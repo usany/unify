@@ -1,0 +1,5 @@
+{
+  "workspace": ["./sending", "./serviceWithDeno"],
+  "nodeModulesDir": "auto",
+  "allowScripts": ["npm:@firebase/util@1.13.0", "npm:protobufjs@7.5.4"]
+}
