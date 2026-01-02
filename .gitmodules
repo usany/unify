@@ -4,6 +4,6 @@
 [submodule "sending"]
 	path = sending
 	url = https://github.com/usany/sending
-[submodule "sending"]
+[submodule "serviceWithDeno"]
 	path = serviceWithDeno
 	url = https://github.com/usany/serviceWithDeno
