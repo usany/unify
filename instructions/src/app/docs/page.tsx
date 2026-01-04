@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { Box, Container, Typography, useMediaQuery, useTheme, Button } from '@mui/material';
 import styled from 'styled-components';
@@ -5,12 +7,8 @@ import Link from 'next/link';
 
 const Section = styled.section`
   margin: 32px 0;
-  & h2 {
-    margin: 16px 0;
-  }
-  & p {
-    margin: 8px 0;
-  }
+  & h2 { margin: 16px 0; }
+  & p { margin: 8px 0; }
 `;
 
 export default function DocsPage() {
@@ -46,8 +44,7 @@ export default function DocsPage() {
       <Section>
         <Typography variant="h5" component="h2">Styled Components</Typography>
         <Typography variant="body1">
-          This page uses styled-components for global and local styles. You can compose styles with the theme
-          from MUI by reading values via the useTheme hook.
+          This page uses styled-components for local styles. Global styles are provided via GlobalStyles.
         </Typography>
       </Section>
     </Container>

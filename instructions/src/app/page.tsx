@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import Link from 'next/link';
 import { Box, Button, Container, Typography, useMediaQuery, useTheme } from '@mui/material';
@@ -28,9 +30,6 @@ export default function HomePage() {
         <Box sx={{ display: 'flex', gap: 2, mt: 3, flexWrap: 'wrap', justifyContent: 'center' }}>
           <Button component={Link} href="/docs" variant="contained" color="primary">
             Browse Docs
-          </Button>
-          <Button component={Link} href="/" variant="outlined" color="primary">
-            Home
           </Button>
         </Box>
       </Hero>
