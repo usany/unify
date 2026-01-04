@@ -1,0 +1,40 @@
+import {
+  defineConfig,
+  minimal2023Preset as preset,
+} from '@vite-pwa/assets-generator/config'
+
+export default defineConfig({
+  headLinkOptions: {
+    preset: '2023',
+  },
+  preset,
+  images: [
+    'public/applicationImage.jpg',
+    // 'public/16.png',
+    // 'public/20.png',
+    // 'public/29.png',
+    // 'public/32.png',
+    // 'public/40.png',
+    // 'public/50.png',
+    // 'public/57.png',
+    // 'public/58.png',
+    // 'public/60.png',
+    // 'public/64.png',
+    // 'public/72.png',
+    // 'public/76.png',
+    // 'public/80.png',
+    // 'public/87.png',
+    // 'public/100.png',
+    // 'public/114.png',
+    // 'public/120.png',
+    // 'public/128.png',
+    // 'public/144.png',
+    // 'public/152.png',
+    // 'public/167.png',
+    // 'public/180.png',
+    // 'public/192.png',
+    // 'public/256.png',
+    // 'public/512.png',
+    // 'public/1024.png',
+  ],
+})

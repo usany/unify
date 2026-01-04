@@ -1,0 +1,9 @@
+import{r as o}from"./iframe-DFoL4fyy.js";var V={exports:{}},g={};/**
+ * @license React
+ * use-sync-external-store-with-selector.production.js
+ *
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */var d=o;function w(e,t){return e===t&&(e!==0||1/e===1/t)||e!==e&&t!==t}var E=typeof Object.is=="function"?Object.is:w,M=d.useSyncExternalStore,h=d.useRef,j=d.useEffect,k=d.useMemo,z=d.useDebugValue;g.useSyncExternalStoreWithSelector=function(e,t,n,a,u){var c=h(null);if(c.current===null){var l={hasValue:!1,value:null};c.current=l}else l=c.current;c=k(function(){function x(r){if(!m){if(m=!0,i=r,r=a(r),u!==void 0&&l.hasValue){var v=l.value;if(u(v,r))return f=v}return f=r}if(v=f,E(i,r))return v;var y=a(r);return u!==void 0&&u(v,y)?(i=r,v):(i=r,f=y)}var m=!1,i,f,S=n===void 0?null:n;return[function(){return x(t())},S===null?void 0:function(){return x(S())}]},[t,n,a,u]);var s=M(e,c[0],c[1]);return j(function(){l.hasValue=!0,l.value=s},[s]),z(s),s};V.exports=g;var D=V.exports,b=Symbol.for("react-redux-context"),C=typeof globalThis<"u"?globalThis:{};function T(){if(!o.createContext)return{};const e=C[b]??(C[b]=new Map);let t=e.get(o.createContext);return t||(t=o.createContext(null),e.set(o.createContext,t)),t}var R=T();function p(e=R){return function(){return o.useContext(e)}}var W=p(),H=(e,t)=>e===t;function G(e=R){const t=e===R?W:p(e),n=(a,u={})=>{const{equalityFn:c=H}=typeof u=="function"?{equalityFn:u}:u,l=t(),{store:s,subscription:x,getServerState:m}=l;o.useRef(!0);const i=o.useCallback({[a.name](S){return a(S)}}[a.name],[a]),f=D.useSyncExternalStoreWithSelector(x.addNestedSub,s.getState,m||s.getState,i,c);return o.useDebugValue(f),f};return Object.assign(n,{withTypes:()=>n}),n}var I=G();const _=I.withTypes();export{_ as u};
