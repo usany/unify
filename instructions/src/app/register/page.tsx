@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import styles from './register.module.css';
 import fs from 'fs';
 import path from 'path';
+import Comments from '@/components/Comments';
 
 export default function RegisterPage() {
   const registerPath = path.join(process.cwd(), 'src/content/register.md');
@@ -18,6 +19,8 @@ export default function RegisterPage() {
       <div className={styles.content}>
         <ReactMarkdown>{registerContent}</ReactMarkdown>
       </div>
+
+      <Comments pageId="register" />
     </div>
   );
 }

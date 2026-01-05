@@ -11,7 +11,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <GlobalStyles />
+        {/* <GlobalStyles /> */}
         {children}
       </body>
     </html>

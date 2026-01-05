@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import styles from './docs.module.css';
 import fs from 'fs';
 import path from 'path';
+import Comments from '@/components/Comments';
 
 export default function DocsPage() {
   const docsPath = path.join(process.cwd(), 'src/content/docs.md');
@@ -18,6 +19,8 @@ export default function DocsPage() {
       <div className={styles.content}>
         <ReactMarkdown>{docsContent}</ReactMarkdown>
       </div>
+
+      <Comments pageId="docs" />
     </div>
   );
 }
