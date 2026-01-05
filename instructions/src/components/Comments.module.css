@@ -123,6 +123,86 @@
   color: #333;
 }
 
+.commentMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.replyBadge {
+  font-size: 0.75rem;
+  background: #e3f2fd;
+  color: #1976d2;
+  padding: 0.125rem 0.5rem;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.commentActions {
+  margin-top: 0.75rem;
+}
+
+.replyButton {
+  background: transparent;
+  border: 1px solid #ddd;
+  color: #666;
+  padding: 0.375rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.replyButton:hover {
+  background: #f5f5f5;
+  border-color: #1976d2;
+  color: #1976d2;
+}
+
+.reply {
+  margin-left: 2rem;
+  border-left: 3px solid #e3f2fd;
+  padding-left: 1rem;
+  margin-top: 1rem;
+}
+
+.replies {
+  margin-top: 1rem;
+  padding-left: 1rem;
+}
+
+.replyForm {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+}
+
+.replyFormHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+  color: #555;
+}
+
+.cancelReplyButton {
+  background: transparent;
+  border: none;
+  color: #666;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.cancelReplyButton:hover {
+  background: #e0e0e0;
+}
+
 @media (max-width: 768px) {
   .commentForm {
     padding: 1rem;
@@ -136,5 +216,18 @@
   
   .timestamp {
     font-size: 0.8rem;
+  }
+  
+  .reply {
+    margin-left: 1rem;
+    padding-left: 0.75rem;
+  }
+  
+  .replyForm {
+    padding: 0.75rem;
+  }
+  
+  .replyFormHeader {
+    font-size: 0.9rem;
   }
 }
