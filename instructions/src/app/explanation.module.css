@@ -23,11 +23,29 @@
 }
 
 .buttonGroup {
-  display: flex;
+  display: grid;
   gap: 0.75rem;
   margin-top: 1.5rem;
-  flex-wrap: wrap;
   justify-content: center;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 480px) {
+  .buttonGroup {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .buttonGroup {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .buttonGroup {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 .button {

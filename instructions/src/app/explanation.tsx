@@ -4,6 +4,10 @@ import styles from './explanation.module.css';
 const links = [
     { href: '/docs', label: 'Browse Docs' },
     { href: '/register', label: 'Browse Register' },
+    { href: '/register', label: 'Browse Register' },
+    { href: '/register', label: 'Browse Register' },
+    { href: '/register', label: 'Browse Register' },
+    { href: '/register', label: 'Browse Register' },
 ];
 
 export default function Explanation() {
