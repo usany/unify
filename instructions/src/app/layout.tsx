@@ -1,6 +1,8 @@
+import DefaultButton from '@/components/Default';
 import type { Metadata } from 'next';
-import StyledComponentsRegistry from './StyledComponentsRegistry';
-import { GlobalStyles } from '@/styles/GlobalStyles';
+// import StyledComponentsRegistry from './StyledComponentsRegistry';
+// import { GlobalStyles } from '@/styles/GlobalStyles';
+// import styles from './docs.module.css';
 
 export const metadata: Metadata = {
   title: 'Posts Docs',
@@ -12,6 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         {/* <GlobalStyles /> */}
+        <DefaultButton />
         {children}
       </body>
     </html>

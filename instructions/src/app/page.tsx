@@ -9,7 +9,7 @@ export default function HomePage() {
 
   return (
     <div>
-      <div>Posts Documentation</div>
+      {/* <div>Posts Documentation</div> */}
       <Explanation />
     </div>
   );

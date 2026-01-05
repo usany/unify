@@ -11,9 +11,9 @@ export default function RegisterPage() {
 
   return (
     <div className={styles.container}>
+      {/* <a href="/" className={styles.homeButton}>Default</a> */}
       <div className={styles.header}>
         <h1 className={styles.title}>Register Docs</h1>
-        <a href="/" className={styles.homeButton}>Home</a>
       </div>
 
       <div className={styles.content}>

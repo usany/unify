@@ -10,17 +10,19 @@ export default function DocsPage() {
   const docsContent = fs.readFileSync(docsPath, 'utf8');
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <h1 className={styles.title}>Posts Docs</h1>
-        <a href="/" className={styles.homeButton}>Home</a>
-      </div>
+    <>
+      {/* <a href="/" className={styles.homeButton}>Default</a> */}
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <h1 className={styles.title}>Posts Docs</h1>
+        </div>
 
-      <div className={styles.content}>
-        <ReactMarkdown>{docsContent}</ReactMarkdown>
-      </div>
+        <div className={styles.content}>
+          <ReactMarkdown>{docsContent}</ReactMarkdown>
+        </div>
 
-      <Comments pageId="docs" />
-    </div>
+        <Comments pageId="docs" />
+      </div>
+    </>
   );
 }
