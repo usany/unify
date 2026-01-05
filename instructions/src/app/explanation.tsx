@@ -17,7 +17,7 @@ export default function Explanation() {
     const [showLinks, setShowLinks] = useState(false);
 
     return (
-        <section className={styles.hero}>
+        <>
             <button 
                 className={`${styles.showMoreButton} ${showLinks ? styles.active : ''}`}
                 onClick={() => setShowLinks(!showLinks)}
@@ -27,21 +27,23 @@ export default function Explanation() {
                 <span></span>
                 <span></span>
             </button>
-            {!showLinks &&
-                <>
-                    <h1 className={styles.title}>Posts Documentation</h1>
-                    <p className={styles.subtitle}>
-                        Learn how to use components and APIs from the posts project.
-                    </p>
-                </>
-            }
-            <div className={`${styles.buttonGroup} ${showLinks ? styles.visible : ''}`}>
-                {links.map((link, index) => (
-                    <Link key={index} href={link.href} className={styles.button}>
-                        {link.label}
-                    </Link>
-                ))}
-            </div>
-        </section>
+            <section className={styles.hero}>
+                {!showLinks &&
+                    <>
+                        <h1 className={styles.title}>Posts Documentation</h1>
+                        <p className={styles.subtitle}>
+                            Learn how to use components and APIs from the posts project.
+                        </p>
+                    </>
+                }
+                <div className={`${styles.buttonGroup} ${showLinks ? styles.visible : ''}`}>
+                    {links.map((link, index) => (
+                        <Link key={index} href={link.href} className={styles.button}>
+                            {link.label}
+                        </Link>
+                    ))}
+                </div>
+            </section>
+        </>
     );
 }
