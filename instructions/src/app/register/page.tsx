@@ -1,11 +1,11 @@
 import Link from 'next/link';
-import styles from './docs.module.css';
+import styles from './register.module.css';
 
-export default function DocsPage() {
+export default function RegisterPage() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h1 className={styles.title}>Posts Docs</h1>
+        <h1 className={styles.title}>Register Docs</h1>
         <Link href="/" className={styles.homeButton}>Home</Link>
       </div>
 
