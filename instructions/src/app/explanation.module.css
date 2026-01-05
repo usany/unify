@@ -6,6 +6,49 @@
   min-height: 70vh;
   text-align: center;
   padding: 2rem 1rem;
+  position: relative;
+}
+
+.showMoreButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 10;
+}
+
+.showMoreButton span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background-color: #1976d2;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.showMoreButton:hover span {
+  background-color: #1565c0;
+}
+
+.showMoreButton.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.showMoreButton.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.showMoreButton.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -6px);
 }
 
 .title {
@@ -28,6 +71,15 @@
   margin-top: 1.5rem;
   justify-content: center;
   grid-template-columns: 1fr;
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.3s ease;
+}
+
+.buttonGroup.hidden {
+  opacity: 0;
+  transform: translateY(-20px);
+  pointer-events: none;
 }
 
 @media (min-width: 480px) {
@@ -45,6 +97,23 @@
 @media (min-width: 1024px) {
   .buttonGroup {
     grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Mobile responsive behavior */
+@media (max-width: 767px) {
+  .showMoreButton {
+    display: flex;
+  }
+  
+  .buttonGroup:not(.visible) {
+    display: none;
+  }
+  
+  .buttonGroup.visible {
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-top: 2rem;
   }
 }
 
