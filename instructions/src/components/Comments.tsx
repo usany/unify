@@ -25,6 +25,8 @@ export default function Comments({ pageId }: CommentsProps) {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
+  const [editingComment, setEditingComment] = useState<string | null>(null);
+  const [editContent, setEditContent] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -92,8 +94,55 @@ export default function Comments({ pageId }: CommentsProps) {
     setNewComment(prev => ({ ...prev, parentId: '' }));
   };
 
+  const handleEdit = (commentId: string, content: string) => {
+    setEditingComment(commentId);
+    setEditContent(content);
+  };
+
+  const handleSaveEdit = () => {
+    if (editingComment && editContent.trim()) {
+      setComments(prev => updateCommentContent(prev, editingComment, editContent));
+      setEditingComment(null);
+      setEditContent('');
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setEditingComment(null);
+    setEditContent('');
+  };
+
+  const handleDelete = (commentId: string) => {
+    setComments(prev => deleteCommentFromTree(prev, commentId));
+  };
+
+  const updateCommentContent = (comments: Comment[], commentId: string, content: string): Comment[] => {
+    return comments.map(comment => {
+      if (comment.id === commentId) {
+        return { ...comment, content };
+      }
+      if (comment.replies && comment.replies.length > 0) {
+        return {
+          ...comment,
+          replies: updateCommentContent(comment.replies, commentId, content)
+        };
+      }
+      return comment;
+    });
+  };
+
+  const deleteCommentFromTree = (comments: Comment[], commentId: string): Comment[] => {
+    return comments
+      .filter(comment => comment.id !== commentId)
+      .map(comment => ({
+        ...comment,
+        replies: comment.replies ? deleteCommentFromTree(comment.replies, commentId) : []
+      }));
+  };
+
   const CommentItem = ({ comment, depth = 0 }: { comment: Comment; depth?: number }) => {
     const isReplying = replyingTo === comment.id;
+    const isEditing = editingComment === comment.id;
 
     return (
       <div className={`${styles.comment} ${depth > 0 ? styles.reply : ''}`}>
@@ -107,7 +156,32 @@ export default function Comments({ pageId }: CommentsProps) {
           </div>
         </div>
         
-        <p className={styles.commentContent}>{comment.content}</p>
+        {isEditing ? (
+          <div className={styles.editForm}>
+            <textarea
+              value={editContent}
+              onChange={(e) => setEditContent(e.target.value)}
+              className={styles.editTextarea}
+              rows={3}
+            />
+            <div className={styles.editActions}>
+              <button
+                onClick={handleSaveEdit}
+                className={styles.saveButton}
+              >
+                Save
+              </button>
+              <button
+                onClick={handleCancelEdit}
+                className={styles.cancelButton}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        ) : (
+          <p className={styles.commentContent}>{comment.content}</p>
+        )}
 
         <div className={styles.commentActions}>
           <button 
@@ -116,6 +190,21 @@ export default function Comments({ pageId }: CommentsProps) {
           >
             Reply
           </button>
+          
+          <>
+            <button 
+              onClick={() => handleEdit(comment.id, comment.content)}
+              className={styles.editButton}
+            >
+              Edit
+            </button>
+            <button 
+              onClick={() => handleDelete(comment.id)}
+              className={styles.deleteButton}
+            >
+              Delete
+            </button>
+          </>
         </div>
 
         {isReplying && (
