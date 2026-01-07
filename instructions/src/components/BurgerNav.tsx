@@ -9,7 +9,6 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { name: 'Home', href: '/', icon: '🏠' },
   { name: 'Documentation', href: '/docs', icon: '📚' },
   { name: 'Register', href: '/register', icon: '📝' },
 ];
