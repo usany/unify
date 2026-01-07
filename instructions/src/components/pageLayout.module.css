@@ -10,6 +10,8 @@
   padding: 2rem 1rem;
   margin-left: 280px; /* Add margin to avoid fixed sideNav */
   margin-top: 60px; /* Add margin for fixed top bar */
+  /* Reserve space on the right for the fixed TOC so content is not hidden */
+  padding-right: 280px;
 }
 
 .contentWrapper {
@@ -288,6 +290,7 @@
     overflow-y: visible;
     margin-left: 0; /* Remove margin on mobile where sideNav is hidden */
     margin-top: 60px; /* Keep top bar margin on mobile */
+    padding-right: 1rem; /* reset extra right padding on smaller screens */
   }
   
   .contentWrapper {
