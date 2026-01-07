@@ -18,7 +18,7 @@ export default function Explanation() {
 
     return (
         <>
-            <button 
+            {/* <button 
                 className={`${styles.showMoreButton} ${showLinks ? styles.active : ''}`}
                 onClick={() => setShowLinks(!showLinks)}
                 aria-label="Toggle navigation links"
@@ -26,7 +26,7 @@ export default function Explanation() {
                 <span></span>
                 <span></span>
                 <span></span>
-            </button>
+            </button> */}
             <section className={styles.hero}>
                 {!showLinks &&
                     <>
@@ -36,7 +36,7 @@ export default function Explanation() {
                         </p>
                     </>
                 }
-                <div className={`${styles.buttonGroup} ${showLinks ? styles.visible : ''}`}>
+                <div className={`${styles.buttonGroup}`}>
                     {links.map((link, index) => (
                         <Link key={index} href={link.href} className={styles.button}>
                             {link.label}

@@ -70,7 +70,9 @@
   gap: 0.75rem;
   margin-top: 1.5rem;
   justify-content: center;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  max-width: 800px;
+  width: 100%;
   opacity: 1;
   transform: translateY(0);
   transition: all 0.3s ease;
@@ -82,26 +84,8 @@
   pointer-events: none;
 }
 
-@media (min-width: 480px) {
-  .buttonGroup {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 768px) {
-  .buttonGroup {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (min-width: 1024px) {
-  .buttonGroup {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
 /* Mobile responsive behavior */
-@media (max-width: 767px) {
+/* @media (max-width: 767px) {
   .showMoreButton {
     display: flex;
   }
@@ -115,7 +99,7 @@
     grid-template-columns: 1fr;
     margin-top: 2rem;
   }
-}
+} */
 
 .button {
   display: inline-flex;
