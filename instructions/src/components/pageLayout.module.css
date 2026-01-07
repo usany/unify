@@ -15,7 +15,7 @@
   /* Reserve space on the right for the fixed TOC so content is not hidden */
   padding-right: 280px;
   padding-right: 280px;
-  transition: padding-right 0.3s ease, margin-left 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .contentMinifiedSideNav {
