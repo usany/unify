@@ -99,7 +99,7 @@ export default function PageLayout({file, pageId}: {file: string; pageId: string
   return (
     <div className={styles.pageContainer}>
       <SideNav />
-      <div className={styles.contentContainer}>
+      <div className={`${styles.contentContainer} ${!isTocOpen ? styles.contentExpanded : ''}`}>
         <div className={styles.headerRow}>
           <div className={styles.header}>
             <h1 className={styles.title}>{pageId}</h1>

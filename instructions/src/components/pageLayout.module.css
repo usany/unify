@@ -12,6 +12,11 @@
   margin-top: 60px; /* Add margin for fixed top bar */
   /* Reserve space on the right for the fixed TOC so content is not hidden */
   padding-right: 280px;
+  transition: padding-right 0.3s ease;
+}
+
+.contentExpanded {
+  padding-right: 1rem !important;
 }
 
 .contentWrapper {
@@ -155,6 +160,8 @@
 .tocCollapsed {
   height: auto;
   max-height: none;
+  width: auto;
+  min-width: 120px;
 }
 
 .content div.responsiveBox {
