@@ -86,6 +86,27 @@
   margin-bottom: 0.5rem;
 }
 
+.tocHeaderRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tocToggle {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  color: #555;
+}
+
+.tocToggle:hover {
+  background: #f0f0f0;
+}
+
 .tocList {
   list-style: none;
   margin: 0;
@@ -127,6 +148,11 @@
   background: #e3f2fd;
   color: #1976d2;
   font-weight: 600;
+}
+
+.tocCollapsed {
+  height: auto;
+  max-height: none;
 }
 
 .content div.responsiveBox {

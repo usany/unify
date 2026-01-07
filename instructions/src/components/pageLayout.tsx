@@ -40,6 +40,7 @@ function extractHeadings(markdown: string): HeadingItem[] {
 export default function PageLayout({file, pageId}: {file: string; pageId: string}) {
   const headings = React.useMemo(() => extractHeadings(file), [file]);
   const [activeId, setActiveId] = React.useState<string | null>(null);
+  const [isTocOpen, setIsTocOpen] = React.useState(true);
 
   const handleTocClick = (id: string) => {
     if (typeof document === 'undefined') return;
@@ -104,32 +105,47 @@ export default function PageLayout({file, pageId}: {file: string; pageId: string
             <h1 className={styles.title}>{pageId}</h1>
           </div>
           {headings.length > 0 && (
-            <nav className={styles.toc} aria-label="Page navigation">
-              <div className={styles.tocTitle}>On this page</div>
-              <ul className={styles.tocList}>
-                {headings.map((h) => (
-                  <li
-                    key={h.id}
-                    className={
-                      h.level === 1
-                        ? styles.tocItemLevel1
-                        : h.level === 2
-                        ? styles.tocItemLevel2
-                        : styles.tocItemLevel3
-                    }
-                  >
-                    <button
-                      type="button"
-                      className={`${styles.tocLink} ${
-                        activeId === h.id ? styles.tocLinkActive : ''
-                      }`}
-                      onClick={() => handleTocClick(h.id)}
+            <nav
+              className={`${styles.toc} ${!isTocOpen ? styles.tocCollapsed : ''}`}
+              aria-label="Page navigation"
+            >
+              <div className={styles.tocHeaderRow}>
+                <div className={styles.tocTitle}>On this page</div>
+                <button
+                  type="button"
+                  className={styles.tocToggle}
+                  onClick={() => setIsTocOpen((prev) => !prev)}
+                  aria-label={isTocOpen ? 'Hide table of contents' : 'Show table of contents'}
+                >
+                  {isTocOpen ? '−' : '+'}
+                </button>
+              </div>
+              {isTocOpen && (
+                <ul className={styles.tocList}>
+                  {headings.map((h) => (
+                    <li
+                      key={h.id}
+                      className={
+                        h.level === 1
+                          ? styles.tocItemLevel1
+                          : h.level === 2
+                          ? styles.tocItemLevel2
+                          : styles.tocItemLevel3
+                      }
                     >
-                      {h.text}
-                    </button>
-                  </li>
-                ))}
-              </ul>
+                      <button
+                        type="button"
+                        className={`${styles.tocLink} ${
+                          activeId === h.id ? styles.tocLinkActive : ''
+                        }`}
+                        onClick={() => handleTocClick(h.id)}
+                      >
+                        {h.text}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </nav>
           )}
         </div>
