@@ -1,4 +1,5 @@
 import DefaultButton from '@/components/Default';
+import SideNav from '@/components/SideNav';
 import type { Metadata } from 'next';
 // import StyledComponentsRegistry from './StyledComponentsRegistry';
 // import { GlobalStyles } from '@/styles/GlobalStyles';
@@ -14,8 +15,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         {/* <GlobalStyles /> */}
-        <DefaultButton />
-        {children}
+        {/* <SideNav /> */}
+        <div>
+          <DefaultButton />
+          {children}
+        </div>
       </body>
     </html>
   );

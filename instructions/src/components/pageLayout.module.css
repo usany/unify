@@ -1,0 +1,126 @@
+.pageContainer {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.contentContainer {
+  flex: 1;
+  overflow-y: auto;
+  height: 100vh;
+  background: #fafafa;
+}
+
+.contentWrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0;
+  color: #333;
+}
+
+.content {
+  line-height: 1.6;
+  margin-bottom: 3rem;
+}
+
+.content h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 2rem 0 1rem 0;
+  color: #333;
+}
+
+.content h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 1.5rem 0 0.5rem 0;
+  color: #333;
+}
+
+.content p {
+  margin: 0.5rem 0;
+  color: #333;
+}
+
+.content strong {
+  font-weight: 600;
+  color: #1976d2;
+}
+
+.content div.responsiveBox {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 4px;
+  background-color: #f5f5f5;
+}
+
+/* Custom scrollbar for content */
+.contentContainer::-webkit-scrollbar {
+  width: 8px;
+}
+
+.contentContainer::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.contentContainer::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.contentContainer::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1023px) {
+  .pageContainer {
+    flex-direction: column;
+  }
+  
+  .contentContainer {
+    height: auto;
+    overflow-y: visible;
+  }
+  
+  .contentWrapper {
+    padding: 1.5rem 1rem;
+    min-height: auto;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+  }
+  
+  .content h1 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .contentWrapper {
+    padding: 1rem;
+  }
+  
+  .header {
+    margin-bottom: 1.5rem;
+  }
+  
+  .title {
+    font-size: 1.25rem;
+  }
+}
