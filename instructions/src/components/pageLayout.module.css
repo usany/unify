@@ -6,9 +6,9 @@
 .contentContainer {
   flex: 1;
   overflow-y: auto;
-  height: 100vh;
   background: #fafafa;
   padding: 2rem 1rem;
+  margin-left: 280px; /* Add margin to avoid fixed sideNav */
 }
 
 /* .contentWrapper {
@@ -192,6 +192,7 @@
   .contentContainer {
     height: auto;
     overflow-y: visible;
+    margin-left: 0; /* Remove margin on mobile where sideNav is hidden */
   }
   
   .contentWrapper {
