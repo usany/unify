@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import styles from './pageLayout.module.css';
@@ -7,9 +8,6 @@ import Comments from '@/components/Comments';
 import SideNav from '@/components/SideNav';
 
 export default function PageLayout({file, pageId}: {file: string; pageId: string}) {
-  const docsPath = path.join(process.cwd(), 'src/content/docs.md');
-  const docsContent = fs.readFileSync(docsPath, 'utf8');
-
   return (
     <div className={styles.pageContainer}>
       <SideNav />

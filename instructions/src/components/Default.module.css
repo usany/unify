@@ -1,30 +1,135 @@
-.homeButton {
-  display: inline-flex;
+.topBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 1rem;
-  background: transparent;
-  border: none;
+  padding: 0.75rem 1.5rem;
+  background: white;
+  border-bottom: 1px solid #e0e0e0;
+  z-index: 999;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.homeButton {
   color: #1976d2;
   text-decoration: none;
-  border-radius: 4px;
   font-weight: 500;
-  transition: background-color 0.2s ease;
+  font-size: 1rem;
+  transition: color 0.2s ease;
 }
 
 .homeButton:hover {
-  background-color: rgba(25, 118, 210, 0.04);
+  color: #1565c0;
 }
 
+/* Hamburger Menu Button - Only visible on small screens */
+.showMoreButton {
+  width: 30px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0;
+}
+
+.showMoreButton span {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background: #333;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.showMoreButton.active span:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+.showMoreButton.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.showMoreButton.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* Button Group - Only visible on small screens */
+.buttonGroup {
+  position: fixed;
+  top: 60px;
+  right: -300px;
+  width: 280px;
+  height: calc(100vh - 60px);
+  background: white;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  padding: 2rem 1.5rem;
+  transition: right 0.3s ease;
+  z-index: 998;
+  overflow-y: auto;
+}
+
+.buttonGroup.visible {
+  right: 0;
+}
+
+.buttonGroup .button {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.buttonGroup .button:hover {
+  background: #e0e0e0;
+  border-color: #bbb;
+  transform: translateY(-1px);
+}
+
+/* Custom scrollbar for button group */
+.buttonGroup::-webkit-scrollbar {
+  width: 4px;
+}
+
+.buttonGroup::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.buttonGroup::-webkit-scrollbar-thumb {
+  background: #ddd;
+  border-radius: 2px;
+}
+
+.buttonGroup::-webkit-scrollbar-thumb:hover {
+  background: #bbb;
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
-  .container {
+  .topBar {
+    padding: 0.5rem 1rem;
+  }
+  
+  .homeButton {
+    font-size: 0.9rem;
+  }
+  
+  .buttonGroup {
+    width: 250px;
     padding: 1.5rem 1rem;
-  }
-  
-  .title {
-    font-size: 1.5rem;
-  }
-  
-  .content h1 {
-    font-size: 1.5rem;
   }
 }
