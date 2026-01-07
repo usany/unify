@@ -12,7 +12,12 @@
   margin-top: 60px; /* Add margin for fixed top bar */
 }
 
-/* .contentWrapper {
+.contentWrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  min-height: 100vh;
+}
 
 .header {
   display: flex;
@@ -59,9 +64,6 @@
 .toc {
   position: fixed;
   top: 70px; /* just below fixed top bar */
-.toc {
-  position: fixed;
-  top: 70px;
   right: 1.5rem;
   width: 240px;
   max-height: calc(100vh - 80px);
@@ -267,8 +269,13 @@
     min-height: auto;
   }
 
+  /* On smaller screens, show the TOC above content instead of fixed top-right */
   .toc {
-    display: none;
+    position: static;
+    width: 100%;
+    max-height: none;
+    margin-bottom: 1.5rem;
+    box-shadow: none;
   }
   
   .title {
