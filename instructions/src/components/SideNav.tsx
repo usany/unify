@@ -4,18 +4,14 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import styles from './SideNav.module.css';
+import links from '@/lib/links';
 
 interface NavItem {
-  name: string;
+  label: string;
   href: string;
   icon?: string;
 }
 
-const navItems: NavItem[] = [
-  // { name: 'Home', href: '/', icon: '🏠' },
-  { name: 'Documentation', href: '/docs', icon: '📚' },
-  { name: 'Register', href: '/register', icon: '📝' },
-];
 
 export default function SideNav() {
   const pathname = usePathname();
@@ -44,14 +40,14 @@ export default function SideNav() {
       </div>
       
       <ul className={styles.navList}>
-        {navItems.map((item) => (
+        {links.map((item) => (
           <li key={item.href} className={styles.navItem}>
             <Link 
               href={item.href}
               className={`${styles.navLink} ${pathname === item.href ? styles.active : ''}`}
             >
               <span className={styles.navIcon}>{item.icon}</span>
-              <span className={styles.navLabel}>{item.name}</span>
+              <span className={styles.navLabel}>{item.label}</span>
             </Link>
           </li>
         ))}

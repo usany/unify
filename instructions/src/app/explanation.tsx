@@ -3,15 +3,16 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import styles from './explanation.module.css';
+import links from '@/lib/links';
 
-const links = [
-    { href: '/docs', label: 'Browse Docs' },
-    { href: '/register', label: 'Browse Register' },
-    { href: '/register', label: 'Browse Register' },
-    { href: '/register', label: 'Browse Register' },
-    { href: '/register', label: 'Browse Register' },
-    { href: '/register', label: 'Browse Register' },
-];
+// const links = [
+//     { href: '/docs', label: 'Browse Docs' },
+//     { href: '/register', label: 'Browse Register' },
+//     { href: '/register', label: 'Browse Register' },
+//     { href: '/register', label: 'Browse Register' },
+//     { href: '/register', label: 'Browse Register' },
+//     { href: '/register', label: 'Browse Register' },
+// ];
 
 export default function Explanation() {
     const [showLinks, setShowLinks] = useState(false);

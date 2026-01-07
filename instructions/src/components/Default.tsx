@@ -3,12 +3,8 @@
 import { useState, useEffect } from 'react';
 import styles from './Default.module.css';
 import { usePathname } from 'next/navigation';
+import links from '@/lib/links';
 
-const links = [
-    { href: '/docs', label: 'Browse Docs' },
-    { href: '/register', label: 'Browse Register' },
-    { href: '/', label: 'Home' },
-];
 
 export default function DefaultButton() {
   const [showLinks, setShowLinks] = useState(false);
