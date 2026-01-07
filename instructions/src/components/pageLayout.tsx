@@ -14,17 +14,15 @@ export default function PageLayout({file, pageId}: {file: string; pageId: string
     <div className={styles.pageContainer}>
       <SideNav />
       <div className={styles.contentContainer}>
-        <div className={styles.contentWrapper}>
-          <div className={styles.header}>
-            <h1 className={styles.title}>{pageId}</h1>
-          </div>
-
-          <div className={styles.content}>
-            <ReactMarkdown>{file}</ReactMarkdown>
-          </div>
-
-          <Comments pageId={pageId} />
+        <div className={styles.header}>
+          <h1 className={styles.title}>{pageId}</h1>
         </div>
+
+        <div className={styles.content}>
+          <ReactMarkdown>{file}</ReactMarkdown>
+        </div>
+
+        <Comments pageId={pageId} />
       </div>
     </div>
   );

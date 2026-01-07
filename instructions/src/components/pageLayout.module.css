@@ -1,6 +1,5 @@
 .pageContainer {
   display: flex;
-  height: 100vh;
   overflow: hidden;
 }
 
@@ -9,14 +8,15 @@
   overflow-y: auto;
   height: 100vh;
   background: #fafafa;
+  padding: 2rem 1rem;
 }
 
-.contentWrapper {
+/* .contentWrapper {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem 1rem;
   min-height: 100vh;
-}
+} */
 
 .header {
   display: flex;
