@@ -1,9 +1,11 @@
 .sideNav {
   position: fixed;
-  top: 60px; /* Start below top bar */
+  top: 60px;
+  /* Start below top bar */
   left: 0;
   width: 280px;
-  height: calc(100vh - 60px); /* Account for top bar height */
+  height: calc(100vh - 60px);
+  /* Account for top bar height */
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-right: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
@@ -11,11 +13,30 @@
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
   overflow-x: hidden;
+  transition: width 0.3s ease;
+  z-index: 100;
+}
+
+.sideNav.minified {
+  width: 70px;
 }
 
 .navHeader {
   padding: 2rem 1.5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  white-space: nowrap;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 89px;
+  /* Maintain height during transition */
+  padding: 1.5rem 1rem;
+}
+
+.minified .navHeader {
+  padding: 1.5rem 0.5rem;
+  justify-content: center;
 }
 
 .navTitle {
@@ -24,6 +45,35 @@
   font-weight: 600;
   margin: 0;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+.minified .navTitle {
+  display: none;
+  opacity: 0;
+}
+
+.toggleButton {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.toggleButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.minified .toggleButton {
+  margin: 0 auto;
 }
 
 .navList {
@@ -32,6 +82,7 @@
   margin: 0;
   padding: 1rem 0;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .navItem {
@@ -48,6 +99,12 @@
   border-left: 4px solid transparent;
   position: relative;
   overflow: hidden;
+  white-space: nowrap;
+}
+
+.minified .navLink {
+  padding: 1rem 0;
+  justify-content: center;
 }
 
 .navLink::before {
@@ -89,17 +146,36 @@
   align-items: center;
   justify-content: center;
   min-width: 24px;
+  transition: margin 0.3s ease;
+}
+
+.minified .navIcon {
+  margin-right: 0;
 }
 
 .navLabel {
   font-size: 0.95rem;
   font-weight: 400;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+.minified .navLabel {
+  display: none;
+  opacity: 0;
 }
 
 .navFooter {
   padding: 1.5rem;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.minified .navFooter {
+  padding: 1.5rem 0.5rem;
+  text-align: center;
 }
 
 .navInfo {
@@ -113,6 +189,10 @@
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
 }
 
+.minified .navVersion {
+  font-size: 0.65rem;
+}
+
 /* Main content wrapper to prevent overlap */
 body {
   padding-left: 0;
@@ -123,6 +203,10 @@ body {
   margin-left: 280px;
   min-height: 100vh;
   transition: margin-left 0.3s ease;
+}
+
+.mainContentMinified {
+  margin-left: 70px;
 }
 
 /* Hide scrollbar but keep functionality */
@@ -148,8 +232,12 @@ body {
   .sideNav {
     display: none;
   }
-  
+
   .mainContent {
+    margin-left: 0;
+  }
+
+  .mainContentMinified {
     margin-left: 0;
   }
 }

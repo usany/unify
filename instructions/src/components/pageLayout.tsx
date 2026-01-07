@@ -37,7 +37,7 @@ function extractHeadings(markdown: string): HeadingItem[] {
   return headings;
 }
 
-export default function PageLayout({file, pageId}: {file: string; pageId: string}) {
+export default function PageLayout({ file, pageId }: { file: string; pageId: string }) {
   const headings = React.useMemo(() => extractHeadings(file), [file]);
   const [activeId, setActiveId] = React.useState<string | null>(null);
   const [isTocOpen, setIsTocOpen] = React.useState(true);
@@ -96,10 +96,15 @@ export default function PageLayout({file, pageId}: {file: string; pageId: string
       );
     };
 
+  const [isSideNavMinified, setIsSideNavMinified] = React.useState(false);
+
   return (
     <div className={styles.pageContainer}>
-      <SideNav />
-      <div className={`${styles.contentContainer} ${!isTocOpen ? styles.contentExpanded : ''}`}>
+      <SideNav
+        isMinified={isSideNavMinified}
+        onToggle={() => setIsSideNavMinified(!isSideNavMinified)}
+      />
+      <div className={`${styles.contentContainer} ${!isTocOpen ? styles.contentExpanded : ''} ${isSideNavMinified ? styles.contentMinifiedSideNav : ''}`}>
         <div className={styles.headerRow}>
           <div className={styles.header}>
             <h1 className={styles.title}>{pageId}</h1>
@@ -129,15 +134,14 @@ export default function PageLayout({file, pageId}: {file: string; pageId: string
                         h.level === 1
                           ? styles.tocItemLevel1
                           : h.level === 2
-                          ? styles.tocItemLevel2
-                          : styles.tocItemLevel3
+                            ? styles.tocItemLevel2
+                            : styles.tocItemLevel3
                       }
                     >
                       <button
                         type="button"
-                        className={`${styles.tocLink} ${
-                          activeId === h.id ? styles.tocLinkActive : ''
-                        }`}
+                        className={`${styles.tocLink} ${activeId === h.id ? styles.tocLinkActive : ''
+                          }`}
                         onClick={() => handleTocClick(h.id)}
                       >
                         {h.text}

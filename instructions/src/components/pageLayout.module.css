@@ -8,11 +8,18 @@
   overflow-y: auto;
   background: #fafafa;
   padding: 2rem 1rem;
-  margin-left: 280px; /* Add margin to avoid fixed sideNav */
-  margin-top: 60px; /* Add margin for fixed top bar */
+  margin-left: 280px;
+  /* Add margin to avoid fixed sideNav */
+  margin-top: 60px;
+  /* Add margin for fixed top bar */
   /* Reserve space on the right for the fixed TOC so content is not hidden */
   padding-right: 280px;
-  transition: padding-right 0.3s ease;
+  padding-right: 280px;
+  transition: padding-right 0.3s ease, margin-left 0.3s ease;
+}
+
+.contentMinifiedSideNav {
+  margin-left: 70px;
 }
 
 .contentExpanded {
@@ -70,7 +77,8 @@
 
 .toc {
   position: fixed;
-  top: 70px; /* just below fixed top bar */
+  top: 70px;
+  /* just below fixed top bar */
   right: 1.5rem;
   width: 240px;
   max-height: calc(100vh - 80px);
@@ -291,15 +299,18 @@
   .pageContainer {
     flex-direction: column;
   }
-  
+
   .contentContainer {
     height: auto;
     overflow-y: visible;
-    margin-left: 0; /* Remove margin on mobile where sideNav is hidden */
-    margin-top: 60px; /* Keep top bar margin on mobile */
-    padding-right: 1rem; /* reset extra right padding on smaller screens */
+    margin-left: 0;
+    /* Remove margin on mobile where sideNav is hidden */
+    margin-top: 60px;
+    /* Keep top bar margin on mobile */
+    padding-right: 1rem;
+    /* reset extra right padding on smaller screens */
   }
-  
+
   .contentWrapper {
     padding: 1.5rem 1rem;
     min-height: auto;
@@ -313,17 +324,18 @@
     margin-bottom: 1.5rem;
     box-shadow: none;
   }
-  
+
   .title {
     font-size: 1.5rem;
   }
-  
+
   .content h1 {
     font-size: 1.5rem;
   }
-  
+
   .showMoreButton {
-    top: 3.5rem; /* Position below top bar */
+    top: 3.5rem;
+    /* Position below top bar */
     right: 1.5rem;
   }
 }
@@ -332,20 +344,21 @@
   .contentWrapper {
     padding: 1rem;
   }
-  
+
   .header {
     margin-bottom: 1.5rem;
   }
-  
+
   .title {
     font-size: 1.25rem;
   }
-  
+
   .showMoreButton {
-    top: 3rem; /* Position below top bar on mobile */
+    top: 3rem;
+    /* Position below top bar on mobile */
     right: 1rem;
   }
-  
+
   .buttonGroup {
     width: 250px;
     padding: 3rem 1rem 1.5rem;

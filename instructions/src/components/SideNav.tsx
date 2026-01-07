@@ -13,7 +13,13 @@ interface NavItem {
 }
 
 
-export default function SideNav() {
+export default function SideNav({
+  isMinified = false,
+  onToggle
+}: {
+  isMinified?: boolean;
+  onToggle?: () => void;
+}) {
   const pathname = usePathname();
   const [isLargeScreen, setIsLargeScreen] = useState(false);
 
@@ -24,7 +30,7 @@ export default function SideNav() {
 
     checkScreenSize();
     window.addEventListener('resize', checkScreenSize);
-    
+
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
@@ -34,15 +40,33 @@ export default function SideNav() {
   }
 
   return (
-    <nav className={styles.sideNav}>
+    <nav className={`${styles.sideNav} ${isMinified ? styles.minified : ''}`}>
       <div className={styles.navHeader}>
         <h3 className={styles.navTitle}>Navigation</h3>
+        {onToggle && (
+          <button
+            onClick={onToggle}
+            className={styles.toggleButton}
+            title={isMinified ? "Expand sidebar" : "Collapse sidebar"}
+            aria-label={isMinified ? "Expand sidebar" : "Collapse sidebar"}
+          >
+            {isMinified ? (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13 17L18 12L13 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            ) : (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11 17L6 12L11 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            )}
+          </button>
+        )}
       </div>
-      
+
       <ul className={styles.navList}>
         {links.map((item) => (
           <li key={item.href} className={styles.navItem}>
-            <Link 
+            <Link
               href={item.href}
               className={`${styles.navLink} ${pathname === item.href ? styles.active : ''}`}
             >
