@@ -12,6 +12,8 @@ const links = [
 export default function DefaultButton() {
   const [showLinks, setShowLinks] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [currentLang, setCurrentLang] = useState('en');
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -24,21 +26,54 @@ export default function DefaultButton() {
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
+  useEffect(() => {
+    // Apply dark mode class to body
+    if (isDarkMode) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+  }, [isDarkMode]);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
+  const toggleLanguage = () => {
+    setCurrentLang(currentLang === 'en' ? 'es' : 'en');
+  };
+
   return (
     <>
       <div className={styles.topBar}>
         <a href="/" className={styles.homeButton}>Posts Documentation</a>
-        {isSmallScreen && (
+        <div className={styles.topBarActions}>
           <button 
-            className={`${styles.showMoreButton} ${showLinks ? styles.active : ''}`}
-            onClick={() => setShowLinks(!showLinks)}
-            aria-label="Toggle navigation links"
+            className={styles.toggleButton}
+            onClick={toggleDarkMode}
+            aria-label="Toggle dark mode"
           >
-            <span></span>
-            <span></span>
-            <span></span>
+            {isDarkMode ? '🌙' : '☀️'}
           </button>
-        )}
+          <button 
+            className={styles.toggleButton}
+            onClick={toggleLanguage}
+            aria-label="Toggle language"
+          >
+            {currentLang === 'en' ? 'ES' : 'EN'}
+          </button>
+          {isSmallScreen && (
+            <button 
+              className={`${styles.showMoreButton} ${showLinks ? styles.active : ''}`}
+              onClick={() => setShowLinks(!showLinks)}
+              aria-label="Toggle navigation links"
+            >
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+          )}
+        </div>
       </div>
       
       {isSmallScreen && (
