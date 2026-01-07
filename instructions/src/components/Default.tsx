@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import styles from './Default.module.css';
+import { usePathname } from 'next/navigation';
 
 const links = [
     { href: '/docs', label: 'Browse Docs' },
@@ -14,7 +15,7 @@ export default function DefaultButton() {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [currentLang, setCurrentLang] = useState('en');
-
+  const pathname = usePathname();
   useEffect(() => {
     const checkScreenSize = () => {
       setIsSmallScreen(window.innerWidth < 1024); // lg breakpoint
@@ -62,7 +63,7 @@ export default function DefaultButton() {
           >
             {currentLang === 'en' ? 'ES' : 'EN'}
           </button>
-          {isSmallScreen && (
+          {pathname !== '/' && isSmallScreen && (
             <button 
               className={`${styles.showMoreButton} ${showLinks ? styles.active : ''}`}
               onClick={() => setShowLinks(!showLinks)}
@@ -76,7 +77,7 @@ export default function DefaultButton() {
         </div>
       </div>
       
-      {isSmallScreen && (
+      {pathname !== '/' && isSmallScreen && (
         <div className={`${styles.buttonGroup} ${showLinks ? styles.visible : ''}`}>
           {links.map((link, index) => (
             <a key={index} href={link.href} className={styles.button}>
