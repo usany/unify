@@ -94,19 +94,22 @@
 .buttonGroup {
   position: fixed;
   top: 60px;
-  right: -300px;
-  width: 280px;
-  height: calc(100vh - 60px);
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-height: 0;
   background: white;
-  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-  padding: 2rem 1.5rem;
-  transition: right 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 0 1.5rem;
+  transition: max-height 0.3s ease, padding 0.3s ease;
   z-index: 998;
-  overflow-y: auto;
+  overflow: hidden;
 }
 
 .buttonGroup.visible {
-  right: 0;
+  max-height: calc(100vh - 60px);
+  padding: 2rem 1.5rem;
+  overflow-y: auto;
 }
 
 .buttonGroup .button {
@@ -253,8 +256,7 @@ body.dark-mode .buttonGroup::-webkit-scrollbar-thumb:hover {
     gap: 0.25rem;
   }
   
-  .buttonGroup {
-    width: 250px;
+  .buttonGroup.visible {
     padding: 1.5rem 1rem;
   }
 }
