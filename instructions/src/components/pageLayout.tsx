@@ -1,25 +1,25 @@
 'use client';
-import React from 'react';
+import { useState, useEffect, ComponentType } from 'react';
 import styles from './pageLayout.module.css';
 import Comments from '@/components/Comments';
 import SideNav from '@/components/SideNav';
 import ContentLayout from './ContentLayout';
+
 interface HeadingItem {
   id: string;
   text: string;
   level: number;
 }
 
-
-export default function PageLayout({ file, pageId }: { file: React.ComponentType<any>; pageId: string }) {
+export default function PageLayout({ file, pageId }: { file: ComponentType<any>; pageId: string }) {
   // For MDX components, we'll use static headings for now
   const headings: HeadingItem[] = [
     { id: 'registers-docs', text: 'Registers Docs', level: 1 },
     { id: 'responsive-example', text: 'Responsive Example', level: 2 },
     { id: 'css-modules', text: 'CSS Modules', level: 2 },
   ];
-  const [activeId, setActiveId] = React.useState<string | null>(null);
-  const [isTocOpen, setIsTocOpen] = React.useState(true);
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const [isTocOpen, setIsTocOpen] = useState(true);
 
   const handleTocClick = (id: string) => {
     if (typeof document === 'undefined') return;
@@ -29,7 +29,7 @@ export default function PageLayout({ file, pageId }: { file: React.ComponentType
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (typeof document === 'undefined') return;
 
     const headingElements = Array.from(
@@ -62,7 +62,7 @@ export default function PageLayout({ file, pageId }: { file: React.ComponentType
     };
   }, [file]);
 
-  const [isSideNavMinified, setIsSideNavMinified] = React.useState(false);
+  const [isSideNavMinified, setIsSideNavMinified] = useState(false);
 
   return (
     <div className={styles.pageContainer}>
