@@ -1,8 +1,10 @@
 'use client';
+
 import { useState, useEffect, ComponentType } from 'react';
 import styles from './pageLayout.module.css';
-import Comments from '@/[slug]/components/Comments';
-import SideNav from '@/[slug]/components/SideNav';
+import Comments from './Comments';
+import SideNav from './SideNav';
+import MDXContent from './MDXContent';
 
 interface HeadingItem {
   id: string;
@@ -10,16 +12,16 @@ interface HeadingItem {
   level: number;
 }
 
-export default function PageLayout({ file, pageId }: { file: ComponentType<any>; pageId: string }) {
+export default function PageLayout({ pageId }: { pageId: string }) {
   // For MDX components, we'll use static headings for now
   const headings: HeadingItem[] = [
     { id: 'registers-docs', text: 'Registers Docs', level: 1 },
     { id: 'responsive-example', text: 'Responsive Example', level: 2 },
-    { id: 'css-modules', text: 'CSS Modules', level: 2 },
+    { id: 'css-modules', text: 'CSS Modules', level: 3 },
   ];
   const [activeId, setActiveId] = useState<string | null>(null);
   const [isTocOpen, setIsTocOpen] = useState(true);
-  const ContentComponent = file
+
   const handleTocClick = (id: string) => {
     if (typeof document === 'undefined') return;
     const el = document.getElementById(id);
@@ -59,7 +61,7 @@ export default function PageLayout({ file, pageId }: { file: ComponentType<any>;
     return () => {
       observer.disconnect();
     };
-  }, [file]);
+  }, [pageId]);
 
   const [isSideNavMinified, setIsSideNavMinified] = useState(false);
 
@@ -71,54 +73,55 @@ export default function PageLayout({ file, pageId }: { file: ComponentType<any>;
       />
       <div className={`${styles.contentContainer} ${!isTocOpen ? styles.contentExpanded : ''} ${isSideNavMinified ? styles.contentMinifiedSideNav : ''}`}>
         <div className={styles.headerRow}>
-          {/* <div className={styles.header}>
+          <div className={styles.header}>
             <h1 className={styles.title}>{pageId}</h1>
-          </div> */}
-          {headings.length > 0 && (
-            <nav
-              className={`${styles.toc} ${!isTocOpen ? styles.tocCollapsed : ''}`}
-              aria-label="Page navigation"
-            >
-              <div className={styles.tocHeaderRow}>
-                <div className={styles.tocTitle}>On this page</div>
-                <button
-                  type="button"
-                  className={styles.tocToggle}
-                  onClick={() => setIsTocOpen((prev) => !prev)}
-                  aria-label={isTocOpen ? 'Hide table of contents' : 'Show table of contents'}
-                >
-                  {isTocOpen ? '−' : '+'}
-                </button>
-              </div>
-              {isTocOpen && (
-                <ul className={styles.tocList}>
-                  {headings.map((h) => (
-                    <li
-                      key={h.id}
-                      className={
-                        h.level === 1
-                          ? styles.tocItemLevel1
-                          : h.level === 2
-                            ? styles.tocItemLevel2
-                            : styles.tocItemLevel3
-                      }
-                    >
-                      <button
-                        type="button"
-                        className={`${styles.tocLink} ${activeId === h.id ? styles.tocLinkActive : ''
-                          }`}
-                        onClick={() => handleTocClick(h.id)}
-                      >
-                        {h.text}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </nav>
-          )}
+          </div>
         </div>
-        <ContentComponent />
+        {headings.length > 0 && (
+          <nav
+            className={`${styles.toc} ${!isTocOpen ? styles.tocCollapsed : ''}`}
+            aria-label="Page navigation"
+          >
+            <div className={styles.tocHeaderRow}>
+              <div className={styles.tocTitle}>On this page</div>
+              <button
+                type="button"
+                className={styles.tocToggle}
+                onClick={() => setIsTocOpen((prev) => !prev)}
+                aria-label={isTocOpen ? 'Hide table of contents' : 'Show table of contents'}
+              >
+                {isTocOpen ? '−' : '+'}
+              </button>
+            </div>
+            {isTocOpen && (
+              <ul className={styles.tocList}>
+                {headings.map((h) => (
+                  <li
+                    key={h.id}
+                    className={
+                      h.level === 1
+                        ? styles.tocItemLevel1
+                        : h.level === 2
+                          ? styles.tocItemLevel2
+                          : styles.tocItemLevel3
+                    }
+                  >
+                    <button
+                      type="button"
+                      className={`${styles.tocLink} ${activeId === h.id ? styles.tocLinkActive : ''
+                        }`}
+                      onClick={() => handleTocClick(h.id)}
+                    >
+                      {h.text}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </nav>
+        )}
+        <MDXContent slug={pageId} />
+        {/* {children} */}
         <Comments pageId={pageId} />
       </div>
     </div>
