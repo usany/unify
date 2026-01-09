@@ -1,12 +1,11 @@
 'use client';
-
 import { useState, useEffect } from 'react';
 import styles from './Default.module.css';
 import { usePathname } from 'next/navigation';
 import links from '@/lib/links';
 
 
-export default function DefaultButton() {
+export default function TopBar() {
   const [showLinks, setShowLinks] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -19,7 +18,7 @@ export default function DefaultButton() {
 
     checkScreenSize();
     window.addEventListener('resize', checkScreenSize);
-    
+
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
@@ -45,14 +44,14 @@ export default function DefaultButton() {
       <div className={styles.topBar}>
         <a href="/" className={styles.homeButton}>Posts Documentation</a>
         <div className={styles.topBarActions}>
-          <button 
+          <button
             className={styles.toggleButton}
             onClick={toggleDarkMode}
             aria-label="Toggle dark mode"
           >
             {isDarkMode ? '🌙' : '☀️'}
           </button>
-          <button 
+          <button
             className={styles.toggleButton}
             onClick={toggleLanguage}
             aria-label="Toggle language"
@@ -60,7 +59,7 @@ export default function DefaultButton() {
             {currentLang === 'en' ? 'ES' : 'EN'}
           </button>
           {pathname !== '/' && isSmallScreen && (
-            <button 
+            <button
               className={`${styles.showMoreButton} ${showLinks ? styles.active : ''}`}
               onClick={() => setShowLinks(!showLinks)}
               aria-label="Toggle navigation links"
@@ -72,7 +71,7 @@ export default function DefaultButton() {
           )}
         </div>
       </div>
-      
+
       {pathname !== '/' && isSmallScreen && (
         <div className={`${styles.buttonGroup} ${showLinks ? styles.visible : ''}`}>
           {links.map((link, index) => (

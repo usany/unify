@@ -1,4 +1,4 @@
-import DefaultButton from '@/components/Default';
+import TopBar from '@/components/Default';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import type { Metadata } from 'next';
 
@@ -12,7 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <AppRouterCacheProvider>
-          <DefaultButton />
+          <TopBar />
           {children}
         </AppRouterCacheProvider>
       </body>
