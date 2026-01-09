@@ -1,4 +1,4 @@
-import styles from './main.module.css';
+import styles from './root.module.css';
 import links from '@/lib/links';
 import Link from 'next/link';
 
