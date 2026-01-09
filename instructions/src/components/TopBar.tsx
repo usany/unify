@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import styles from './Default.module.css';
+import styles from './TopBar.module.css';
 import { usePathname } from 'next/navigation';
 import links from '@/lib/links';
 
