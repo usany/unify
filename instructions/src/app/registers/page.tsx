@@ -1,17 +1,10 @@
-import React from 'react';
-import ReactMarkdown from 'react-markdown';
-import styles from './register.module.css';
-import fs from 'fs';
-import path from 'path';
-import Comments from '@/components/Comments';
-import SideNav from '@/components/SideNav';
+'use client';
+import registers from '@/content/registers.mdx';
 import PageLayout from '@/components/pageLayout';
 
 export default function RegisterPage() {
-  const registerPath = path.join(process.cwd(), 'src/content/register.mdx');
-  const registerContent = fs.readFileSync(registerPath, 'utf8');
 
   return (
-    <PageLayout file={registerContent} pageId="register" />
+    <PageLayout file={registers} pageId="register" />
   );
 }
