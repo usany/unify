@@ -1,6 +1,6 @@
 'use client'
 import PageLayout from '@app/[slug]/components/pageLayout';
-import docs from '@app/content/docs.mdx';
+import docs from '@contents/docs.mdx';
 
 export default function DocsPage() {
 

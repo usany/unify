@@ -25,11 +25,11 @@
     ],
     "baseUrl": "src",
     "paths": {
-      "@app/*": [
+      "@/*": [
         "app/*"
       ],
-      "@content/*": [
-        "content/*"
+      "@contents/*": [
+        "contents/*"
       ]
     }
   },
