@@ -39,7 +39,7 @@ function extractHeadings(markdown: string): HeadingItem[] {
   return headings;
 }
 
-export default function PageLayout({ file, pageId }: { file: string; pageId: string }) {
+export default function PageLayout({ file, pageId }: { file: () => Element; pageId: string }) {
   const headings = React.useMemo(() => extractHeadings(file), [file]);
   const [activeId, setActiveId] = React.useState<string | null>(null);
   const [isTocOpen, setIsTocOpen] = React.useState(true);

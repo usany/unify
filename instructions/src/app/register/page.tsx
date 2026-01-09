@@ -6,12 +6,12 @@ import path from 'path';
 import Comments from '@/components/Comments';
 import SideNav from '@/components/SideNav';
 import PageLayout from '@/components/pageLayout';
-
+import register from '@/content/register.mdx';
 export default function RegisterPage() {
-  const registerPath = path.join(process.cwd(), 'src/content/register.md');
-  const registerContent = fs.readFileSync(registerPath, 'utf8');
+  // const registerPath = path.join(process.cwd(), 'src/content/register.md');
+  // const registerContent = fs.readFileSync(registerPath, 'utf8');
 
   return (
-    <PageLayout file={registerContent} pageId="register" />
+    <PageLayout file={register} pageId="register" />
   );
 }
