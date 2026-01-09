@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import styles from './SideNav.module.css';
-import links from '@/links';
+import links from 'links';
 
 interface NavItem {
   label: string;

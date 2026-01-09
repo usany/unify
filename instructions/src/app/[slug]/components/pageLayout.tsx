@@ -1,8 +1,8 @@
 'use client';
 import { useState, useEffect, ComponentType } from 'react';
 import styles from './pageLayout.module.css';
-import Comments from '@/app/[slug]/components/Comments';
-import SideNav from '@/app/[slug]/components/SideNav';
+import Comments from '@app/[slug]/components/Comments';
+import SideNav from '@app/[slug]/components/SideNav';
 
 interface HeadingItem {
   id: string;
