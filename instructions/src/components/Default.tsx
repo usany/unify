@@ -71,7 +71,6 @@ export default function TopBar() {
           )}
         </div>
       </div>
-
       {pathname !== '/' && isSmallScreen && (
         <div className={`${styles.buttonGroup} ${showLinks ? styles.visible : ''}`}>
           {links.map((link, index) => (
