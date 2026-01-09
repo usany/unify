@@ -1,10 +1,6 @@
 import DefaultButton from '@/components/Default';
-import SideNav from '@/components/SideNav';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import type { Metadata } from 'next';
-// import StyledComponentsRegistry from './StyledComponentsRegistry';
-// import { GlobalStyles } from '@/styles/GlobalStyles';
-// import styles from './docs.module.css';
 
 export const metadata: Metadata = {
   title: 'Posts Docs',
