@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import styles from './TopBar.module.css';
 import { usePathname } from 'next/navigation';
-import links from '@/links';
+import links from 'links';
 
 
 export default function TopBar() {
