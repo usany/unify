@@ -11,6 +11,8 @@ const components = {
   h2: (props: any) => <h2 variant="h2" {...props} />, 
   p: (props: any) => <p variant="body1" {...props} />, 
   Button: (props: any) => <Button variant="contained" {...props} />,
+  BottomNavigation: (props: any) => <BottomNavigation {...props} />,
+  BottomNavigationAction: (props: any) => <BottomNavigationAction {...props} />,
 }
 function ContentLayout({content}: {content: ComponentType<any>}) {
   const ContentComponent = content
