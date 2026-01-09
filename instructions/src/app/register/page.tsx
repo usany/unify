@@ -6,4 +6,3 @@ export default function RegisterPage() {
     <PageLayout file={register} pageId="register" />
   );
 }
-q
