@@ -8,7 +8,7 @@ import Comments from '@/components/Comments';
 import SideNav from '@/components/SideNav';
 import NavigationsLayout from './NavigationsLayout';
 import ContentLayout from './ContentLayout';
-import registers from '../content/register.mdx';
+import registers from '../content/registers.mdx';
 interface HeadingItem {
   id: string;
   text: string;
