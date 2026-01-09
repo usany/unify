@@ -1,6 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import TableOfContents from './TableOfContents';
 
 export default function MDXContent({ slug }: { slug: string }) {
     const Content = dynamic(() => import(`@contents/${slug}.mdx`), {
@@ -8,6 +9,7 @@ export default function MDXContent({ slug }: { slug: string }) {
     });
 
     return <>
+        <TableOfContents pageId={slug} />
         <Content />
     </>
 }
