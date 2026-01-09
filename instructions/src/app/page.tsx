@@ -2,7 +2,7 @@ import styles from './main.module.css';
 import links from '@/lib/links';
 import Link from 'next/link';
 
-export default function HomePage() {
+export default function RootPage() {
   return (
     <section className={styles.hero}>
       <h1 className={styles.title}>Posts Documentation</h1>
