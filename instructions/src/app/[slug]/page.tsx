@@ -2,7 +2,7 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import path from 'path';
 import fs from 'fs';
-import PageLayout from '@app/[slug]/components/pageLayout';
+import PageLayout from '@/[slug]/components/pageLayout';
 
 interface PageProps {
   params: { slug: string };
