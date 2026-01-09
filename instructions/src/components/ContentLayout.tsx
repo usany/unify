@@ -7,10 +7,10 @@ import { ComponentType } from 'react'
 // import { useLocation, useNavigate } from 'react-router-dom'
 
 const components = {
-  h1: (props: any) => <h1 variant="h1" {...props} />, 
-  h2: (props: any) => <h2 variant="h2" {...props} />, 
-  p: (props: any) => <p variant="body1" {...props} />, 
-  Button: (props: any) => <Button variant="contained" {...props} />,
+  h1: () => <h1 />, 
+  h2: () => <h2 />, 
+  p: () => <p />, 
+  Button: (props: any) => <Button {...props} />,
   BottomNavigation: (props: any) => <BottomNavigation {...props} />,
   BottomNavigationAction: (props: any) => <BottomNavigationAction {...props} />,
 }
