@@ -6,6 +6,7 @@ import fs from 'fs';
 import path from 'path';
 import Comments from '@/components/Comments';
 import SideNav from '@/components/SideNav';
+import NavigationsLayout from './NavigationsLayout';
 
 interface HeadingItem {
   id: string;
@@ -88,12 +89,8 @@ export default function PageLayout({ file, pageId }: { file: string; pageId: str
       const { children } = props;
       const text = String(children);
       const id = slugify(text);
-      const Tag = (`h${level}` as keyof JSX.IntrinsicElements);
-      return (
-        <Tag id={id}>
-          {children}
-        </Tag>
-      );
+      const Tag = `h${level}` as 'h1' | 'h2' | 'h3';
+      return React.createElement(Tag, { id }, children);
     };
 
   const [isSideNavMinified, setIsSideNavMinified] = React.useState(false);
@@ -153,17 +150,40 @@ export default function PageLayout({ file, pageId }: { file: string; pageId: str
             </nav>
           )}
         </div>
-
         <div className={styles.content}>
-          <ReactMarkdown
-            components={{
-              h1: headingRenderer(1),
-              h2: headingRenderer(2),
-              h3: headingRenderer(3),
-            }}
-          >
-            {file}
-          </ReactMarkdown>
+          {file.includes('<!-- NAVIGATION_LAYOUT_MARKER -->') ? (
+            <>
+              <ReactMarkdown
+                components={{
+                  h1: headingRenderer(1),
+                  h2: headingRenderer(2),
+                  h3: headingRenderer(3),
+                }}
+              >
+                {file.split('<!-- NAVIGATION_LAYOUT_MARKER -->')[0]}
+              </ReactMarkdown>
+              <NavigationsLayout onChange={() => {}} bottomNavigation={0} tabs={false} />
+              <ReactMarkdown
+                components={{
+                  h1: headingRenderer(1),
+                  h2: headingRenderer(2),
+                  h3: headingRenderer(3),
+                }}
+              >
+                {file.split('<!-- NAVIGATION_LAYOUT_MARKER -->')[1] || ''}
+              </ReactMarkdown>
+            </>
+          ) : (
+            <ReactMarkdown
+              components={{
+                h1: headingRenderer(1),
+                h2: headingRenderer(2),
+                h3: headingRenderer(3),
+              }}
+            >
+              {file}
+            </ReactMarkdown>
+          )}
         </div>
 
         <Comments pageId={pageId} />
