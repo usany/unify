@@ -14,12 +14,7 @@ interface TableOfContentsProps {
 }
 
 export default function TableOfContents({ pageId }: TableOfContentsProps) {
-    // For MDX components, we'll use static headings for now
-    const headings: HeadingItem[] = [
-        { id: 'registers-docs', text: 'Registers Docs', level: 1 },
-        { id: 'responsive-example', text: 'Responsive Example', level: 2 },
-        { id: 'css-modules', text: 'CSS Modules', level: 3 },
-    ];
+    const [headings, setHeadings] = useState<HeadingItem[]>([]);
     const [activeId, setActiveId] = useState<string | null>(null);
     const [isTocOpen, setIsTocOpen] = useState(true);
 
@@ -34,33 +29,71 @@ export default function TableOfContents({ pageId }: TableOfContentsProps) {
     useEffect(() => {
         if (typeof document === 'undefined') return;
 
-        const headingElements = Array.from(
-            document.querySelectorAll<HTMLElement>('h1[id], h2[id], h3[id]')
-        );
+        let observer: IntersectionObserver | null = null;
+        let mutationObserver: MutationObserver | null = null;
 
-        if (headingElements.length === 0) return;
+        const extractAndObserveHeadings = () => {
+            const headingElements = Array.from(
+                document.querySelectorAll<HTMLElement>('h1[id], h2[id], h3[id]')
+            );
 
-        const observer = new IntersectionObserver(
-            (entries) => {
-                const visible = entries
-                    .filter((entry) => entry.isIntersecting)
-                    .sort((a, b) => (a.target as HTMLElement).offsetTop - (b.target as HTMLElement).offsetTop);
+            if (headingElements.length === 0) return false;
 
-                if (visible.length > 0) {
-                    const topMost = visible[0].target as HTMLElement;
-                    setActiveId(topMost.id || null);
-                }
-            },
-            {
-                root: null,
-                threshold: 0.4,
+            // Extract headings from DOM
+            const extractedHeadings: HeadingItem[] = headingElements.map((el) => ({
+                id: el.id,
+                text: el.textContent || '',
+                level: parseInt(el.tagName.substring(1), 10),
+            }));
+            setHeadings(extractedHeadings);
+
+            // Clean up previous observer if it exists
+            if (observer) {
+                observer.disconnect();
             }
-        );
 
-        headingElements.forEach((el) => observer.observe(el));
+            observer = new IntersectionObserver(
+                (entries) => {
+                    const visible = entries
+                        .filter((entry) => entry.isIntersecting)
+                        .sort((a, b) => (a.target as HTMLElement).offsetTop - (b.target as HTMLElement).offsetTop);
+
+                    if (visible.length > 0) {
+                        const topMost = visible[0].target as HTMLElement;
+                        setActiveId(topMost.id || null);
+                    }
+                },
+                {
+                    root: null,
+                    threshold: 0.4,
+                }
+            );
+
+            headingElements.forEach((el) => observer!.observe(el));
+            return true;
+        };
+
+        // Try to extract headings immediately
+        const success = extractAndObserveHeadings();
+
+        // If no headings found, watch for DOM changes
+        if (!success) {
+            mutationObserver = new MutationObserver(() => {
+                const found = extractAndObserveHeadings();
+                if (found && mutationObserver) {
+                    mutationObserver.disconnect();
+                }
+            });
+
+            mutationObserver.observe(document.body, {
+                childList: true,
+                subtree: true,
+            });
+        }
 
         return () => {
-            observer.disconnect();
+            if (observer) observer.disconnect();
+            if (mutationObserver) mutationObserver.disconnect();
         };
     }, [pageId]);
 
