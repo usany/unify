@@ -1,5 +1,5 @@
 import styles from './root.module.css';
-import links from '@/lib/links';
+import links from '@/app/lib/links';
 import Link from 'next/link';
 
 export default function RootPage() {
