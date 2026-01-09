@@ -23,6 +23,8 @@ export default function TableOfContents({ pageId }: TableOfContentsProps) {
         const el = document.getElementById(id);
         if (el) {
             el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // Immediate feedback on click
+            setActiveId(id);
         }
     };
 
@@ -32,68 +34,59 @@ export default function TableOfContents({ pageId }: TableOfContentsProps) {
         let observer: IntersectionObserver | null = null;
         let mutationObserver: MutationObserver | null = null;
 
-        const extractAndObserveHeadings = () => {
-            const headingElements = Array.from(
-                document.querySelectorAll<HTMLElement>('h1[id], h2[id], h3[id]')
-            );
+        const extractAndObserve = () => {
+            const hElements = Array.from(
+                document.querySelectorAll<HTMLElement>('h1, h2, h3')
+            ).filter(el => el.id || el.querySelector('a[id]'));
 
-            if (headingElements.length === 0) return false;
+            if (hElements.length === 0) return false;
 
-            // Extract headings from DOM
-            const extractedHeadings: HeadingItem[] = headingElements.map((el) => ({
-                id: el.id,
-                text: el.textContent || '',
-                level: parseInt(el.tagName.substring(1), 10),
-            }));
-            setHeadings(extractedHeadings);
+            const extracted = hElements.map((el) => {
+                const childAnchor = el.querySelector('a[id]');
+                return {
+                    id: el.id || childAnchor?.id || '',
+                    text: el.textContent || '',
+                    level: parseInt(el.tagName.substring(1), 10),
+                };
+            }).filter(h => h.id);
 
-            // Clean up previous observer if it exists
-            if (observer) {
-                observer.disconnect();
-            }
+            setHeadings(extracted);
 
+            if (observer) observer.disconnect();
+
+            // Using IntersectionObserver with rootMargin is much more reliable across different scroll layouts
             observer = new IntersectionObserver(
                 (entries) => {
-                    const visible = entries
-                        .filter((entry) => entry.isIntersecting)
-                        .sort((a, b) => (a.target as HTMLElement).offsetTop - (b.target as HTMLElement).offsetTop);
+                    const intersecting = entries
+                        .filter(entry => entry.isIntersecting)
+                        .sort((a, b) => a.target.getBoundingClientRect().top - b.target.getBoundingClientRect().top);
 
-                    if (visible.length > 0) {
-                        const topMost = visible[0].target as HTMLElement;
-                        setActiveId(topMost.id || null);
+                    if (intersecting.length > 0) {
+                        const targetId = intersecting[0].target.id || intersecting[0].target.querySelector('a[id]')?.id || null;
+                        if (targetId) setActiveId(targetId);
                     }
                 },
                 {
-                    root: null,
-                    threshold: 0.4,
+                    // -60px accounts for the TopBar height, -80% bottom ensures we focus on the top of the page
+                    rootMargin: '-60px 0px -80% 0px',
+                    threshold: 0
                 }
             );
 
-            headingElements.forEach((el) => observer!.observe(el));
+            hElements.forEach(el => observer?.observe(el));
             return true;
         };
 
-        // Try to extract headings immediately
-        const success = extractAndObserveHeadings();
-
-        // If no headings found, watch for DOM changes
-        if (!success) {
+        if (!extractAndObserve()) {
             mutationObserver = new MutationObserver(() => {
-                const found = extractAndObserveHeadings();
-                if (found && mutationObserver) {
-                    mutationObserver.disconnect();
-                }
+                if (extractAndObserve()) mutationObserver?.disconnect();
             });
-
-            mutationObserver.observe(document.body, {
-                childList: true,
-                subtree: true,
-            });
+            mutationObserver.observe(document.body, { childList: true, subtree: true });
         }
 
         return () => {
-            if (observer) observer.disconnect();
-            if (mutationObserver) mutationObserver.disconnect();
+            observer?.disconnect();
+            mutationObserver?.disconnect();
         };
     }, [pageId]);
 
