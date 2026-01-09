@@ -27,24 +27,6 @@
     "paths": {
       "@app/*": [
         "app/*"
-      ],
-      "@components/*": [
-        "components/*"
-      ],
-      "@lib/*": [
-        "lib/*"
-      ],
-      "@pages/*": [
-        "pages/*"
-      ],
-      "@public/*": [
-        "public/*"
-      ],
-      "@styles/*": [
-        "styles/*"
-      ],
-      "@utils/*": [
-        "utils/*"
       ]
     }
   },
