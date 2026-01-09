@@ -1,4 +1,4 @@
-import TopBar from '@/components/TopBar';
+import TopBar from '@/app/TopBar';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import type { Metadata } from 'next';
 
