@@ -1,7 +1,7 @@
 const links = [
   { label: 'Documentation', href: '/docs', icon: '📚' },
   { label: 'Register', href: '/register', icon: '📝' },
-  { label: 'Registers', href: '/registers', icon: '📝' },
+  { label: 'Registers', href: '/slug', icon: '📝' },
   // { href: '/', label: 'Home' },
 ];
 
