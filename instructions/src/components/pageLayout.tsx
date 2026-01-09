@@ -7,7 +7,8 @@ import path from 'path';
 import Comments from '@/components/Comments';
 import SideNav from '@/components/SideNav';
 import NavigationsLayout from './NavigationsLayout';
-
+import ContentLayout from './ContentLayout';
+import registers from '../content/register.mdx';
 interface HeadingItem {
   id: string;
   text: string;
@@ -150,42 +151,7 @@ export default function PageLayout({ file, pageId }: { file: string; pageId: str
             </nav>
           )}
         </div>
-        <div className={styles.content}>
-          {file.includes('<!-- NAVIGATION_LAYOUT_MARKER -->') ? (
-            <>
-              <ReactMarkdown
-                components={{
-                  h1: headingRenderer(1),
-                  h2: headingRenderer(2),
-                  h3: headingRenderer(3),
-                }}
-              >
-                {file.split('<!-- NAVIGATION_LAYOUT_MARKER -->')[0]}
-              </ReactMarkdown>
-              <NavigationsLayout onChange={() => {}} bottomNavigation={0} tabs={false} />
-              <ReactMarkdown
-                components={{
-                  h1: headingRenderer(1),
-                  h2: headingRenderer(2),
-                  h3: headingRenderer(3),
-                }}
-              >
-                {file.split('<!-- NAVIGATION_LAYOUT_MARKER -->')[1] || ''}
-              </ReactMarkdown>
-            </>
-          ) : (
-            <ReactMarkdown
-              components={{
-                h1: headingRenderer(1),
-                h2: headingRenderer(2),
-                h3: headingRenderer(3),
-              }}
-            >
-              {file}
-            </ReactMarkdown>
-          )}
-        </div>
-
+        <ContentLayout content={registers} />
         <Comments pageId={pageId} />
       </div>
     </div>
