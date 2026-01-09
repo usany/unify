@@ -1,43 +1,15 @@
 'use client';
 import React from 'react';
-import ReactMarkdown from 'react-markdown';
 import styles from './pageLayout.module.css';
-import fs from 'fs';
-import path from 'path';
 import Comments from '@/components/Comments';
 import SideNav from '@/components/SideNav';
-import NavigationsLayout from './NavigationsLayout';
 import ContentLayout from './ContentLayout';
-import registers from '../content/registers.mdx';
 interface HeadingItem {
   id: string;
   text: string;
   level: number;
 }
 
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9\s-]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-');
-}
-
-function extractHeadings(markdown: string): HeadingItem[] {
-  const headingRegex = /^(#{1,3})\s+(.+)$/gm;
-  const headings: HeadingItem[] = [];
-  let match: RegExpExecArray | null;
-
-  while ((match = headingRegex.exec(markdown)) !== null) {
-    const level = match[1].length;
-    const text = match[2].trim();
-    const id = slugify(text);
-    headings.push({ id, text, level });
-  }
-
-  return headings;
-}
 
 export default function PageLayout({ file, pageId }: { file: React.ComponentType<any>; pageId: string }) {
   // For MDX components, we'll use static headings for now
@@ -89,15 +61,6 @@ export default function PageLayout({ file, pageId }: { file: React.ComponentType
       observer.disconnect();
     };
   }, [file]);
-
-  const headingRenderer = (level: 1 | 2 | 3) =>
-    function Heading(props: any) {
-      const { children } = props;
-      const text = String(children);
-      const id = slugify(text);
-      const Tag = `h${level}` as 'h1' | 'h2' | 'h3';
-      return React.createElement(Tag, { id }, children);
-    };
 
   const [isSideNavMinified, setIsSideNavMinified] = React.useState(false);
 
