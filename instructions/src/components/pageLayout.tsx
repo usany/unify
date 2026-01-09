@@ -3,7 +3,6 @@ import { useState, useEffect, ComponentType } from 'react';
 import styles from './pageLayout.module.css';
 import Comments from '@/components/Comments';
 import SideNav from '@/components/SideNav';
-import ContentLayout from './ContentLayout';
 
 interface HeadingItem {
   id: string;
@@ -20,7 +19,7 @@ export default function PageLayout({ file, pageId }: { file: ComponentType<any>;
   ];
   const [activeId, setActiveId] = useState<string | null>(null);
   const [isTocOpen, setIsTocOpen] = useState(true);
-
+  const ContentComponent = file
   const handleTocClick = (id: string) => {
     if (typeof document === 'undefined') return;
     const el = document.getElementById(id);
@@ -119,7 +118,7 @@ export default function PageLayout({ file, pageId }: { file: ComponentType<any>;
             </nav>
           )}
         </div>
-        <ContentLayout content={file} />
+        <ContentComponent />
         <Comments pageId={pageId} />
       </div>
     </div>

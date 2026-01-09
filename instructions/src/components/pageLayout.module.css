@@ -14,6 +14,16 @@
   /* Add margin for fixed top bar */
   /* Reserve space on the right for the fixed TOC so content is not hidden */
   padding-right: 280px;
+  padding-right: 280px;
+  transition: all 0.3s ease;
+}
+
+.contentMinifiedSideNav {
+  margin-left: 70px;
+}
+
+.contentExpanded {
+  padding-right: 1rem !important;
 }
 
 .contentWrapper {
