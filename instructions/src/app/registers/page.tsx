@@ -1,6 +1,6 @@
 'use client';
 import registers from '@/content/registers.mdx';
-import PageLayout from '@/components/pageLayout';
+import PageLayout from '@/app/[slug]/components/pageLayout';
 
 export default function RegisterPage() {
 
