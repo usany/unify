@@ -71,9 +71,9 @@ export default function PageLayout({ file, pageId }: { file: ComponentType<any>;
       />
       <div className={`${styles.contentContainer} ${!isTocOpen ? styles.contentExpanded : ''} ${isSideNavMinified ? styles.contentMinifiedSideNav : ''}`}>
         <div className={styles.headerRow}>
-          <div className={styles.header}>
+          {/* <div className={styles.header}>
             <h1 className={styles.title}>{pageId}</h1>
-          </div>
+          </div> */}
           {headings.length > 0 && (
             <nav
               className={`${styles.toc} ${!isTocOpen ? styles.tocCollapsed : ''}`}
