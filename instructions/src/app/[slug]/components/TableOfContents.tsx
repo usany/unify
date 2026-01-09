@@ -20,7 +20,14 @@ export default function TableOfContents({ pageId }: TableOfContentsProps) {
 
     const handleTocClick = (id: string) => {
         if (typeof document === 'undefined') return;
-        const el = document.getElementById(id);
+        let el: HTMLElement | null = document.getElementById(id);
+
+        // If the ID is on an anchor inside a heading, scroll the heading instead
+        // This ensures scroll-margin-top on the heading is respected
+        if (el?.tagName === 'A' && el.parentElement && /^H[1-3]$/.test(el.parentElement.tagName)) {
+            el = el.parentElement as HTMLElement;
+        }
+
         if (el) {
             el.scrollIntoView({ behavior: 'smooth', block: 'start' });
             // Immediate feedback on click

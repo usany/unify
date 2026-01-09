@@ -22,7 +22,9 @@ export default function PageLayout({ pageId }: { pageId: string }) {
             <h1 className={styles.title}>{pageId}</h1>
           </div>
         </div> */}
-        <MDXContent slug={pageId} />
+        <div className={styles.content}>
+          <MDXContent slug={pageId} />
+        </div>
         {/* {children} */}
         <Comments pageId={pageId} />
       </div>
