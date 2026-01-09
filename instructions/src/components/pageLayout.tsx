@@ -39,8 +39,13 @@ function extractHeadings(markdown: string): HeadingItem[] {
   return headings;
 }
 
-export default function PageLayout({ file, pageId }: { file: () => Element; pageId: string }) {
-  const headings = React.useMemo(() => extractHeadings(file), [file]);
+export default function PageLayout({ file, pageId }: { file: React.ComponentType<any>; pageId: string }) {
+  // For MDX components, we'll use static headings for now
+  const headings: HeadingItem[] = [
+    { id: 'registers-docs', text: 'Registers Docs', level: 1 },
+    { id: 'responsive-example', text: 'Responsive Example', level: 2 },
+    { id: 'css-modules', text: 'CSS Modules', level: 2 },
+  ];
   const [activeId, setActiveId] = React.useState<string | null>(null);
   const [isTocOpen, setIsTocOpen] = React.useState(true);
 
@@ -151,7 +156,7 @@ export default function PageLayout({ file, pageId }: { file: () => Element; page
             </nav>
           )}
         </div>
-        <ContentLayout content={registers} />
+        <ContentLayout content={file} />
         <Comments pageId={pageId} />
       </div>
     </div>
