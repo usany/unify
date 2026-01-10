@@ -1,12 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import styles from './PageLayout.module.css';
+import styles from './SlugLayout.module.css';
 import Comments from './Comments';
 import SideNav from './SideNav';
 import MDXContent from './MDXContent';
 
-export default function PageLayout({ pageId }: { pageId: string }) {
+export default function SlugLayout({ pageId }: { pageId: string }) {
 
   const [isSideNavMinified, setIsSideNavMinified] = useState(false);
 

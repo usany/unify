@@ -1,6 +1,6 @@
 
 import { redirect } from 'next/navigation';
-import PageLayout from './components/PageLayout';
+import SlugLayout from './components/SlugLayout';
 import MDXContent from './components/MDXContent';
 import dynamic from 'next/dynamic';
 
@@ -21,8 +21,8 @@ export default async function Page({
   {/* <div></div>
   <MDXContent slug={slug} />
   <Content />
-</PageLayout > */}
+</SlugLayout > */}
   return (
-    <PageLayout pageId={slug} />
+    <SlugLayout pageId={slug} />
   )
 }

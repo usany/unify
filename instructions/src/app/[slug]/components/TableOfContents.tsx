@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import styles from './PageLayout.module.css';
+import styles from './SlugLayout.module.css';
 
 interface HeadingItem {
     id: string;
