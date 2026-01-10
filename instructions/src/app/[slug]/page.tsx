@@ -20,6 +20,6 @@ export default async function Page({
   const language = cookieStore.get('language')?.value || 'ko'
 
   return (
-    <SlugLayout pageId={slug} language={language} />
+    <SlugLayout pageId={slug} />
   )
 }

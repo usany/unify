@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import styles from './TopBar.module.css';
 import { usePathname } from 'next/navigation';
 import links from 'links';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface TopBarProps {
   language: string;
@@ -13,7 +14,8 @@ export default function TopBar({ language, theme }: TopBarProps) {
   const [showLinks, setShowLinks] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(theme === 'dark');
-  const [isEnglish, setIsEnglish] = useState(language === 'en');
+  const { language: currentLanguage, toggleLanguage: contextToggleLanguage } = useLanguage();
+  const isEnglish = currentLanguage === 'en';
   const pathname = usePathname();
 
   useEffect(() => {
@@ -44,10 +46,7 @@ export default function TopBar({ language, theme }: TopBarProps) {
   };
 
   const toggleLanguage = () => {
-    const newLanguage = !isEnglish ? 'en' : 'ko';
-    setIsEnglish(newLanguage === 'en');
-    document.cookie = `language=${newLanguage}; path=/; max-age=31536000`; // 1 year
-    window.location.reload();
+    contextToggleLanguage();
   };
 
   return (
