@@ -10,11 +10,11 @@
   padding: 2rem 1rem;
   margin-left: 280px;
   /* Add margin to avoid fixed sideNav */
-  margin-top: 60px;
+  /* margin-top: 60px; */
   /* Add margin for fixed top bar */
   /* Reserve space on the right for the fixed TOC so content is not hidden */
   padding-right: 280px;
-  padding-right: 280px;
+  /* padding-right: 280px; */
   transition: all 0.3s ease;
 }
 
@@ -61,26 +61,26 @@
 .content h1 {
   font-size: 2rem;
   font-weight: 600;
-  margin: 2rem 0 1rem 0;
+  /* margin: 2rem 0 1rem 0; */
   color: var(--text-main);
 }
 
 .content h2 {
   font-size: 1.25rem;
   font-weight: 600;
-  margin: 1.5rem 0 0.5rem 0;
+  /* margin: 1.5rem 0 0.5rem 0; */
   color: var(--text-main);
 }
 
 .content h3 {
   font-size: 1.1rem;
   font-weight: 600;
-  margin: 1.0rem 0 0.5rem 0;
+  /* margin: 1.0rem 0 0.5rem 0; */
   color: var(--text-main);
 }
 
 .content p {
-  margin: 0.5rem 0;
+  /* margin: 0.5rem 0; */
   color: var(--text-main);
 }
 
