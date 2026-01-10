@@ -7,7 +7,7 @@
   flex: 1;
   overflow-y: auto;
   background: var(--bg-body);
-  padding: 2rem 1rem;
+  padding: 2rem;
   padding-inline-start: 280px;
   /* Add margin to avoid fixed sideNav */
   /* margin-top: 60px; */
@@ -48,7 +48,11 @@
 
 .content {
   line-height: 1.6;
+  padding: 2rem;
   margin-bottom: 3rem;
+  background: var(--bg-card);
+  border-radius: 12px;
+  border: 1px solid var(--border);
 }
 
 .content h1,
