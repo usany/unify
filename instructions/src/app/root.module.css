@@ -29,14 +29,14 @@
   display: block;
   height: 2px;
   width: 100%;
-  background-color: #1976d2;
+  background-color: var(--primary);
   border-radius: 2px;
   transition: all 0.3s ease;
   transform-origin: center;
 }
 
 .showMoreButton:hover span {
-  background-color: #1565c0;
+  background-color: var(--primary-hover);
 }
 
 .showMoreButton.active span:nth-child(1) {
@@ -60,7 +60,7 @@
 
 .subtitle {
   font-size: 1.125rem;
-  color: #666;
+  color: var(--text-muted);
   margin-bottom: 1.5rem;
   max-width: 600px;
 }
@@ -106,9 +106,9 @@
   align-items: center;
   justify-content: center;
   padding: 0.625rem 1.25rem;
-  border: 2px solid #1976d2;
+  border: 2px solid var(--primary);
   background: transparent;
-  color: #1976d2;
+  color: var(--primary);
   text-decoration: none;
   border-radius: 4px;
   font-weight: 500;
@@ -116,7 +116,7 @@
 }
 
 .button:hover {
-  background: #1976d2;
+  background: var(--primary);
   color: white;
 }
 
@@ -124,11 +124,11 @@
   .hero {
     padding: 1rem;
   }
-  
+
   .title {
     font-size: 2rem;
   }
-  
+
   .subtitle {
     font-size: 1rem;
   }

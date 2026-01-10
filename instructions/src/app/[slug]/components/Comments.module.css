@@ -1,7 +1,7 @@
 .commentsSection {
   margin-top: 3rem;
   padding-top: 2rem;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid var(--border);
 }
 
 .commentsHeader {
@@ -15,7 +15,7 @@
   font-size: 1.5rem;
   font-weight: 600;
   margin: 0;
-  color: #333;
+  color: var(--text-main);
 }
 
 .adminControls {
@@ -26,9 +26,9 @@
 }
 
 .adminToggle {
-  background: #f5f5f5;
-  border: 1px solid #ddd;
-  color: #666;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
   padding: 0.5rem 1rem;
   border-radius: 4px;
   font-size: 0.875rem;
@@ -52,14 +52,14 @@
 
 .moderationNote {
   font-size: 0.75rem;
-  color: #666;
+  color: var(--text-muted);
   margin: 0;
   text-align: right;
   max-width: 200px;
 }
 
 .commentForm {
-  background: #f8f9fa;
+  background: var(--bg-card);
   padding: 1.5rem;
   border-radius: 8px;
   margin-bottom: 2rem;
@@ -73,14 +73,16 @@
   display: block;
   font-weight: 500;
   margin-bottom: 0.5rem;
-  color: #555;
+  color: var(--text-main);
 }
 
 .input,
 .textarea {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border);
+  background: var(--bg-body);
+  color: var(--text-main);
   border-radius: 4px;
   font-family: inherit;
   font-size: 0.95rem;
@@ -90,8 +92,8 @@
 .input:focus,
 .textarea:focus {
   outline: none;
-  border-color: #1976d2;
-  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.1);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--shadow);
 }
 
 .textarea {
@@ -100,7 +102,7 @@
 }
 
 .submitButton {
-  background: #1976d2;
+  background: var(--primary);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -133,8 +135,8 @@
 }
 
 .comment {
-  background: white;
-  border: 1px solid #e0e0e0;
+  background: var(--bg-comment);
+  border: 1px solid var(--border);
   border-radius: 8px;
   padding: 1rem;
   margin-bottom: 1rem;
@@ -146,8 +148,8 @@
 }
 
 .comment.pending {
-  background: #fff3cd;
-  border-color: #ffeaa7;
+  background: var(--bg-comment-pending);
+  border-color: var(--border);
 }
 
 .comment.pending:hover {
@@ -165,18 +167,18 @@
 
 .author {
   font-weight: 600;
-  color: #1976d2;
+  color: var(--primary);
 }
 
 .timestamp {
   font-size: 0.85rem;
-  color: #666;
+  color: var(--text-muted);
 }
 
 .commentContent {
   margin: 0;
   line-height: 1.6;
-  color: #333;
+  color: var(--text-main);
 }
 
 .commentMeta {
@@ -187,8 +189,8 @@
 
 .replyBadge {
   font-size: 0.75rem;
-  background: #e3f2fd;
-  color: #1976d2;
+  background: var(--bg-badge);
+  color: var(--primary);
   padding: 0.125rem 0.5rem;
   border-radius: 12px;
   font-weight: 500;
@@ -217,7 +219,7 @@
 
 .reply {
   margin-left: 2rem;
-  border-left: 3px solid #e3f2fd;
+  border-left: 3px solid var(--bg-badge);
   padding-left: 1rem;
   margin-top: 1rem;
 }
@@ -263,26 +265,26 @@
   .commentForm {
     padding: 1rem;
   }
-  
+
   .commentHeader {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.25rem;
   }
-  
+
   .timestamp {
     font-size: 0.8rem;
   }
-  
+
   .reply {
     margin-left: 1rem;
     padding-left: 0.75rem;
   }
-  
+
   .replyForm {
     padding: 0.75rem;
   }
-  
+
   .replyFormHeader {
     font-size: 0.9rem;
   }

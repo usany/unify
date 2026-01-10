@@ -4,13 +4,17 @@ import styles from './TopBar.module.css';
 import { usePathname } from 'next/navigation';
 import links from 'links';
 
+interface TopBarProps {
+  theme: string;
+}
 
-export default function TopBar() {
+export default function TopBar({ theme }: TopBarProps) {
   const [showLinks, setShowLinks] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(theme === 'dark');
   const [currentLang, setCurrentLang] = useState('en');
   const pathname = usePathname();
+
   useEffect(() => {
     const checkScreenSize = () => {
       setIsSmallScreen(window.innerWidth < 1024); // lg breakpoint
@@ -22,17 +26,20 @@ export default function TopBar() {
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
-  useEffect(() => {
-    // Apply dark mode class to body
-    if (isDarkMode) {
-      document.body.classList.add('dark-mode');
-    } else {
-      document.body.classList.remove('dark-mode');
-    }
-  }, [isDarkMode]);
-
   const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
+    const newMode = !isDarkMode;
+    setIsDarkMode(newMode);
+
+    const themeValue = newMode ? 'dark' : 'light';
+    document.cookie = `theme=${themeValue}; path=/; max-age=31536000`; // 1 year
+
+    if (newMode) {
+      document.documentElement.classList.add('dark');
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
   };
 
   const toggleLanguage = () => {
