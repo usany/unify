@@ -12,7 +12,7 @@ export default function TopBar({ theme }: TopBarProps) {
   const [showLinks, setShowLinks] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(theme === 'dark');
-  const [currentLang, setCurrentLang] = useState('en');
+  const [currentLang, setCurrentLang] = useState('ko');
   const pathname = usePathname();
 
   useEffect(() => {
