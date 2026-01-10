@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import styles from './pageLayout.module.css';
+import styles from './PageLayout.module.css';
 import Comments from './Comments';
 import SideNav from './SideNav';
 import MDXContent from './MDXContent';
