@@ -6,7 +6,7 @@ import Comments from './Comments';
 import SideNav from './SideNav';
 import MDXContent from './MDXContent';
 
-export default function SlugLayout({ pageId }: { pageId: string }) {
+export default function SlugLayout({ pageId, language }: { pageId: string, language: string }) {
 
   const [isSideNavMinified, setIsSideNavMinified] = useState(false);
 
@@ -23,7 +23,7 @@ export default function SlugLayout({ pageId }: { pageId: string }) {
           </div>
         </div> */}
         <div className={styles.content}>
-          <MDXContent slug={pageId} />
+          <MDXContent slug={pageId} language={language} />
         </div>
         {/* {children} */}
         <Comments pageId={pageId} />

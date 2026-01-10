@@ -47,6 +47,7 @@ export default function TopBar({ language, theme }: TopBarProps) {
     const newLanguage = !isEnglish ? 'en' : 'ko';
     setIsEnglish(newLanguage === 'en');
     document.cookie = `language=${newLanguage}; path=/; max-age=31536000`; // 1 year
+    window.location.reload();
   };
 
   return (
