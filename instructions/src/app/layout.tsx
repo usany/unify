@@ -18,7 +18,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang={language} className={theme} data-theme={theme}>
       <body>
         <AppRouterCacheProvider>
-          <TopBar theme={theme} />
+          <TopBar language={language} theme={theme} />
           <main style={{ paddingTop: '60px' }}>
             {children}
           </main>

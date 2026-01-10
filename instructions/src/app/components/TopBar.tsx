@@ -5,14 +5,15 @@ import { usePathname } from 'next/navigation';
 import links from 'links';
 
 interface TopBarProps {
+  language: string;
   theme: string;
 }
 
-export default function TopBar({ theme }: TopBarProps) {
+export default function TopBar({ language, theme }: TopBarProps) {
   const [showLinks, setShowLinks] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(theme === 'dark');
-  const [currentLang, setCurrentLang] = useState('ko');
+  const [isEnglish, setIsEnglish] = useState(language === 'en');
   const pathname = usePathname();
 
   useEffect(() => {
@@ -43,7 +44,9 @@ export default function TopBar({ theme }: TopBarProps) {
   };
 
   const toggleLanguage = () => {
-    setCurrentLang(currentLang === 'en' ? 'es' : 'en');
+    const newLanguage = !isEnglish ? 'en' : 'ko';
+    setIsEnglish(newLanguage === 'en');
+    document.cookie = `language=${newLanguage}; path=/; max-age=31536000`; // 1 year
   };
 
   return (
@@ -63,7 +66,7 @@ export default function TopBar({ theme }: TopBarProps) {
             onClick={toggleLanguage}
             aria-label="Toggle language"
           >
-            {currentLang === 'en' ? 'ES' : 'EN'}
+            {isEnglish ? 'En' : 'Ko'}
           </button>
           {pathname !== '/' && isSmallScreen && (
             <button
