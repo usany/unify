@@ -7,7 +7,7 @@
   flex: 1;
   overflow-y: auto;
   background: var(--bg-body);
-  padding: 2rem;
+  /* padding: 2rem; */
   padding-inline-start: 280px;
   /* Add margin to avoid fixed sideNav */
   /* margin-top: 60px; */
@@ -328,7 +328,7 @@
     overflow-y: visible;
     padding-inline-start: 0;
     /* Remove margin on mobile where sideNav is hidden */
-    padding-block-start: 60px;
+    /* padding-block-start: 60px; */
     /* Keep top bar margin on mobile */
     padding-right: 1rem;
     /* reset extra right padding on smaller screens */
