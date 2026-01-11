@@ -11,12 +11,13 @@ interface HeadingItem {
 
 interface TableOfContentsProps {
     pageId: string;
+    isTocOpen: boolean;
+    toggleToc: () => void;
 }
 
-export default function TableOfContents({ pageId }: TableOfContentsProps) {
+export default function TableOfContents({ pageId, isTocOpen, toggleToc }: TableOfContentsProps) {
     const [headings, setHeadings] = useState<HeadingItem[]>([]);
     const [activeId, setActiveId] = useState<string | null>(null);
-    const [isTocOpen, setIsTocOpen] = useState(true);
 
     const handleTocClick = (id: string) => {
         if (typeof document === 'undefined') return;
@@ -109,7 +110,7 @@ export default function TableOfContents({ pageId }: TableOfContentsProps) {
                 <button
                     type="button"
                     className={styles.tocToggle}
-                    onClick={() => setIsTocOpen((prev) => !prev)}
+                    onClick={toggleToc}
                     aria-label={isTocOpen ? 'Hide table of contents' : 'Show table of contents'}
                 >
                     {isTocOpen ? '−' : '+'}
