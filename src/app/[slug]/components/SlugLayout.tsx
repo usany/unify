@@ -24,7 +24,7 @@ export default function SlugLayout({ pageId }: { pageId: string }) {
           <TableOfContents pageId={pageId} isTocOpen={isTocOpen} toggleToc={toggleToc} />
           <MDXContent slug={pageId} />
         </div>
-        <Comments pageId={pageId} />
+        <Comments slug={pageId} />
       </div>
     </div>
   );

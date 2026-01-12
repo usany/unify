@@ -4,30 +4,29 @@ import React, { useState, useEffect } from 'react';
 import styles from './Comments.module.css';
 
 interface Comment {
-  id: string;
-  page_id: string;
+  id: number;
+  slug: string;
   author: string;
+  email: string;
   content: string;
   created_at: string;
   updated_at?: string;
-  parent_id?: string;
-  replies?: Comment[];
 }
 
 interface CommentsProps {
-  pageId: string;
+  slug: string;
 }
 
-export default function Comments({ pageId }: CommentsProps) {
+export default function Comments({ slug }: CommentsProps) {
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState({
     author: '',
-    content: '',
-    parentId: ''
+    email: '',
+    content: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [replyingTo, setReplyingTo] = useState<string | null>(null);
-  const [editingComment, setEditingComment] = useState<string | null>(null);
+  const [replyingTo, setReplyingTo] = useState<number | null>(null);
+  const [editingComment, setEditingComment] = useState<number | null>(null);
   const [editContent, setEditContent] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -36,7 +35,7 @@ export default function Comments({ pageId }: CommentsProps) {
   const fetchComments = async () => {
     try {
       setError(null);
-      const response = await fetch(`/api/comments?pageId=${pageId}`);
+      const response = await fetch(`/api/comments?slug=${slug}`);
       if (!response.ok) {
         throw new Error('Failed to fetch comments');
       }
@@ -52,12 +51,12 @@ export default function Comments({ pageId }: CommentsProps) {
   // Load comments when component mounts
   useEffect(() => {
     fetchComments();
-  }, [pageId]);
+  }, [slug]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!newComment.author.trim() || !newComment.content.trim()) {
+    if (!newComment.author.trim() || !newComment.email.trim() || !newComment.content.trim()) {
       return;
     }
 
@@ -71,10 +70,10 @@ export default function Comments({ pageId }: CommentsProps) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          pageId,
+          slug,
           author: newComment.author,
-          content: newComment.content,
-          parentId: newComment.parentId || undefined
+          email: newComment.email,
+          content: newComment.content
         })
       });
 
@@ -83,7 +82,7 @@ export default function Comments({ pageId }: CommentsProps) {
       }
 
       await fetchComments(); // Refresh comments
-      setNewComment({ author: '', content: '', parentId: '' });
+      setNewComment({ author: '', email: '', content: '' });
       setReplyingTo(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to post comment');
@@ -92,39 +91,11 @@ export default function Comments({ pageId }: CommentsProps) {
     }
   };
 
-  const addReplyToComment = (comments: Comment[], parentId: string, reply: Comment): Comment[] => {
-    return comments.map(comment => {
-      if (comment.id === parentId) {
-        return {
-          ...comment,
-          replies: [...(comment.replies || []), reply]
-        };
-      }
-      if (comment.replies && comment.replies.length > 0) {
-        return {
-          ...comment,
-          replies: addReplyToComment(comment.replies, parentId, reply)
-        };
-      }
-      return comment;
-    });
-  };
-
-  const handleInputChange = (field: 'author' | 'content', value: string) => {
+  const handleInputChange = (field: 'author' | 'email' | 'content', value: string) => {
     setNewComment(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleReply = (commentId: string) => {
-    setReplyingTo(commentId);
-    setNewComment(prev => ({ ...prev, parentId: commentId }));
-  };
-
-  const handleCancelReply = () => {
-    setReplyingTo(null);
-    setNewComment(prev => ({ ...prev, parentId: '' }));
-  };
-
-  const handleEdit = (commentId: string, content: string) => {
+  const handleEdit = (commentId: number, content: string) => {
     setEditingComment(commentId);
     setEditContent(content);
   };
@@ -139,7 +110,7 @@ export default function Comments({ pageId }: CommentsProps) {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            id: editingComment,
+            id: parseInt(editingComment),
             content: editContent
           })
         });
@@ -162,7 +133,7 @@ export default function Comments({ pageId }: CommentsProps) {
     setEditContent('');
   };
 
-  const handleDelete = async (commentId: string) => {
+  const handleDelete = async (commentId: number) => {
     try {
       setError(null);
       const response = await fetch(`/api/comments?id=${commentId}`, {
@@ -179,43 +150,15 @@ export default function Comments({ pageId }: CommentsProps) {
     }
   };
 
-  const updateCommentContent = (comments: Comment[], commentId: string, content: string): Comment[] => {
-    return comments.map(comment => {
-      if (comment.id === commentId) {
-        return { ...comment, content };
-      }
-      if (comment.replies && comment.replies.length > 0) {
-        return {
-          ...comment,
-          replies: updateCommentContent(comment.replies, commentId, content)
-        };
-      }
-      return comment;
-    });
-  };
-
-  const deleteCommentFromTree = (comments: Comment[], commentId: string): Comment[] => {
-    return comments
-      .filter(comment => comment.id !== commentId)
-      .map(comment => ({
-        ...comment,
-        replies: comment.replies ? deleteCommentFromTree(comment.replies, commentId) : []
-      }));
-  };
-
-  const CommentItem = ({ comment, depth = 0 }: { comment: Comment; depth?: number }) => {
-    const isReplying = replyingTo === comment.id;
+  const CommentItem = ({ comment }: { comment: Comment }) => {
     const isEditing = editingComment === comment.id;
 
     return (
-      <div className={`${styles.comment} ${depth > 0 ? styles.reply : ''}`}>
+      <div className={styles.comment}>
         <div className={styles.commentHeader}>
           <span className={styles.author}>{comment.author}</span>
           <div className={styles.commentMeta}>
             <span className={styles.timestamp}>{new Date(comment.created_at).toLocaleString()}</span>
-            {depth > 0 && (
-              <span className={styles.replyBadge}>Reply</span>
-            )}
           </div>
         </div>
         
@@ -248,76 +191,18 @@ export default function Comments({ pageId }: CommentsProps) {
 
         <div className={styles.commentActions}>
           <button 
-            onClick={() => handleReply(comment.id)}
-            className={styles.replyButton}
+            onClick={() => handleEdit(comment.id, comment.content)}
+            className={styles.editButton}
           >
-            Reply
+            Edit
           </button>
-          
-          <>
-            <button 
-              onClick={() => handleEdit(comment.id, comment.content)}
-              className={styles.editButton}
-            >
-              Edit
-            </button>
-            <button 
-              onClick={() => handleDelete(comment.id)}
-              className={styles.deleteButton}
-            >
-              Delete
-            </button>
-          </>
+          <button 
+            onClick={() => handleDelete(comment.id)}
+            className={styles.deleteButton}
+          >
+            Delete
+          </button>
         </div>
-
-        {isReplying && (
-          <div className={styles.replyForm}>
-            <div className={styles.replyFormHeader}>
-              <span>Replying to {comment.author}</span>
-              <button 
-                onClick={handleCancelReply}
-                className={styles.cancelReplyButton}
-              >
-                ✕
-              </button>
-            </div>
-            <div className={styles.formGroup}>
-              <input
-                type="text"
-                value={newComment.author}
-                onChange={(e) => handleInputChange('author', e.target.value)}
-                className={styles.input}
-                placeholder="Your name"
-                required
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <textarea
-                value={newComment.content}
-                onChange={(e) => handleInputChange('content', e.target.value)}
-                className={styles.textarea}
-                placeholder="Write your reply..."
-                rows={3}
-                required
-              />
-            </div>
-            <button 
-              onClick={handleSubmit}
-              disabled={isSubmitting}
-              className={styles.submitButton}
-            >
-              {isSubmitting ? 'Posting...' : 'Post Reply'}
-            </button>
-          </div>
-        )}
-
-        {comment.replies && comment.replies.length > 0 && (
-          <div className={styles.replies}>
-            {comment.replies.map(reply => (
-              <CommentItem key={reply.id} comment={reply} depth={depth + 1} />
-            ))}
-          </div>
-        )}
       </div>
     );
   };
@@ -336,6 +221,19 @@ export default function Comments({ pageId }: CommentsProps) {
             onChange={(e) => handleInputChange('author', e.target.value)}
             className={styles.input}
             placeholder="Enter your name"
+            required
+          />
+        </div>
+        
+        <div className={styles.formGroup}>
+          <label htmlFor="email" className={styles.label}>Email</label>
+          <input
+            type="email"
+            id="email"
+            value={newComment.email}
+            onChange={(e) => handleInputChange('email', e.target.value)}
+            className={styles.input}
+            placeholder="Enter your email"
             required
           />
         </div>

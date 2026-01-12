@@ -37,9 +37,9 @@
 	},
 	"d1_databases": [
 		{
-		"binding": "prod_d1_tutorial",
-		"database_name": "prod-d1-tutorial",
-		"database_id": "<unique-ID-for-your-database>"
+			"binding": "instructions_db",
+			"database_name": "instructions-db",
+			"database_id": "4c06b4b6-2d1d-49e7-a622-a5c78038ea25"
 		}
 	]
 	/**
