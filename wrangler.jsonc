@@ -34,7 +34,14 @@
 	],
 	"observability": {
 		"enabled": true
-	}
+	},
+	"d1_databases": [
+		{
+		"binding": "prod_d1_tutorial",
+		"database_name": "prod-d1-tutorial",
+		"database_id": "<unique-ID-for-your-database>"
+		}
+	]
 	/**
 	 * Smart Placement
 	 * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
