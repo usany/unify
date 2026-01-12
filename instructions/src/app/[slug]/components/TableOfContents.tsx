@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import styles from './TableOfContents.module.css';
+import { useLanguage } from '@/app/context/LanguageContext';
 
 interface HeadingItem {
     id: string;
@@ -18,6 +19,22 @@ interface TableOfContentsProps {
 export default function TableOfContents({ pageId, isTocOpen, toggleToc }: TableOfContentsProps) {
     const [headings, setHeadings] = useState<HeadingItem[]>([]);
     const [activeId, setActiveId] = useState<string | null>(null);
+    const { language } = useLanguage();
+    
+    const translations = {
+        en: {
+            title: 'On this page',
+            showToc: 'Show table of contents',
+            hideToc: 'Hide table of contents'
+        },
+        ko: {
+            title: '목차',
+            showToc: '목차 보기',
+            hideToc: '목차 숨기기'
+        }
+    };
+    
+    const t = translations[language] || translations.ko;
 
     const handleTocClick = (id: string) => {
         if (typeof document === 'undefined') return;
@@ -106,12 +123,12 @@ export default function TableOfContents({ pageId, isTocOpen, toggleToc }: TableO
             aria-label="Page navigation"
         >
             <div className={styles.tocHeaderRow}>
-                <div className={styles.tocTitle}>On this page</div>
+                <div className={styles.tocTitle}>{t.title}</div>
                 <button
                     type="button"
                     className={styles.tocToggle}
                     onClick={toggleToc}
-                    aria-label={isTocOpen ? 'Hide table of contents' : 'Show table of contents'}
+                    aria-label={isTocOpen ? t.hideToc : t.showToc}
                 >
                     {isTocOpen ? '−' : '+'}
                 </button>
