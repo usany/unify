@@ -110,10 +110,10 @@ export default function TableOfContents({ pageId, isTocOpen, toggleToc }: TableO
         }
 
         return () => {
-            observer?.disconnect();
-            mutationObserver?.disconnect();
+            if (mutationObserver) mutationObserver.disconnect();
+            if (observer) observer.disconnect();
         };
-    }, [pageId]);
+    }, [pageId, language]);
 
     if (headings.length === 0) return null;
 
