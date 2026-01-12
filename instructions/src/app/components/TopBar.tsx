@@ -83,7 +83,7 @@ export default function TopBar({ language, theme }: TopBarProps) {
       </div>
       {pathname !== '/' && isSmallScreen && (
         <div className={`${styles.buttonGroup} ${showLinks ? styles.visible : ''}`}>
-          {links.map((link, index) => (
+          {links[language as keyof typeof links].map((link, index) => (
             <a key={index} href={link.href} className={styles.button}>
               {link.label}
             </a>

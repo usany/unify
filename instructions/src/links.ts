@@ -1,7 +1,7 @@
 import { Language } from './app/context/LanguageContext';
 import { Links } from './types/links';
 
-const translations: Links = {
+const links: Links = {
   en: [
     { label: 'Documentation', href: '/docs', icon: '📚' },
     { label: 'Platform', href: '/platform', icon: '🌐' },
@@ -30,12 +30,4 @@ const translations: Links = {
   ],
 } as const;
 
-const getLinks = (language: Language = 'ko'): ReadonlyArray<{
-  label: string;
-  href: string;
-  icon: string;
-}> => {
-  return translations[language] || translations.ko;
-};
-
-export default getLinks;
+export default links;
