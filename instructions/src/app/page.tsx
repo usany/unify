@@ -1,10 +1,10 @@
 'use client';
 
 import styles from './root.module.css';
-import getLinks from 'links';
 import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
 import { LinkItem } from '@/types/links';
+import links from 'links';
 
 const translations = {
   en: {
@@ -20,7 +20,6 @@ const translations = {
 export default function RootPage() {
   const { language } = useLanguage();
   const t = translations[language];
-  const links = getLinks(language);
   return (
     <section className={styles.hero}>
       <h1 className={styles.title}>{t.title}</h1>
@@ -28,7 +27,7 @@ export default function RootPage() {
         {t.subtitle}
       </p>
       <div className={`${styles.buttonGroup}`}>
-        {links.map((link: LinkItem, index: number) => (
+        {links[language].map((link: LinkItem, index: number) => (
           <Link key={index} href={link.href} className={styles.button}>
             {link.label}
           </Link>
