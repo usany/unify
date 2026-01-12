@@ -19,6 +19,7 @@ interface TableOfContentsProps {
 export default function TableOfContents({ pageId, isTocOpen, toggleToc }: TableOfContentsProps) {
     const [headings, setHeadings] = useState<HeadingItem[]>([]);
     const [activeId, setActiveId] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
     const { language } = useLanguage();
     const translations = {
         en: {
@@ -75,6 +76,7 @@ export default function TableOfContents({ pageId, isTocOpen, toggleToc }: TableO
             }).filter(h => h.id);
 
             setHeadings(extracted);
+            setIsLoading(false);
 
             if (observer) observer.disconnect();
 
@@ -101,6 +103,10 @@ export default function TableOfContents({ pageId, isTocOpen, toggleToc }: TableO
             return true;
         };
 
+        // Set loading state when language changes
+        setIsLoading(true);
+        setHeadings([]);
+
         if (!extractAndObserve()) {
             mutationObserver = new MutationObserver(() => {
                 if (extractAndObserve()) mutationObserver?.disconnect();
@@ -114,7 +120,7 @@ export default function TableOfContents({ pageId, isTocOpen, toggleToc }: TableO
         };
     }, [pageId, language]);
 
-    if (headings.length === 0) return null;
+    if (headings.length === 0 && !isLoading) return null;
 
     return (
         <nav
@@ -134,27 +140,35 @@ export default function TableOfContents({ pageId, isTocOpen, toggleToc }: TableO
             </div>
             {isTocOpen && (
                 <ul className={styles.tocList}>
-                    {headings.map((h) => (
-                        <li
-                            key={h.id}
-                            className={
-                                h.level === 1
-                                    ? styles.tocItemLevel1
-                                    : h.level === 2
-                                        ? styles.tocItemLevel2
-                                        : styles.tocItemLevel3
-                            }
-                        >
-                            <button
-                                type="button"
-                                className={`${styles.tocLink} ${activeId === h.id ? styles.tocLinkActive : ''
-                                    }`}
-                                onClick={() => handleTocClick(h.id)}
-                            >
-                                {h.text}
-                            </button>
+                    {isLoading ? (
+                        <li className={styles.tocItemLevel1}>
+                            <span className={styles.tocLink} style={{ opacity: 0.5 }}>
+                                Loading...
+                            </span>
                         </li>
-                    ))}
+                    ) : (
+                        headings.map((h) => (
+                            <li
+                                key={h.id}
+                                className={
+                                    h.level === 1
+                                        ? styles.tocItemLevel1
+                                        : h.level === 2
+                                            ? styles.tocItemLevel2
+                                            : styles.tocItemLevel3
+                                }
+                            >
+                                <button
+                                    type="button"
+                                    className={`${styles.tocLink} ${activeId === h.id ? styles.tocLinkActive : ''
+                                        }`}
+                                    onClick={() => handleTocClick(h.id)}
+                                >
+                                    {h.text}
+                                </button>
+                            </li>
+                        ))
+                    )}
                 </ul>
             )}
         </nav>
