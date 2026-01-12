@@ -7,6 +7,7 @@ import styles from './SideNav.module.css';
 import getLinks from 'links';
 import { useLanguage } from '@/app/context/LanguageContext';
 import { LinkItem } from '@/types/links';
+import links from 'links';
 
 interface NavItem {
   label: string;

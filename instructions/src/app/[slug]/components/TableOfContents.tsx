@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import styles from './TableOfContents.module.css';
 import { useLanguage } from '@/app/context/LanguageContext';
 
@@ -52,13 +52,23 @@ export default function TableOfContents({ pageId, isTocOpen, toggleToc }: TableO
         }
     };
 
-    useEffect(() => {
-        if (typeof document === 'undefined') return;
+    // Custom hook-like logic using refs and callbacks
+    const observerManagerRef = useRef<{
+        observer: IntersectionObserver | null;
+        mutationObserver: MutationObserver | null;
+        isInitialized: boolean;
+    }>({
+        observer: null,
+        mutationObserver: null,
+        isInitialized: false
+    });
 
-        let observer: IntersectionObserver | null = null;
-        let mutationObserver: MutationObserver | null = null;
+    const initializeObservers = useCallback(() => {
+        if (typeof document === 'undefined' || observerManagerRef.current.isInitialized) return;
 
-        const extractAndObserve = () => {
+        const manager = observerManagerRef.current;
+        
+        const extractHeadings = () => {
             const hElements = Array.from(
                 document.querySelectorAll<HTMLElement>('h1, h2, h3')
             ).filter(el => el.id || el.querySelector('a[id]'));
@@ -75,11 +85,13 @@ export default function TableOfContents({ pageId, isTocOpen, toggleToc }: TableO
             }).filter(h => h.id);
 
             setHeadings(extracted);
+            return true;
+        };
 
-            if (observer) observer.disconnect();
+        const setupIntersectionObserver = (elements: HTMLElement[]) => {
+            if (manager.observer) manager.observer.disconnect();
 
-            // Using IntersectionObserver with rootMargin is much more reliable across different scroll layouts
-            observer = new IntersectionObserver(
+            manager.observer = new IntersectionObserver(
                 (entries) => {
                     const intersecting = entries
                         .filter(entry => entry.isIntersecting)
@@ -91,28 +103,48 @@ export default function TableOfContents({ pageId, isTocOpen, toggleToc }: TableO
                     }
                 },
                 {
-                    // -60px accounts for the TopBar height, -80% bottom ensures we focus on the top of the page
                     rootMargin: '-60px 0px -80% 0px',
                     threshold: 0
                 }
             );
 
-            hElements.forEach(el => observer?.observe(el));
+            elements.forEach(el => manager.observer?.observe(el));
+        };
+
+        const initialize = () => {
+            const hElements = Array.from(
+                document.querySelectorAll<HTMLElement>('h1, h2, h3')
+            ).filter(el => el.id || el.querySelector('a[id]'));
+
+            if (hElements.length === 0) return false;
+
+            extractHeadings();
+            setupIntersectionObserver(hElements);
+            manager.isInitialized = true;
             return true;
         };
 
-        if (!extractAndObserve()) {
-            mutationObserver = new MutationObserver(() => {
-                if (extractAndObserve()) mutationObserver?.disconnect();
+        if (!initialize()) {
+            manager.mutationObserver = new MutationObserver(() => {
+                if (initialize()) {
+                    manager.mutationObserver?.disconnect();
+                }
             });
-            mutationObserver.observe(document.body, { childList: true, subtree: true });
+            manager.mutationObserver.observe(document.body, { childList: true, subtree: true });
         }
+    }, [setActiveId, setHeadings]);
 
+    // Simple effect that just calls the initialization function
+    useEffect(() => {
+        initializeObservers();
+        
         return () => {
-            if (mutationObserver) mutationObserver.disconnect();
-            if (observer) observer.disconnect();
+            const manager = observerManagerRef.current;
+            if (manager.observer) manager.observer.disconnect();
+            if (manager.mutationObserver) manager.mutationObserver.disconnect();
+            manager.isInitialized = false;
         };
-    }, [pageId, language]);
+    }, [pageId, language, initializeObservers]);
 
     if (headings.length === 0) return null;
 
