@@ -11,12 +11,13 @@ export default function SlugLayout({ pageId }: { pageId: string }) {
 
   const [isSideNavMinified, setIsSideNavMinified] = useState(false);
   const [isTocOpen, setIsTocOpen] = useState(true);
+  const toggleSideNav = () => setIsSideNavMinified(!isSideNavMinified);
   const toggleToc = () => setIsTocOpen(!isTocOpen);
   return (
     <div className={styles.pageContainer}>
       <SideNav
         isMinified={isSideNavMinified}
-        onToggle={() => setIsSideNavMinified(!isSideNavMinified)}
+        onToggle={toggleSideNav}
       />
       <div className={`${styles.contentContainer} ${isSideNavMinified ? styles.contentMinifiedSideNav : ''} ${!isTocOpen ? styles.contentExpanded : ''}`}>
         <div className={styles.content}>
