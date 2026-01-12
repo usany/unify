@@ -110,7 +110,7 @@ export default function Comments({ slug }: CommentsProps) {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            id: parseInt(editingComment),
+            id: editingComment,
             content: editContent
           })
         });
