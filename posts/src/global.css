@@ -6,15 +6,19 @@
   font-family: 'maruburi';
   src: url('src/assets/fonts/OTF/MaruBuri-Light.otf') format('opentype')
 }
+
 html {
   overflow-y: scroll;
 }
+
 ::selection {
   background: #CFCFCF;
 }
+
 .markerContainer {
   padding: 10px;
 }
+
 .flipCard {
   perspective: 1000px;
 }
@@ -269,6 +273,8 @@ body {
     --radius: 0.5rem;
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
+    --tier-2-bg: #e2e8f0;
+    --tier-3-border: #cbd5df;
   }
 
   .dark {
@@ -295,7 +301,9 @@ body {
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%
+    --chart-5: 340 75% 55%;
+    --tier-2-bg: #2d3848;
+    --tier-3-border: #1a202c;
   }
 }
 

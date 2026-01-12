@@ -82,6 +82,26 @@ const useColors = () => {
           },
         },
       },
+      MuiBottomNavigation: {
+        styleOverrides: {
+          root: {
+            backgroundColor: 'var(--tier-2-bg)',
+            borderTop: '1px solid',
+            borderColor: 'var(--tier-3-border)',
+            borderRadius: '10px 10px 0 0',
+          },
+        },
+      },
+      MuiBottomNavigationAction: {
+        styleOverrides: {
+          root: {
+            color: 'hsl(var(--muted-foreground))',
+            '&.Mui-selected': {
+              color: '#1976D2',
+            },
+          },
+        },
+      },
     },
   }
   const lightTheme = createTheme({

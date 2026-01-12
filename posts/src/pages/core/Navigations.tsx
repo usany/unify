@@ -1,18 +1,15 @@
-import { alpha } from '@mui/material'
 import BottomNavigation from '@mui/material/BottomNavigation'
 import BottomNavigationAction from '@mui/material/BottomNavigationAction'
 import { Pencil, Presentation, Umbrella } from 'lucide-react'
-import { useEffect, useLayoutEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
-import useCardsBackground from 'src/hooks/useCardsBackground'
 import useSelectors from 'src/hooks/useSelectors'
 import { changeBottomNavigation } from 'src/stateSlices/bottomNavigationSlice'
 import { changePiazzaForm } from 'src/stateSlices/piazzaFormSlice'
 import texts from 'src/texts.json'
 
 function Navigations() {
-  const { colorTwo } = useCardsBackground()
   const piazzaForm = useSelectors((state) => state.piazzaForm.value)
   const bottomNavigation = useSelectors((state) => state.bottomNavigation.value)
   const languages = useSelectors((state) => state.languages.value)
@@ -78,7 +75,7 @@ function Navigations() {
         {(!piazzaForm || location.pathname !== '/piazza') && (
           <div className="w-full z-50 fixed bottom-0 start-0 end-0">
             <BottomNavigation
-              sx={{ bgcolor: alpha(colorTwo, 0.8), borderRadius: '10px', borderTop: '1px solid' }}
+              className="rounded-t-[10px]"
               showLabels
               value={bottomNavigation}
               onChange={(event, newValue) => {
