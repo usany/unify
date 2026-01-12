@@ -7,9 +7,9 @@ const MDXContent = ({ slug }: { slug: string }) => {
     const { language } = useLanguage();
     const Content = dynamic(() => {
         if (language === 'ko') {
-            return import(`@contents/${slug}.mdx`);
+            return import(`../../contents/${slug}.mdx`);
         }
-        return import(`@contents/${slug}En.mdx`);
+        return import(`../../contents/${slug}En.mdx`);
     }, {
         loading: () => <div>Loading...</div>,
     });

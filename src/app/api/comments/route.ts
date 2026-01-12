@@ -73,7 +73,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
+    const body = await request.json() as { pageId?: string; author?: string; content?: string; parentId?: string };
     const { pageId, author, content, parentId } = body;
 
     if (!pageId || !author || !content) {
@@ -107,7 +107,7 @@ export async function POST(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
   try {
-    const body = await request.json();
+    const body = await request.json() as { id?: string; content?: string };
     const { id, content } = body;
 
     if (!id || !content) {

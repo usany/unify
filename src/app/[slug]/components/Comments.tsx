@@ -40,7 +40,7 @@ export default function Comments({ pageId }: CommentsProps) {
       if (!response.ok) {
         throw new Error('Failed to fetch comments');
       }
-      const data = await response.json();
+      const data = await response.json() as { comments: any[] };
       setComments(data.comments || []);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load comments');

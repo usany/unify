@@ -49,7 +49,7 @@ async function handleGet(url: URL, env: any) {
 
 async function handlePost(request: Request, env: any) {
   try {
-    const body = await request.json();
+    const body = await request.json() as { pageId?: string; author?: string; content?: string; parentId?: string };
     const { pageId, author, content, parentId } = body;
 
     if (!pageId || !author || !content) {
@@ -83,7 +83,7 @@ async function handlePost(request: Request, env: any) {
 
 async function handlePut(request: Request, env: any) {
   try {
-    const body = await request.json();
+    const body = await request.json() as { id?: string; content?: string };
     const { id, content } = body;
 
     if (!id || !content) {
