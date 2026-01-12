@@ -4,7 +4,9 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import styles from './SideNav.module.css';
-import links from 'links';
+import getLinks from 'links';
+import { useLanguage } from '@/app/context/LanguageContext';
+import { LinkItem } from '@/types/links';
 
 interface NavItem {
   label: string;
@@ -22,6 +24,8 @@ export default function SideNav({
 }) {
   const pathname = usePathname();
   const [isLargeScreen, setIsLargeScreen] = useState(false);
+  const { language } = useLanguage();
+  const links = getLinks(language);
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -64,7 +68,7 @@ export default function SideNav({
       </div>
 
       <ul className={styles.navList}>
-        {links.map((item) => (
+        {links.map((item: LinkItem) => (
           <li key={item.href} className={styles.navItem}>
             <Link
               href={item.href}
