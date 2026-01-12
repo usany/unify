@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import { useLanguage } from '@/context/LanguageContext';
+import { memo } from 'react';
 
 const MDXContent = ({ slug }: { slug: string }) => {
     const { language } = useLanguage();
@@ -18,4 +19,4 @@ const MDXContent = ({ slug }: { slug: string }) => {
 }
 
 
-export default MDXContent;
+export default memo(MDXContent);

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import styles from './Comments.module.css';
 
 interface Comment {
@@ -17,7 +17,7 @@ interface CommentsProps {
   slug: string;
 }
 
-export default function Comments({ slug }: CommentsProps) {
+export default memo(function Comments({ slug }: CommentsProps) {
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState({
     author: '',
@@ -289,4 +289,4 @@ export default function Comments({ slug }: CommentsProps) {
       )}
     </div>
   );
-}
+});

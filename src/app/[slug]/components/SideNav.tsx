@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import styles from './SideNav.module.css';
 import getLinks from 'links';
 import { useLanguage } from '@/app/context/LanguageContext';
@@ -16,7 +16,7 @@ interface NavItem {
 }
 
 
-export default function SideNav({
+export default memo(function SideNav({
   isMinified = false,
   onToggle
 }: {
@@ -88,4 +88,4 @@ export default function SideNav({
       </div>
     </nav>
   );
-}
+});
