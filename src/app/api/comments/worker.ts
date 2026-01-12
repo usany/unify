@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import { D1Database } from '@cloudflare/workers-types';
 
 type ExecutionContext = any;

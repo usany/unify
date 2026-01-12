@@ -1,5 +1,7 @@
 'use client';
 
+export const runtime = 'edge';
+
 import styles from './root.module.css';
 import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';

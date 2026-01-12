@@ -1,4 +1,6 @@
 
+export const runtime = 'edge';
+
 import { redirect } from 'next/navigation';
 import SlugLayout from './components/SlugLayout';
 import MDXContent from './components/MDXContent';

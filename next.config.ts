@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
   // pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
+  images: {
+    unoptimized: true,
+  },
 };
 
 const withMDX = createMDX();
