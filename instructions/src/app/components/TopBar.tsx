@@ -6,7 +6,7 @@ import links from 'links';
 import { useLanguage } from '@/context/LanguageContext';
 
 interface TopBarProps {
-  language: string;
+  language: 'ko' | 'en';
   theme: string;
 }
 
@@ -83,7 +83,7 @@ export default function TopBar({ language, theme }: TopBarProps) {
       </div>
       {pathname !== '/' && isSmallScreen && (
         <div className={`${styles.buttonGroup} ${showLinks ? styles.visible : ''}`}>
-          {links[language as keyof typeof links].map((link, index) => (
+          {links[language].map((link, index) => (
             <a key={index} href={link.href} className={styles.button}>
               {link.label}
             </a>
