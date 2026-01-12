@@ -25,7 +25,6 @@ export default function SideNav({
   const pathname = usePathname();
   const [isLargeScreen, setIsLargeScreen] = useState(false);
   const { language } = useLanguage();
-  const links = getLinks(language);
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -68,7 +67,7 @@ export default function SideNav({
       </div>
 
       <ul className={styles.navList}>
-        {links.map((item: LinkItem) => (
+        {links[language].map((item: LinkItem) => (
           <li key={item.href} className={styles.navItem}>
             <Link
               href={item.href}
