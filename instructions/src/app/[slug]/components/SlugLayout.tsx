@@ -19,16 +19,10 @@ export default function SlugLayout({ pageId }: { pageId: string }) {
         onToggle={() => setIsSideNavMinified(!isSideNavMinified)}
       />
       <div className={`${styles.contentContainer} ${isSideNavMinified ? styles.contentMinifiedSideNav : ''} ${!isTocOpen ? styles.contentExpanded : ''}`}>
-        {/* <div className={styles.headerRow}>
-          <div className={styles.header}>
-            <h1 className={styles.title}>{pageId}</h1>
-          </div>
-        </div> */}
         <div className={styles.content}>
           <TableOfContents pageId={pageId} isTocOpen={isTocOpen} toggleToc={toggleToc} />
           <MDXContent slug={pageId} />
         </div>
-        {/* {children} */}
         <Comments pageId={pageId} />
       </div>
     </div>
