@@ -1,0 +1,11 @@
+name = "unify-instructions"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# For Cloudflare Pages deployment
+pages_build_output_dir = ".next"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "unify-comments"
+database_id = "${process.env.DB_ID}"
