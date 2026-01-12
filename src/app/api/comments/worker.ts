@@ -1,5 +1,5 @@
 export default {
-  async fetch(request, env, ctx) {
+  async fetch(request: Request, env: any, ctx: any) {
     const url = new URL(request.url);
     const method = request.method;
 
@@ -19,7 +19,7 @@ export default {
   }
 };
 
-async function handleGet(url, env) {
+async function handleGet(url: URL, env: any) {
   const pageId = url.searchParams.get('pageId');
   
   if (!pageId) {
@@ -47,7 +47,7 @@ async function handleGet(url, env) {
   }
 }
 
-async function handlePost(request, env) {
+async function handlePost(request: Request, env: any) {
   try {
     const body = await request.json();
     const { pageId, author, content, parentId } = body;
@@ -81,7 +81,7 @@ async function handlePost(request, env) {
   }
 }
 
-async function handlePut(request, env) {
+async function handlePut(request: Request, env: any) {
   try {
     const body = await request.json();
     const { id, content } = body;
@@ -112,7 +112,7 @@ async function handlePut(request, env) {
   }
 }
 
-async function handleDelete(url, env) {
+async function handleDelete(url: URL, env: any) {
   const id = url.searchParams.get('id');
 
   if (!id) {
@@ -138,17 +138,17 @@ async function handleDelete(url, env) {
   }
 }
 
-function organizeComments(flatComments) {
+function organizeComments(flatComments: any[]) {
   const commentMap = new Map();
-  const rootComments = [];
+  const rootComments: any[] = [];
 
   // Create a map of all comments
-  flatComments.forEach(comment => {
+  flatComments.forEach((comment: any) => {
     commentMap.set(comment.id, { ...comment, replies: [] });
   });
 
   // Build the tree structure
-  flatComments.forEach(comment => {
+  flatComments.forEach((comment: any) => {
     const commentNode = commentMap.get(comment.id);
     
     if (comment.parent_id) {
