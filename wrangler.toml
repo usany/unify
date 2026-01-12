@@ -8,4 +8,4 @@ pages_build_output_dir = ".vercel/output/static"
 [[d1_databases]]
 binding = "DB"
 database_name = "unify-comments"
-database_id = "${DB_ID}"
+database_id = "1dda6ae2-ff9d-41d8-8c11-be512e701b85"
