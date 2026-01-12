@@ -11,7 +11,7 @@ vars = { ENVIRONMENT = "development" }
 [[d1_databases]]
 binding = "DB"
 database_name = "unify-comments"
-database_id = "your-database-id-here"
+database_id = "${DB_ID}"
 
 [build]
 command = "npm run build"

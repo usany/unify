@@ -16,10 +16,14 @@ npm install @cloudflare/workers-types wrangler --legacy-peer-deps
    wrangler d1 create unify-comments
    ```
 
-2. **Update `wrangler.toml`:**
-   - Replace `your-database-id-here` with your actual database ID from the command above
+2. **Set up environment variables:**
+   - Copy `.env.example` to `.env.local`
+   - Add your database ID: `DB_ID=your-actual-database-id`
+   
+3. **Update `wrangler.toml`:**
+   - The configuration now uses `${DB_ID}` environment variable
 
-3. **Set up the database schema:**
+4. **Set up the database schema:**
    ```bash
    wrangler d1 execute unify-comments --file=./schema.sql
    ```
