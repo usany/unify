@@ -1,4 +1,111 @@
 // Database client for D1
+// Local development fallback database
+class LocalDevDB {
+  private static instance: LocalDevDB;
+  private comments: Comment[] = [];
+  private nextId = 1;
+
+  static getInstance(): LocalDevDB {
+    if (!LocalDevDB.instance) {
+      LocalDevDB.instance = new LocalDevDB();
+    }
+    return LocalDevDB.instance;
+  }
+
+  private constructor() {}
+
+  prepare(query: string) {
+    return new LocalDevQuery(this, query);
+  }
+
+  getComments() {
+    return this.comments;
+  }
+
+  addComment(comment: Comment) {
+    this.comments.push(comment);
+  }
+
+  updateComment(id: number, content: string) {
+    const comment = this.comments.find(c => c.id === id);
+    if (comment) {
+      comment.content = content;
+      comment.updated_at = new Date().toISOString();
+      return comment;
+    }
+    return null;
+  }
+
+  deleteComment(id: number) {
+    const initialLength = this.comments.length;
+    this.comments = this.comments.filter(c => c.id !== id);
+    return {
+      success: true,
+      meta: { changes: initialLength - this.comments.length }
+    };
+  }
+}
+
+class LocalDevQuery {
+  private db: LocalDevDB;
+  private query: string;
+  private params: any[] = [];
+
+  constructor(db: LocalDevDB, query: string) {
+    this.db = db;
+    this.query = query;
+  }
+
+  bind(...params: any[]) {
+    this.params = params;
+    return this;
+  }
+
+  async all() {
+    if (this.query.includes('WHERE slug =')) {
+      const slug = this.params[0];
+      return {
+        results: this.db.getComments()
+          .filter(comment => comment.slug === slug)
+          .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+      };
+    }
+    return { results: this.db.getComments() };
+  }
+
+  async first() {
+    if (this.query.includes('INSERT')) {
+      const [slug, author, email, content] = this.params;
+      const newComment: Comment = {
+        id: this.db['nextId']++,
+        slug,
+        author,
+        email,
+        content,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      };
+      this.db.addComment(newComment);
+      return newComment;
+    } else if (this.query.includes('UPDATE')) {
+      const [content, id] = this.params;
+      return this.db.updateComment(id, content);
+    } else if (this.query.includes('SELECT') && this.query.includes('WHERE id =')) {
+      const id = this.params[0];
+      return this.db.getComments().find(c => c.id === id) || null;
+    }
+    return null;
+  }
+
+  async run() {
+    if (this.query.includes('DELETE')) {
+      const id = this.params[0];
+      return this.db.deleteComment(id);
+    }
+    return { success: true, meta: { changes: 0 } };
+  }
+}
+
 export interface Comment {
   id: number;
   slug: string;
@@ -11,10 +118,15 @@ export interface Comment {
 
 export class DatabaseClient {
   private db: any;
+  private isLocalDev: boolean;
 
   constructor(env: any) {
+    this.isLocalDev = process.env.NODE_ENV === 'development';
     if (env?.instructions_db) {
       this.db = env.instructions_db;
+    } else if (this.isLocalDev) {
+      // Local development fallback - use singleton in-memory storage
+      this.db = LocalDevDB.getInstance();
     }
   }
 
