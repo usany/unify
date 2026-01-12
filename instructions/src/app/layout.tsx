@@ -22,7 +22,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <AppRouterCacheProvider>
           <LanguageProvider initialLanguage={language as 'ko' | 'en'}>
             <MuiThemeProvider theme={theme}>
-              <TopBar language={language} theme={theme} />
+              <TopBar language={language as 'ko' | 'en'} theme={theme} />
               <main style={{ paddingTop: '60px' }}>
                 {children}
               </main>
