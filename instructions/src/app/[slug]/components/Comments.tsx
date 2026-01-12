@@ -1,14 +1,16 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './Comments.module.css';
 
 interface Comment {
   id: string;
+  page_id: string;
   author: string;
   content: string;
-  timestamp: string;
-  parentId?: string;
+  created_at: string;
+  updated_at?: string;
+  parent_id?: string;
   replies?: Comment[];
 }
 
@@ -27,6 +29,30 @@ export default function Comments({ pageId }: CommentsProps) {
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
   const [editingComment, setEditingComment] = useState<string | null>(null);
   const [editContent, setEditContent] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch comments from API
+  const fetchComments = async () => {
+    try {
+      setError(null);
+      const response = await fetch(`/api/comments?pageId=${pageId}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch comments');
+      }
+      const data = await response.json();
+      setComments(data.comments || []);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to load comments');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Load comments when component mounts
+  useEffect(() => {
+    fetchComments();
+  }, [pageId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,30 +62,34 @@ export default function Comments({ pageId }: CommentsProps) {
     }
 
     setIsSubmitting(true);
+    setError(null);
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    try {
+      const response = await fetch('/api/comments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          pageId,
+          author: newComment.author,
+          content: newComment.content,
+          parentId: newComment.parentId || undefined
+        })
+      });
 
-    const comment: Comment = {
-      id: Date.now().toString(),
-      author: newComment.author,
-      content: newComment.content,
-      timestamp: new Date().toLocaleString(),
-      parentId: newComment.parentId || undefined,
-      replies: []
-    };
+      if (!response.ok) {
+        throw new Error('Failed to post comment');
+      }
 
-    if (newComment.parentId) {
-      // Add as reply to parent comment
-      setComments(prev => addReplyToComment(prev, newComment.parentId, comment));
-    } else {
-      // Add as top-level comment
-      setComments(prev => [comment, ...prev]);
+      await fetchComments(); // Refresh comments
+      setNewComment({ author: '', content: '', parentId: '' });
+      setReplyingTo(null);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to post comment');
+    } finally {
+      setIsSubmitting(false);
     }
-
-    setNewComment({ author: '', content: '', parentId: '' });
-    setReplyingTo(null);
-    setIsSubmitting(false);
   };
 
   const addReplyToComment = (comments: Comment[], parentId: string, reply: Comment): Comment[] => {
@@ -99,11 +129,31 @@ export default function Comments({ pageId }: CommentsProps) {
     setEditContent(content);
   };
 
-  const handleSaveEdit = () => {
+  const handleSaveEdit = async () => {
     if (editingComment && editContent.trim()) {
-      setComments(prev => updateCommentContent(prev, editingComment, editContent));
-      setEditingComment(null);
-      setEditContent('');
+      try {
+        setError(null);
+        const response = await fetch('/api/comments', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id: editingComment,
+            content: editContent
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to update comment');
+        }
+
+        await fetchComments(); // Refresh comments
+        setEditingComment(null);
+        setEditContent('');
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to update comment');
+      }
     }
   };
 
@@ -112,8 +162,21 @@ export default function Comments({ pageId }: CommentsProps) {
     setEditContent('');
   };
 
-  const handleDelete = (commentId: string) => {
-    setComments(prev => deleteCommentFromTree(prev, commentId));
+  const handleDelete = async (commentId: string) => {
+    try {
+      setError(null);
+      const response = await fetch(`/api/comments?id=${commentId}`, {
+        method: 'DELETE'
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete comment');
+      }
+
+      await fetchComments(); // Refresh comments
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to delete comment');
+    }
   };
 
   const updateCommentContent = (comments: Comment[], commentId: string, content: string): Comment[] => {
@@ -149,7 +212,7 @@ export default function Comments({ pageId }: CommentsProps) {
         <div className={styles.commentHeader}>
           <span className={styles.author}>{comment.author}</span>
           <div className={styles.commentMeta}>
-            <span className={styles.timestamp}>{comment.timestamp}</span>
+            <span className={styles.timestamp}>{new Date(comment.created_at).toLocaleString()}</span>
             {depth > 0 && (
               <span className={styles.replyBadge}>Reply</span>
             )}
@@ -299,16 +362,33 @@ export default function Comments({ pageId }: CommentsProps) {
         </button>
       </form>
 
+      {/* Error Display */}
+      {error && (
+        <div className={styles.errorMessage}>
+          <span>{error}</span>
+          <button onClick={() => setError(null)} className={styles.errorClose}>×</button>
+        </div>
+      )}
+
+      {/* Loading State */}
+      {isLoading && (
+        <div className={styles.loadingMessage}>
+          <span>Loading comments...</span>
+        </div>
+      )}
+
       {/* Comments List */}
-      <div className={styles.commentsList}>
-        {comments.length === 0 ? (
-          <p className={styles.noComments}>No comments yet. Be the first to share your thoughts!</p>
-        ) : (
-          comments.map(comment => (
-            <CommentItem key={comment.id} comment={comment} />
-          ))
-        )}
-      </div>
+      {!isLoading && (
+        <div className={styles.commentsList}>
+          {comments.length === 0 ? (
+            <p className={styles.noComments}>No comments yet. Be the first to share your thoughts!</p>
+          ) : (
+            comments.map(comment => (
+              <CommentItem key={comment.id} comment={comment} />
+            ))
+          )}
+        </div>
+      )}
     </div>
   );
 }

@@ -1,0 +1,17 @@
+name = "unify"
+main = "instructions/src/app/api/[[...route]]/route.ts"
+compatibility_date = "2024-01-01"
+
+[env.production]
+vars = { ENVIRONMENT = "production" }
+
+[env.development]
+vars = { ENVIRONMENT = "development" }
+
+[[d1_databases]]
+binding = "DB"
+database_name = "unify-comments"
+database_id = "your-database-id-here"
+
+[build]
+command = "npm run build"
