@@ -20,7 +20,6 @@ export default function TableOfContents({ pageId, isTocOpen, toggleToc }: TableO
     const [headings, setHeadings] = useState<HeadingItem[]>([]);
     const [activeId, setActiveId] = useState<string | null>(null);
     const { language } = useLanguage();
-    
     const translations = {
         en: {
             title: 'On this page',
