@@ -1,26 +1,5 @@
-export const runtime = 'edge';
-
-import { D1Database } from '@cloudflare/workers-types';
-
-type ExecutionContext = any;
-
-interface Env {
-  DB: D1Database;
-}
-
-interface Comment {
-  id: string;
-  page_id: string;
-  author: string;
-  content: string;
-  parent_id: string | null;
-  created_at: string;
-  updated_at?: string;
-  replies?: Comment[];
-}
-
 export default {
-  async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
     const method = request.method;
 
@@ -40,7 +19,7 @@ export default {
   }
 };
 
-async function handleGet(url: URL, env: Env) {
+async function handleGet(url, env) {
   const pageId = url.searchParams.get('pageId');
   
   if (!pageId) {
@@ -55,7 +34,7 @@ async function handleGet(url: URL, env: Env) {
       .bind(pageId)
       .all();
     
-    const comments = organizeComments(result.results as unknown as Comment[]);
+    const comments = organizeComments(result.results);
     
     return new Response(JSON.stringify({ comments }), {
       headers: { 'Content-Type': 'application/json' }
@@ -68,7 +47,7 @@ async function handleGet(url: URL, env: Env) {
   }
 }
 
-async function handlePost(request: Request, env: Env) {
+async function handlePost(request, env) {
   try {
     const body = await request.json();
     const { pageId, author, content, parentId } = body;
@@ -102,7 +81,7 @@ async function handlePost(request: Request, env: Env) {
   }
 }
 
-async function handlePut(request: Request, env: Env) {
+async function handlePut(request, env) {
   try {
     const body = await request.json();
     const { id, content } = body;
@@ -133,7 +112,7 @@ async function handlePut(request: Request, env: Env) {
   }
 }
 
-async function handleDelete(url: URL, env: Env) {
+async function handleDelete(url, env) {
   const id = url.searchParams.get('id');
 
   if (!id) {
@@ -159,18 +138,18 @@ async function handleDelete(url: URL, env: Env) {
   }
 }
 
-function organizeComments(flatComments: Comment[]): Comment[] {
-  const commentMap = new Map<string, Comment & { replies: Comment[] }>();
-  const rootComments: (Comment & { replies: Comment[] })[] = [];
+function organizeComments(flatComments) {
+  const commentMap = new Map();
+  const rootComments = [];
 
   // Create a map of all comments
-  flatComments.forEach((comment: Comment) => {
+  flatComments.forEach(comment => {
     commentMap.set(comment.id, { ...comment, replies: [] });
   });
 
   // Build the tree structure
-  flatComments.forEach((comment: Comment) => {
-    const commentNode = commentMap.get(comment.id)!;
+  flatComments.forEach(comment => {
+    const commentNode = commentMap.get(comment.id);
     
     if (comment.parent_id) {
       const parent = commentMap.get(comment.parent_id);

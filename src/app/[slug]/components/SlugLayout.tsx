@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import styles from './SlugLayout.module.css';
-// import Comments from './Comments';
+import Comments from './Comments';
 import SideNav from './SideNav';
 import MDXContent from './MDXContent';
 import TableOfContents from './TableOfContents';
@@ -24,7 +24,7 @@ export default function SlugLayout({ pageId }: { pageId: string }) {
           <TableOfContents pageId={pageId} isTocOpen={isTocOpen} toggleToc={toggleToc} />
           <MDXContent slug={pageId} />
         </div>
-        {/* <Comments pageId={pageId} /> */}
+        <Comments pageId={pageId} />
       </div>
     </div>
   );
