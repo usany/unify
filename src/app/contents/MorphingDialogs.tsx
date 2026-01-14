@@ -15,17 +15,8 @@ interface Props {
 }
 const MorphingDialogs = ({
   message,
-  increaseRound,
-  decreaseRound
 }: Props) => {
   const [onTransfer, setOnTransfer] = useState(false)
-  const [connectedClock, setConnectedClock] = useState({
-    clock: '',
-    cancelled: false,
-  })
-  const [confirmingClock, setConfirmingClock] = useState('')
-  const [returningClock, setReturningClock] = useState('')
-  const [confirmedReturnClock, setConfirmedReturnClock] = useState('')
   return (
     <MorphingDialog
       transition={{

@@ -1,7 +1,7 @@
 import { MorphingDialogContent } from '@/components/ui/morphing-dialog'
 import { User } from 'firebase/auth'
 import { useState } from 'react'
-import Specifics from 'src/pages/core/specifics/Specifics'
+import Specifics from './Specifics'
 
 interface Props {
   message: { id: string; text: object }
