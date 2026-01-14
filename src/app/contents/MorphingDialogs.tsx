@@ -6,7 +6,6 @@ import {
 } from '../../components/ui/morphing-dialog'
 import { useEffect, useState } from 'react'
 import CardsViews from './CardsViews'
-import Specifics from './Specifics'
 import Link from 'next/link'
 
 interface Props {
