@@ -3,13 +3,13 @@ import BottomNavigationAction from '@mui/material/BottomNavigationAction'
 import { Pencil, Presentation, Umbrella } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 
-function NavigationsLayout() {
+function NavigationsLayout({value}: {value: string}) {
   const pathname = usePathname()
   const router = useRouter()
   return (
     <BottomNavigation
       showLabels
-      value={pathname}
+      value={value}
       onChange={(event, newValue) => {
         router.push(newValue)
       }}
@@ -20,8 +20,8 @@ function NavigationsLayout() {
         icon={<Pencil />}
       />
       <BottomNavigationAction
-        label="Login"
-        value="/login"
+        label="Status"
+        value="/status"
         icon={<Umbrella />}
       />
       <BottomNavigationAction
