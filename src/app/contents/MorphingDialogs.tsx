@@ -7,6 +7,7 @@ import {
 import { useEffect, useState } from 'react'
 import CardsViews from './CardsViews'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation';
 
 interface Props {
   message: { id: string; text: object }
@@ -15,6 +16,7 @@ const MorphingDialogs = ({
   message,
 }: Props) => {
   const [onTransfer, setOnTransfer] = useState(false)
+  const pathname = usePathname()
   return (
     <MorphingDialog
       transition={{
@@ -25,7 +27,7 @@ const MorphingDialogs = ({
       <MorphingDialogTrigger>
         <Link
           key={message.id}
-          href={`${location.pathname}?card=sample`}
+          href={`${pathname}?card=sample`}
         >
           <CardsViews
             message={message}
