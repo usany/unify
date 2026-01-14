@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Tilt from 'react-parallax-tilt'
-import SpecificsRear from './SpecificsRear'
+// import SpecificsRear from './SpecificsRear'
 // import SpecificsDefault from './SpecificsDefault'
 import SpecificsRear from './SpecificsRear'
 import getShadowColor from './getShadowColor'

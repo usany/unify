@@ -6,7 +6,7 @@ import {
 } from '../../components/ui/morphing-dialog'
 import { useEffect, useState } from 'react'
 import CardsViews from './CardsViews'
-import Specifics from './specifics/Specifics'
+import Specifics from './Specifics'
 
 interface Props {
   message: { id: string; text: object }

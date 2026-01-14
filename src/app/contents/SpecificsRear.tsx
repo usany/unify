@@ -1,7 +1,7 @@
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Divider from '@mui/material/Divider'
-// import staticImage from 'src/assets/umbrellasfixed.png'
+import staticImage from 'src/assets/umbrellasfixed.png'
 import useSelectors from 'src/hooks/useSelectors'
 import useTexts from 'src/hooks/useTexts'
 import Avatars from '../Avatars'
@@ -24,9 +24,9 @@ function SpecificsRear({
   returningClock,
   confirmedReturnClock,
 }: Props) {
-  const { borrowing, lending, createdAt, supportedAt, borrowedAt, lendedAt, returnOnProcessAt, returnConfirmedAt, issued } = useTexts()
-  const profile = useSelectors((state) => state.profile.value)
-  const profileImageUrl = useSelectors((state) => state.profileImageUrl.value)
+  // const { borrowing, lending, createdAt, supportedAt, borrowedAt, lendedAt, returnOnProcessAt, returnConfirmedAt, issued } = useTexts()
+  // const profile = useSelectors((state) => state.profile.value)
+  // const profileImageUrl = useSelectors((state) => state.profileImageUrl.value)
   const id = message?.id || ''
   const shadowColor = getShadowColor(id)
   // useEffect(() => {
@@ -43,74 +43,74 @@ function SpecificsRear({
   const sendedDefaultProfile = sendingProfile?.connectedDefaultProfile
   const sendedProfileImageUrl = sendingProfile?.connectedProfileImageUrl
 
-  const passingValueCreator = {
-    profileImage: message.creatorProfileImage,
-    defaultProfile: message.creatorDefaultProfile,
-    profileImageUrl: message.creatorProfileImageUrl,
-  }
-  const passingValueConnected = {
-    profileImage: message.connectedProfileImage || sendedProfileImage,
-    defaultProfile:
-      message.connectedDefaultProfile ||
-      sendedDefaultProfile ||
-      profile.defaultProfile,
-    profileImageUrl:
-      message.connectedProfileImageUrl ||
-      sendedProfileImageUrl ||
-      profileImageUrl,
-  }
-  const connectedMoment = connectedClock.cancelled
-    ? ''
-    : message?.connectedClock
-    ? message?.connectedClock
-    : connectedClock.clock
-  const confirmingMoment = message?.confirmingClock
-    ? message.confirmingClock
-    : confirmingClock
-  const returningMoment = message?.returningClock
-    ? message.returningClock
-    : returningClock
-  const confirmedReturnMoment = message?.confirmedReturnClock
-    ? message.confirmedReturnClock
-    : confirmedReturnClock
-  const statusCollection = [
-    {
-      isBorrowing: message.text.choose === 1,
-      passingProfile: passingValueCreator,
-      text: createdAt,
-      messageClock: message.createdClock
-    },
-    {
-      isBorrowing: message.text.choose !== 1,
-      passingProfile: passingValueConnected,
-      text: supportedAt,
-      messageClock: connectedMoment
-    },
-    {
-      isBorrowing: message.text.choose === 1,
-      passingProfile: passingValueCreator,
-      text: message.text.choose === 1 ? borrowedAt : lendedAt,
-      messageClock: confirmingMoment
-    },
-    {
-      isBorrowing: true,
-      passingProfile: message.text.choose === 1 ? passingValueCreator : passingValueConnected,
-      text: returnOnProcessAt,
-      messageClock: returningMoment
-    },
-    {
-      isBorrowing: false,
-      passingProfile: message.text.choose === 1 ? passingValueConnected : passingValueCreator,
-      text: returnConfirmedAt,
-      messageClock: confirmedReturnMoment
-    },
-    {
-      isBorrowing: false,
-      passingProfile: message.text.choose === 1 ? passingValueConnected : passingValueCreator,
-      text: issued,
-      messageClock: message.issueClock
-    }
-  ]
+  // const passingValueCreator = {
+  //   profileImage: message.creatorProfileImage,
+  //   defaultProfile: message.creatorDefaultProfile,
+  //   profileImageUrl: message.creatorProfileImageUrl,
+  // }
+  // const passingValueConnected = {
+  //   profileImage: message.connectedProfileImage || sendedProfileImage,
+  //   defaultProfile:
+  //     message.connectedDefaultProfile ||
+  //     sendedDefaultProfile ||
+  //     profile.defaultProfile,
+  //   profileImageUrl:
+  //     message.connectedProfileImageUrl ||
+  //     sendedProfileImageUrl ||
+  //     profileImageUrl,
+  // }
+  // const connectedMoment = connectedClock.cancelled
+  //   ? ''
+  //   : message?.connectedClock
+  //   ? message?.connectedClock
+  //   : connectedClock.clock
+  // const confirmingMoment = message?.confirmingClock
+  //   ? message.confirmingClock
+  //   : confirmingClock
+  // const returningMoment = message?.returningClock
+  //   ? message.returningClock
+  //   : returningClock
+  // const confirmedReturnMoment = message?.confirmedReturnClock
+  //   ? message.confirmedReturnClock
+  //   : confirmedReturnClock
+  // const statusCollection = [
+  //   {
+  //     isBorrowing: message.text.choose === 1,
+  //     passingProfile: passingValueCreator,
+  //     text: createdAt,
+  //     messageClock: message.createdClock
+  //   },
+  //   {
+  //     isBorrowing: message.text.choose !== 1,
+  //     passingProfile: passingValueConnected,
+  //     text: supportedAt,
+  //     messageClock: connectedMoment
+  //   },
+  //   {
+  //     isBorrowing: message.text.choose === 1,
+  //     passingProfile: passingValueCreator,
+  //     text: message.text.choose === 1 ? borrowedAt : lendedAt,
+  //     messageClock: confirmingMoment
+  //   },
+  //   {
+  //     isBorrowing: true,
+  //     passingProfile: message.text.choose === 1 ? passingValueCreator : passingValueConnected,
+  //     text: returnOnProcessAt,
+  //     messageClock: returningMoment
+  //   },
+  //   {
+  //     isBorrowing: false,
+  //     passingProfile: message.text.choose === 1 ? passingValueConnected : passingValueCreator,
+  //     text: returnConfirmedAt,
+  //     messageClock: confirmedReturnMoment
+  //   },
+  //   {
+  //     isBorrowing: false,
+  //     passingProfile: message.text.choose === 1 ? passingValueConnected : passingValueCreator,
+  //     text: issued,
+  //     messageClock: message.issueClock
+  //   }
+  // ]
   return (
     <div className="backSide">
       <Card
@@ -130,15 +130,15 @@ function SpecificsRear({
           <div className="flex justify-center">
             <img
               className="absolute w-[50%] top-[25%] opacity-50"
-              src={staticImage}
+              // src={staticImage}
             />
           </div>
           <div className="flex justify-between">
-            <div>{borrowing}</div>
-            <div>{lending}</div>
+            <div>빌리기</div>
+            <div>빌려주기</div>
           </div>
           <Divider />
-          {statusCollection.map((value) => {
+          {/* {statusCollection.map((value) => {
             if (value.messageClock) {
               return (
                 <div className={`flex ${value.isBorrowing ? 'justify-start' : 'justify-end'} gap-5`}>
@@ -163,7 +163,7 @@ function SpecificsRear({
               )
             }
             return null
-          })}
+          })} */}
           {/* {message.text.choose === 1 ? (
             <div className='pt-5'>
               {message.createdClock && (
