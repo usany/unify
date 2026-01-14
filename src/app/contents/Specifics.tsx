@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import Tilt from 'react-parallax-tilt'
 import SpecificsRear from './SpecificsRear'
-import SpecificsDefault from './SpecificsDefault'
+// import SpecificsDefault from './SpecificsDefault'
+import SpecificsRear from './SpecificsRear'
 import getShadowColor from './getShadowColor'
 import { RotateCcw, Redo } from 'lucide-react';
-import { usePulse } from '../morphingDialogs/usePulse'
+// import { usePulse } from '../morphingDialogs/usePulse'
 
 interface Props {
   message: {}
@@ -37,10 +38,10 @@ function Specifics({
   const flipCards = () => {
     setCardFlipped(!cardFlipped)
   }
-  const { onPulse, changeOnPulse } = usePulse({
-    message: message,
-    round: message?.round,
-  })
+  // const { onPulse, changeOnPulse } = usePulse({
+  //   message: message,
+  //   round: message?.round,
+  // })
   
   return (
     <div
@@ -94,13 +95,12 @@ function Specifics({
       >
         <div className={`cards ${cardFlipped && 'rotatingCards'} z-50`}>
           <div className="sides">
-            <SpecificsDefault
+            {/* <SpecificsDefault
               drawerOpenTrue={drawerOpenTrue}
               message={message}
               connectedUser={connectedUser}
               increaseRound={increaseRound}
               decreaseRound={decreaseRound}
-              changeOnPulse={changeOnPulse}
               changeConnectedUser={changeConnectedUser}
               toggleOnTransfer={toggleOnTransfer}
               handleConnectedClock={handleConnectedClock}
@@ -108,7 +108,7 @@ function Specifics({
               handleReturningClock={handleReturningClock}
               handleConfirmedReturnClock={handleConfirmedReturnClock}
               changeMessageValue={changeMessageValue}
-            />
+            /> */}
           </div>
           <SpecificsRear
             message={message}
