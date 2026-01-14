@@ -1,11 +1,9 @@
 import { MorphingDialogContent } from '@/components/ui/morphing-dialog'
-import { User } from 'firebase/auth'
 import { useState } from 'react'
 import Specifics from './Specifics'
 
 interface Props {
   message: { id: string; text: object }
-  userObj: User | null
 }
 
 const Morphings = ({

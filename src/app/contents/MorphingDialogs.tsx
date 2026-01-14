@@ -5,9 +5,7 @@ import {
   MorphingDialogTrigger,
 } from '../../components/ui/morphing-dialog'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import CardsViews from '../card/CardsViews'
-import Morphings from './Morphings'
+import CardsViews from './CardsViews'
 import Specifics from './specifics/Specifics'
 
 interface Props {

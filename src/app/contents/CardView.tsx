@@ -5,23 +5,23 @@ import CardMedia from '@mui/material/CardMedia'
 import CardViewLocation from './CardViewLocation'
 import CardViewTime from './CardViewTime'
 import CardViewTop from './CardViewTop'
-import CardViewTransfer from './CardViewTransfer'
-import { buildingsObj, staticArray } from 'src/pages/add/locationsBuildings'
+// import CardViewTransfer from './CardViewTransfer'
+// import { buildingsObj, staticArray } from 'src/pages/add/locationsBuildings'
 
 const CardView = ({ onTransfer, message, shadowColor }) => {
   const locationOne = message.text.count
-  const buildingsObject = {
-    input: buildingsObj.input,
-    ...buildingsObj.se,
-    ...buildingsObj.gu,
-    ...buildingsObj.gw
-  }
-  const key = Object.keys(buildingsObject).find((key) => buildingsObject[key].ko.name === locationOne)
-  const staticImg = buildingsObject[key]?.image
+  // const buildingsObject = {
+  //   input: buildingsObj.input,
+  //   ...buildingsObj.se,
+  //   ...buildingsObj.gu,
+  //   ...buildingsObj.gw
+  // }
+  // const key = Object.keys(buildingsObject).find((key) => buildingsObject[key].ko.name === locationOne)
+  // const staticImg = buildingsObject[key]?.image
   // const staticImg = staticArray[message.text.count] || staticArray['building']
   return (
     <div className="flex flex-col gap-5">
-      {onTransfer && <CardViewTransfer />}
+      {/* {onTransfer && <CardViewTransfer />} */}
       <Card
         className='colorTwo'
         sx={{
@@ -42,7 +42,7 @@ const CardView = ({ onTransfer, message, shadowColor }) => {
                 height: 141 * 0.9,
                 borderRadius: '10px'
               }}
-              image={staticImg}
+              image={''}
             />
           </div>
           <div className="flex flex-col pt-1 gap-1 text-xs">
