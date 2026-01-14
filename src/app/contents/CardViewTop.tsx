@@ -1,12 +1,15 @@
 import { Chip } from '@mui/material'
 import useTexts from 'src/hooks/useTexts'
 import Avatars from '../Avatars'
+import { useLanguage } from '@/context/LanguageContext';
 
 const CardViewTop = ({ message }) => {
-  const {borrowing, lending} = useTexts()
+  // const {borrowing, lending} = useTexts()
+  const { language } = useLanguage();
+  
   const profileUrl = message?.creatorUrl
   const item = message.item
-  const action = message.text.choose === 1 ? borrowing : lending
+  // const action = message.text.choose === 1 ? borrowing : lending
   const passingValue = {
     profileImage: message.creatorProfileImage,
     defaultProfile: message.creatorDefaultProfile,
@@ -26,7 +29,7 @@ const CardViewTop = ({ message }) => {
         <Chip
           label={
             <div className="text-xs">
-              {item} {action}
+              {item} 빌리기
             </div>
           }
         />

@@ -1,8 +1,8 @@
 import { Watch } from 'lucide-react'
-import useSelectors from 'src/hooks/useSelectors'
+import { useLanguage } from '@/context/LanguageContext';
 
 const CardViewTime = ({ message }) => {
-  const languages = useSelectors((state) => state.languages.value)
+  const { language } = useLanguage();
   return (
     <div className="flex gap-1">
       <div className="flex items-center">
