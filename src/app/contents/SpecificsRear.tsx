@@ -1,13 +1,13 @@
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Divider from '@mui/material/Divider'
-import staticImage from 'src/assets/umbrellasfixed.png'
-import useSelectors from 'src/hooks/useSelectors'
-import useTexts from 'src/hooks/useTexts'
-import Avatars from '../Avatars'
+// import staticImage from 'src/assets/umbrellasfixed.png'
+// import useSelectors from 'src/hooks/useSelectors'
+// import useTexts from 'src/hooks/useTexts'
+// import Avatars from '../Avatars'
 import getShadowColor from './getShadowColor'
-import FormatClock from '../FormatClock'
-import getCard from '../getCard'
+// import FormatClock from '../FormatClock'
+// import getCard from '../getCard'
 
 interface Props {
   message: {}
@@ -38,7 +38,7 @@ function SpecificsRear({
   //   }
   //   messages()
   // }, [connectedClock, confirmingClock, returningClock, confirmedReturnClock])
-  const sendingProfile = getCard(id)
+  // const sendingProfile = getCard(id)
   const sendedProfileImage = sendingProfile?.connectedProfileImage
   const sendedDefaultProfile = sendingProfile?.connectedDefaultProfile
   const sendedProfileImageUrl = sendingProfile?.connectedProfileImageUrl

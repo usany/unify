@@ -7,6 +7,7 @@ import {
 import { useEffect, useState } from 'react'
 import CardsViews from './CardsViews'
 import Specifics from './Specifics'
+import Link from 'next/link'
 
 interface Props {
   message: { id: string; text: object }
@@ -25,8 +26,7 @@ const MorphingDialogs = ({
       <MorphingDialogTrigger>
         <Link
           key={message.id}
-          // Moving to the product page
-          to={`${location.pathname}?card=sample`}
+          href={`${location.pathname}?card=sample`}
         >
           <CardsViews
             message={message}
@@ -35,11 +35,8 @@ const MorphingDialogs = ({
         </Link>
       </MorphingDialogTrigger>
       <MorphingDialogContainer>
-        <MorphingDialogContent
-          drawerOpen={drawerOpen}
-          drawerOpenFalse={drawerOpenFalse}
-        >
-          <Specifics />
+        <MorphingDialogContent>
+          {/* <Specifics /> */}
         </MorphingDialogContent>
       </MorphingDialogContainer>
     </MorphingDialog>
