@@ -35,9 +35,12 @@ const MorphingDialogs = ({
         </Link>
       </MorphingDialogTrigger>
       <MorphingDialogContainer>
-        <MorphingDialogContent>
-          {/* <Specifics /> */}
-        </MorphingDialogContent>
+        {/* <MorphingDialogContent
+          drawerOpen={drawerOpen}
+          drawerOpenFalse={drawerOpenFalse}
+        >
+          <Specifics />
+        </MorphingDialogContent> */}
       </MorphingDialogContainer>
     </MorphingDialog>
   )
