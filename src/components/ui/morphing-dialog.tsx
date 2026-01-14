@@ -1,7 +1,7 @@
 'use client'
 
-import useClickOutside from '@/hooks/useClickOutside'
-import { cn } from '@/lib/utils'
+import useClickOutside from '../hooks/useClickOutside'
+import { cn } from '../lib/utils'
 import { XIcon } from 'lucide-react'
 import {
   AnimatePresence,
