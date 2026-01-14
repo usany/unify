@@ -20,21 +20,6 @@ const CardsViews = ({ message, onTransfer }: Props) => {
   if (!id) return null
   return (
     <Tilt>
-      {/* {onPulse || issue ? (
-        <PulsatingButton pulseColor={shadowColor}>
-          <CardView
-            onTransfer={false}
-            message={message}
-            shadowColor={shadowColor}
-          />
-        </PulsatingButton>
-      ) : (
-        <CardView
-          onTransfer={onTransfer}
-          message={message}
-          shadowColor={shadowColor}
-        />
-      )} */}
       <CardView
         onTransfer={onTransfer}
         message={message}
