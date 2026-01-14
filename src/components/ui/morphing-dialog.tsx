@@ -20,7 +20,7 @@ import React, {
   useState,
 } from 'react'
 import { createPortal } from 'react-dom'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 export type MorphingDialogContextType = {
   isOpen: boolean
@@ -151,14 +151,14 @@ function MorphingDialogContent({
   //   useState<HTMLElement | null>(null)
   // const [lastFocusableElement, setLastFocusableElement] =
   //   useState<HTMLElement | null>(null)
-  const navigate = useNavigate()
-  const [searchParams] = useSearchParams();
+  const router = useRouter()
+  const searchParams = useSearchParams();
   const card = searchParams.get("card");
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setIsOpen(false)
-        navigate(`${location.pathname}`, { replace: true })
+        router.replace(`${location.pathname}`)
         // navigate(-1)
       }
       // if (event.key === 'Tab') {
@@ -213,7 +213,7 @@ function MorphingDialogContent({
   useClickOutside(containerRef, () => {
     if (isOpen && !drawerOpen) {
       setIsOpen(false)
-      navigate(`${location.pathname}`, { replace: true })
+      router.replace(`${location.pathname}`)
       // navigate(-1)
     }
     drawerOpenFalse()
