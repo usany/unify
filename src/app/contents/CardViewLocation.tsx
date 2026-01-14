@@ -48,7 +48,7 @@ const CardViewLocation = ({ message }) => {
       <div className="flex items-center">
         <Building />
       </div>
-      <div className="flex items-center">중도</div>
+      <div className="flex items-center">{message.locationOne} {message.locationTwo}</div>
     </div>
   )
 }
