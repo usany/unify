@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
 import { LinkItem } from '@/types/links';
 import links from 'links';
+import Playlist from './contents/Playlist';
 
 const translations = {
   en: {
