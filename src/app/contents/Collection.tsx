@@ -28,17 +28,17 @@ import { AnimatedGroup } from 'src/components/motion-primitives/animated-group'
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import { useLanguage } from 'src/hooks/useLanguage';
+import { useLanguage } from '@/context/LanguageContext'
 
 function Collection() {
-  const {language} = useLanguage()
+  const { language } = useLanguage()
   return (
     <div>
       <button
         className="flex gap-5 justify-center"
       >
         <PlusCircle />
-        {register}
+        {language === 'en' ? 'Register' : '등록'}
       </button>
       {images.length > 0 && 
         <AnimatedGroup className="grid grid-cols-[repeat(auto-fit,minmax(80px,1fr))] col-span-full p-5">

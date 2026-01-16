@@ -1,6 +1,6 @@
 import TextField from '@mui/material/TextField'
 import ContactAddress from './ContactAddress'
-import { useLanguage } from 'src/hooks/useLanguage'
+import { useLanguage } from '@/context/LanguageContext'
 
 function ContactForm() {
   const { language } = useLanguage()
