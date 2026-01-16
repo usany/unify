@@ -2,13 +2,15 @@
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useMemo } from 'react';
+import { useTheme } from '@/app/context/ThemeContext';
 
 interface MuiThemeProviderProps {
     children: React.ReactNode;
-    theme: string;
 }
 
-export default function MuiThemeProvider({ children, theme }: MuiThemeProviderProps) {
+export default function MuiThemeProvider({ children }: MuiThemeProviderProps) {
+    const { theme } = useTheme();
+    
     const muiTheme = useMemo(() => {
         return createTheme({
             palette: {

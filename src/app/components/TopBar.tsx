@@ -3,17 +3,17 @@ import { useState, useEffect } from 'react';
 import styles from './TopBar.module.css';
 import { usePathname } from 'next/navigation';
 import links from 'links';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/app/context/LanguageContext';
+import { useTheme } from '@/app/context/ThemeContext';
 
 interface TopBarProps {
   language: 'ko' | 'en';
-  theme: string;
 }
 
-export default function TopBar({ language, theme }: TopBarProps) {
+export default function TopBar({ language }: TopBarProps) {
   const [showLinks, setShowLinks] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(theme === 'dark');
+  const { theme, toggleTheme } = useTheme();
   const { language: currentLanguage, toggleLanguage: contextToggleLanguage } = useLanguage();
   const isEnglish = currentLanguage === 'en';
   const pathname = usePathname();
@@ -30,19 +30,7 @@ export default function TopBar({ language, theme }: TopBarProps) {
   }, []);
 
   const toggleDarkMode = () => {
-    const newMode = !isDarkMode;
-    setIsDarkMode(newMode);
-
-    const themeValue = newMode ? 'dark' : 'light';
-    document.cookie = `theme=${themeValue}; path=/; max-age=31536000`; // 1 year
-
-    if (newMode) {
-      document.documentElement.classList.add('dark');
-      document.documentElement.setAttribute('data-theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      document.documentElement.setAttribute('data-theme', 'light');
-    }
+    toggleTheme();
   };
 
   const toggleLanguage = () => {
@@ -59,7 +47,7 @@ export default function TopBar({ language, theme }: TopBarProps) {
             onClick={toggleDarkMode}
             aria-label="Toggle dark mode"
           >
-            {isDarkMode ? '🌙' : '☀️'}
+            {theme === 'dark' ? '🌙' : '☀️'}
           </button>
           <button
             className={styles.toggleButton}

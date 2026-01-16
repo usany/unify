@@ -1,6 +1,7 @@
 import TopBar from '@/components/TopBar';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
-import { LanguageProvider } from '@/context/LanguageContext';
+import { LanguageProvider } from '@/app/context/LanguageContext';
+import { ThemeProvider } from '@/app/context/ThemeContext';
 import MuiThemeProvider from '@/components/MuiThemeProvider';
 import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
@@ -21,12 +22,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body>
         <AppRouterCacheProvider>
           <LanguageProvider initialLanguage={language as 'ko' | 'en'}>
-            <MuiThemeProvider theme={theme}>
-              <TopBar language={language as 'ko' | 'en'} theme={theme} />
-              <main style={{ paddingTop: '60px' }}>
-                {children}
-              </main>
-            </MuiThemeProvider>
+            <ThemeProvider initialTheme={theme as 'light' | 'dark'}>
+              <MuiThemeProvider>
+                <TopBar language={language as 'ko' | 'en'} />
+                <main style={{ paddingTop: '60px' }}>
+                  {children}
+                </main>
+              </MuiThemeProvider>
+            </ThemeProvider>
           </LanguageProvider>
         </AppRouterCacheProvider>
       </body>
