@@ -43,46 +43,14 @@ function Collection() {
         <AnimatedGroup className="grid grid-cols-[repeat(auto-fit,minmax(80px,1fr))] col-span-full p-5">
           {images.map((element, index) => {
             return (
-              <MorphingDialog key={index}>
-                <MorphingDialogTrigger>
-                  <img
-                    src={element.defaultProfile}
-                    className="w-[80px] h-[80px]"
-                    onClick={() => {
-                      navigate(`/collection?card=${element.uid}`, {replace: true})
-                      setConnectedUsers(element.connectedUsers)
-                    }}
-                  />
-                </MorphingDialogTrigger>
-                <MorphingDialogContainer>
-                  <MorphingDialogContent
-                    drawerOpen={drawerOpen}
-                    drawerOpenFalse={() => setDrawerOpen(false)}
-                  >
-                    <div className="flex flex-col px-5">
-                      <img src={element.defaultProfile} />
-                      <div className='flex justify-end'>
-                        {element.displayName}
-                      </div>
-                      <div className='flex justify-end gap-1'>
-                        <Button className='colorOne' variant='outlined' onClick={() => {
-                          if (connectedUsers.includes(profile.uid)) {
-                            disconnectUser(element.uid)
-                          } else {
-                            connectUser(element.uid)
-                          }
-                        }}>
-                          {connectedUsers.includes(profile.uid) ? <div className='flex gap-1'><ThumbUpIcon />{`${connectedUsers.length}`}</div> : <div className='flex gap-1'><ThumbUpAltOutlinedIcon />{`${connectedUsers.length}`}</div>}
-                        </Button>
-                        {element.userUid === profile.uid && <Button className='colorOne' variant='outlined' onClick={() => {
-                          navigate('/collection', {replace: true})
-                          deleteImage(element.uid)
-                        }}>{<Ban />}</Button>}
-                      </div>
-                    </div>
-                  </MorphingDialogContent>
-                </MorphingDialogContainer>
-              </MorphingDialog>
+              <img
+                src={element.defaultProfile}
+                className="w-[80px] h-[80px]"
+                onClick={() => {
+                  navigate(`/collection?card=${element.uid}`, {replace: true})
+                  setConnectedUsers(element.connectedUsers)
+                }}
+              />
             )
           })}
         </AnimatedGroup>
