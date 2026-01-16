@@ -1,12 +1,13 @@
 import TextField from '@mui/material/TextField'
 import ContactAddress from './ContactAddress'
+import { useLanguage } from 'src/hooks/useLanguage'
 
 function ContactForm() {
-  
+  const { language } = useLanguage()
   return (
     <form id="auth">
-      <ContactAddress action={'sending'} label={'익명 유저'} />
-      <ContactAddress action={'receiving'} label={'담당자'} />
+      <ContactAddress action={language === 'en' ? 'Sending' : '발신'} label={language === 'en' ? 'Anonymous User' : '익명 유저'} />
+      <ContactAddress action={language === 'en' ? 'Receiving' : '수신'} label={language === 'en' ? 'Manager' : '담당자'} />
       <div className="pt-5 px-5">
         <TextField
           name="title"
@@ -14,7 +15,7 @@ function ContactForm() {
             display: 'flex',
             justifyContent: 'center'
           }}
-          label={'신고 제목'}
+          label={language === 'en' ? 'Report Title' : '신고 제목'}
           multiline
           variant="outlined"
           fullWidth
@@ -27,7 +28,7 @@ function ContactForm() {
             display: 'flex',
             justifyContent: 'center',
           }}
-          label={'신고 내용'}
+          label={language === 'en' ? 'Report Content' : '신고 내용'}
           multiline
           rows={5}
           variant="outlined"
