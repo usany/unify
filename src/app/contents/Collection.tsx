@@ -4,6 +4,7 @@ import { useLanguage } from '@/context/LanguageContext'
 
 function Collection() {
   const { language } = useLanguage()
+  const images = []
   return (
     <div>
       <button
