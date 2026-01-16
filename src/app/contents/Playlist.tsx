@@ -1,10 +1,7 @@
-import useSelectors from 'src/hooks/useSelectors';
+import { useTheme } from '@/app/context/ThemeContext';
 
-interface Props {
-  open: boolean
-}
-const Playlist = ({ open }: Props) => {
-  const theme = useSelectors((state) => state.theme.value);
+const Playlist = () => {
+  const { theme } = useTheme();
   return (
     <div
       className={`fixed bottom-0 left-0 z-[120] flex justify-start transition-all ${open ? 'opacity-100 pointer-events-auto duration-250' : 'opacity-0 pointer-events-none duration-0'

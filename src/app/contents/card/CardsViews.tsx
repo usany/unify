@@ -12,7 +12,7 @@ interface Props {
 const CardsViews = ({ message, onTransfer }: Props) => {
   const id = message?.id || ''
   const shadowColor = getShadowColor(id)
-  const issue = message?.issue
+  // const issue = message?.issue
   // const { onPulse } = usePulse({
   //   message: message,
   //   round: message?.round,
