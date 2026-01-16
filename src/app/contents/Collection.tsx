@@ -28,9 +28,10 @@ import { AnimatedGroup } from 'src/components/motion-primitives/animated-group'
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import { useLanguage } from 'src/hooks/useLanguage';
 
 function Collection() {
-
+  const {language} = useLanguage()
   return (
     <div>
       <button
@@ -46,10 +47,10 @@ function Collection() {
               <img
                 src={element.defaultProfile}
                 className="w-[80px] h-[80px]"
-                onClick={() => {
-                  navigate(`/collection?card=${element.uid}`, {replace: true})
-                  setConnectedUsers(element.connectedUsers)
-                }}
+                // onClick={() => {
+                //   navigate(`/collection?card=${element.uid}`, {replace: true})
+                //   setConnectedUsers(element.connectedUsers)
+                // }}
               />
             )
           })}
