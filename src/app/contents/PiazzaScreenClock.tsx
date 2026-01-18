@@ -1,6 +1,7 @@
+import { useLanguage } from "@/context/LanguageContext"
 
 const PiazzaScreenClock = ({ value }) => {
-  const languages = useSelectors((state) => state.languages.value)
+  const { language } = useLanguage()
   const clock = new Date(value.messageClock)
   let messageHours = clock.getHours()
   const messageMonth = (clock.getMonth() + 1 < 10 ? '0':'')+(clock.getMonth() + 1).toString()
@@ -18,10 +19,10 @@ const PiazzaScreenClock = ({ value }) => {
   return (
     <>
       {clock.getFullYear()}-{messageMonth}-{messageDate}{' '}
-      {languages === 'ko' && messageAmpm} {messageHours}:
+      {language === 'ko' && messageAmpm} {messageHours}:
       {clock.getMinutes() < 10 && '0'}
       {clock.getMinutes()}
-      {languages === 'en' &&
+      {language === 'en' &&
         (messageAmpm === '오전' ? 'am' : 'pm')}
     </>
   )
