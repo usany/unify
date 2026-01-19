@@ -43,7 +43,7 @@ const ProfileSecond = () => {
       <Chip
         sx={{color: theme === 'light' ? 'black' : 'white' }}
         color={'success'}
-        label={<div className='flex justify-center items-center gap-1'><LottieOnce color={'blue'} />{locationConfirmed}</div>}
+        label={<div className='flex justify-center items-center gap-1'><LottieOnce color={'blue'} />{language === 'ko' ? '위치 확인' : 'Location confirmed'}</div>}
       />
     </div>
   )
