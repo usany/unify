@@ -7,6 +7,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { useLanguage } from '@/context/LanguageContext'
+import { useTheme } from '@/context/ThemeContext'
 import { Button, Chip } from '@mui/material'
 
 const campuses = {
@@ -15,7 +16,7 @@ const campuses = {
 }
 const ProfileSecond = () => {
   const {language} = useLanguage()
-  const theme = useTheme()
+  const { theme } = useTheme()
   return (
     <div className={`flex justify-center gap-1`}>
       <div className='flex items-center'>
