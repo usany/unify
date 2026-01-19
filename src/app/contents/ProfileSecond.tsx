@@ -7,7 +7,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { useLanguage } from '@/context/LanguageContext'
-import { Button } from '@mui/material'
+import { Button, Chip } from '@mui/material'
 
 const campuses = {
   ko: ['서울캠퍼스', '국제캠퍼스', '광릉캠퍼스'],
@@ -15,7 +15,7 @@ const campuses = {
 }
 const ProfileSecond = () => {
   const {language} = useLanguage()
-  
+  const theme = useTheme()
   return (
     <div className={`flex justify-center gap-1`}>
       <div className='flex items-center'>
@@ -39,6 +39,11 @@ const ProfileSecond = () => {
         </Select>
         <Button>{language === 'ko' ? '저장' : 'Save'}</Button>
       </div>
+      <Chip
+        sx={{color: theme === 'light' ? 'black' : 'white' }}
+        color={'success'}
+        label={<div className='flex justify-center items-center gap-1'><LottieOnce color={'blue'} />{locationConfirmed}</div>}
+      />
     </div>
   )
 }
