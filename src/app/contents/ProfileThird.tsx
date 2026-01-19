@@ -1,6 +1,6 @@
 import { AnimatedNumber } from "@/components/motion-primitives/animated-number"
-import { Card } from "@/components/ui/card"
 import { useLanguage } from "@/context/LanguageContext"
+import { Card } from "@mui/material"
 
 const ProfileThird = ({isFollowers}) => {
   const {language} = useLanguage()
