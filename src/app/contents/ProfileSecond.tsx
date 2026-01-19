@@ -25,7 +25,7 @@ const ProfileSecond = () => {
         </SelectTrigger>
         <SelectContent className="bg-light-1 dark:bg-dark-1">
           <SelectGroup>
-            {campuses[language as keyof typeof campuses].map((value, index) => {
+            {campuses[language].map((value, index) => {
               return (
                 <SelectItem key={index} value={campuses.en[index]}>
                   {value}
