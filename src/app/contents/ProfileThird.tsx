@@ -15,7 +15,6 @@ const ProfileCard = ({isPassoword}: {isPassoword: boolean}) => {
   )
 }
 const ProfileThird = () => {
-  const {language} = useLanguage()
   return (
     <div className='flex'>
       <ProfileCard isPassoword={true} />
