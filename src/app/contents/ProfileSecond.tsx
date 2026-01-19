@@ -12,4 +12,4 @@ const ProfileSecond = () => {
   )
 }
 
-export default ProfileFirst
+export default ProfileSecond
