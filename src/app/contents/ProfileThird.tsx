@@ -12,9 +12,7 @@ const ProfileThird = ({isFollowers}) => {
     >
       <div>
         <div>{isFollowers ? language === 'en' ? 'Followers' : '팔로워' : language === 'en' ? 'Following' : '팔로잉'}</div>
-        <div className="flex justify-center">
-          {0}
-        </div>
+        <div className="flex justify-center">0</div>
       </div>
     </Card>
   )
