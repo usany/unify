@@ -1,15 +1,9 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { DocumentData } from 'firebase/firestore'
 
-interface Props {
-  element: DocumentData | undefined
-  profile: boolean
-}
 
-const Avatars = ({ element, profile }: Props) => {
+const Avatars = ({ element, profile }: { element: any, profile: boolean }) => {
   const profileImage = element?.profileImage
   const defaultProfile = element?.defaultProfile
-  console.log(defaultProfile)
   return (
     <Avatar className={profile ? "w-48 h-48":''}>
       <AvatarImage
