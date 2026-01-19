@@ -1,4 +1,3 @@
-import { useTheme } from '@/app/context/ThemeContext';
 import Avatars from './Avatars';
 
 const ProfileSecond = () => {
