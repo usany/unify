@@ -29,6 +29,7 @@
     "next": "15.5.9",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "react-lottie": "^1.2.10",
     "react-markdown": "^10.1.0",
     "react-parallax-tilt": "^1.7.315",
     "styled-components": "^6.1.19",

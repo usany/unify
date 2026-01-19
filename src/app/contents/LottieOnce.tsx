@@ -1,13 +1,12 @@
 import Lottie from 'react-lottie'
 // import Lottie from 'lottie-react'
 import blue from './blue.json'
-import red from './red.json'
 
-function LottieOnce({color}) {
+function LottieOnce() {
   const defaultOptions = {
     loop: false,
     autoplay: true,
-    animationData: color === 'blue' ? blue : red,
+    animationData: blue,
     rendererSettings: {
       preserveAspectRatio: 'xMidYMid slice',
     },
