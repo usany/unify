@@ -8,7 +8,7 @@ import CardViewTop from './CardViewTop'
 // import CardViewTransfer from './CardViewTransfer'
 // import { buildingsObj, staticArray } from 'src/pages/add/locationsBuildings'
 
-const CardView = ({ onTransfer, message, shadowColor }) => {
+const CardView = ({ onTransfer, message, shadowColor }: { onTransfer: boolean, message: any, shadowColor: string }) => {
   // const buildingsObject = {
   //   input: buildingsObj.input,
   //   ...buildingsObj.se,
@@ -31,7 +31,7 @@ const CardView = ({ onTransfer, message, shadowColor }) => {
         }}
       >
         <CardContent
-          sx={{ padding: '5px', bgcolor: onTransfer && alpha('#000000', 0.5) }}
+          sx={{ padding: '5px', bgcolor: alpha('#000000', 0.5) }}
         >
           <CardViewTop message={message} />
           <div className="flex justify-center pt-1">

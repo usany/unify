@@ -3,7 +3,7 @@ import { Building } from 'lucide-react'
 // import locationsBuildings, { locationsCollectionLetters } from 'src/pages/add/locationsBuildings'
 // import locationsCollection from 'src/pages/add/locationsCollection'
 
-const CardViewLocation = ({ message }) => {
+const CardViewLocation = ({ message }: { message: any }) => {
   // const languages = useSelectors((state) => state.languages.value)
   // let location
   // if (languages === 'ko') {
