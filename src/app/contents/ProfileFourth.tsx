@@ -10,15 +10,12 @@ const ProfileCard = ({allies}: {allies?: string}) => {
         padding: '20px'
       }}
     >
-      <div>
-          <div>{allies ? (allies === 'followers' ? language === 'en' ? 'Followers' : '팔로워' : language === 'en' ? 'Following' : '팔로잉') : language === 'en' ? 'Points' : '포인트'}</div>
-          <div className="flex justify-center">0</div>
-        </div>
+      <div>{allies ? (allies === 'followers' ? language === 'en' ? 'Followers' : '팔로워' : language === 'en' ? 'Following' : '팔로잉') : language === 'en' ? 'Points' : '포인트'}</div>
+      <div className="flex justify-center">0</div>
     </Card>
   )
 }
 const ProfileThird = () => {
-  const {language} = useLanguage()
   return (
     <div className='flex'>
       <ProfileCard />
