@@ -14,7 +14,7 @@ const campuses = {
   en: ['Seoul Campus', 'Global Campus', 'Gwangneung Campus']
 }
 const ProfileSecond = () => {
-  const {language} = useLanguage
+  const {language} = useLanguage()
   return (
     <div className='flex items-center'>
       <Select defaultValue={campuses.en[campuses.en.indexOf('Seoul Campus')]}>
