@@ -2,7 +2,7 @@ import { AnimatedNumber } from "@/components/motion-primitives/animated-number"
 import { useLanguage } from "@/context/LanguageContext"
 import { Card } from "@mui/material"
 
-const ProfileCard = ({isFollowers}: {isFollowers: boolean}) => {
+const ProfileCard = ({allies}: {allies: string}) => {
   const {language} = useLanguage()
   return (
     <Card
@@ -11,7 +11,7 @@ const ProfileCard = ({isFollowers}: {isFollowers: boolean}) => {
       }}
     >
       <div>
-          <div>{isFollowers ? language === 'en' ? 'Followers' : '팔로워' : language === 'en' ? 'Following' : '팔로잉'}</div>
+          <div>{allies ? (allies === 'followers' ? language === 'en' ? 'Followers' : '팔로워' : language === 'en' ? 'Following' : '팔로잉') : language === 'en'}</div>
           <div className="flex justify-center">0</div>
         </div>
     </Card>
@@ -21,8 +21,8 @@ const ProfileThird = () => {
   const {language} = useLanguage()
   return (
     <div className='flex'>
-      <ProfileCard isFollowers={true} />
-      <ProfileCard isFollowers={false} />
+      <ProfileCard allies={'followers'} />
+      <ProfileCard allies={'followings'} />
     </div>
   )
 }
