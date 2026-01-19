@@ -9,6 +9,7 @@ import {
 import { useLanguage } from '@/context/LanguageContext'
 import { useTheme } from '@/context/ThemeContext'
 import { Button, Chip } from '@mui/material'
+import LottieOnce from './LottieOnce'
 
 const campuses = {
   ko: ['서울캠퍼스', '국제캠퍼스', '광릉캠퍼스'],
