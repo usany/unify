@@ -1,15 +1,17 @@
 import { AnimatedNumber } from "@/components/motion-primitives/animated-number"
 import { Card } from "@/components/ui/card"
+import { useLanguage } from "@/context/LanguageContext"
 
 const ProfileThird = ({isFollowers}) => {
+  const {language} = useLanguage()
   return (
     <Card
       sx={{
         padding: '20px'
       }}
     >
-      <div onClick={usersCollection}>
-        <div>{isFollowers ? follower : following}</div>
+      <div>
+        <div>{isFollowers ? language === 'en' ? 'Followers' : '팔로워' : language === 'en' ? 'Following' : '팔로잉'}</div>
         <div className="flex justify-center">
           {0}
         </div>
