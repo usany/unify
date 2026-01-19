@@ -35,7 +35,7 @@ const ProfileSecond = () => {
           </SelectGroup>
         </SelectContent>
       </Select>
-      <Button>Save</Button>
+      <Button>{language === 'ko' ? '저장' : 'Save'}</Button>
     </div>
   )
 }
