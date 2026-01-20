@@ -37,7 +37,7 @@ const Carousels = ({completedAction}) => {
   const borrowList = messagesList
     .map((element) => {
       if (element.round === 5) {
-        if (element.creatorId === user.uid && element.text.choose === 1) {
+        if (element.text.choose === 1) {
           return (
             <CarouselItem key={element.id} className="flex justify-center">
               <Cards
@@ -46,7 +46,6 @@ const Carousels = ({completedAction}) => {
             </CarouselItem>
           )
         } else if (
-          element.creatorId !== user.uid &&
           element.text.choose === 2
         ) {
           return (
@@ -65,7 +64,7 @@ const Carousels = ({completedAction}) => {
   const lendList = messagesList
     .map((element) => {
       if (element.round === 5) {
-        if (element.creatorId === user.uid && element.text.choose === 2) {
+        if (element.text.choose === 2) {
           return (
             <CarouselItem key={element.id} className="flex justify-center">
               <Cards
@@ -74,7 +73,6 @@ const Carousels = ({completedAction}) => {
             </CarouselItem>
           )
         } else if (
-          element.creatorId !== user.uid &&
           element.text.choose === 1
         ) {
           return (
