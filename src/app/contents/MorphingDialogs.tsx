@@ -16,13 +16,7 @@ const MorphingDialogs = () => {
   }
   const shadowColor = getShadowColor(mockMessage.id)
   return (
-    <Tilt>
-      <CardView
-        // onTransfer={onTransfer}
-        message={mockMessage}
-        shadowColor={shadowColor}
-      />
-    </Tilt>
+    <CardView />
   )
 }
 

@@ -14,7 +14,6 @@ const CardView = () => {
 
   return (
     <Tilt>
-
       <div className="flex flex-col gap-5">
         {/* {onTransfer && <CardViewTransfer />} */}
         <Card
