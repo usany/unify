@@ -1,10 +1,5 @@
-import getShadowColor from './getShadowColor';
 import CardView from './CardView';
-import Tilt from 'react-parallax-tilt'
 
-interface Props {
-  message: { id: string; text: object }
-}
 const MorphingDialogs = () => {
   const mockMessage = {
     id: Date.now().toString(),
