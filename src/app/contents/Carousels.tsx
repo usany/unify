@@ -121,7 +121,7 @@ const Carousels = ({completedAction}) => {
         }}
         className="w-full max-w-[60vw]"
         handleCardNumber={handleCardNumber}
-        completionAction={completedAction}
+        completedAction={completedAction}
       >
         <CarouselContent className="min-w-[260x]">
           {selectedList}

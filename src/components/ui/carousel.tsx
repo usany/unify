@@ -54,7 +54,7 @@ const Carousel = React.forwardRef<
       className,
       children,
       handleCardNumber,
-      completionAction,
+      completedAction,
       ...props
     },
     ref,
@@ -120,7 +120,6 @@ const Carousel = React.forwardRef<
         api?.off('select', onSelect)
       }
     }, [api, onSelect])
-    const completedAction = useSelectors((state) => state.completedAction.value)
     React.useEffect(() => {
       handleCardNumber(1)
       api?.scrollTo(0)
