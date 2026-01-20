@@ -20,20 +20,27 @@ const ChattingStacks = () => {
           },
         }}
       >
-        <Avatar>
-          <AvatarImage src={staticImage} />
-        </Avatar>
-        <div className="truncate w-1/2 px-3 overflow-hidden">
-          {language === 'ko' ? '단체 대화' : 'Group Messaging'}
+        <div className='flex p-3'>
+          <Avatar>
+            <AvatarImage src={staticImage} />
+          </Avatar>
+          <div className="flex flex-col w-full">
+            <div className="flex justify-between">
+              <div className="truncate w-1/2 px-3 overflow-hidden">
+                {language === 'ko' ? '단체 대화' : 'Group Messaging'}
+              </div>
+              <div className="truncate flex justify-end">{clockValue}</div>
+            </div>
+            <div className='flex justify-between px-3'>
+              <div>{language === 'ko' ? '환영합니다' : 'Welcome'}</div>
+              <Chip
+                sx={{ height: '20px' }}
+                label={`${language === 'ko' ? '새 대화' : 'New Chats'}`}
+                color="primary"
+              />
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col px-3">
-          <div className="truncate flex justify-end">{clockValue}</div>
-        </div>
-        <Chip
-          sx={{ height: '20px' }}
-          label={`${language === 'ko' ? '새 대화' : 'New Chats'}`}
-          color="primary"
-        />
       </Card>
     </AnimatedGroup>
   )
