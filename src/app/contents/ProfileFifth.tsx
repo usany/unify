@@ -7,7 +7,7 @@ import {
 import { Label, Pie, PieChart } from 'recharts'
 import Carousels from './Carousels'
 import { useState } from 'react'
-import { useLanguage } from '@/hooks/useLanguage'
+import { useLanguage } from '@/app/context/LanguageContext'
 
 const ProfileFifth = () => {
   const [completedAction, setCompletedAction] = useState('')
