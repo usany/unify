@@ -9,31 +9,26 @@ import { useEffect, useState } from 'react'
 import Cards from 'src/pages/core/card/Cards'
 
 const Carousels = ({completedAction}) => {
-  const user = state?.element || profile
-  const { borrowing, lending, activitiesCompleted } = useTexts()
-  const [messagesList, setMessagesList] = useState([])
   const [cardNumber, setCardNumber] = useState(1)
   const handleCardNumber = (newValue) => setCardNumber(newValue)
-  useEffect(() => {
-    const getMessage = async () => {
-      const messagesRef = query(collection(dbservice, 'num'))
-      const querySnap = await getDocs(messagesRef)
-      const messagesArray = []
-      querySnap.forEach((docSnap) => {
-        const messageId = docSnap.id
-        const messageObj = docSnap.data()
-        const message = { id: messageId, ...messageObj }
-        if (
-          messageObj.creatorId === user.uid ||
-          messageObj.connectedId === user.uid
-        ) {
-          messagesArray.push(message)
-        }
-      })
-      setMessagesList(messagesArray)
+  const messagesList = [
+    {
+      id: '1',
+      text: {
+        choose: 1
+      },
+      creatorId: '1',
+      connectedId: '2'
+    },
+    {
+      id: '2',
+      text: {
+        choose: 2
+      },
+      creatorId: '2',
+      connectedId: '1'
     }
-    getMessage()
-  }, [])
+  ]
 
   const borrowList = messagesList
     .map((element) => {
