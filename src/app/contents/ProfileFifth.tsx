@@ -29,11 +29,11 @@ const ProfileFifth = () => {
       label: 'total',
     },
     borrow: {
-      label: language === 'en' ? 'Borrow' : '대여',
+      label: language === 'en' ? 'Borrow' : '빌리기',
       color: '#e76e50',
     },
     lend: {
-      label: language === 'en' ? 'Lend' : '대여',
+      label: language === 'en' ? 'Lend' : '빌려주기',
       color: '#7fc4bc',
     },
   } satisfies ChartConfig
