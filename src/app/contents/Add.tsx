@@ -313,14 +313,6 @@ function Add({ borrow }: Props) {
 
   return (
     <div className="flex flex-col h-screen">
-      <PageTitle
-        icon={borrow ? <Minimize2 /> : <Maximize2 />}
-        title={`${
-          borrow
-            ? borrowing
-            : lending
-        } ${card} ${register}`}
-      />
       <AddSteppers addSteps={addSteps} borrow={borrow} />
       <div className={`flex justify-center ${!matches && 'min-w-[400px]' }`}>
         <AddCards
@@ -371,16 +363,6 @@ function Add({ borrow }: Props) {
       {!matches && addSteps > 1 && (
         <AddStepThree onChangeFrom={onChangeFrom} onChangeTo={onChangeTo} />
       )}
-      {addSteps === 2 && fromTo.from && fromTo.to && (
-        <div className="flex justify-center">{pleaseCheckTime}</div>
-      )}
-      {addSteps === 3 && (
-        <AddRegisterButton
-          submit={submit}
-        />
-      )}
-      {addSteps > 3 && <AddStepFour />}
-      {addSteps === 4 && <AddSnackBar />}
     </div>
   )
 }
