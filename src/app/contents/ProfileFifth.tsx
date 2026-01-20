@@ -15,12 +15,12 @@ const ProfileFifth = () => {
   const actions = [
     {
       action: 'borrow',
-      number: cards.borrowDone.length,
+      number: 1,
       fill: '#e76e50',
     },
     {
       action: 'lend',
-      number: cards.lendDone.length,
+      number: 1,
       fill: '#7fc4bc',
     },
   ]
@@ -29,11 +29,11 @@ const ProfileFifth = () => {
       label: 'total',
     },
     borrow: {
-      label: borrowing,
+      label: language === 'en' ? 'Borrow' : '대여',
       color: '#e76e50',
     },
     lend: {
-      label: lending,
+      label: language === 'en' ? 'Lend' : '대여',
       color: '#7fc4bc',
     },
   } satisfies ChartConfig
