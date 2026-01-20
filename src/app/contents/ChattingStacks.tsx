@@ -5,7 +5,7 @@ import { Card, Chip } from '@mui/material'
 
 const ChattingStacks = () => {
   const {language} = useLanguage()
-  const colorTwo = '#F5F5F5'
+  // const colorTwo = '#F5F5F5'
   const staticImage = 'https://ijsfbngiyhgvolsprxeh.supabase.co/storage/v1/object/public/remake/animalprofileRed.png'
   const clockValue = new Date().toLocaleTimeString()
   return (
@@ -14,10 +14,10 @@ const ChattingStacks = () => {
         sx={{
           flexGrow: 1,
           overflow: 'hidden',
-          bgcolor: colorTwo,
-          ':hover': {
-            bgcolor: colorTwo,
-          },
+          // bgcolor: colorTwo,
+          // ':hover': {
+          //   bgcolor: colorTwo,
+          // },
         }}
       >
         <div className='flex p-3'>
