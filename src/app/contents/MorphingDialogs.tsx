@@ -14,7 +14,6 @@ const MorphingDialogs = () => {
     startTime: Date.now(),
     finishTime: Date.now(),
   }
-  const shadowColor = getShadowColor(mockMessage.id)
   return (
     <CardView />
   )

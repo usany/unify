@@ -9,9 +9,16 @@ import Tilt from 'react-parallax-tilt'
 import getShadowColor from './getShadowColor'
 
 const CardView = () => {
+  const message = {
+    id: Date.now().toString(),
+    action: 1,
+    locationOne: '서울 중도',
+    locationTwo: '자료열람실',
+    startTime: Date.now(),
+    finishTime: Date.now(),
+  }
   const id = Date.now().toString()
   const shadowColor = getShadowColor(id)
-
   return (
     <Tilt>
       <div className="flex flex-col gap-5">
