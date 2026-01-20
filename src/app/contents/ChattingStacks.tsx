@@ -1,16 +1,8 @@
-import { useEffect, useState } from 'react'
-import Chats from 'src/pages/core/chatting/Chats'
-import { webSocket } from 'src/webSocket.tsx'
-import { usePiazzaMessage } from './usePiazzaMessage'
-import useSelectors from 'src/hooks/useSelectors'
-import EmptyCard from '../card/EmptyCard'
-import { AnimatedGroup } from 'src/components/motion-primitives/animated-group'
+import { AnimatedGroup } from '../../components/motion-primitives/animated-group'
+import { Avatar, AvatarImage } from '../../components/ui/avatar'
+import { Card, Chip } from '@mui/material'
 
-const ChattingStacks = ({
-  chattings,
-  changeChattings,
-  sorted,
-}) => {
+const ChattingStacks = () => {
   return (
     <AnimatedGroup className='w-full'>
       <Card
