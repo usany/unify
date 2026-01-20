@@ -7,10 +7,12 @@ import {
 } from '@/components/ui/carousel'
 import { useEffect, useState } from 'react'
 import Cards from 'src/pages/core/card/Cards'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 const Carousels = ({completedAction}) => {
   const [cardNumber, setCardNumber] = useState(1)
   const handleCardNumber = (newValue) => setCardNumber(newValue)
+  const {language} = useLanguage()
   const messagesList = [
     {
       id: '1',
