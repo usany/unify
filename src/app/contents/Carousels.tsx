@@ -6,7 +6,7 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel'
 import { useEffect, useState } from 'react'
-import Cards from '@/app/components/Cards'
+import CardView from './CardView'
 import { useLanguage } from '@/app/context/LanguageContext'
 
 const Carousels = ({completedAction}) => {
@@ -55,7 +55,7 @@ const Carousels = ({completedAction}) => {
       if (element.action === 1) {
         return (
           <CarouselItem key={element.id} className="flex justify-center">
-            <Cards
+            <CardView
               message={element}
             />
           </CarouselItem>
@@ -70,7 +70,7 @@ const Carousels = ({completedAction}) => {
       if (element.action === 2) {
         return (
           <CarouselItem key={element.id} className="flex justify-center">
-            <Cards
+            <CardView
               message={element}
             />
           </CarouselItem>
