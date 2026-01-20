@@ -7,9 +7,11 @@ import {
 import { Label, Pie, PieChart } from 'recharts'
 import Carousels from '../core/specifics/Carousels'
 import { useState } from 'react'
+import { useLanguage } from '@/hooks/useLanguage'
 
 const ProfileFifth = () => {
   const [completedAction, setCompletedAction] = useState('')
+  const { language } = useLanguage()
   const actions = [
     {
       action: 'borrow',
@@ -80,7 +82,7 @@ const ProfileFifth = () => {
                           y={(viewBox.cy || 0) + 24}
                           className="fill-foreground"
                         >
-                          {activitiesCompleted}
+                          {language === 'en' ? 'Activities Completed' : '활동 완료'}
                         </tspan>
                       </text>
                     )
