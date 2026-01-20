@@ -10,7 +10,7 @@ import getShadowColor from './getShadowColor'
 
 const CardView = ({message}: {message: {id: string; action: number; locationOne: string; locationTwo: string; startTime: number; finishTime: number}}) => {
   const id = Date.now().toString()
-  const shadowColor = getShadowColor(id)
+  const shadowColor = getShadowColor(id[id.length - 1])
   return (
     <Tilt>
       <div className="flex flex-col gap-5">
