@@ -129,9 +129,9 @@ const Carousels = ({completedAction}) => {
       <div>
         {completedAction
           ? completedAction === 'borrow'
-            ? `${borrowing}: `
-            : `${lending}: `
-          : `${activitiesCompleted}: `}{' '}
+            ? `${language === 'en' ? 'Borrowing' : '빌려준'}: `
+            : `${language === 'en' ? 'Lending' : '빌려받은'}: `
+          : `${language === 'en' ? 'Activities Completed' : '활동 완료'}: `}{' '}
         {cardNumber}/{selectedList.length}
       </div>
     </div>
