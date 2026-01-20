@@ -54,6 +54,7 @@ const Carousel = React.forwardRef<
       className,
       children,
       handleCardNumber,
+      completionAction,
       ...props
     },
     ref,

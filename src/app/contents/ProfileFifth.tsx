@@ -5,7 +5,7 @@ import {
   ChartLegendContent,
 } from '@/components/ui/chart'
 import { Label, Pie, PieChart } from 'recharts'
-import Carousels from '../core/specifics/Carousels'
+import Carousels from './Carousels'
 import { useState } from 'react'
 import { useLanguage } from '@/hooks/useLanguage'
 
