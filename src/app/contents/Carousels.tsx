@@ -20,7 +20,8 @@ const Carousels = ({completedAction}) => {
         choose: 1
       },
       creatorId: '1',
-      connectedId: '2'
+      connectedId: '2',
+      round: 5,
     },
     {
       id: '2',
@@ -28,7 +29,8 @@ const Carousels = ({completedAction}) => {
         choose: 2
       },
       creatorId: '2',
-      connectedId: '1'
+      connectedId: '1',
+      round: 5,
     }
   ]
 
