@@ -98,7 +98,7 @@ const ProfileFifth = () => {
           </PieChart>
         </ChartContainer>
       </div>
-      <Carousels />
+      <Carousels completedAction={completedAction}/>
     </div>
   )
 }
