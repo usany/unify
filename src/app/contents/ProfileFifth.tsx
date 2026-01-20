@@ -6,8 +6,10 @@ import {
 } from '@/components/ui/chart'
 import { Label, Pie, PieChart } from 'recharts'
 import Carousels from '../core/specifics/Carousels'
+import { useState } from 'react'
 
 const ProfileFifth = () => {
+  const [completedAction, setCompletedAction] = useState('')
   const actions = [
     {
       action: 'borrow',
@@ -50,7 +52,7 @@ const ProfileFifth = () => {
               nameKey="action"
               onClick={(value) => {
                 const action = value.action
-                dispatch(changeCompletedAction(action))
+                setCompletedAction(action)
               }}
               innerRadius={60}
             >
@@ -63,7 +65,7 @@ const ProfileFifth = () => {
                         y={viewBox.cy}
                         textAnchor="middle"
                         onClick={() => {
-                          dispatch(changeCompletedAction(''))
+                          setCompletedAction('')
                         }}
                       >
                         <tspan
