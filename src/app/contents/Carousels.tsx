@@ -6,7 +6,7 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel'
 import { useEffect, useState } from 'react'
-import Cards from 'src/pages/core/card/Cards'
+import Cards from '@/app/components/Cards'
 import { useLanguage } from '@/app/context/LanguageContext'
 
 const Carousels = ({completedAction}) => {
@@ -42,9 +42,6 @@ const Carousels = ({completedAction}) => {
             <CarouselItem key={element.id} className="flex justify-center">
               <Cards
                 message={element}
-                isOwner={true}
-                num={null}
-                points={null}
               />
             </CarouselItem>
           )
@@ -56,9 +53,6 @@ const Carousels = ({completedAction}) => {
             <CarouselItem key={element.id} className="flex justify-center">
               <Cards
                 message={element}
-                isOwner={false}
-                num={null}
-                points={null}
               />
             </CarouselItem>
           )
@@ -76,9 +70,6 @@ const Carousels = ({completedAction}) => {
             <CarouselItem key={element.id} className="flex justify-center">
               <Cards
                 message={element}
-                isOwner={true}
-                num={null}
-                points={null}
               />
             </CarouselItem>
           )
@@ -90,9 +81,6 @@ const Carousels = ({completedAction}) => {
             <CarouselItem key={element.id} className="flex justify-center">
               <Cards
                 message={element}
-                isOwner={false}
-                num={null}
-                points={null}
               />
             </CarouselItem>
           )
