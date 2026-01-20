@@ -14,48 +14,52 @@ const Carousels = ({completedAction}) => {
   const handleCardNumber = (newValue) => setCardNumber(newValue)
   const {language} = useLanguage()
   const messagesList = [
+    // {
+    //   id: '1',
+    //   text: {
+    //     choose: 1
+    //   },
+    //   creatorId: '1',
+    //   connectedId: '2',
+    //   round: 5,
+    // },
+    // {
+    //   id: '2',
+    //   text: {
+    //     choose: 2
+    //   },
+    //   creatorId: '2',
+    //   connectedId: '1',
+    //   round: 5,
+    // },
     {
-      id: '1',
-      text: {
-        choose: 1
-      },
-      creatorId: '1',
-      connectedId: '2',
-      round: 5,
+      id: Date.now().toString(),
+      action: 1,
+      locationOne: '서울 중도',
+      locationTwo: '자료열람실',
+      startTime: Date.now(),
+      finishTime: Date.now(),
     },
     {
-      id: '2',
-      text: {
-        choose: 2
-      },
-      creatorId: '2',
-      connectedId: '1',
-      round: 5,
-    }
+      id: Date.now().toString()+1,
+      action: 2,
+      locationOne: '서울 중도',
+      locationTwo: '자료열람실',
+      startTime: Date.now(),
+      finishTime: Date.now(),
+    },
   ]
 
   const borrowList = messagesList
     .map((element) => {
-      if (element.round === 5) {
-        if (element.text.choose === 1) {
-          return (
-            <CarouselItem key={element.id} className="flex justify-center">
-              <Cards
-                message={element}
-              />
-            </CarouselItem>
-          )
-        } else if (
-          element.text.choose === 2
-        ) {
-          return (
-            <CarouselItem key={element.id} className="flex justify-center">
-              <Cards
-                message={element}
-              />
-            </CarouselItem>
-          )
-        }
+      if (element.action === 1) {
+        return (
+          <CarouselItem key={element.id} className="flex justify-center">
+            <Cards
+              message={element}
+            />
+          </CarouselItem>
+        )
       }
     })
     .filter((element) => {
@@ -63,26 +67,14 @@ const Carousels = ({completedAction}) => {
     })
   const lendList = messagesList
     .map((element) => {
-      if (element.round === 5) {
-        if (element.text.choose === 2) {
-          return (
-            <CarouselItem key={element.id} className="flex justify-center">
-              <Cards
-                message={element}
-              />
-            </CarouselItem>
-          )
-        } else if (
-          element.text.choose === 1
-        ) {
-          return (
-            <CarouselItem key={element.id} className="flex justify-center">
-              <Cards
-                message={element}
-              />
-            </CarouselItem>
-          )
-        }
+      if (element.action === 2) {
+        return (
+          <CarouselItem key={element.id} className="flex justify-center">
+            <Cards
+              message={element}
+            />
+          </CarouselItem>
+        )
       }
     })
     .filter((element) => {
