@@ -6,6 +6,8 @@ import { Card, Chip } from '@mui/material'
 const ChattingStacks = () => {
   const {language} = useLanguage()
   const colorTwo = '#F5F5F5'
+  const staticImage = 'https://ijsfbngiyhgvolsprxeh.supabase.co/storage/v1/object/public/remake/animalprofileRed.png'
+  const clockValue = new Date().toLocaleTimeString()
   return (
     <AnimatedGroup className='w-full'>
       <Card
