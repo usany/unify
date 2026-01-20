@@ -1,10 +1,11 @@
 import NavigationsLayout from './NavigationsLayout';
 import MorphingDialogs from './MorphingDialogs';
+import ChattingStacks from './ChattingStacks';
 
 # 상태 <a id="status" />
 <NavigationsLayout value="/status" />
 진행 중인 카드와 대화를 확인할 수 있는 페이지입니다.
 <MorphingDialogs />
 카드를 클릭하면 카드 앞면과 뒷면의 상세 내용을 확인할 수 있습니다. 카드 앞면에는 공유를 진행하는 유저와 함께 물건, 장소, 시간이 표시됩니다. 카드 앞면에서 버튼을 클릭해 공유 시작부터 마무리까지 진행할 수 있습니다. 카드 뒷면에는 매 진행 상황에 대한 내역이 표시됩니다. 유저가 상세 내용을 확인해 공유를 진행해야 할 상황에는 카드 주변에 불빛이 표시됩니다. 공유가 진행 중인 상황에서 상대방의 프로필을 클릭해 프로필 페이지로 이동할 수 있습니다. 공유가 진행 중이지 않은 상황에는 카드를 길게 누르거나 상세 내용에서 삭제를 진행할 수 있습니다.
-
+<ChattingStacks />
 대화를 클릭하면 대화 페이지로 이동합니다. 단체 대화방에서 알림을 설정해 단체 대화를 포함할 수 있습니다. 내 상태에서 대화를 삭제하고 싶다면 대화를 길게 눌러 삭제할 수 있습니다.
