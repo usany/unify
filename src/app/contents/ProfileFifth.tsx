@@ -4,22 +4,10 @@ import {
   ChartLegend,
   ChartLegendContent,
 } from '@/components/ui/chart'
-import { useDispatch } from 'react-redux'
 import { Label, Pie, PieChart } from 'recharts'
-import useTexts from 'src/hooks/useTexts'
-import { changeCompletedAction } from 'src/stateSlices/completedActionSlice'
 import Carousels from '../core/specifics/Carousels'
-import { Card } from 'src/components/ui/card'
-import useSelectors from 'src/hooks/useSelectors'
-import { useLocation } from 'react-router-dom'
 
 const ProfileFifth = () => {
-  const { state } = useLocation()
-  const profile = useSelectors((state) => state.profile.value)
-  const userUid = state?.element.uid || profile?.uid
-  const dispatch = useDispatch()
-  const {startCollectingCardsBySharingItemsWithUsers, noCards} = useTexts()
-  const { borrowing, lending, activitiesCompleted } = useTexts()
   const actions = [
     {
       action: 'borrow',
