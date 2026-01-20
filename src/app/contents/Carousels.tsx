@@ -7,7 +7,7 @@ import {
 } from '@/components/ui/carousel'
 import { useEffect, useState } from 'react'
 import Cards from 'src/pages/core/card/Cards'
-import { useLanguage } from '@/contexts/LanguageContext'
+import { useLanguage } from '@/app/context/LanguageContext'
 
 const Carousels = ({completedAction}) => {
   const [cardNumber, setCardNumber] = useState(1)
