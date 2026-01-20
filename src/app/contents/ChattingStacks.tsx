@@ -4,7 +4,7 @@ import { Avatar, AvatarImage } from '../../components/ui/avatar'
 import { Card, Chip } from '@mui/material'
 
 const ChattingStacks = () => {
-  const {language} = useLanguage
+  const {language} = useLanguage()
   const colorTwo = '#F5F5F5'
   return (
     <AnimatedGroup className='w-full'>
