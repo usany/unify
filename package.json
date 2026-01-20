@@ -32,6 +32,7 @@
     "react-lottie": "^1.2.10",
     "react-markdown": "^10.1.0",
     "react-parallax-tilt": "^1.7.315",
+    "recharts": "^3.6.0",
     "styled-components": "^6.1.19",
     "tailwind-merge": "^3.4.0",
     "wrangler": "^4.58.0"
