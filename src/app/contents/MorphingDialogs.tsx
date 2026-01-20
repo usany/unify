@@ -15,7 +15,7 @@ const MorphingDialogs = () => {
     finishTime: Date.now(),
   }
   return (
-    <CardView />
+    <CardView message={mockMessage}/>
   )
 }
 

@@ -8,15 +8,7 @@ import CardViewTop from './CardViewTop'
 import Tilt from 'react-parallax-tilt'
 import getShadowColor from './getShadowColor'
 
-const CardView = () => {
-  const message = {
-    id: Date.now().toString(),
-    action: 1,
-    locationOne: '서울 중도',
-    locationTwo: '자료열람실',
-    startTime: Date.now(),
-    finishTime: Date.now(),
-  }
+const CardView = ({message}: {message: {id: string; action: number; locationOne: string; locationTwo: string; startTime: number; finishTime: number}}) => {
   const id = Date.now().toString()
   const shadowColor = getShadowColor(id)
   return (
