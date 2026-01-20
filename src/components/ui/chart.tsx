@@ -1,9 +1,7 @@
+import { useLanguage } from '@/context/LanguageContext'
 import { cn } from '@/lib/utils'
 import * as React from 'react'
-import { useDispatch } from 'react-redux'
 import * as RechartsPrimitive from 'recharts'
-import useSelectors from 'src/hooks/useSelectors'
-import { changeCompletedAction } from 'src/stateSlices/completedActionSlice'
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: '', dark: '.dark' } as const
@@ -271,8 +269,9 @@ const ChartLegendContent = React.forwardRef<
     ref,
   ) => {
     const { config } = useChart()
-    const dispatch = useDispatch()
-    const languages = useSelectors((state) => state.languages.value)
+    const { language } = useLanguage()
+    // const dispatch = useDispatch()
+    // const languages = useSelectors((state) => state.languages.value)
     if (!payload?.length) {
       return null
     }
@@ -288,7 +287,7 @@ const ChartLegendContent = React.forwardRef<
       >
         {!payload[0].payload.number && !payload[1].payload.number && (
           <div className="flex shadow-md bg-light-2 dark:bg-dark-2 rounded w-1/2 p-5">
-            {languages === 'ko'
+            {language === 'ko'
               ? '완료 활동이 없습니다'
               : 'No completed activities'}
           </div>
@@ -306,7 +305,7 @@ const ChartLegendContent = React.forwardRef<
                 )}
                 onClick={(value) => {
                   // document.getElementById('completedAction')?.click()
-                  dispatch(changeCompletedAction(item.payload.action))
+                  // dispatch(changeCompletedAction(item.payload.action))
                 }}
               >
                 {itemConfig?.icon && !hideIcon ? (
@@ -321,7 +320,7 @@ const ChartLegendContent = React.forwardRef<
                 )}
                 <div>
                   {itemConfig?.label}: {item.payload.number}
-                  {languages === 'ko' && '회'}
+                  {language === 'ko' && '회'}
                 </div>
               </div>
             )
