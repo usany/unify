@@ -17,8 +17,8 @@ const AddStepThree = ({ onChangeFrom, onChangeTo }: Props) => {
     <div>
       <AddStepTitle title={titles[language]} />
       <div className='flex flex-col px-5'>
-        <Pickers onChange={onChangeFrom} label={`${languages === 'ko' ? '이 때부터' : 'From'}`} />
-        <Pickers onChange={onChangeTo} label={`${languages === 'ko' ? '이 때까지' : 'To'}`} />
+        <Pickers onChange={onChangeFrom} label={`${language === 'ko' ? '이 때부터' : 'From'}`} />
+        <Pickers onChange={onChangeTo} label={`${language === 'ko' ? '이 때까지' : 'To'}`} />
       </div>
     </div>
   )
