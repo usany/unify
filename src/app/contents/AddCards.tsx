@@ -9,7 +9,6 @@ import Avatars from 'src/pages/core/Avatars'
 import { buildingsObj, buildingsObject, staticArray } from 'src/pages/add/locationsBuildings'
 import locationsBuildings, { locationsCollectionLetters } from './locationsBuildings'
 import locationsCollection from './locationsCollection'
-import { DocumentData } from 'firebase/firestore'
 import useTexts from 'src/hooks/useTexts'
 import { useLanguage } from '@/context/LanguageContext'
 interface Clock {
@@ -31,10 +30,8 @@ interface Props {
     to: Clock | null
   }
   locationState: object
-  display: DocumentData
 }
-const AddCards = ({ borrow, item, fromTo, locationState, display }: Props) => {
-  const profile = useSelectors((state) => state.profile.value)
+const AddCards = ({ borrow, item, fromTo, locationState }: Props) => {
   const shadowColorArray = [
     'lightblue',
     'lightcoral',
@@ -49,12 +46,7 @@ const AddCards = ({ borrow, item, fromTo, locationState, display }: Props) => {
     'lightsteelblue',
     'lightyellow',
   ]
-  const alpha = Array.from(Array(26)).map((e, i) => i + 65)
-  const letters = alpha.map((x) => String.fromCharCode(x))
-  const shadowColor = display.id ? shadowColorArray[
-    letters.indexOf(String(display.id[0]).toUpperCase()) %
-      shadowColorArray.length
-  ] : undefined
+  const shadowColor = undefined
   const { language } = useLanguage()
   const locationOne = locationState?.locationOne
   const key = locationOne ? Object.keys(locationsCollectionLetters).find((value) => {

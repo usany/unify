@@ -33,9 +33,6 @@ interface FromTo {
 }
 function Add({ borrow }: Props) {
   const [addSteps, setAddSteps] = useState(0)
-  const [display, setDisplay] = useState({
-    id: '',
-  })
   const [item, setItem] = useState('')
   const [fromTo, setFromTo] = useState<FromTo>({ from: null, to: null })
   const matches = useMediaQuery('(min-width:850px)')
@@ -208,14 +205,13 @@ function Add({ borrow }: Props) {
 
   return (
     <div className="flex flex-col h-screen">
-      <AddSteppers addSteps={addSteps} borrow={borrow} />
+      <AddSteppers addSteps={addSteps} borrow={true} />
       <div className={`flex justify-center ${!matches && 'min-w-[400px]' }`}>
         <AddCards
-          borrow={borrow}
+          borrow={true}
           item={item}
           fromTo={fromTo}
           locationState={locationState}
-          display={display}
         />
         {matches ?
           <div className="flex flex-col w-[624px]">
