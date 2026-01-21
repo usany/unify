@@ -37,12 +37,8 @@ function Add({ borrow }: Props) {
     id: '',
   })
   const [item, setItem] = useState('')
-  const tabs = useSelectors((state) => state.tabs.value)
   const [fromTo, setFromTo] = useState<FromTo>({ from: null, to: null })
   const matches = useMediaQuery('(min-width:850px)')
-  const profile = useSelectors((state) => state.profile.value)
-  const { pleaseCheckTime, borrowing, lending, card, register, needAnInput } = useTexts()
-  const navigate = useNavigate()
   const [locationState, locationDispatch] = useReducer(
     (
       state: {
@@ -106,19 +102,6 @@ function Add({ borrow }: Props) {
       behavior: 'instant', // Optional if you want to skip the scrolling animation
     })
   }, [])
-  useEffect(() => {
-    if (!window.location.search) {
-      navigate('/add?action=borrow', {replace: true})
-    } else if (
-      ['?action=borrow', '?action=lend'].indexOf(window.location.search) === -1
-    ) {
-      navigate('/add?action=borrow', {replace: true})
-    }
-  }, [])
-  useEffect(() => {
-    setAddSteps(0)
-    setItem('')
-  }, [tabs])
 
   const changeItem = (event: LocationEvent) => {
     const {
@@ -186,87 +169,6 @@ function Add({ borrow }: Props) {
     setAddSteps(2)
   }
 
-  const submit = async (event: EventTarget) => {
-    event.preventDefault()
-    if (
-      (locationState.locationInput !== '' ||
-        (['', '직접 입력'].indexOf(locationState.locationOne) === -1 &&
-          ['', '직접 입력'].indexOf(locationState.locationTwo) === -1)) &&
-      fromTo.from !== null &&
-      fromTo.to !== null
-    ) {
-      if (fromTo.from.gmt.getTime() > fromTo.to.gmt.getTime()) {
-        alert(pleaseCheckTime)
-      } else if (fromTo.from.gmt.getTime() < Date.now()) {
-        alert(pleaseCheckTime)
-      } else if (fromTo.to.gmt.getTime() < Date.now()) {
-        alert(pleaseCheckTime)
-      } else {
-        const calculating = () => {
-          if (fromTo.from && fromTo.to) {
-            if (fromTo.to.year - fromTo .from.year > 0) {
-              return (fromTo.to.year - fromTo.from.year) * 366 * 24 * 60
-            } else if (fromTo.to.month - fromTo.from.month > 0) {
-              return (fromTo.to.month - fromTo.from.month) * 31 * 24 * 60
-            } else if (fromTo.to.day - fromTo.from.day > 0) {
-              return (fromTo.to.day - fromTo.from.day) * 24 * 60
-            } else if (fromTo.to.hour - fromTo.from.hour > 0) {
-              return (fromTo.to.hour - fromTo.from.hour) * 60
-            } else if (fromTo.to.minute - fromTo.from.minute > 0) {
-              return fromTo.to.minute - fromTo.from.minute
-            }
-          }
-          return 0
-        }
-        const calculatePoint = calculating()
-        const location = locationState.locationOne === '직접 입력' ? locationState.locationInput : locationState.locationOne
-        const choose = borrow ? 1 : 2
-        const user = doc(dbservice, `members/${profile?.uid}`)
-        const getDocUser = await getDoc(user)
-        const userCreatedCards = getDocUser.data()?.createdCards || []
-        const userProfileUrl = getDocUser.data()?.profileImageUrl
-        const card = await addDoc(collection(dbservice, 'num'), {
-          point: calculatePoint,
-          displayName: profile?.displayName,
-          text: {
-            choose: choose,
-            count: location,
-            counter: locationState.locationTwo,
-            counting: locationState.locationThree,
-            clock: fromTo.from,
-            clocker: fromTo.to,
-          },
-          round: 1,
-          creatorClock: Date.now(),
-          creatorId: profile?.uid,
-          creatorUrl: userProfileUrl,
-          connectedId: null,
-          connectedName: null,
-          connectedUrl: null,
-          item: item,
-          creatorProfileImage: profile?.profileImage,
-          creatorDefaultProfile: profile?.defaultProfile,
-          creatorProfileImageUrl: profile?.profileImageUrl,
-          connectedProfileImage: null,
-          connectedDefaultProfile: null,
-          connectedProfileImageUrl: null,
-          createdClock: new Date().toString(),
-          connectedClock: null,
-          confirmedClock: null,
-          returningClock: null,
-          confirmedReturnClock: null,
-        })
-        await updateDoc(user, { createdCards: [...userCreatedCards, card.id] })
-        // const cardObject = await getDoc(doc(dbservice, `num/${card.id}`))
-        setDisplay({
-          id: card.id,
-        })
-        setAddSteps(4)
-      }
-    } else {
-      alert(needAnInput)
-    }
-  }
   const onChangeFrom = (event) => {
     setFromTo({
       ...fromTo,
