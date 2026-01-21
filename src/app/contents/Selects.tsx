@@ -94,8 +94,7 @@ function Selects({
   const details = (locationOne && locationOne !== '직접 입력') ? buildingsObj[key.slice(0, 2)][key][language].details : {}
   const koDetails = (locationOne && locationOne !== '직접 입력') ? buildingsObj[key.slice(0, 2)][key]['ko'].details : {}
   const menuItems = (locationOne && locationOne !== '직접 입력') ? settingLocations(details, koDetails) : null
-  const {selfInput} = useTexts()
-  console.log(locationState?.locationOne)
+  const selfInput = language === 'en' ? 'Self Input' : '직접 입력'
   return (
     <div className={`flex ${matches ? "" : "flex-col"} gap-1 px-5`}>
       <FormControl variant="standard" sx={{ width: 150 }}>
