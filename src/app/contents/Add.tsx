@@ -2,14 +2,10 @@ import { useMediaQuery } from '@mui/material'
 import { SelectChangeEvent } from '@mui/material/Select'
 import { useEffect, useReducer, useState } from 'react'
 import AddCards from './AddCards'
-// import AddRegisterButton from 'src/pages/add/AddRegisterButton'
-// import AddSnackBar from 'src/pages/add/AddSnackBar'
-// import AddStepFour from 'src/pages/add/AddStepFour'
 import AddStepOne from './AddStepOne'
 import AddSteppers from './AddSteppers'
 import AddStepThree from './AddStepThree'
 import AddStepTwo from './AddStepTwo'
-// import { locationsBuildingsArray } from './locationsBuildings'
 
 interface Props {
   borrow: boolean
