@@ -4,10 +4,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
-import useSelectors from 'src/hooks/useSelectors';
 import locationsBuildings, { buildingsObj, locationsBuildingsArray, locationsCollectionLetters } from "./locationsBuildings";
-// import locationsCollection from "./locationsCollection";
-import useTexts from "src/hooks/useTexts";
 import { useLanguage } from '@/context/LanguageContext';
 
 const settingSeats = (number) => {
