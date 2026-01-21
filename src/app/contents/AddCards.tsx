@@ -78,9 +78,9 @@ const AddCards = ({ borrow, item, fromTo, locationState }: Props) => {
                           ? 'Umbrella'
                           : 'Parasol'}
                         {' '}
-                        {borrow
-                            ? ' 대여'
-                            : ' 대관'}
+                        {language === 'en'
+                            ? 'Borrowing'
+                            : '빌리기'}
                       </div>
                     }
                   />
