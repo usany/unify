@@ -44,7 +44,7 @@ const AddCards = ({ borrow, item, fromTo, locationState }: Props) => {
     'lightsteelblue',
     'lightyellow',
   ]
-  const shadowColor = undefined
+  const shadowColor = shadowColorArray.length*Math.random()
   const { language } = useLanguage()
   const locationOne = locationState?.locationOne
   const key = locationOne ? Object.keys(locationsCollectionLetters).find((value) => {
