@@ -1,14 +1,13 @@
 import AddStepTitle from './AddStepTitle'
 import Selects from './Selects'
-import { ChangeEvent } from 'react'
 import { useLanguage } from '@/context/LanguageContext'
 
 interface Props {
   locationState: { locationOne: string | null, locationTwo: string | null, locationThree: string | null, locationInput: string | null }
-  changeBuilding: (event: ChangeEvent<HTMLInputElement>) => void
-  changeRoom: (event: ChangeEvent<HTMLInputElement>) => void
-  changeSeat: (event: ChangeEvent<HTMLInputElement>) => void
-  changeLocationInput: (event: ChangeEvent<HTMLInputElement>) => void
+  changeBuilding: (event: { preventDefault: () => void, target: { value: string } }) => void
+  changeRoom: (event: { preventDefault: () => void, target: { value: string } }) => void
+  changeSeat: (event: { preventDefault: () => void, target: { value: string } }) => void
+  changeLocationInput: (event: { preventDefault: () => void, target: { value: string } }) => void
 }
 
 const AddStepTwo = ({ locationState, changeBuilding, changeRoom, changeSeat, changeLocationInput }: Props) => {

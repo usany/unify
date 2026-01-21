@@ -1,6 +1,6 @@
 import { useMediaQuery } from '@mui/material'
 import { SelectChangeEvent } from '@mui/material/Select'
-import { useEffect, useReducer, useState, ChangeEvent } from 'react'
+import { useEffect, useReducer, useState } from 'react'
 import AddCards from './AddCards'
 // import AddRegisterButton from 'src/pages/add/AddRegisterButton'
 // import AddSnackBar from 'src/pages/add/AddSnackBar'
@@ -111,7 +111,7 @@ function Add({ borrow }: Props) {
       setAddSteps(0)
     }
   }
-  const changeLocationInput = (event: ChangeEvent<HTMLInputElement>) => {
+  const changeLocationInput = (event: { preventDefault: () => void, target: { value: string } }) => {
     // event.preventDefault()
     const {
       target: { value },
@@ -124,7 +124,7 @@ function Add({ borrow }: Props) {
       setAddSteps(1)
     }
   }
-  const changeBuilding = (event: ChangeEvent<HTMLInputElement>) => {
+  const changeBuilding = (event: { preventDefault: () => void, target: { value: string } }) => {
     // event.preventDefault()
     const {
       target: { value },
@@ -132,7 +132,7 @@ function Add({ borrow }: Props) {
     locationDispatch({ type: 'changeBuilding', newState: value })
     setAddSteps(1)
   }
-  const changeRoom = (event: ChangeEvent<HTMLInputElement>) => {
+  const changeRoom = (event: { preventDefault: () => void, target: { value: string } }) => {
     // event.preventDefault()
     const {
       target: { value },
@@ -155,7 +155,7 @@ function Add({ borrow }: Props) {
       setAddSteps(1)
     }
   }
-  const changeSeat = (event: ChangeEvent<HTMLInputElement>) => {
+  const changeSeat = (event: { preventDefault: () => void, target: { value: string } }) => {
     //   event.preventDefault()
     const {
       target: { value },
