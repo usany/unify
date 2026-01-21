@@ -1,6 +1,6 @@
 import { useLanguage } from '@/context/LanguageContext'
-import AddStepTitle from 'src/pages/add/AddStepTitle'
-import Pickers from 'src/pages/add/Pickers'
+import AddStepTitle from './AddStepTitle'
+import Pickers from './Pickers'
 
 interface Props {
   onChangeFrom: (event: {}) => void
