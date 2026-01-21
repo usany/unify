@@ -8,7 +8,6 @@ import Avatars from './Avatars'
 import { buildingsObj, buildingsObject, staticArray } from 'src/pages/add/locationsBuildings'
 import locationsBuildings, { locationsCollectionLetters } from './locationsBuildings'
 import locationsCollection from './locationsCollection'
-import useTexts from 'src/hooks/useTexts'
 import { useLanguage } from '@/context/LanguageContext'
 interface Clock {
   gmt: {
