@@ -1,6 +1,6 @@
 import { useLanguage } from '@/context/LanguageContext'
-import AddItemSelects from 'src/pages/add/AddItemSelects'
-import AddStepTitle from 'src/pages/add/AddStepTitle'
+import AddItemSelects from './AddItemSelects'
+import AddStepTitle from './AddStepTitle'
 
 interface Props {
   borrow: boolean
