@@ -11,6 +11,7 @@ import locationsBuildings, { locationsCollectionLetters } from './locationsBuild
 import locationsCollection from './locationsCollection'
 import { DocumentData } from 'firebase/firestore'
 import useTexts from 'src/hooks/useTexts'
+import { useLanguage } from '@/context/LanguageContext'
 interface Clock {
   gmt: {
     getTime: () => number
@@ -54,7 +55,7 @@ const AddCards = ({ borrow, item, fromTo, locationState, display }: Props) => {
     letters.indexOf(String(display.id[0]).toUpperCase()) %
       shadowColorArray.length
   ] : undefined
-  const languages = useSelectors((state) => state.languages.value)
+  const { language } = useLanguage()
   const locationOne = locationState?.locationOne
   const key = locationOne ? Object.keys(locationsCollectionLetters).find((value) => {
     if (value === 'input') return buildingsObj[value].ko.name === locationOne
@@ -81,7 +82,7 @@ const AddCards = ({ borrow, item, fromTo, locationState, display }: Props) => {
                   <Chip
                     label={
                       <div className="text-xs">
-                        {languages === 'ko'
+                        {language === 'ko'
                           ? item
                           : item === '우산'
                           ? 'Umbrella'
@@ -124,14 +125,14 @@ const AddCards = ({ borrow, item, fromTo, locationState, display }: Props) => {
                         </div>
                         :
                         <div className="flex items-center">
-                          {(languages === 'ko' && locationState?.locationOne !== '직접 입력')
+                          {(language === 'ko' && locationState?.locationOne !== '직접 입력')
                             ? locationState?.locationOne
                             : locationsBuildings['en'][
                                 locationsBuildings['ko'].indexOf(
                                   locationState?.locationOne,
                                 )
                               ]}{' '}
-                          {locationState?.locationTwo !== '직접 입력' && (languages === 'ko'
+                          {locationState?.locationTwo !== '직접 입력' && (language === 'ko'
                             ? locationState?.locationTwo
                             : locationOne !== '직접 입력' && locationState?.locationOne &&
                               locationsCollection['en'][
@@ -160,25 +161,25 @@ const AddCards = ({ borrow, item, fromTo, locationState, display }: Props) => {
                       <Watch />
                       <div className="flex flex-col justify-center">
                         <div className="flex">
-                          {languages === 'en' && (
+                          {language === 'en' && (
                             <div className="w-[40px]">From</div>
                           )}
                           {fromTo.from.year}.{fromTo.from.month < 10 && '0'}
                           {fromTo.from.month}.{fromTo.from.day < 10 && '0'}
                           {fromTo.from.day} {fromTo.from.hour < 10 && '0'}
                           {fromTo.from.hour}:{fromTo.from.minute < 10 && '0'}
-                          {fromTo.from.minute} {languages === 'ko' && '부터'}
+                          {fromTo.from.minute} {language === 'ko' && '부터'}
                         </div>
                         {fromTo.to && (
                           <div className="flex">
-                            {languages === 'en' && (
+                            {language === 'en' && (
                               <div className="w-[40px]">To</div>
                             )}
                             {fromTo.to.year}.{fromTo.to.month < 10 && '0'}
                             {fromTo.to.month}.{fromTo.from.day < 10 && '0'}
                             {fromTo.to.day} {fromTo.to.hour < 10 && '0'}
                             {fromTo.to.hour}:{fromTo.to.minute < 10 && '0'}
-                            {fromTo.to.minute} {languages === 'ko' && '까지'}
+                            {fromTo.to.minute} {language === 'ko' && '까지'}
                           </div>
                         )}
                       </div>
