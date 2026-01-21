@@ -2,7 +2,7 @@ import CardView from './CardView';
 
 const MorphingDialogs = () => {
   const mockMessage = {
-    id: Date.now().toString(),
+    id: Date.now().toString().slice(0, 7),
     action: 1,
     locationOne: '서울 중도',
     locationTwo: '자료열람실',
