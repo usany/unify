@@ -2,11 +2,11 @@ import { useLanguage } from '@/context/LanguageContext';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 interface Props {
   item: string
-  changeItem: () => void
+  changeItem: (event: SelectChangeEvent<string>) => void
 }
 function AddItemSelects({ item, changeItem }: Props) {
   const { language } = useLanguage()

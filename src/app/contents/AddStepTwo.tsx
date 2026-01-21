@@ -1,29 +1,27 @@
 import useSelectors from 'src/hooks/useSelectors'
 import AddStepTitle from 'src/pages/add/AddStepTitle'
 import Selects from 'src/pages/add/Selects'
-
-interface LocationEvent extends EventTarget {
-  target: { value: string }
-}
+import { ChangeEvent } from 'react'
+import { useLanguage } from '@/context/LanguageContext'
 
 interface Props {
   locationState: { locationOne: string | null, locationTwo: string | null, locationThree: string | null, locationInput: string | null }
-  changeBuilding: (event: LocationEvent) => void
-  changeRoom: (event: LocationEvent) => void
-  changeSeat: (event: LocationEvent) => void
-  changeLocationInput: (event: LocationEvent) => void
+  changeBuilding: (event: ChangeEvent<HTMLInputElement>) => void
+  changeRoom: (event: ChangeEvent<HTMLInputElement>) => void
+  changeSeat: (event: ChangeEvent<HTMLInputElement>) => void
+  changeLocationInput: (event: ChangeEvent<HTMLInputElement>) => void
 }
 
 const AddStepTwo = ({ locationState, changeBuilding, changeRoom, changeSeat, changeLocationInput }: Props) => {
-  const languages = useSelectors((state) => state.languages.value)
+  const { language } = useLanguage()
   const titles = {
     ko: '2. 장소 입력',
     en: '2. Input Location'
   }
-  const index = (languages === 'ko' || languages === 'en') ? languages : 'ko'
+  const index = (language === 'ko' || language === 'en') ? language : 'ko'
   return (
     <div className='flex flex-col'>
-      <AddStepTitle title={titles[index]} />
+      <AddStepTitle title={titles[language]} />
       <Selects
         locationState={locationState}
         changeBuilding={changeBuilding} changeRoom={changeRoom} changeSeat={changeSeat}

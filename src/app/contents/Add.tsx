@@ -1,5 +1,6 @@
 import { useMediaQuery } from '@mui/material'
-import { useEffect, useReducer, useState } from 'react'
+import { SelectChangeEvent } from '@mui/material/Select'
+import { useEffect, useReducer, useState, ChangeEvent } from 'react'
 import AddCards from './AddCards'
 // import AddRegisterButton from 'src/pages/add/AddRegisterButton'
 // import AddSnackBar from 'src/pages/add/AddSnackBar'
@@ -12,9 +13,6 @@ import AddStepTwo from './AddStepTwo'
 
 interface Props {
   borrow: boolean
-}
-interface LocationEvent extends EventTarget {
-  target: { value: string }
 }
 
 interface Clock {
@@ -100,7 +98,7 @@ function Add({ borrow }: Props) {
     })
   }, [])
 
-  const changeItem = (event: LocationEvent) => {
+  const changeItem = (event: SelectChangeEvent<string>) => {
     const {
       target: { value },
     } = event
@@ -113,7 +111,7 @@ function Add({ borrow }: Props) {
       setAddSteps(0)
     }
   }
-  const changeLocationInput = (event: LocationEvent) => {
+  const changeLocationInput = (event: ChangeEvent<HTMLInputElement>) => {
     // event.preventDefault()
     const {
       target: { value },
@@ -126,7 +124,7 @@ function Add({ borrow }: Props) {
       setAddSteps(1)
     }
   }
-  const changeBuilding = (event: LocationEvent) => {
+  const changeBuilding = (event: ChangeEvent<HTMLInputElement>) => {
     // event.preventDefault()
     const {
       target: { value },
@@ -134,7 +132,7 @@ function Add({ borrow }: Props) {
     locationDispatch({ type: 'changeBuilding', newState: value })
     setAddSteps(1)
   }
-  const changeRoom = (event: LocationEvent) => {
+  const changeRoom = (event: ChangeEvent<HTMLInputElement>) => {
     // event.preventDefault()
     const {
       target: { value },
@@ -157,7 +155,7 @@ function Add({ borrow }: Props) {
       setAddSteps(1)
     }
   }
-  const changeSeat = (event: LocationEvent) => {
+  const changeSeat = (event: ChangeEvent<HTMLInputElement>) => {
     //   event.preventDefault()
     const {
       target: { value },

@@ -1,11 +1,12 @@
 import { useLanguage } from '@/context/LanguageContext'
 import AddItemSelects from './AddItemSelects'
 import AddStepTitle from './AddStepTitle'
+import { SelectChangeEvent } from '@mui/material/Select'
 
 interface Props {
   borrow: boolean
   item: string
-  changeItem: () => void
+  changeItem: (event: SelectChangeEvent<string>) => void
 }
 const AddStepOne = ({ borrow, item, changeItem }: Props) => {
   const { language } = useLanguage()
