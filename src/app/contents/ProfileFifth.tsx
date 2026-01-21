@@ -90,11 +90,6 @@ const ProfileFifth = () => {
                 }}
               />
             </Pie>
-            <ChartLegend
-              content={<ChartLegendContent nameKey="action" />}
-              className="text-base font-bold gap-2 [&>*]:basis-1/4 [&>*]:justify-center"
-              verticalAlign="top"
-            />
           </PieChart>
         </ChartContainer>
       </div>
