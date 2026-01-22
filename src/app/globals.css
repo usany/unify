@@ -5,11 +5,11 @@
 :root {
     --primary: #1976d2;
     --primary-hover: #1565c0;
-    --bg-body: #ffffff;
-    --bg-topbar: #ffffff;
+    --bg-body: #cbd5df;
+    --bg-topbar: #cbd5df;
     --bg-card: #f5f5f5;
     --bg-card-hover: #e0e0e0;
-    --bg-comment: #ffffff;
+    --bg-comment: #cbd5df;
     --bg-comment-pending: #fff3cd;
     --bg-badge: #e3f2fd;
     --text-main: #333333;
@@ -26,11 +26,11 @@
 .dark {
     --primary: #64b5f6;
     --primary-hover: #90caf9;
-    --bg-body: #1a1a1a;
-    --bg-topbar: #2d2d2d;
+    --bg-body: #1a202c;
+    --bg-topbar: #1a202c;
     --bg-card: #3d3d3d;
     --bg-card-hover: #4d4d4d;
-    --bg-comment: #2d2d2d;
+    --bg-comment: #1a202c;
     --bg-comment-pending: #4d4d3d;
     --bg-badge: #1a365d;
     --text-main: #ffffff;
