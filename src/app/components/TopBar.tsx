@@ -40,7 +40,7 @@ export default function TopBar({ language }: TopBarProps) {
   return (
     <>
       <div className={styles.topBar}>
-        <a href="/" className={styles.homeButton}>Posts Documentation</a>
+        <a href="/" className={styles.homeButton}>KHUSAN</a>
         <div className={styles.topBarActions}>
           <button
             className={styles.toggleButton}
