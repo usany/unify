@@ -10,8 +10,8 @@ import { cookies } from 'next/headers';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Posts Docs',
-  description: 'Documentation site for the posts project',
+  title: 'KHUSAN',
+  description: 'Documentation site for KHUSAN',
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
