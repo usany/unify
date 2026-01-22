@@ -75,6 +75,33 @@ body {
     border-radius: 0 0 2px 2px;
 }
 
+.rain-splash {
+    position: fixed;
+    width: 20px;
+    height: 10px;
+    background: radial-gradient(ellipse at center, rgba(74, 144, 226, 0.6) 0%, transparent 70%);
+    border-radius: 50%;
+    user-select: none;
+    pointer-events: none;
+    z-index: 50;
+    transform: translateX(-50%);
+}
+
+@keyframes splash {
+    0% {
+        transform: translateX(-50%) scale(0);
+        opacity: 0;
+    }
+    20% {
+        transform: translateX(-50%) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(-50%) scale(2);
+        opacity: 0;
+    }
+}
+
 @keyframes rainfall {
     0% {
         transform: translateY(-100vh);
