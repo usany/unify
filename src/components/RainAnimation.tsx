@@ -24,7 +24,7 @@ export default function RainAnimation() {
       drops.push({
         id: i,
         left: Math.random() * 100,
-        animationDuration: Math.random() * 0.5 + 3,
+        animationDuration: Math.random() + 3,
         animationDelay: Math.random(),
         opacity: Math.random() * 0.3 + 0.2,
         height: Math.random() * 15 + 10,
