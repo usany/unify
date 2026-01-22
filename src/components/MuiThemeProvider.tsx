@@ -10,8 +10,12 @@ interface MuiThemeProviderProps {
 
 export default function MuiThemeProvider({ children }: MuiThemeProviderProps) {
     const { theme } = useTheme();
-    
+
     const muiTheme = useMemo(() => {
+        const colorOne = theme === 'dark' ? '#5c6778' : '#f7fafb'
+        const colorTwo = theme === 'dark' ? '#2d3848' : '#e2e8f0'
+        const colorThree = theme === 'dark' ? '#1a202c' : '#cbd5df'
+
         return createTheme({
             palette: {
                 mode: theme === 'dark' ? 'dark' : 'light',
@@ -24,38 +28,84 @@ export default function MuiThemeProvider({ children }: MuiThemeProviderProps) {
                 },
             },
             components: {
-                MuiBottomNavigation: {
-                    styleOverrides: {
-                        root: {
-                            backgroundColor: 'var(--bg-topbar)',
-                            borderTop: '1px solid',
-                            borderColor: 'var(--border)',
-                            borderRadius: '10px 10px 0 0',
-                            height: 64,
-                            boxShadow: '0 -2px 10px 0 rgba(0,0,0,0.05)',
-                        },
-                    },
-                },
-                MuiBottomNavigationAction: {
-                    styleOverrides: {
-                        root: {
-                            color: 'var(--text-muted)',
-                            padding: '12px 12px 10px',
-                            '&.Mui-selected': {
-                                color: 'var(--primary)',
-                                '& .MuiBottomNavigationAction-label': {
-                                    fontSize: '0.875rem',
-                                    fontWeight: 600,
-                                },
-                            },
-                        },
-                        label: {
-                            fontSize: '0.75rem',
-                            transition: 'font-size 0.2s, font-weight 0.2s',
-                        },
-                    },
-                },
+      MuiCard: {
+        defaultProps: {
+          sx: {
+            bgcolor: colorThree,
+            ':hover': {
+              bgcolor: colorThree,
             },
+          },
+        },
+        styleOverrides: {
+          root: {
+            variants: [
+              {
+                props: { className: 'colorTwo' },
+                style: {
+                  backgroundColor: colorTwo,
+                },
+              },
+              {
+                props: { className: 'colorOne' },
+                style: {
+                  backgroundColor: colorOne,
+                },
+              },
+            ],
+          },
+        },
+      },
+      // MuiButtonBase: {
+      //   defaultProps: {
+      //     sx: {
+      //       bgcolor: colorTwo,
+      //     },
+      //   }
+      // },
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            variants: [
+              {
+                props: { className: 'colorOne' },
+                style: {
+                  backgroundColor: colorOne,
+                },
+              },
+              {
+                props: { className: 'colorTwo' },
+                style: {
+                  backgroundColor: colorTwo,
+                },
+              },
+            ],
+          },
+        },
+      },
+      MuiChip: {
+        defaultProps: {
+          sx: {
+            bgcolor: colorOne,
+            ':hover': {
+              bgcolor: colorOne,
+            },
+          },
+        },
+        styleOverrides: {
+          root: {
+            variants: [
+              {
+                props: { className: 'specific' },
+                style: {
+                  fontSize: '12px',
+                },
+              },
+            ],
+          },
+        },
+      },
+    },
         });
 
     }, [theme]);

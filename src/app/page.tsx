@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
 import { LinkItem } from '@/types/links';
 import links from 'links';
-import Playlist from './contents/Playlist';
+import { Button } from '@mui/material';
 
 const translations = {
   en: {
@@ -29,9 +29,9 @@ export default function RootPage() {
       </p>
       <div className={`${styles.buttonGroup}`}>
         {links[language].map((link: LinkItem, index: number) => (
-          <Link key={index} href={link.href} className={styles.button}>
+          <Button key={index} href={link.href} variant='outlined' className={'colorOne'}>
             {link.label}
-          </Link>
+          </Button>
         ))}
       </div>
     </section>
