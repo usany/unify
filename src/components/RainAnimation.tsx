@@ -62,26 +62,30 @@ export default function RainAnimation() {
     // Initial generation
     generateDrops();
     
-    // Update splash positions after each splash completes (every 1.5 seconds to match splash cycle)
-    let keyCounter = 0;
-    const splashInterval = setInterval(() => {
-      keyCounter++;
-      setSplashes(prevSplashes => 
-        prevSplashes.map(splash => ({
-          ...splash,
-          left: Math.random() * 100,
-          animationDelay: 0, // Reset to trigger immediate animation
-          key: keyCounter, // New key to force re-render
-        }))
-      );
-      console.log('Updated splash positions with immediate animation');
-    }, 1500);
+    // Create staggered intervals for each splash position
+    const splashIntervals: NodeJS.Timeout[] = [];
+    
+    for (let i = 0; i < 10; i++) {
+      const interval = setInterval(() => {
+        setSplashes(prevSplashes => {
+          if (prevSplashes.length > i) {
+            return prevSplashes.map((splash, index) => 
+              index === i 
+                ? { ...splash, left: Math.random() * 100, animationDelay: 0, key: Date.now() }
+                : splash
+            );
+          }
+          return prevSplashes;
+        });
+      }, 1500 + (i * 200)); // Stagger by 200ms per splash
+      splashIntervals.push(interval);
+    }
 
     // Regenerate all positions every 5 seconds
     const dropInterval = setInterval(generateDrops, 5000);
 
     return () => {
-      clearInterval(splashInterval);
+      splashIntervals.forEach(interval => clearInterval(interval));
       clearInterval(dropInterval);
     };
   }, []);
