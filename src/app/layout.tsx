@@ -12,6 +12,9 @@ import './globals.css';
 export const metadata: Metadata = {
   title: 'KHUSAN',
   description: 'Documentation site for KHUSAN',
+  icons: {
+    icon: '/applicationImage.jpg',
+  },
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
@@ -35,12 +38,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </ThemeProvider>
           </LanguageProvider>
         </AppRouterCacheProvider>
-        
-        <Script 
-          src="https://open.spotify.com/embed/iframe-api/v1" 
-          async 
+
+        <Script
+          src="https://open.spotify.com/embed/iframe-api/v1"
+          async
         />
-        <Script 
+        <Script
           src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=yi6uxw634q&language=en"
         />
       </body>
