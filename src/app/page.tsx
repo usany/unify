@@ -9,11 +9,11 @@ import { Button } from '@mui/material';
 
 const translations = {
   en: {
-    title: 'Posts Documentation',
+    title: 'KHUSAN Documentation',
     subtitle: 'Learn how to use components and APIs from the posts project.'
   },
   ko: {
-    title: '문서',
+    title: '쿠우산 문서',
     subtitle: '프로젝트의 컴포넌트와 API 사용법을 알아보세요.'
   }
 };
