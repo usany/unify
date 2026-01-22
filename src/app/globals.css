@@ -66,9 +66,9 @@ body {
 
 .rain-drop {
     position: fixed;
-    width: 2px;
+    width: 5px;
     height: 20px;
-    background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.6));
+    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.6));
     user-select: none;
     pointer-events: none;
     z-index: 50;

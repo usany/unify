@@ -18,14 +18,14 @@ export default function RainAnimation() {
 
   useEffect(() => {
     const drops: RainDrop[] = [];
-    const dropCount = 100;
+    const dropCount = 10;
 
     for (let i = 0; i < dropCount; i++) {
       drops.push({
         id: i,
         left: Math.random() * 100,
-        animationDuration: Math.random() * 0.5 + 0.3,
-        animationDelay: Math.random() * 2,
+        animationDuration: Math.random() * 0.5 + 3,
+        animationDelay: Math.random(),
         opacity: Math.random() * 0.3 + 0.2,
         height: Math.random() * 15 + 10,
       });
