@@ -16,6 +16,7 @@ interface Splash {
   id: number;
   left: number;
   animationDelay: number;
+  key: number; // Add key to force re-render
 }
 
 export default function RainAnimation() {
@@ -48,7 +49,10 @@ export default function RainAnimation() {
           id: i,
           left,
           animationDelay: animationDelay + animationDuration,
+          key: 0, // Initial key
         });
+        
+        console.log(`Drop ${i}: delay=${animationDelay.toFixed(2)}s, duration=${animationDuration.toFixed(2)}s, splash at ${(animationDelay + animationDuration).toFixed(2)}s`);
       }
 
       setRainDrops(drops);
@@ -58,10 +62,28 @@ export default function RainAnimation() {
     // Initial generation
     generateDrops();
     
-    // Regenerate positions every 5 seconds to allow for multiple cycles
-    const interval = setInterval(generateDrops, 5000);
+    // Update splash positions after each splash completes (every 1.5 seconds to match splash cycle)
+    let keyCounter = 0;
+    const splashInterval = setInterval(() => {
+      keyCounter++;
+      setSplashes(prevSplashes => 
+        prevSplashes.map(splash => ({
+          ...splash,
+          left: Math.random() * 100,
+          animationDelay: 0, // Reset to trigger immediate animation
+          key: keyCounter, // New key to force re-render
+        }))
+      );
+      console.log('Updated splash positions with immediate animation');
+    }, 1500);
 
-    return () => clearInterval(interval);
+    // Regenerate all positions every 5 seconds
+    const dropInterval = setInterval(generateDrops, 5000);
+
+    return () => {
+      clearInterval(splashInterval);
+      clearInterval(dropInterval);
+    };
   }, []);
 
   return (
@@ -83,15 +105,15 @@ export default function RainAnimation() {
       ))}
       {splashes.map((splash) => (
         <div
-          key={`splash-${splash.id}`}
+          key={`${splash.id}-${splash.key}`}
           className="rain-splash"
           style={{
             left: `${splash.left}%`,
             bottom: '0px',
             background: theme === 'dark'
-              ? 'radial-gradient(ellipse at center, rgba(255, 255, 255, 0.6) 0%, transparent 70%)'
-              : 'radial-gradient(ellipse at center, rgba(74, 144, 226, 0.6) 0%, transparent 70%)',
-            animation: `splash 0.6s ease-out ${splash.animationDelay}s infinite`,
+              ? 'radial-gradient(ellipse at center, rgba(255, 255, 255, 0.8) 0%, transparent 70%)'
+              : 'radial-gradient(ellipse at center, rgba(74, 144, 226, 0.8) 0%, transparent 70%)',
+            animation: `splash 0.6s ease-out ${splash.animationDelay}s`,
           }}
         />
       ))}
