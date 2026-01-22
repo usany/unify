@@ -22,15 +22,15 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json() as { slug?: string; author?: string; email?: string; content?: string };
-    const { slug, author, email, content } = body;
+    const body = await request.json() as { slug?: string; author?: string; email?: string; content?: string; password?: string };
+    const { slug, author, email, content, password } = body;
 
     if (!slug || !author || !email || !content) {
       return NextResponse.json({ error: 'slug, author, email, and content are required' }, { status: 400 });
     }
 
     const db = createDBClient(process.env);
-    const comment = await db.createComment(slug, author, email, content);
+    const comment = await db.createComment(slug, author, email, content, password);
 
     return NextResponse.json({ comment }, { status: 201 });
   } catch (error) {
@@ -64,21 +64,29 @@ export async function PUT(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
-    const id = searchParams.get('id');
+    const body = await request.json() as { id?: number; password?: string };
+    const { id, password } = body;
 
     if (!id) {
       return NextResponse.json({ error: 'id is required' }, { status: 400 });
     }
 
     const db = createDBClient(process.env);
-    const success = await db.deleteComment(parseInt(id));
+    
+    try {
+      const success = await db.deleteComment(id, password);
 
-    if (!success) {
-      return NextResponse.json({ error: 'Comment not found' }, { status: 404 });
+      if (!success) {
+        return NextResponse.json({ error: 'Comment not found' }, { status: 404 });
+      }
+
+      return NextResponse.json({ success: true });
+    } catch (deleteError) {
+      if (deleteError instanceof Error && deleteError.message === 'Incorrect password') {
+        return NextResponse.json({ error: 'Incorrect password' }, { status: 401 });
+      }
+      throw deleteError;
     }
-
-    return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Error deleting comment:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

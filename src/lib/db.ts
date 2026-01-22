@@ -26,6 +26,10 @@ class LocalDevDB {
     this.comments.push(comment);
   }
 
+  getComment(id: number) {
+    return this.comments.find(c => c.id === id);
+  }
+
   updateComment(id: number, content: string) {
     const comment = this.comments.find(c => c.id === id);
     if (comment) {
@@ -36,7 +40,20 @@ class LocalDevDB {
     return null;
   }
 
-  deleteComment(id: number) {
+  deleteComment(id: number, password?: string) {
+    const comment = this.getComment(id);
+    if (!comment) {
+      return {
+        success: true,
+        meta: { changes: 0 }
+      };
+    }
+    
+    // If comment has a password, verify it matches
+    if (comment.password && comment.password !== '' && comment.password !== password) {
+      throw new Error('Incorrect password');
+    }
+    
     const initialLength = this.comments.length;
     this.comments = this.comments.filter(c => c.id !== id);
     return {
@@ -75,13 +92,14 @@ class LocalDevQuery {
 
   async first() {
     if (this.query.includes('INSERT')) {
-      const [slug, author, email, content] = this.params;
+      const [slug, author, email, content, password] = this.params;
       const newComment: Comment = {
         id: this.db['nextId']++,
         slug,
         author,
         email,
         content,
+        password: password || '',
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
       };
@@ -92,15 +110,15 @@ class LocalDevQuery {
       return this.db.updateComment(id, content);
     } else if (this.query.includes('SELECT') && this.query.includes('WHERE id =')) {
       const id = this.params[0];
-      return this.db.getComments().find(c => c.id === id) || null;
+      return this.db.getComment(id) || null;
     }
     return null;
   }
 
   async run() {
     if (this.query.includes('DELETE')) {
-      const id = this.params[0];
-      return this.db.deleteComment(id);
+      const [id, password] = this.params;
+      return this.db.deleteComment(id, password);
     }
     return { success: true, meta: { changes: 0 } };
   }
@@ -112,6 +130,7 @@ export interface Comment {
   author: string;
   email: string;
   content: string;
+  password?: string;
   created_at: string;
   updated_at: string;
 }
@@ -147,11 +166,11 @@ export class DatabaseClient {
     return result.results as Comment[];
   }
 
-  async createComment(slug: string, author: string, email: string, content: string): Promise<Comment> {
+  async createComment(slug: string, author: string, email: string, content: string, password?: string): Promise<Comment> {
     const db = this.getDb();
     const result = await db
-      .prepare('INSERT INTO comments (slug, author, email, content) VALUES (?, ?, ?, ?) RETURNING *')
-      .bind(slug, author, email, content)
+      .prepare('INSERT INTO comments (slug, author, email, content, password) VALUES (?, ?, ?, ?, ?) RETURNING *')
+      .bind(slug, author, email, content, password || '')
       .first();
     return result as Comment;
   }
@@ -165,8 +184,25 @@ export class DatabaseClient {
     return result as Comment | null;
   }
 
-  async deleteComment(id: number): Promise<boolean> {
+  async deleteComment(id: number, password?: string): Promise<boolean> {
     const db = this.getDb();
+    
+    // First, get the comment to verify password
+    const comment = await db
+      .prepare('SELECT password FROM comments WHERE id = ?')
+      .bind(id)
+      .first();
+    
+    if (!comment) {
+      return false;
+    }
+    
+    // If comment has a password, verify it matches
+    if (comment.password && comment.password !== '' && comment.password !== password) {
+      throw new Error('Incorrect password');
+    }
+    
+    // Delete the comment
     const result = await db.prepare('DELETE FROM comments WHERE id = ?').bind(id).run();
     return result.success && (result.meta?.changes || 0) > 0;
   }

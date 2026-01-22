@@ -9,6 +9,7 @@ interface Comment {
   author: string;
   email: string;
   content: string;
+  password?: string;
   created_at: string;
   updated_at?: string;
 }
@@ -22,12 +23,15 @@ export default memo(function Comments({ slug }: CommentsProps) {
   const [newComment, setNewComment] = useState({
     author: '',
     email: '',
-    content: ''
+    content: '',
+    password: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [replyingTo, setReplyingTo] = useState<number | null>(null);
   const [editingComment, setEditingComment] = useState<number | null>(null);
   const [editContent, setEditContent] = useState('');
+  const [deletePassword, setDeletePassword] = useState('');
+  const [showDeleteModal, setShowDeleteModal] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -73,7 +77,8 @@ export default memo(function Comments({ slug }: CommentsProps) {
           slug,
           author: newComment.author,
           email: newComment.email,
-          content: newComment.content
+          content: newComment.content,
+          password: newComment.password
         })
       });
 
@@ -82,7 +87,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
       }
 
       await fetchComments(); // Refresh comments
-      setNewComment({ author: '', email: '', content: '' });
+      setNewComment({ author: '', email: '', content: '', password: '' });
       setReplyingTo(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to post comment');
@@ -91,7 +96,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
     }
   };
 
-  const handleInputChange = (field: 'author' | 'email' | 'content', value: string) => {
+  const handleInputChange = (field: 'author' | 'email' | 'content' | 'password', value: string) => {
     setNewComment(prev => ({ ...prev, [field]: value }));
   };
 
@@ -133,18 +138,33 @@ export default memo(function Comments({ slug }: CommentsProps) {
     setEditContent('');
   };
 
-  const handleDelete = async (commentId: number) => {
+  const handleDelete = async (commentId: number, password: string) => {
+    if (!password.trim()) {
+      setError('Password is required to delete comment');
+      return;
+    }
+
     try {
       setError(null);
-      const response = await fetch(`/api/comments?id=${commentId}`, {
-        method: 'DELETE'
+      const response = await fetch('/api/comments', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: commentId,
+          password
+        })
       });
 
       if (!response.ok) {
-        throw new Error('Failed to delete comment');
+        const errorData = await response.json() as any;
+        throw new Error(errorData.error || 'Failed to delete comment');
       }
 
       await fetchComments(); // Refresh comments
+      setShowDeleteModal(null);
+      setDeletePassword('');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to delete comment');
     }
@@ -197,7 +217,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
             Edit
           </button>
           <button 
-            onClick={() => handleDelete(comment.id)}
+            onClick={() => setShowDeleteModal(comment.id)}
             className={styles.deleteButton}
           >
             Delete
@@ -251,6 +271,18 @@ export default memo(function Comments({ slug }: CommentsProps) {
           />
         </div>
         
+        <div className={styles.formGroup}>
+          <label htmlFor="password" className={styles.label}>Password (for deletion)</label>
+          <input
+            type="password"
+            id="password"
+            value={newComment.password}
+            onChange={(e) => handleInputChange('password', e.target.value)}
+            className={styles.input}
+            placeholder="Enter a password to delete this comment later"
+          />
+        </div>
+        
         <button 
           type="submit" 
           disabled={isSubmitting}
@@ -285,6 +317,41 @@ export default memo(function Comments({ slug }: CommentsProps) {
               <CommentItem key={comment.id} comment={comment} />
             ))
           )}
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <h3>Delete Comment</h3>
+            <p>Enter the password to delete this comment:</p>
+            <input
+              type="password"
+              value={deletePassword}
+              onChange={(e) => setDeletePassword(e.target.value)}
+              className={styles.input}
+              placeholder="Enter password"
+              autoFocus
+            />
+            <div className={styles.modalActions}>
+              <button
+                onClick={() => handleDelete(showDeleteModal, deletePassword)}
+                className={styles.deleteButton}
+              >
+                Delete
+              </button>
+              <button
+                onClick={() => {
+                  setShowDeleteModal(null);
+                  setDeletePassword('');
+                }}
+                className={styles.cancelButton}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
