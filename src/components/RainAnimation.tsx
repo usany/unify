@@ -24,34 +24,44 @@ export default function RainAnimation() {
   const [splashes, setSplashes] = useState<Splash[]>([]);
 
   useEffect(() => {
-    const drops: RainDrop[] = [];
-    const newSplashes: Splash[] = [];
-    const dropCount = 10;
+    const generateDrops = () => {
+      const drops: RainDrop[] = [];
+      const newSplashes: Splash[] = [];
+      const dropCount = 10;
 
-    for (let i = 0; i < dropCount; i++) {
-      const animationDelay = Math.random();
-      const left = Math.random() * 100;
-      const animationDuration = Math.random() + 3;
-      
-      drops.push({
-        id: i,
-        left,
-        animationDuration,
-        animationDelay,
-        opacity: Math.random() * 0.3 + 0.2,
-        height: Math.random() * 15 + 10,
-      });
-      
-      // Create splash that triggers when drop hits bottom
-      newSplashes.push({
-        id: i,
-        left,
-        animationDelay: animationDelay + animationDuration,
-      });
-    }
+      for (let i = 0; i < dropCount; i++) {
+        const animationDelay = Math.random();
+        const left = Math.random() * 100;
+        const animationDuration = Math.random() + 3;
+        
+        drops.push({
+          id: i,
+          left,
+          animationDuration,
+          animationDelay,
+          opacity: Math.random() * 0.3 + 0.2,
+          height: Math.random() * 15 + 10,
+        });
+        
+        // Create splash that triggers when drop hits bottom
+        newSplashes.push({
+          id: i,
+          left,
+          animationDelay: animationDelay + animationDuration,
+        });
+      }
 
-    setRainDrops(drops);
-    setSplashes(newSplashes);
+      setRainDrops(drops);
+      setSplashes(newSplashes);
+    };
+
+    // Initial generation
+    generateDrops();
+    
+    // Regenerate positions every 5 seconds to allow for multiple cycles
+    const interval = setInterval(generateDrops, 5000);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
