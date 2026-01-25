@@ -14,7 +14,7 @@ function ContactForm() {
           sx={{
             display: 'flex',
             justifyContent: 'center',
-            color: 'blue',
+            color: 'black'
           }}
           label={language === 'en' ? 'Report Title' : '신고 제목'}
           multiline
