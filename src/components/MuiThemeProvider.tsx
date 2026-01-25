@@ -66,7 +66,7 @@ export default function MuiThemeProvider({ children }: MuiThemeProviderProps) {
       MuiButton: {
         defaultProps: {
           sx: {
-            backgroundColor: theme === 'dark' ? '#37474f' : '#f0fbe7',
+            backgroundColor: theme === 'dark' ? '#37474f' : '#f0fbd7',
             color: theme === 'dark' ? '#ffffff' : '#000000',
             ':hover': {
               backgroundColor: theme === 'dark' ? '#304000' : '#f0f4c3',
