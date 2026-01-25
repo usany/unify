@@ -23,8 +23,8 @@ export default function MuiThemeProvider({ children }: MuiThemeProviderProps) {
                     main: theme === 'dark' ? '#66bb6a' : '#2e7d32',
                 },
                 background: {
-                    default: theme === 'dark' ? '#1a202c' : '#cbd5df',
-                    paper: theme === 'dark' ? '#2d2d2d' : '#ffffff',
+                    default: theme === 'dark' ? '#2d3e2d' : '#f0f4c3',
+                    paper: theme === 'dark' ? '#1e2e1e' : '#ffffff',
                 },
             },
             components: {
@@ -64,6 +64,15 @@ export default function MuiThemeProvider({ children }: MuiThemeProviderProps) {
       //   }
       // },
       MuiButton: {
+        defaultProps: {
+          sx: {
+            backgroundColor: theme === 'dark' ? '#37474f' : '#f9fbe7',
+            color: theme === 'dark' ? '#ffffff' : '#000000',
+            ':hover': {
+              backgroundColor: theme === 'dark' ? '#66bb6a' : '#f0f4c3',
+            },
+          },
+        },
         styleOverrides: {
           root: {
             variants: [
