@@ -3,44 +3,44 @@
 @tailwind utilities;
 
 :root {
-    --primary: #1976d2;
-    --primary-hover: #1565c0;
-    --bg-body: #cbd5df;
-    --bg-topbar: #cbd5df;
-    --bg-card: #f5f5f5;
-    --bg-card-hover: #e0e0e0;
-    --bg-comment: #cbd5df;
-    --bg-comment-pending: #fff3cd;
-    --bg-badge: #e3f2fd;
+    --primary: #2e7d32;
+    --primary-hover: #1b5e20;
+    --bg-body: #f0f4c3;
+    --bg-topbar: #f0f4c3;
+    --bg-card: #ffffff;
+    --bg-card-hover: #e8f5e8;
+    --bg-comment: #f0f4c3;
+    --bg-comment-pending: #fff9c4;
+    --bg-badge: #e8f5e8;
     --text-main: #333333;
     --text-muted: #666666;
     --bg-sidenav: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     --border: #e0e0e0;
     --shadow: rgba(0, 0, 0, 0.1);
-    --bg-tier-1: #f7fafb;
-    --bg-tier-2: #e2e8f0;
-    --bg-tier-3: #cbd5df;
+    --bg-tier-1: #f9fbe7;
+    --bg-tier-2: #f0f4c3;
+    --bg-tier-3: #e6ee9c;
 }
 
 [data-theme='dark'],
 .dark {
-    --primary: #64b5f6;
-    --primary-hover: #90caf9;
-    --bg-body: #1a202c;
-    --bg-topbar: #1a202c;
-    --bg-card: #3d3d3d;
-    --bg-card-hover: #4d4d4d;
-    --bg-comment: #1a202c;
-    --bg-comment-pending: #4d4d3d;
-    --bg-badge: #1a365d;
+    --primary: #66bb6a;
+    --primary-hover: #81c784;
+    --bg-body: #2d3e2d;
+    --bg-topbar: #2d3e2d;
+    --bg-card: #1e2e1e;
+    --bg-card-hover: #263626;
+    --bg-comment: #2d3e2d;
+    --bg-comment-pending: #3d4e3d;
+    --bg-badge: #1e3a1e;
     --text-main: #ffffff;
     --text-muted: #e0e0e0;
     --bg-sidenav: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
     --border: #444444;
     --shadow: rgba(0, 0, 0, 0.3);
-    --bg-tier-1: #5c6778;
-    --bg-tier-2: #2d3848;
-    --bg-tier-3: #1a202c;
+    --bg-tier-1: #3d4e3d;
+    --bg-tier-2: #2d3e2d;
+    --bg-tier-3: #1d2e1d;
 }
 
 * {
@@ -79,7 +79,7 @@ body {
     position: fixed;
     width: 20px;
     height: 10px;
-    background: radial-gradient(ellipse at center, rgba(74, 144, 226, 0.6) 0%, transparent 70%);
+    background: radial-gradient(ellipse at center, rgba(76, 175, 80, 0.6) 0%, transparent 70%);
     border-radius: 50%;
     user-select: none;
     pointer-events: none;

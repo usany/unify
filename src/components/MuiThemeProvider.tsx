@@ -11,16 +11,16 @@ interface MuiThemeProviderProps {
 export default function MuiThemeProvider({ children }: MuiThemeProviderProps) {
     const { theme } = useTheme();
 
-    const colorOne = theme === 'dark' ? '#5c6778' : '#f7fafb'
-    const colorTwo = theme === 'dark' ? '#2d3848' : '#e2e8f0'
-    const colorThree = theme === 'dark' ? '#1a202c' : '#cbd5df'
+    const colorOne = theme === 'dark' ? '#37474f' : '#e8f5e8'
+    const colorTwo = theme === 'dark' ? '#263238' : '#c8e6c9'
+    const colorThree = theme === 'dark' ? '#1a202c' : '#a5d6a7'
     const muiTheme = useMemo(() => {
 
         return createTheme({
             palette: {
                 mode: theme === 'dark' ? 'dark' : 'light',
                 primary: {
-                    main: theme === 'dark' ? '#64b5f6' : '#1976d2',
+                    main: theme === 'dark' ? '#66bb6a' : '#2e7d32',
                 },
                 background: {
                     default: theme === 'dark' ? '#1a202c' : '#cbd5df',
