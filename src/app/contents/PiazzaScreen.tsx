@@ -1,4 +1,5 @@
 import Avatars from './Avatars'
+import PiazzaForm from './PiazzaForm'
 import PiazzaScreenClock from './PiazzaScreenClock'
 
 function PiazzaScreen() {
@@ -50,6 +51,7 @@ function PiazzaScreen() {
           })}
         </ul>
       </div>
+      <PiazzaForm />
     </>
   )
 }
