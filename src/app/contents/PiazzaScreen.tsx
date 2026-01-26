@@ -15,7 +15,9 @@ function PiazzaScreen() {
       profileImage: true,
     }
   ])
-  const addMessage = (message: {id: string, msg: string, userUid: string, messageClock: Date, defaultProfile: string, profileImageUrl: string, profileImage: boolean}) => {
+  const addMessage = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const message = event.currentTarget.piazza.value
     setMessages([...messages, message])
   }
   const messagesArray = [{
