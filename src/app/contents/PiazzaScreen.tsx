@@ -14,8 +14,8 @@ function PiazzaScreen() {
   }]
   return (
     <>
+      <br />
       <div className={`p-1 rounded-xl overflow-auto w-full bg-light-3 dark:bg-dark-3 flex flex-col`}>
-        <br />
         <ul>
           {messagesArray.map((value, index) => {
             const passingValue = {
@@ -48,6 +48,7 @@ function PiazzaScreen() {
         </ul>
       </div>
       <PiazzaForm />
+      <br />
     </>
   )
 }
