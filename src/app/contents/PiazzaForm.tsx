@@ -1,21 +1,6 @@
 import { AlarmCheck, PlusCircle, UserRound } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 
-interface Props {
-  chattingUser: {
-    uid: string
-    displayName: string
-    profileImage: boolean
-    defaulProfile: string
-    profileUrl: string
-  } | null
-  multiple: boolean
-  messages: string
-  handleMessages: (newValue: string) => void
-  messagesList: []
-  handleMessagesList: (newValue: []) => void
-  isKeyboardOpen: boolean
-}
 function PiazzaForm() {
   const { language } = useLanguage()
   return (
