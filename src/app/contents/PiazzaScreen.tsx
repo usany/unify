@@ -24,12 +24,8 @@ function PiazzaScreen() {
               profileImage: value.profileImage,
             }
             return (
-              <li
-                key={index}
-              >
-                <div
-                  className={`flex ${index ? 'justify-end' : 'justify-start'}`}
-                >
+              <li key={index}>
+                <div className={`flex ${index ? 'justify-end' : 'justify-start'}`}>
                   <div className="flex gap-3 pt-3">
                     <Avatars
                       element={passingValue}
@@ -38,8 +34,7 @@ function PiazzaScreen() {
                     {value.id}
                   </div>
                 </div>
-                <div                   className={`flex ${index ? 'justify-end' : 'justify-start'}`}
->
+                <div className={`flex ${index ? 'justify-end' : 'justify-start'}`}>
                   <div className="other rounded-tr-lg rounded-bl-lg rounded-br-lg p-1 bg-light-1 dark:bg-dark-1">
                     {value.msg}
                   </div>
