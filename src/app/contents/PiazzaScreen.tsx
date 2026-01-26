@@ -26,22 +26,20 @@ function PiazzaScreen() {
             return (
               <li
                 key={index}
-                className={'text-left'}
               >
                 <div
                   className={`flex ${index ? 'justify-end' : 'justify-start'}`}
                 >
                   <div className="flex gap-3 pt-3">
-                    <button>
-                      <Avatars
-                        element={passingValue}
-                        profile={false}
-                      />
-                    </button>
+                    <Avatars
+                      element={passingValue}
+                      profile={false}
+                    />
                     {value.id}
                   </div>
                 </div>
-                <div className="flex gap-3 justify-start">
+                <div                   className={`flex ${index ? 'justify-end' : 'justify-start'}`}
+>
                   <div className="other rounded-tr-lg rounded-bl-lg rounded-br-lg p-1 bg-light-1 dark:bg-dark-1">
                     {value.msg}
                   </div>
