@@ -1,8 +1,23 @@
+import { useState } from 'react'
 import Avatars from './Avatars'
 import PiazzaForm from './PiazzaForm'
 import PiazzaScreenClock from './PiazzaScreenClock'
 
 function PiazzaScreen() {
+  const [messages, setMessages] = useState([
+    {
+      id: 'KHUSAN',
+      msg: 'Welcome to KHUSAN',
+      userUid: '1',
+      messageClock: new Date(),
+      defaultProfile: 'https://ijsfbngiyhgvolsprxeh.supabase.co/storage/v1/object/public/remake/animalprofileRed.png',
+      profileImageUrl: 'https://ijsfbngiyhgvolsprxeh.supabase.co/storage/v1/object/public/remake/animalprofileRed.png',
+      profileImage: true,
+    }
+  ])
+  const addMessage = (message: {id: string, msg: string, userUid: string, messageClock: Date, defaultProfile: string, profileImageUrl: string, profileImage: boolean}) => {
+    setMessages([...messages, message])
+  }
   const messagesArray = [{
     id: 'KHUSAN',
     msg: 'Welcome to KHUSAN',
@@ -17,7 +32,7 @@ function PiazzaScreen() {
       <br />
       <div className={`p-1 rounded-xl overflow-auto w-full bg-light-3 dark:bg-dark-3 flex flex-col`}>
         <ul>
-          {messagesArray.map((value, index) => {
+          {messages.map((value, index) => {
             const passingValue = {
               defaultProfile: value.defaultProfile,
               profileImageUrl: value.profileImageUrl,
@@ -47,7 +62,7 @@ function PiazzaScreen() {
           })}
         </ul>
       </div>
-      <PiazzaForm />
+      <PiazzaForm addMessage={addMessage}/>
       <br />
     </>
   )

@@ -1,7 +1,7 @@
 import { AlarmCheck, PlusCircle, UserRound } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 
-function PiazzaForm() {
+function PiazzaForm({ addMessage }: { addMessage: (message: string) => void }) {
   const { language } = useLanguage()
   return (
     <form className='flex'>
