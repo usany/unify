@@ -8,8 +8,8 @@ function PiazzaForm({ addMessage }: { addMessage: (event: React.FormEvent<HTMLFo
     msg: '',
     userUid: '2',
     messageClock: new Date(),
-    defaultProfile: 'https://ijsfbngiyhgvolsprxeh.supabase.co/storage/v1/object/public/remake/animalprofileRed.png',
-    profileImageUrl: 'https://ijsfbngiyhgvolsprxeh.supabase.co/storage/v1/object/public/remake/animalprofileRed.png',
+    defaultProfile: 'https://ijsfbngiyhgvolsprxeh.supabase.co/storage/v1/object/public/remake/animalprofileBlue.png',
+    profileImageUrl: 'https://ijsfbngiyhgvolsprxeh.supabase.co/storage/v1/object/public/remake/animalprofileBlue.png',
     profileImage: true,
   })
   const { language } = useLanguage()
