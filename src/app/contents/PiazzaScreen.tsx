@@ -27,12 +27,12 @@ function PiazzaScreen() {
               <li key={index}>
                 <div className={`flex ${index ? 'justify-end' : 'justify-start'}`}>
                   <div className="flex gap-3 pt-3">
-                    {index ? null : value.id}
+                    {index ? value.id : null}
                     <Avatars
                       element={passingValue}
                       profile={false}
                     />
-                    {index ? value.id : null}
+                    {index ? null : value.id}
                   </div>
                 </div>
                 <div className={`flex ${index ? 'justify-end' : 'justify-start'}`}>
