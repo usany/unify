@@ -6,9 +6,10 @@ function ContactForm() {
   const { language } = useLanguage()
   return (
     <form id="auth">
+      <br />
       <ContactAddress action={language === 'en' ? 'Sending' : '발신'} label={language === 'en' ? 'Anonymous User' : '익명 유저'} />
       <ContactAddress action={language === 'en' ? 'Receiving' : '수신'} label={language === 'en' ? 'Manager' : '담당자'} />
-      <div className="pt-5 px-5">
+      <div className="flex flex-col gap-5 pt-5">
         <TextField
           name="title"
           sx={{
@@ -21,8 +22,6 @@ function ContactForm() {
           variant="outlined"
           fullWidth
         />
-      </div>
-      <div className="pt-5 px-5">
         <TextField
           name="content"
           sx={{
@@ -36,6 +35,7 @@ function ContactForm() {
           fullWidth
         />
       </div>
+      <br />
     </form>
   )
 }

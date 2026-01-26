@@ -7,7 +7,7 @@ interface Props {
 
 function ContactAddress({ action, label }: Props) {
   return (
-    <div className='flex gap-5 pt-1 px-5'>
+    <div className='flex gap-5 pt-1'>
       <div className='flex items-center'>
         {action}:
       </div>
