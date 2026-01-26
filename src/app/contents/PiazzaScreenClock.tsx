@@ -22,8 +22,7 @@ const PiazzaScreenClock = ({ value }: { value: { messageClock: Date } }) => {
       {language === 'ko' && messageAmpm} {messageHours}:
       {clock.getMinutes() < 10 && '0'}
       {clock.getMinutes()}
-      {language === 'en' &&
-        (messageAmpm === '오전' ? 'am' : 'pm')}
+      {language === 'en' && (messageAmpm === '오전' ? 'am' : 'pm')}
     </>
   )
 }
