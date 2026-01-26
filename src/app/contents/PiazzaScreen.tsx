@@ -8,7 +8,7 @@ function PiazzaScreen() {
     {
       id: 'KHUSAN',
       msg: 'Welcome to KHUSAN',
-      userUid: '0',
+      userUid: '1',
       messageClock: new Date(),
       defaultProfile: 'https://ijsfbngiyhgvolsprxeh.supabase.co/storage/v1/object/public/remake/animalprofileRed.png',
       profileImageUrl: 'https://ijsfbngiyhgvolsprxeh.supabase.co/storage/v1/object/public/remake/animalprofileRed.png',
@@ -17,7 +17,15 @@ function PiazzaScreen() {
   ])
   const addMessage = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const message = event.currentTarget.piazza.value
+    const message = {
+      id: 'user',
+      msg: event.currentTarget.piazza.value,
+      userUid: '2',
+      messageClock: new Date(),
+      defaultProfile: 'https://ijsfbngiyhgvolsprxeh.supabase.co/storage/v1/object/public/remake/animalprofileBlue.png',
+      profileImageUrl: 'https://ijsfbngiyhgvolsprxeh.supabase.co/storage/v1/object/public/remake/animalprofileBlue.png',
+      profileImage: true,
+    }
     setMessages([...messages, message])
   }
   // const messagesArray = [{
