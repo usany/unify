@@ -6,8 +6,8 @@ function PiazzaForm({ addMessage }: { addMessage: (event: React.FormEvent<HTMLFo
   const [message, setMessage] = useState('')
   const { language } = useLanguage()
   return (
-    <form id='piazza' className='flex' onSubmit={() => {
-      addMessage()
+    <form id='piazza' className='flex' onSubmit={(event) => {
+      addMessage(event)
       setMessage('')
     }}>
       <div className="flex items-center px-1 rounded bg-light-2 dark:bg-dark-2">
