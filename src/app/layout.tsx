@@ -34,7 +34,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 <main style={{ paddingTop: '60px' }}>
                   {children}
                 </main>
-                <div className='p-5'>practice</div>
               </MuiThemeProvider>
             </ThemeProvider>
           </LanguageProvider>
