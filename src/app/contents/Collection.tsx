@@ -5,12 +5,13 @@ function Collection() {
   const images = [staticImg]
   return (
     <div>
+      <br />
       {images.length > 0 && 
         <AnimatedGroup className="grid grid-cols-[repeat(auto-fit,minmax(80px,1fr))] col-span-full p-5">
           {images.map((element, index) => {
             return (
               <Image
-                src={staticImg}
+                src={element}
                 className="w-[80px] h-[80px]"
                 alt='khusan'
               />
@@ -18,6 +19,7 @@ function Collection() {
           })}
         </AnimatedGroup>
       }
+      <br />
     </div>
   )
 }
