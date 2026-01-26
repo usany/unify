@@ -29,7 +29,7 @@ function PiazzaScreen() {
                 className={'text-left'}
               >
                 <div
-                  className={`flex justify-start`}
+                  className={`flex ${index ? 'justify-end' : 'justify-start'}`}
                 >
                   <div className="flex gap-3 pt-3">
                     <button>
