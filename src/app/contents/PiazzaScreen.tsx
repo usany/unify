@@ -40,7 +40,7 @@ function PiazzaScreen() {
   return (
     <>
       <br />
-      <div className={`p-1 rounded-xl overflow-auto w-full bg-light-3 dark:bg-dark-3 flex flex-col`}>
+      <div className={`p-1 rounded-xl overflow-auto w-full bg-light-3 dark:bg-dark-3 flex flex-col h-[300px]`}>
         <ul>
           {messages.map((value, index) => {
             const passingValue = {
