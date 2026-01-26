@@ -37,7 +37,7 @@ function PiazzaScreen() {
                 </div>
                 <div className={`flex ${index ? 'justify-end' : 'justify-start'}`}>
                   {index ? <PiazzaScreenClock value={value}/> : null}
-                  <div className="other rounded-tr-lg rounded-bl-lg rounded-br-lg p-1 bg-light-1 dark:bg-dark-1">
+                  <div className="rounded-tr-lg rounded-bl-lg rounded-br-lg p-1 bg-light-1 dark:bg-dark-1">
                     {value.msg}
                   </div>
                   {index ? null : <PiazzaScreenClock value={value}/>}
