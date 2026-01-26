@@ -6,7 +6,10 @@ function PiazzaForm({ addMessage }: { addMessage: (event: React.FormEvent<HTMLFo
   const [message, setMessage] = useState('')
   const { language } = useLanguage()
   return (
-    <form id='piazza' className='flex' onSubmit={addMessage}>
+    <form id='piazza' className='flex' onSubmit={() => {
+      addMessage()
+      setMessage('')
+    }}>
       <div className="flex items-center px-1 rounded bg-light-2 dark:bg-dark-2">
         <PlusCircle />
       </div>
@@ -17,7 +20,7 @@ function PiazzaForm({ addMessage }: { addMessage: (event: React.FormEvent<HTMLFo
         value={message}
         onChange={(event) => setMessage(event.target.value)}
       />
-      <button className="w-1/6 rounded bg-light-2 dark:bg-dark-2" type="submit" onClick={() => setMessage('')}>
+      <button className="w-1/6 rounded bg-light-2 dark:bg-dark-2" type="submit">
         {language === 'en' ? 'Send' : '전송'}
       </button>
     </form>
