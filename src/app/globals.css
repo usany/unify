@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 :root {
     --primary: #2e7d32;
@@ -43,11 +41,11 @@
     --bg-tier-3: #1d2e1d;
 }
 
-* {
+/* * {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-}
+} */
 
 html,
 body {
