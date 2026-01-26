@@ -1,6 +1,6 @@
 import { useLanguage } from "@/context/LanguageContext"
 
-const PiazzaScreenClock = ({ value }) => {
+const PiazzaScreenClock = ({ value }: { value: { messageClock: Date } }) => {
   const { language } = useLanguage()
   const clock = new Date(value.messageClock)
   let messageHours = clock.getHours()
