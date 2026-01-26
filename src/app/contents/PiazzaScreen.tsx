@@ -51,14 +51,14 @@ function PiazzaScreen() {
             return (
               <li key={index}>
                 <div className={`flex ${index ? 'justify-end' : 'justify-start'}`}>
-                  <div className="flex gap-3 pt-3">
+                  {index < 2 && <div className="flex gap-3 pt-3">
                     {index ? value.id : null}
-                    {index < 2 && <Avatars
+                    <Avatars
                       element={passingValue}
                       profile={false}
-                    />}
+                    />
                     {index ? null : value.id}
-                  </div>
+                  </div>}
                 </div>
                 <div className={`flex ${index ? 'justify-end' : 'justify-start'}`}>
                   {index ? <PiazzaScreenClock value={value}/> : null}
