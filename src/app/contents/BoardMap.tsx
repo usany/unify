@@ -36,6 +36,7 @@ function BoardMap() {
   const [markings, setMarkings] = useState([])
   const [markersList, setMarkersList] = useState([])
   const [currentMarker, setCurrentMarker] = useState('')
+  const [selectedValueTwo, setSelectedValueTwo] = useState('서울캠퍼스 전체')
   useEffect(() => {
     document.documentElement.scrollTo({
       top: 0,
@@ -150,18 +151,18 @@ function BoardMap() {
     displayMap()
   }, [selectedLocation])
   useEffect(() => {
-    if (selectedLocation && markings.length && calledMap) {
-      const index = markings.findIndex((value) => value.id === selectedLocation)
+    if (selectedValueTwo && markings.length && calledMap) {
+      const index = markings.findIndex((value) => value.id === selectedValueTwo)
       if (index > -1) {
         markings[index]?.open(calledMap, markersList[index])
       }
     }
-    if (!selectedLocation) {
+    if (!selectedValueTwo) {
       markings.forEach((value) => {
         value.close()
       })
     }
-  }, [selectedLocation])
+  }, [selectedValueTwo])
   return (
     <div className="flex flex-col justify-center">
       <div className='flex flex-col p-5 gap-5'>
