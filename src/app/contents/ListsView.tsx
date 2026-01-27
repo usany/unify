@@ -1,6 +1,7 @@
 import { Chip, Divider } from '@mui/material'
 import { Ban, Check } from 'lucide-react'
 import Avatars from './Avatars'
+import { useLanguage } from '@/context/LanguageContext';
 
 interface User {
   id: number;
@@ -15,6 +16,14 @@ interface User {
 }
 
 const ListsView = ({ elements, userSearch, multiple }: { elements: User[], userSearch?: string, multiple: boolean }) => {
+  const hasResults = elements.some((element) => {
+    if (userSearch) {
+      const isMatch = element.name.toLowerCase().includes(userSearch.toLowerCase())
+      return isMatch
+    }
+    return true
+  })
+  const {language} = useLanguage()
   return (
     <div className="flex truncate justify-center w-full">
       <div className="w-full">
@@ -53,6 +62,9 @@ const ListsView = ({ elements, userSearch, multiple }: { elements: User[], userS
           )
         })}
       </div>
+      {!hasResults && (
+        <p className='text-center'>{language === 'en' ? 'No users found' : '사용자를 찾을 수 없습니다.'}</p>
+      )}
     </div>
   )
 }
