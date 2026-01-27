@@ -21,14 +21,14 @@ function RankingListsTitle({ multiple }: Props) {
   
   const { language } = useLanguage()
   return (
-    <div className="flex truncate justify-center">
-      <div className={`flex justify-around w-[1000px]`}>
+    <div className="flex truncate justify-center w-full">
+      <div className={`flex justify-around w-full`}>
         {isLargeScreen ? (
-          <div className="flex items-center justify-center w-[100px]">
+          <div className="flex items-center justify-center">
             {multiple ? (language === 'en' ? 'User' : '유저') : language === 'en' ? 'My' : '내'} {multiple ? (language === 'en' ? 'Ranking' : '랭킹') : language === 'en' ? 'Ranking' : '랭킹'}
           </div>
         ) : (
-          <div className="flex flex-col items-center w-[100px]">
+          <div className="flex flex-col items-center">
             <div>{multiple ? (language === 'en' ? 'User' : '유저') : language === 'en' ? 'My' : '내'}</div>
             <div>{multiple ? (language === 'en' ? 'Ranking' : '랭킹') : language === 'en' ? 'Ranking' : '랭킹'}</div>
           </div>
