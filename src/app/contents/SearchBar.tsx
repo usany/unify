@@ -62,7 +62,7 @@ function SearchBar() {
   return (
     <div className='px-5 flex flex-col w-full items-center'>
       <br />
-      <TextField sx={{ width: '100%', maxWidth: '1000px', borderRadius: '5px' }} value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)}/>
+      <TextField sx={{ width: '100%', maxWidth: '1000px', borderRadius: '5px' }} label={language === 'en' ? 'User Name' : '사용자 이름'} value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)}/>
       <div className='flex flex-col gap-4'>
         {filteredUsers}
         {!hasResults && (
