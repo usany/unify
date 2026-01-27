@@ -80,10 +80,6 @@ function BoardMap() {
           title: value[1].ko.name,
           id: value[1].ko.name,
         })
-        const key = value[0]
-        // const key = Object.keys(locationsCollectionLetters).find(
-        //   (key) => locationsCollectionLetters[key] === value[1][languages].name,
-        // )
         const contentString = [
           `<div class="markerContainer">
             <div class="markerTitle">
