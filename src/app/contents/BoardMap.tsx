@@ -10,7 +10,7 @@ const defaultLocations = {
   gw: buildingsObj.gw.gwcl.location,
 }
 function BoardMap() {
-  const [selectedLocation, setSelectedLocation] = useState('')
+  const [selectedLocation, setSelectedLocation] = useState('se')
   const locations = {
     Seoul: 'se',
     Global: 'gu',
