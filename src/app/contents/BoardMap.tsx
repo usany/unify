@@ -146,6 +146,9 @@ function BoardMap() {
       }
     }
   }
+  useEffect(() => {
+    displayMap()
+  }, [selectedLocation])
   return (
     <div className="flex flex-col justify-center">
       <div className='flex flex-col p-5 gap-5'>
