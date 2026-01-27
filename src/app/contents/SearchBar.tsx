@@ -20,6 +20,7 @@ const myProfile = [{
   profileImage: false,
   profileImageUrl: '',
   defaultProfile: 'https://ijsfbngiyhgvolsprxeh.supabase.co/storage/v1/object/public/remake/animalprofileRed.png',
+  locationConfirmed: false,
 }]
 const usersList: User[] = [
   ...myProfile,
@@ -31,6 +32,7 @@ const usersList: User[] = [
     profileImage: false,
     profileImageUrl: '',
     defaultProfile: 'https://ijsfbngiyhgvolsprxeh.supabase.co/storage/v1/object/public/remake/animalprofileRed.png',
+    locationConfirmed: true,
   },
   {
     id: 3,
@@ -40,6 +42,7 @@ const usersList: User[] = [
     profileImage: false,
     profileImageUrl: '',
     defaultProfile: 'https://ijsfbngiyhgvolsprxeh.supabase.co/storage/v1/object/public/remake/animalprofileRed.png',
+    locationConfirmed: true,
   },
 ]
 function SearchBar() {
