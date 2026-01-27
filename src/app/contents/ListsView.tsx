@@ -35,7 +35,7 @@ const ListsView = ({ elements, userSearch, multiple }: { elements: User[], userS
               key={index}
               className="cursor-pointer"
             >
-              <div>
+              <div className="flex justify-around">
                 <div className="flex items-center justify-center w-[100px]">
                   {multiple ? element.ranking : element?.ranking}
                 </div>
