@@ -2,7 +2,17 @@ import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 
-const usersList = [
+interface User {
+  id: number;
+  name: string;
+  point: number;
+  campus: string;
+  profileImage: boolean;
+  profileImageUrl: string;
+  defaultProfile: string;
+}
+
+const usersList: User[] = [
   {
     id: 1,
     name: 'KHUSAN1',
@@ -47,14 +57,14 @@ function SearchBar() {
         <p>{user.campus}</p>
       </div>
     )
-  })
+  }).filter((user) => user !== null)
   const hasResults = filteredUsers.some((user) => user !== null)
   return (
     <div className='px-5 flex flex-col w-full items-center'>
       <br />
       <TextField sx={{ width: '100%', maxWidth: '1000px', borderRadius: '5px' }} value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)}/>
       <div className='flex flex-col gap-4'>
-        {filteredUsers.sort((a, b) => (b?.point || 0) - (a?.point || 0))}
+        {filteredUsers.sort((a: User, b: User) => (b?.point || 0) - (a?.point || 0))}
         {!hasResults && (
           <p className='text-center'>{language === 'en' ? 'No users found' : '사용자를 찾을 수 없습니다.'}</p>
         )}
