@@ -1,10 +1,3 @@
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion'
-import { MapIcon } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import locationsBuildings, { locationsCollectionLetters, markers, buildingsObj, locationsBuildingsArray } from './locationsBuildings'
 import { Chip } from '@mui/material'
