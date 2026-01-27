@@ -16,8 +16,8 @@ interface User {
 
 const ListsView = ({ elements, userSearch, multiple }: { elements: User[], userSearch?: string, multiple: boolean }) => {
   return (
-    <div className="flex truncate justify-center">
-      <div className="w-[1000px]">
+    <div className="flex truncate justify-center w-full">
+      <div className="w-full">
         {elements.map((element, index) => {
           if (userSearch) {
             for (let number = 0; number < userSearch.length; number++) {
@@ -38,7 +38,6 @@ const ListsView = ({ elements, userSearch, multiple }: { elements: User[], userS
               <div
                 className={`flex justify-around
                   ${
-                    location.pathname === '/ranking' &&
                     multiple &&
                     index < 3 &&
                     `bg-[#e2e8f0] dark:bg-[#2d3848] rounded`
@@ -54,7 +53,7 @@ const ListsView = ({ elements, userSearch, multiple }: { elements: User[], userS
                   <div className="overflow-hidden">{displayName}</div>
                   <div className="overflow-hidden">{element.point}</div>
                 </div>
-                <div className="flex flex-col justify-center items-center w-[100px]">
+                <div className="flex flex-col justify-center items-center">
                   {element?.campus && element?.campus.slice(0, element?.campus.indexOf(' ')) || 'Seoul'}
                   <Chip sx={{height: '25px'}} color={element.locationConfirmed ? "success" : undefined} label={element.locationConfirmed ? <Check /> : <Ban />} />
                 </div>
