@@ -1,6 +1,7 @@
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
+import RankingListsTitle from './RankingListsTitle';
 
 interface User {
   id: number;
@@ -11,17 +12,17 @@ interface User {
   profileImageUrl: string;
   defaultProfile: string;
 }
-
+const myProfile = {
+  id: 1,
+  name: 'KHUSAN1',
+  point: 3000,
+  campus: '서울',
+  profileImage: false,
+  profileImageUrl: '',
+  defaultProfile: 'https://ijsfbngiyhgvolsprxeh.supabase.co/storage/v1/object/public/remake/animalprofileRed.png',
+}
 const usersList: User[] = [
-  {
-    id: 1,
-    name: 'KHUSAN1',
-    point: 3000,
-    campus: '서울',
-    profileImage: false,
-    profileImageUrl: '',
-    defaultProfile: 'https://ijsfbngiyhgvolsprxeh.supabase.co/storage/v1/object/public/remake/animalprofileRed.png',
-  },
+  myProfile,
   {
     id: 2,
     name: 'KHUSAN2',
@@ -63,6 +64,7 @@ function SearchBar() {
     <div className='px-5 flex flex-col w-full items-center'>
       <br />
       <TextField sx={{ width: '100%', maxWidth: '1000px', borderRadius: '5px' }} label={language === 'en' ? 'User Name' : '사용자 이름'} value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)}/>
+      <RankingListsTitle multiple={false} />
       <div className='flex flex-col gap-4'>
         {filteredUsers}
         {!hasResults && (
