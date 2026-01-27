@@ -44,7 +44,7 @@ const usersList: User[] = [
 function SearchBar() {
   const [searchQuery, setSearchQuery] = useState('')
   const {language } = useLanguage()
-  const filteredUsers = usersList.map((user) => {
+  const filteredUsers = usersList.sort((a, b) => b.point - a.point).map((user) => {
     if (searchQuery) {
       const isMatch = user.name.toLowerCase().includes(searchQuery.toLowerCase())
       if (!isMatch) return null
@@ -64,7 +64,7 @@ function SearchBar() {
       <br />
       <TextField sx={{ width: '100%', maxWidth: '1000px', borderRadius: '5px' }} value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)}/>
       <div className='flex flex-col gap-4'>
-        {filteredUsers.sort((a: User, b: User) => (b?.point || 0) - (a?.point || 0))}
+        {filteredUsers}
         {!hasResults && (
           <p className='text-center'>{language === 'en' ? 'No users found' : '사용자를 찾을 수 없습니다.'}</p>
         )}
