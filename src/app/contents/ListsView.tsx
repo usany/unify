@@ -11,6 +11,7 @@ interface User {
   profileImageUrl: string;
   defaultProfile: string;
   locationConfirmed: Date | null;
+  ranking: number;
 }
 
 const ListsView = ({ elements, userSearch, multiple }: { elements: User[], userSearch?: string, multiple: boolean }) => {
@@ -44,7 +45,7 @@ const ListsView = ({ elements, userSearch, multiple }: { elements: User[], userS
                   }`}
               >
                 <div className="flex items-center justify-center w-[100px]">
-                  {multiple ? element.ranking : profile?.ranking}
+                  {multiple ? element.ranking : element?.ranking}
                 </div>
                 <div className="flex items-center">
                   <Avatars element={element} piazza={null} profile={false} />
