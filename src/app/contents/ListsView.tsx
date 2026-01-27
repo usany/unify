@@ -20,11 +20,8 @@ const ListsView = ({ elements, userSearch, multiple }: { elements: User[], userS
       <div className="w-full">
         {elements.map((element, index) => {
           if (userSearch) {
-            for (let number = 0; number < userSearch.length; number++) {
-              if (element?.name[number] !== userSearch[number]) {
-                return null
-              }
-            }
+            const isMatch = element.name.toLowerCase().includes(userSearch.toLowerCase())
+            if (!isMatch) return null
           }
           const displayName =
             (element.name?.length || 0) > 9
