@@ -13,6 +13,7 @@ interface User {
   profileImageUrl: string;
   defaultProfile: string;
   locationConfirmed: Date | null;
+  ranking: number;
 }
 const myProfile = [{
   id: 1,
@@ -23,6 +24,7 @@ const myProfile = [{
   profileImageUrl: '',
   defaultProfile: 'https://ijsfbngiyhgvolsprxeh.supabase.co/storage/v1/object/public/remake/animalprofileRed.png',
   locationConfirmed: null,
+  ranking: 1,
 }]
 const usersList: User[] = [
   ...myProfile,
@@ -35,6 +37,7 @@ const usersList: User[] = [
     profileImageUrl: '',
     defaultProfile: 'https://ijsfbngiyhgvolsprxeh.supabase.co/storage/v1/object/public/remake/animalprofileRed.png',
     locationConfirmed: new Date(),
+    ranking: 2
   },
   {
     id: 3,
@@ -45,6 +48,7 @@ const usersList: User[] = [
     profileImageUrl: '',
     defaultProfile: 'https://ijsfbngiyhgvolsprxeh.supabase.co/storage/v1/object/public/remake/animalprofileRed.png',
     locationConfirmed: new Date(),
+    ranking: 3``
   },
 ]
 function SearchBar() {
