@@ -35,7 +35,7 @@ const usersList: User[] = [
     campus: '국제',
     profileImage: false,
     profileImageUrl: '',
-    defaultProfile: 'https://ijsfbngiyhgvolsprxeh.supabase.co/storage/v1/object/public/remake/animalprofileRed.png',
+    defaultProfile: 'https://ijsfbngiyhgvolsprxeh.supabase.co/storage/v1/object/public/remake/animalprofileBlue.png',
     locationConfirmed: new Date(),
     ranking: 2
   },
@@ -46,7 +46,7 @@ const usersList: User[] = [
     campus: '광릉',
     profileImage: false,
     profileImageUrl: '',
-    defaultProfile: 'https://ijsfbngiyhgvolsprxeh.supabase.co/storage/v1/object/public/remake/animalprofileRed.png',
+    defaultProfile: 'https://ijsfbngiyhgvolsprxeh.supabase.co/storage/v1/object/public/remake/animalprofileGold.png',
     locationConfirmed: new Date(),
     ranking: 3
   },
@@ -77,12 +77,6 @@ function SearchBar() {
       {!searchQuery && <ListsView elements={myProfile} multiple={false} />}
       <RankingListsTitle multiple={true} />
       <ListsView elements={usersList} userSearch={searchQuery} multiple={true} />
-      {/* <div className='flex flex-col gap-4'>
-        {filteredUsers}
-        {!hasResults && (
-          <p className='text-center'>{language === 'en' ? 'No users found' : '사용자를 찾을 수 없습니다.'}</p>
-        )}
-      </div> */}
       <br />
     </div>
   )
