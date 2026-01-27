@@ -50,9 +50,9 @@ function SearchBar() {
   })
   const hasResults = filteredUsers.some((user) => user !== null)
   return (
-    <div className='px-5 flex flex-col w-[1000px] items-center'>
+    <div className='px-5 flex flex-col w-full items-center'>
       <br />
-      <TextField sx={{ width: '1000px', borderRadius: '5px' }} value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)}/>
+      <TextField sx={{ width: '100%', borderRadius: '5px' }} value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)}/>
       <div className='flex flex-col gap-4 mt-4'>
         {filteredUsers}
         {!hasResults && (
