@@ -48,7 +48,7 @@ const usersList: User[] = [
     profileImageUrl: '',
     defaultProfile: 'https://ijsfbngiyhgvolsprxeh.supabase.co/storage/v1/object/public/remake/animalprofileRed.png',
     locationConfirmed: new Date(),
-    ranking: 3``
+    ranking: 3
   },
 ]
 function SearchBar() {
