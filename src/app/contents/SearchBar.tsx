@@ -30,7 +30,7 @@ const usersList: User[] = [
   ...myProfile,
   {
     id: 2,
-    name: 'KHUSAN2',
+    name: 'Other1',
     point: 2500,
     campus: '국제',
     profileImage: false,
@@ -41,7 +41,7 @@ const usersList: User[] = [
   },
   {
     id: 3,
-    name: 'KHUSAN3',
+    name: 'Other2',
     point: 2000,
     campus: '광릉',
     profileImage: false,
