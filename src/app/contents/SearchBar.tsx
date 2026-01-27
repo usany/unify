@@ -1,4 +1,5 @@
 import TextField from '@mui/material/TextField';
+import { useState } from 'react';
 
 const usersList = [
   {
@@ -30,10 +31,11 @@ const usersList = [
   },
 ]
 function SearchBar() {
+  const [searchQuery, setSearchQuery] = useState('')
   return (
     <div className='px-5 flex flex-col w-[1000px] items-center'>
       <br />
-      <TextField sx={{ width: '1000px', borderRadius: '5px' }} />
+      <TextField sx={{ width: '1000px', borderRadius: '5px' }} value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)}/>
       <div className='flex flex-col gap-4 mt-4'>
         {usersList.map((user) => (
           <div key={user.id} className='flex items-center gap-4'>
