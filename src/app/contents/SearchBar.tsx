@@ -77,12 +77,12 @@ function SearchBar() {
       {!searchQuery && <ListsView elements={myProfile} multiple={false} />}
       <RankingListsTitle multiple={true} />
       <ListsView elements={usersList} userSearch={searchQuery} multiple={true} />
-      <div className='flex flex-col gap-4'>
+      {/* <div className='flex flex-col gap-4'>
         {filteredUsers}
         {!hasResults && (
           <p className='text-center'>{language === 'en' ? 'No users found' : '사용자를 찾을 수 없습니다.'}</p>
         )}
-      </div>
+      </div> */}
       <br />
     </div>
   )
