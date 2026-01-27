@@ -169,6 +169,7 @@ function BoardMap() {
               {campusesArray.map((value) => {
                 return (
                   <Chip
+                    key={value.name}
                     sx={selectedLocation === locations[value.name] ? {}:undefined}
                     label={
                       <button onClick={value.onClick}>{value.displayName}</button>
