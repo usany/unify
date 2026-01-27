@@ -73,8 +73,8 @@ function SearchBar() {
     <div className='px-5 flex flex-col w-full items-center'>
       <br />
       <TextField sx={{ width: '100%', maxWidth: '1000px', borderRadius: '5px' }} label={language === 'en' ? 'User Name' : '사용자 이름'} value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)}/>
-      <RankingListsTitle multiple={false} />
-      <ListsView elements={myProfile} multiple={false} />
+      {!searchQuery && <RankingListsTitle multiple={false} />}
+      {!searchQuery && <ListsView elements={myProfile} multiple={false} />}
       <RankingListsTitle multiple={true} />
       <ListsView elements={usersList} userSearch={searchQuery} multiple={true} />
       <div className='flex flex-col gap-4'>
