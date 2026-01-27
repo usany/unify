@@ -24,11 +24,11 @@ function RankingListsTitle({ multiple }: Props) {
     <div className="flex truncate justify-center w-full">
       <div className={`flex justify-around w-full`}>
         {isLargeScreen ? (
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center w-[100px]">
             {multiple ? (language === 'en' ? 'User' : '유저') : language === 'en' ? 'My' : '내'} {multiple ? (language === 'en' ? 'Ranking' : '랭킹') : language === 'en' ? 'Ranking' : '랭킹'}
           </div>
         ) : (
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center w-[100px]">
             <div>{multiple ? (language === 'en' ? 'User' : '유저') : language === 'en' ? 'My' : '내'}</div>
             <div>{multiple ? (language === 'en' ? 'Ranking' : '랭킹') : language === 'en' ? 'Ranking' : '랭킹'}</div>
           </div>
