@@ -12,7 +12,7 @@ interface User {
   profileImageUrl: string;
   defaultProfile: string;
 }
-const myProfile = {
+const myProfile = [{
   id: 1,
   name: 'KHUSAN1',
   point: 3000,
@@ -20,9 +20,9 @@ const myProfile = {
   profileImage: false,
   profileImageUrl: '',
   defaultProfile: 'https://ijsfbngiyhgvolsprxeh.supabase.co/storage/v1/object/public/remake/animalprofileRed.png',
-}
+}]
 const usersList: User[] = [
-  myProfile,
+  ...myProfile,
   {
     id: 2,
     name: 'KHUSAN2',
