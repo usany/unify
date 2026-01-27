@@ -36,12 +36,12 @@ const ListsView = ({ elements, userSearch, multiple }: { elements: User[], userS
               className="cursor-pointer"
             >
               <div
-                className={`flex justify-around
-                  ${
-                    multiple &&
-                    index < 3 &&
-                    `bg-[#e2e8f0] dark:bg-[#2d3848] rounded`
-                  }`}
+                // className={`flex justify-around
+                //   ${
+                //     multiple &&
+                //     index < 3 &&
+                //     `bg-[#e2e8f0] dark:bg-[#2d3848] rounded`
+                //   }`}
               >
                 <div className="flex items-center justify-center w-[100px]">
                   {multiple ? element.ranking : element?.ranking}
