@@ -32,7 +32,7 @@ const usersList = [
 function SearchBar() {
   return (
     <div className='px-5 flex flex-col w-[1000px] items-center'>
-    <br />
+      <br />
       <TextField sx={{ width: '1000px', borderRadius: '5px' }} />
       <div className='flex flex-col gap-4 mt-4'>
         {usersList.map((user) => (
@@ -44,6 +44,7 @@ function SearchBar() {
           </div>
         ))}
       </div>
+      <br />
     </div>
   )
 }
