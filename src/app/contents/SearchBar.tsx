@@ -38,8 +38,10 @@ function SearchBar() {
       <TextField sx={{ width: '1000px', borderRadius: '5px' }} value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)}/>
       <div className='flex flex-col gap-4 mt-4'>
         {usersList.map((user) => {
-          const isMatch = user.name.toLowerCase().includes(searchQuery.toLowerCase())
-          if (!isMatch) return null
+          if (searchQuery) {
+            const isMatch = user.name.toLowerCase().includes(searchQuery.toLowerCase())
+            if (!isMatch) return null
+          }
           return (
             <div key={user.id} className='flex items-center gap-4'>
               <img src={user.defaultProfile} alt={user.name} />
