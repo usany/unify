@@ -1,15 +1,29 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useLanguage } from '@/context/LanguageContext'
+import { useEffect, useState } from 'react';
 
 interface Props {
   multiple: boolean
 }
 function RankingListsTitle({ multiple }: Props) {
+  const [isLargeScreen, setIsLargeScreen] = useState(false);
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsLargeScreen(window.innerWidth >= 1024); // lg breakpoint
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+  
+  
   const { language } = useLanguage()
   return (
     <div className="flex truncate justify-center">
       <div className={`flex justify-around w-[1000px]`}>
-        {true ? (
+        {isLargeScreen ? (
           <div className="flex items-center justify-center w-[100px]">
             {multiple ? (language === 'en' ? 'User' : '유저') : language === 'en' ? 'My' : '내'} {multiple ? (language === 'en' ? 'Ranking' : '랭킹') : language === 'en' ? 'Ranking' : '랭킹'}
           </div>
