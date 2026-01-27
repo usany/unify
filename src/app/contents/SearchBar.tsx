@@ -17,7 +17,7 @@ interface User {
 }
 const myProfile = [{
   id: 1,
-  name: 'KHUSAN1',
+  name: 'Me',
   point: 3000,
   campus: '서울',
   profileImage: false,
