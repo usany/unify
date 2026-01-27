@@ -6,7 +6,7 @@ const usersList = [
   {
     id: 1,
     name: 'KHUSAN1',
-    point: 100,
+    point: 3000,
     campus: '서울',
     profileImage: false,
     profileImageUrl: '',
@@ -15,7 +15,7 @@ const usersList = [
   {
     id: 2,
     name: 'KHUSAN2',
-    point: 100,
+    point: 2500,
     campus: '국제',
     profileImage: false,
     profileImageUrl: '',
@@ -24,7 +24,7 @@ const usersList = [
   {
     id: 3,
     name: 'KHUSAN3',
-    point: 100,
+    point: 2000,
     campus: '광릉',
     profileImage: false,
     profileImageUrl: '',
@@ -54,7 +54,7 @@ function SearchBar() {
       <br />
       <TextField sx={{ width: '100%', maxWidth: '1000px', borderRadius: '5px' }} value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)}/>
       <div className='flex flex-col gap-4'>
-        {filteredUsers}
+        {filteredUsers.sort((a, b) => (b?.point || 0) - (a?.point || 0))}
         {!hasResults && (
           <p className='text-center'>{language === 'en' ? 'No users found' : '사용자를 찾을 수 없습니다.'}</p>
         )}
