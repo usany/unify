@@ -1,20 +1,22 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { useLanguage } from '@/context/LanguageContext'
 
 interface Props {
   multiple: boolean
 }
 function RankingListsTitle({ multiple }: Props) {
+  const { language } = useLanguage()
   return (
     <div className="flex truncate justify-center">
       <div className={`flex justify-around w-[1000px]`}>
         {true ? (
           <div className="flex items-center justify-center w-[100px]">
-            {multiple ? 'User' : 'My'} {multiple ? 'Ranking' : 'Ranking'}
+            {multiple ? (language === 'en' ? 'User' : '유저') : language === 'en' ? 'My' : '내'} {multiple ? (language === 'en' ? 'Ranking' : '랭킹') : language === 'en' ? 'Ranking' : '랭킹'}
           </div>
         ) : (
           <div className="flex flex-col items-center w-[100px]">
-            <div>{multiple ? 'User' : 'My'}</div>
-            <div>{multiple ? 'Ranking' : 'Ranking'}</div>
+            <div>{multiple ? (language === 'en' ? 'User' : '유저') : language === 'en' ? 'My' : '내'}</div>
+            <div>{multiple ? (language === 'en' ? 'Ranking' : '랭킹') : language === 'en' ? 'Ranking' : '랭킹'}</div>
           </div>
         )}
         <div className="flex items-center">
@@ -25,13 +27,13 @@ function RankingListsTitle({ multiple }: Props) {
         </div>
         <div className="flex flex-col justify-center overflow-hidden px-3 w-32">
           <div>
-            {multiple ? 'User' : 'My'} {multiple ? 'Name' : 'Name'}
+            {multiple ? (language === 'en' ? 'User' : '유저') : language === 'en' ? 'My' : '내'} {multiple ? (language === 'en' ? 'Name' : '이름') : language === 'en' ? 'Name' : '이름'}
           </div>
-          <div>{multiple ? 'Points' : 'Points'}</div>
+          <div>{multiple ? (language === 'en' ? 'Points' : '포인트') : language === 'en' ? 'Points' : '포인트'}</div>
         </div>
         <div className="flex flex-col justify-center items-center w-[100px]">
-          <div>Campus</div>
-          <div>Verification</div>
+          <div>{language === 'en' ? 'Campus' : '캠퍼스'}</div>
+          <div>{language === 'en' ? 'Verification' : '인증'}</div>
         </div>
       </div>
     </div>
