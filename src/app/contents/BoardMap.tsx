@@ -91,25 +91,25 @@ function BoardMap() {
             </div>
             <div key={index} className="flex gap-5">
                 <div className="pt-1">
-                  ${itemOne}
+                  ${language === 'en' ? 'itemOne' : '물건 1'}
                 </div>
                 <div className="pt-3">
-                  ${borrowing}
+                  ${language === 'en' ? 'borrowing' : '빌리기'}
                   ${0}
                 </div>
                 <div className="pt-3">
-                  ${lending}
+                  ${language === 'en' ? 'lending' : '빌려주기'}
                   ${0}
                 </div>
                 <div className="pt-1">
-                  ${itemTwo}
+                  ${language === 'en' ? 'itemTwo' : '물건 2'}
                 </div>
                 <div className="pt-3">
-                  ${borrowing}
+                  ${language === 'en' ? 'borrowing' : '빌리기'}
                   ${0}
                 </div>
                 <div className="pt-3">
-                  ${lending}
+                  ${language === 'en' ? 'lending' : '빌려주기'}
                   ${0}
                 </div>
               </div>
