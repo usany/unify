@@ -72,6 +72,7 @@ function SearchBar() {
       <RankingListsTitle multiple={false} />
       <ListsView elements={myProfile} multiple={false} />
       <RankingListsTitle multiple={true} />
+      <ListsView elements={usersList} userSearch={searchQuery} multiple={true} />
       <div className='flex flex-col gap-4'>
         {filteredUsers}
         {!hasResults && (
