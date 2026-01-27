@@ -2,6 +2,7 @@ import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import RankingListsTitle from './RankingListsTitle';
+import ListsView from './ListsView';
 
 interface User {
   id: number;
@@ -69,6 +70,7 @@ function SearchBar() {
       <br />
       <TextField sx={{ width: '100%', maxWidth: '1000px', borderRadius: '5px' }} label={language === 'en' ? 'User Name' : '사용자 이름'} value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)}/>
       <RankingListsTitle multiple={false} />
+      <ListsView elements={myProfile} multiple={false} />
       <RankingListsTitle multiple={true} />
       <div className='flex flex-col gap-4'>
         {filteredUsers}

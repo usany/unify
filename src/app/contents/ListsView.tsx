@@ -2,7 +2,18 @@ import { Chip, Divider } from '@mui/material'
 import { Ban, Check } from 'lucide-react'
 import Avatars from './Avatars'
 
-const ListsView = ({ elements, userSearch, multiple }) => {
+interface User {
+  id: number;
+  name: string;
+  point: number;
+  campus: string;
+  profileImage: boolean;
+  profileImageUrl: string;
+  defaultProfile: string;
+  locationConfirmed: Date | null;
+}
+
+const ListsView = ({ elements, userSearch, multiple }: { elements: User[], userSearch?: string, multiple: boolean }) => {
   return (
     <div className="flex truncate justify-center">
       <div className="w-[1000px]">
