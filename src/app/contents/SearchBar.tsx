@@ -53,7 +53,7 @@ const usersList: User[] = [
 ]
 function SearchBar() {
   const [searchQuery, setSearchQuery] = useState('')
-  const {language } = useLanguage()
+  const { language } = useLanguage()
   const filteredUsers = usersList.sort((a, b) => b.point - a.point).map((user) => {
     if (searchQuery) {
       const isMatch = user.name.toLowerCase().includes(searchQuery.toLowerCase())
