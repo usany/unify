@@ -180,7 +180,7 @@ function BoardMap() {
             </div>
             {!currentMarker ? (
               <div className="flex">
-                {onLine && registeredMapExplanation}
+                {registeredMapExplanation}
               </div>
             ) : (
               <div className="flex">
@@ -189,18 +189,12 @@ function BoardMap() {
               </div>
             )}
             </div>
-            {onLine ? (
-              <div className='px-5'>
-              <div
-                ref={mapRef}
-                className='w-full h-[300px]'
-              ></div>
-              </div>
-            ) : (
-              <div className="flex justify-center">
-                {needNetworkConnection}
-              </div>
-            )}
+            <div className='px-5'>
+            <div
+              ref={mapRef}
+              className='w-full h-[300px]'
+            ></div>
+            </div>
     </div>
   )
 }
