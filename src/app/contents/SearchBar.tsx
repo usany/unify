@@ -1,5 +1,6 @@
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
+import { useLanguage } from '@/context/LanguageContext';
 
 const usersList = [
   {
@@ -32,6 +33,7 @@ const usersList = [
 ]
 function SearchBar() {
   const [searchQuery, setSearchQuery] = useState('')
+  const {language } = useLanguage()
   const filteredUsers = usersList.map((user) => {
     if (searchQuery) {
       const isMatch = user.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -54,7 +56,7 @@ function SearchBar() {
       <div className='flex flex-col gap-4 mt-4'>
         {filteredUsers}
         {!hasResults && (
-          <p>No users found</p>
+          <p className='text-center'>{language === 'en' ? 'No users found' : '사용자를 찾을 수 없습니다.'}</p>
         )}
       </div>
       <br />
