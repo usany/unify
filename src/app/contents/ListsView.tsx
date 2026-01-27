@@ -25,7 +25,7 @@ const ListsView = ({ elements, userSearch, multiple }: { elements: User[], userS
   })
   const {language} = useLanguage()
   return (
-    <div className="flex truncate justify-center w-full">
+    <div className="flex flex-col truncate items-center w-full">
       <div className="w-full">
         {elements.map((element, index) => {
           if (userSearch) {
@@ -63,7 +63,7 @@ const ListsView = ({ elements, userSearch, multiple }: { elements: User[], userS
         })}
       </div>
       {!hasResults && (
-        <p className='text-center'>{language === 'en' ? 'No users found' : '사용자를 찾을 수 없습니다.'}</p>
+        <p className='flex justify-center'>{language === 'en' ? 'No users found' : '사용자를 찾을 수 없습니다.'}</p>
       )}
     </div>
   )
