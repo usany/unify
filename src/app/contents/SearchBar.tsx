@@ -11,6 +11,7 @@ interface User {
   profileImage: boolean;
   profileImageUrl: string;
   defaultProfile: string;
+  locationConfirmed: Date | null;
 }
 const myProfile = [{
   id: 1,
@@ -20,7 +21,7 @@ const myProfile = [{
   profileImage: false,
   profileImageUrl: '',
   defaultProfile: 'https://ijsfbngiyhgvolsprxeh.supabase.co/storage/v1/object/public/remake/animalprofileRed.png',
-  locationConfirmed: false,
+  locationConfirmed: null,
 }]
 const usersList: User[] = [
   ...myProfile,
@@ -32,7 +33,7 @@ const usersList: User[] = [
     profileImage: false,
     profileImageUrl: '',
     defaultProfile: 'https://ijsfbngiyhgvolsprxeh.supabase.co/storage/v1/object/public/remake/animalprofileRed.png',
-    locationConfirmed: true,
+    locationConfirmed: new Date(),
   },
   {
     id: 3,
@@ -42,7 +43,7 @@ const usersList: User[] = [
     profileImage: false,
     profileImageUrl: '',
     defaultProfile: 'https://ijsfbngiyhgvolsprxeh.supabase.co/storage/v1/object/public/remake/animalprofileRed.png',
-    locationConfirmed: true,
+    locationConfirmed: new Date(),
   },
 ]
 function SearchBar() {
