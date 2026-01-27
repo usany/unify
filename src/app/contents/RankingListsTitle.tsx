@@ -33,7 +33,7 @@ function RankingListsTitle({ multiple }: Props) {
         </div>
         <div className="flex flex-col justify-center items-center w-[100px]">
           <div>{language === 'en' ? 'Campus' : '캠퍼스'}</div>
-          <div>{language === 'en' ? 'Verification' : '인증'}</div>
+          <div>{language === 'en' ? 'Verification' : '확인'}</div>
         </div>
       </div>
     </div>
