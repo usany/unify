@@ -8,7 +8,6 @@ const defaultLocations = {
   gw: buildingsObj.gw.gwcl.location,
 }
 function BoardMap() {
-  const [items, setItems] = useState({})
   const [selectedLocation, setSelectedLocation] = useState('')
   const locations = {
     Seoul: 'se',
@@ -92,22 +91,22 @@ function BoardMap() {
                 </div>
                 <div className="pt-3">
                   ${borrowing}
-                  ${items[key].usanOne}
+                  ${0}
                 </div>
                 <div className="pt-3">
                   ${lending}
-                  ${items[key].usanTwo}
+                  ${0}
                 </div>
                 <div className="pt-1">
                   ${itemTwo}
                 </div>
                 <div className="pt-3">
                   ${borrowing}
-                  ${items[key].ParasolOne}
+                  ${0}
                 </div>
                 <div className="pt-3">
                   ${lending}
-                  ${items[key].ParasolTwo}
+                  ${0}
                 </div>
               </div>
           </div>`,
