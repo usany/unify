@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import locationsBuildings, { locationsCollectionLetters, markers, buildingsObj, locationsBuildingsArray } from './locationsBuildings'
 import { Chip } from '@mui/material'
+import { useLanguage } from '@/context/LanguageContext'
+import { useTheme } from '@/context/ThemeContext'
 
 const defaultLocations = {
   se: buildingsObj.se.secl.location,
@@ -36,6 +38,8 @@ function BoardMap() {
   const [markersList, setMarkersList] = useState([])
   const [currentMarker, setCurrentMarker] = useState('')
   const [selectedValueTwo, setSelectedValueTwo] = useState('서울캠퍼스 전체')
+  const {language} = useLanguage()
+  const {theme} = useTheme()
   useEffect(() => {
     document.documentElement.scrollTo({
       top: 0,
