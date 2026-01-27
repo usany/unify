@@ -53,7 +53,7 @@ const ListsView = ({ elements, userSearch, multiple }: { elements: User[], userS
                   <div className="overflow-hidden">{element.point}</div>
                 </div>
                 <div className="flex flex-col justify-center items-center w-[100px]">
-                  {language === 'en' ? element?.campus : element?.campus==='서울' ? 'Seoul' : element?.campus==='국제' ? 'Global' : 'Gwangneung'}
+                  {language === 'en' ? element?.campus : element?.campus==='Seoul' ? '서울' : element?.campus==='Global' ? 'Global' : 'Gwangneung'}
                   <Chip sx={{height: '25px'}} color={element.locationConfirmed ? "success" : undefined} label={element.locationConfirmed ? <Check /> : <Ban />} />
                 </div>
               </div>
