@@ -149,6 +149,19 @@ function BoardMap() {
   useEffect(() => {
     displayMap()
   }, [selectedLocation])
+  useEffect(() => {
+    if (selectedLocation && markings.length && calledMap) {
+      const index = markings.findIndex((value) => value.id === selectedLocation)
+      if (index > -1) {
+        markings[index]?.open(calledMap, markersList[index])
+      }
+    }
+    if (!selectedLocation) {
+      markings.forEach((value) => {
+        value.close()
+      })
+    }
+  }, [selectedLocation])
   return (
     <div className="flex flex-col justify-center">
       <div className='flex flex-col p-5 gap-5'>
