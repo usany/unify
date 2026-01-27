@@ -7,7 +7,6 @@ const defaultLocations = {
   gu: buildingsObj.gu.gucl.location,
   gw: buildingsObj.gw.gwcl.location,
 }
-// const defaultLocation = markers[0].location
 function BoardMap() {
   const [items, setItems] = useState({})
   const [selectedLocation, setSelectedLocation] = useState('')
