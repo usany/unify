@@ -26,24 +26,23 @@ function BoardMap() {
   const campusesArray = [
     {
       name: 'Seoul',
-      displayName: seoul,
+      displayName: 'Seoul',
       onClick: () => setSelectedLocation('se')
     },
     {
       name: 'Global',
-      displayName: global,
+      displayName: 'Global',
       onClick: () => setSelectedLocation('gu')
     },
     {
       name: 'Gwangneung',
-      displayName: gwangneung,
+      displayName: 'Gwangneung',
       onClick: () => setSelectedLocation('gw')
     },
   ]
   const [calledMap, setCalledMap] = useState(null)
   const [markings, setMarkings] = useState([])
   const [markersList, setMarkersList] = useState([])
-  const [onAccordion, setOnAccordion] = useState(false)
   const [currentMarker, setCurrentMarker] = useState('')
   useEffect(() => {
     document.documentElement.scrollTo({
@@ -82,8 +81,8 @@ function BoardMap() {
         const marker = new naver.maps.Marker({
           map: map,
           position: position,
-          title: value[1][languages].name,
-          id: value[1][languages].name,
+          title: value[1].ko.name,
+          id: value[1].ko.name,
         })
         const key = value[0]
         // const key = Object.keys(locationsCollectionLetters).find(
@@ -92,7 +91,7 @@ function BoardMap() {
         const contentString = [
           `<div class="markerContainer">
             <div class="markerTitle">
-              ${value[1][languages].name}
+              ${value[1].ko.name}
             </div>
             <div key={index} className="flex gap-5">
                 <div className="pt-1">
@@ -121,7 +120,7 @@ function BoardMap() {
           </div>`,
         ].join('')
         const infoWindow = new naver.maps.InfoWindow({
-          id: value[1][languages].name,
+          id: value[1].ko.name,
           content: contentString,
           maxWidth: 250,
           backgroundColor: theme === 'light' ? '#fff' : '#777',
@@ -157,31 +156,7 @@ function BoardMap() {
   }
   return (
     <div className="flex flex-col justify-center">
-      <Accordion type="single" collapsible>
-        <AccordionItem value="item-1">
-          <div className="flex justify-center sticky top-16 z-30 px-1">
-            <div className="w-[1000px]">
-              <button
-                onClick={() => {
-                  document.getElementById('boardMap')?.click()
-                }}
-                className="rounded shadow-md px-3 flex sticky top-16 z-30 w-full items-center justify-between bg-light-2/50 dark:bg-dark-2/50"
-              >
-                <div className="flex gap-5">
-                  <MapIcon />
-                  <div>{registeredMap}</div>
-                </div>
-                <AccordionTrigger
-                  id='boardMap'
-                  onClick={() => {
-                    setOnAccordion(!onAccordion)
-                  }}
-                ></AccordionTrigger>
-              </button>
-            </div>
-          </div>
-          <AccordionContent>
-            <div className='flex flex-col p-5 gap-5'>
+      <div className='flex flex-col p-5 gap-5'>
             <div className='flex gap-1'>
               {campusesArray.map((value) => {
                 return (
@@ -217,9 +192,6 @@ function BoardMap() {
                 {needNetworkConnection}
               </div>
             )}
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
     </div>
   )
 }
