@@ -21,15 +21,15 @@ const ListsView = ({ elements, userSearch, multiple }: { elements: User[], userS
         {elements.map((element, index) => {
           if (userSearch) {
             for (let number = 0; number < userSearch.length; number++) {
-              if (element?.displayName[number] !== userSearch[number]) {
+              if (element?.name[number] !== userSearch[number]) {
                 return null
               }
             }
           }
           const displayName =
-            (element.displayName?.length || 0) > 9
-              ? element.displayName.slice(0, 9) + '......'
-              : element.displayName.slice(0, 9)
+            (element.name?.length || 0) > 9
+              ? element.name.slice(0, 9) + '......'
+              : element.name.slice(0, 9)
           return (
             <div
               key={index}
@@ -48,15 +48,15 @@ const ListsView = ({ elements, userSearch, multiple }: { elements: User[], userS
                   {multiple ? element.ranking : element?.ranking}
                 </div>
                 <div className="flex items-center">
-                  <Avatars element={element} piazza={null} profile={false} />
+                  <Avatars element={element} profile={false} />
                 </div>
                 <div className="flex flex-col justify-center items-start overflow-hidden px-3 w-32">
                   <div className="overflow-hidden">{displayName}</div>
-                  <div className="overflow-hidden">{element.points}</div>
+                  <div className="overflow-hidden">{element.point}</div>
                 </div>
                 <div className="flex flex-col justify-center items-center w-[100px]">
                   {element?.campus && element?.campus.slice(0, element?.campus.indexOf(' ')) || 'Seoul'}
-                  <Chip sx={{height: '25px'}} color={locationConfirmed ? "success" : undefined} label={element.locationConfirmed ? <Check /> : <Ban />} />
+                  <Chip sx={{height: '25px'}} color={element.locationConfirmed ? "success" : undefined} label={element.locationConfirmed ? <Check /> : <Ban />} />
                 </div>
               </div>
               <Divider />
