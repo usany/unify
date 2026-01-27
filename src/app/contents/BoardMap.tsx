@@ -4,15 +4,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
-import { collection, getDocs, orderBy, query } from 'firebase/firestore'
 import { MapIcon } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
-import { dbservice } from 'src/baseApi/serverbase'
-import useSelectors from 'src/hooks/useSelectors'
-import useTexts from 'src/hooks/useTexts'
-import FilterDialogsTrigger from '../FilterDialogs/FilterDialogsTrigger'
-import locationsBuildings, { locationsCollectionLetters, markers, buildingsObj, locationsBuildingsArray } from 'src/pages/add/locationsBuildings'
+import locationsBuildings, { locationsCollectionLetters, markers, buildingsObj, locationsBuildingsArray } from './locationsBuildings'
 import { Chip } from '@mui/material'
 
 interface Props {
@@ -35,13 +29,11 @@ function BoardMap({
 }: Props) {
   const [items, setItems] = useState({})
   const [selectedLocation, setSelectedLocation] = useState('')
-  const profile = useSelectors((state) => state.profile.value)
   const locations = {
     Seoul: 'se',
     Global: 'gu',
     Gwangneung: 'gw'
   }
-  const {seoul, global, gwangneung} = useTexts()
   const campusesArray = [
     {
       name: 'Seoul',
@@ -59,21 +51,10 @@ function BoardMap({
       onClick: () => setSelectedLocation('gw')
     },
   ]
-  useEffect(() => {
-    if (!selectedLocation) {
-      setSelectedLocation(locations[profile?.campus && profile?.campus.slice(0, profile?.campus.indexOf(' ')) || 'Seoul'])
-    }
-  }, [])
-  const languages = useSelectors((state) => state.languages.value)
-  const [searchParams, setSearchParams] = useSearchParams()
-  const onLine = useSelectors((state) => state.onLine.value)
   const [calledMap, setCalledMap] = useState(null)
   const [markings, setMarkings] = useState([])
   const [markersList, setMarkersList] = useState([])
   const [onAccordion, setOnAccordion] = useState(false)
-  const selectedValueTwo = searchParams.get('selectedValueTwo')
-  const theme = useSelectors((state) => state.theme.value)
-  const { borrowing, lending, needNetworkConnection, registeredMap, registeredMapExplanation, itemOne, itemTwo } = useTexts()
   const [currentMarker, setCurrentMarker] = useState('')
   useEffect(() => {
     document.documentElement.scrollTo({
@@ -83,57 +64,7 @@ function BoardMap({
     })
   }, [])
 
-  useEffect(() => {
-    const bringMessages = async () => {
-      const collectionQuery = query(
-        collection(dbservice, 'num'),
-        orderBy('creatorClock'),
-      )
-      const docs = await getDocs(collectionQuery)
-      const newArray = []
-      const keys = Object.keys(locationsCollectionLetters)
-      keys.splice(keys.indexOf('input'), 1)
-      const itemCount = Object.fromEntries(keys.map((value) => {
-        return [value, {
-          usanOne: 0,
-          usanTwo: 0,
-          ParasolOne: 0,
-          ParasolTwo: 0,
-        }]
-      }))
-      docs.forEach((doc) => {
-        newArray.push(doc.data())
-        if (doc.data().item === '우산') {
-          const key = Object.keys(locationsCollectionLetters).find(
-            (key) => locationsCollectionLetters[key] === doc.data().text.count,
-          )
-          if (doc.data().text.choose === 1) {
-            if (key) {
-              itemCount[key].usanOne += 1
-            }
-          } else if (doc.data().text.choose === 2) {
-            if (key) {
-              itemCount[key].usanTwo += 1
-            }
-          }
-        } else if (doc.data().item === '양산') {
-          if (doc.data().text.choose === 1) {
-            if (key) {
-              itemCount[key].ParasolOne += 1
-            }
-          } else if (doc.data().text.choose === 2) {
-            if (key) {
-              itemCount[key].ParasolTwo += 1
-            }
-          }
-        }
-      })
-      setItems(itemCount)
-    }
-    bringMessages()
-  }, [selectedValues[1].value])
   const onClickMarker = (newValue) => {
-    handleSelectedValues({ id: 'selectedValueTwo', newValue: newValue })
     const marker = newValue === '전체 장소' ? '' : newValue
     setCurrentMarker(marker)
   }
@@ -235,24 +166,6 @@ function BoardMap({
       }
     }
   }
-  useEffect(() => {
-    if (onAccordion) {
-      displayMap()
-    }
-  }, [languages, theme, onAccordion, selectedLocation])
-  useEffect(() => {
-    if (selectedValueTwo && markings.length && calledMap) {
-      const index = markings.findIndex((value) => value.id === selectedValueTwo)
-      if (index > -1) {
-        markings[index]?.open(calledMap, markersList[index])
-      }
-    }
-    if (!selectedValueTwo) {
-      markings.forEach((value) => {
-        value.close()
-      })
-    }
-  }, [selectedValueTwo])
   return (
     <div className="flex flex-col justify-center">
       <Accordion type="single" collapsible>
