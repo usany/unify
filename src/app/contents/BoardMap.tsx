@@ -177,16 +177,6 @@ function BoardMap() {
                 )
               })}
             </div>
-            {!currentMarker ? (
-              <div className="flex">
-                {registeredMapExplanation}
-              </div>
-            ) : (
-              <div className="flex">
-                {/* <FilterDialogsTrigger /> */}
-                <Chip label={languages === 'ko' ? currentMarker : locationsBuildings['en'][locationsBuildings['ko'].indexOf(currentMarker)]} />
-              </div>
-            )}
             </div>
             <div className='px-5'>
             <div
