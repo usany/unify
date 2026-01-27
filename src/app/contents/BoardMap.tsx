@@ -9,24 +9,13 @@ import { useEffect, useRef, useState } from 'react'
 import locationsBuildings, { locationsCollectionLetters, markers, buildingsObj, locationsBuildingsArray } from './locationsBuildings'
 import { Chip } from '@mui/material'
 
-interface Props {
-  selectedValues: object
-  handleSelectedValues: (newValue: {
-    id: string
-    newValue: string
-  }) => void
-}
-
 const defaultLocations = {
   se: buildingsObj.se.secl.location,
   gu: buildingsObj.gu.gucl.location,
   gw: buildingsObj.gw.gwcl.location,
 }
 // const defaultLocation = markers[0].location
-function BoardMap({
-  selectedValues,
-  handleSelectedValues,
-}: Props) {
+function BoardMap() {
   const [items, setItems] = useState({})
   const [selectedLocation, setSelectedLocation] = useState('')
   const locations = {
