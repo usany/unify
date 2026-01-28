@@ -1,4 +1,3 @@
-import { Language } from './app/context/LanguageContext';
 import { Links } from './types/links';
 
 const links: Links = {
@@ -28,6 +27,6 @@ const links: Links = {
     { label: '신고', href: '/report', icon: '📢' },
     { label: '재생목록', href: '/playlist', icon: '🎵' },
   ],
-} as const;
+}
 
 export default links;
