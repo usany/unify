@@ -80,22 +80,3 @@
   font-weight: 500;
   transition: all 0.2s ease;
 }
-
-.button:hover {
-  background: var(--primary);
-  color: white;
-}
-
-@media (max-width: 768px) {
-  .hero {
-    padding: 1rem;
-  }
-
-  .title {
-    font-size: 2rem;
-  }
-
-  .subtitle {
-    font-size: 1rem;
-  }
-}
