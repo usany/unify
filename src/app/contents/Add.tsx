@@ -199,6 +199,7 @@ function Add({ borrow }: Props) {
 
   return (
     <div className="flex flex-col">
+      <br />
       <AddSteppers addSteps={addSteps} borrow={true} />
       <div className={`flex justify-center ${!matches && 'min-w-[400px]' }`}>
         <AddCards
@@ -248,6 +249,7 @@ function Add({ borrow }: Props) {
       {!matches && addSteps > 1 && (
         <AddStepThree onChangeFrom={onChangeFrom} onChangeTo={onChangeTo} />
       )}
+      <br />
     </div>
   )
 }
