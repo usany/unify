@@ -12,7 +12,7 @@
     --text-main: #333333;
     --text-muted: #666666;
     --bg-sidenav: linear-gradient(135deg, #f8f4f1 0%, #efeae7 100%);
-    --border: #e0e0e0;
+    --border: #eq0e0e0;
     --shadow: rgba(0, 0, 0, 0.1);
     --bg-tier-1: #f8f4f1;
     --bg-tier-2: #efeae7;
@@ -38,18 +38,6 @@
     --bg-tier-2: #2d3e2d;
     --bg-tier-3: #1d2e1d;
 }
-
-/* * {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-} */
-
-/* html,
-body {
-    max-width: 100vw;
-    overflow-x: hidden;
-} */
 
 body {
     background-color: var(--bg-body);

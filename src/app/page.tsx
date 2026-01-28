@@ -22,7 +22,7 @@ export default function RootPage() {
   const translation = translations[language];
   return (
     <section className={styles.hero}>
-      <h1 className={styles.title}>{translation.title}</h1>
+      <h1>{translation.title}</h1>
       <p className={styles.subtitle}>
         {translation.subtitle}
       </p>
