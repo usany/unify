@@ -23,33 +23,37 @@ function NavigationsLayout({value}: {value: string}) {
   
   const translation = translations[language] || translations.ko
   return (
-    <BottomNavigation
-      showLabels
-      value={value}
-      onChange={(event, newValue) => {
-        router.push(newValue)
-      }}
-      sx={{
-        border: 'solid',
-        borderRadius: '10px'
-      }}
-    >
-      <BottomNavigationAction
-        label={translation.register}
-        value="/register"
-        icon={<Pencil />}
-      />
-      <BottomNavigationAction
-        label={translation.status}
-        value="/status"
-        icon={<Umbrella />}
-      />
-      <BottomNavigationAction
-        label={translation.board}
-        value="/board"
-        icon={<Presentation />}
-      />
-    </BottomNavigation>
+    <>
+      <br />
+      <BottomNavigation
+        showLabels
+        value={value}
+        onChange={(event, newValue) => {
+          router.push(newValue)
+        }}
+        sx={{
+          border: 'solid',
+          borderRadius: '10px'
+        }}
+      >
+        <BottomNavigationAction
+          label={translation.register}
+          value="/register"
+          icon={<Pencil />}
+        />
+        <BottomNavigationAction
+          label={translation.status}
+          value="/status"
+          icon={<Umbrella />}
+        />
+        <BottomNavigationAction
+          label={translation.board}
+          value="/board"
+          icon={<Presentation />}
+        />
+      </BottomNavigation>
+      <br />
+    </>
   )
 }
 
