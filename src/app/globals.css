@@ -8,7 +8,6 @@
     --bg-card: #ffffff;
     --bg-card-hover: #e8f5e8;
     --bg-comment: #f0f4c3;
-    --bg-comment-pending: #fff9c4;
     --bg-badge: #e8f5e8;
     --text-main: #333333;
     --text-muted: #666666;
@@ -24,12 +23,11 @@
 .dark {
     --primary: #66bb6a;
     --primary-hover: #81c784;
-    --bg-body: #2d3e2d;
+    --bg-body: #1d2e1d;
     --bg-topbar: #2d3e2d;
-    --bg-card: #1e2e1e;
+    --bg-card: #2d3e2d;
     --bg-card-hover: #263626;
     --bg-comment: #2d3e2d;
-    --bg-comment-pending: #3d4e3d;
     --bg-badge: #1e3a1e;
     --text-main: #ffffff;
     --text-muted: #e0e0e0;
