@@ -111,7 +111,7 @@ const AddCards = ({ borrow, item, fromTo, locationState }: Props) => {
                         height: 141 * 0.9,
                         borderRadius: '10px'
                       }}
-                      image={staticImg}
+                      image={staticImg.src}
                     />
                   </div>
                 )}
