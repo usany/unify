@@ -20,12 +20,12 @@ const translations = {
 
 export default function RootPage() {
   const { language } = useLanguage();
-  const t = translations[language];
+  const translation = translations[language];
   return (
     <section className={styles.hero}>
-      <h1 className={styles.title}>{t.title}</h1>
+      <h1 className={styles.title}>{translation.title}</h1>
       <p className={styles.subtitle}>
-        {t.subtitle}
+        {translation.subtitle}
       </p>
       <div className={`${styles.buttonGroup}`}>
         {links[language].map((link: LinkItem, index: number) => (
