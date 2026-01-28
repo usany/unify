@@ -164,20 +164,18 @@ function BoardMap() {
   }, [selectedValueTwo])
   return (
     <div className="flex flex-col justify-center">
-      <div className='flex flex-col p-5 gap-5'>
-        <div className='flex gap-1'>
-          {campusesArray.map((value) => {
-            return (
-              <Chip
-                key={value.name}
-                sx={selectedLocation === locations[value.name] ? {}:undefined}
-                label={
-                  <button onClick={value.onClick}>{value.displayName}</button>
-                }
-              />
-            )
-          })}
-        </div>
+      <div className='flex p-5 gap-1'>
+        {campusesArray.map((value) => {
+          return (
+            <Chip
+              key={value.name}
+              sx={selectedLocation === locations[value.name] ? {}:undefined}
+              label={
+                <button onClick={value.onClick}>{value.displayName}</button>
+              }
+            />
+          )
+        })}
       </div>
       <div className='px-5'>
         <div
