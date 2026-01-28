@@ -11,8 +11,8 @@ import getShadowColor from './getShadowColor'
 const CardView = ({message}: {message: {id: string; action: number; locationOne: string; locationTwo: string; startTime: number; finishTime: number}}) => {
   const shadowColor = getShadowColor(message.id[message.id.length - 1])
   return (
-    <Tilt>
-      <div className="flex flex-col gap-5">
+    <div className="flex justify-center gap-5">
+      <Tilt>
         {/* {onTransfer && <CardViewTransfer />} */}
         <Card
           className='colorTwo'
@@ -43,8 +43,8 @@ const CardView = ({message}: {message: {id: string; action: number; locationOne:
             </div>
           </CardContent>
         </Card>
-      </div>
-    </Tilt>
+      </Tilt>
+    </div>
   )
 }
 export default CardView
