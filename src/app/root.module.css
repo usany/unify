@@ -84,23 +84,6 @@
   pointer-events: none;
 }
 
-/* Mobile responsive behavior */
-/* @media (max-width: 767px) {
-  .showMoreButton {
-    display: flex;
-  }
-  
-  .buttonGroup:not(.visible) {
-    display: none;
-  }
-  
-  .buttonGroup.visible {
-    display: grid;
-    grid-template-columns: 1fr;
-    margin-top: 2rem;
-  }
-} */
-
 .button {
   display: inline-flex;
   align-items: center;
