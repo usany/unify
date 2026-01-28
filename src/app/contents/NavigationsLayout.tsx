@@ -21,7 +21,7 @@ function NavigationsLayout({value}: {value: string}) {
     }
   }
   
-  const t = translations[language] || translations.ko
+  const translation = translations[language] || translations.ko
   return (
     <BottomNavigation
       showLabels
@@ -29,19 +29,23 @@ function NavigationsLayout({value}: {value: string}) {
       onChange={(event, newValue) => {
         router.push(newValue)
       }}
+      sx={{
+        border: 'solid',
+        borderRadius: '10px'
+      }}
     >
       <BottomNavigationAction
-        label={t.register}
+        label={translation.register}
         value="/register"
         icon={<Pencil />}
       />
       <BottomNavigationAction
-        label={t.status}
+        label={translation.status}
         value="/status"
         icon={<Umbrella />}
       />
       <BottomNavigationAction
-        label={t.board}
+        label={translation.board}
         value="/board"
         icon={<Presentation />}
       />
@@ -50,4 +54,5 @@ function NavigationsLayout({value}: {value: string}) {
 }
 
 export default NavigationsLayout
+
 
