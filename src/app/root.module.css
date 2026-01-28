@@ -4,9 +4,6 @@
   align-items: center;
   justify-content: center;
   min-height: 70vh;
-  text-align: center;
-  padding: 2rem 1rem;
-  position: relative;
 }
 
 .showMoreButton {
