@@ -55,9 +55,13 @@ const AddCards = ({ borrow, item, fromTo, locationState }: Props) => {
   const locationOne = locationState?.locationOne
   const key = locationOne ? Object.keys(locationsCollectionLetters).find((value) => {
     if (value === 'input') return buildingsObj[value].ko.name === locationOne
-    return buildingsObj[value.slice(0, 2)][value].ko.name === locationOne
+    const campusKey = value.slice(0, 2) as keyof typeof buildingsObj
+    const campusObj = buildingsObj[campusKey] as any
+    return campusObj[value].ko.name === locationOne
   }) : 'se'
-  const staticImg = (locationOne && locationOne !== '직접 입력') ? buildingsObj[key?.slice(0, 2)][key]?.image : buildingsObj.input.image
+  const staticImg = (locationOne && locationOne !== '직접 입력') ? 
+    (key ? (buildingsObj[key.slice(0, 2) as keyof typeof buildingsObj] as any)[key]?.image : buildingsObj.input.image) 
+    : buildingsObj.input.image
   return (
     <div className="flex justify-center text-sm pt-5 p-1">
       <AnimatedList>
