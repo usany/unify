@@ -58,7 +58,7 @@ const AddCards = ({ borrow, item, fromTo, locationState }: Props) => {
     const campusKey = value.slice(0, 2) as keyof typeof buildingsObj
     const campusObj = buildingsObj[campusKey] as { [key: string]: { ko: { name: string }, en: { name: string } } }
     return campusObj[value].ko.name === locationOne
-  }) : 'se'
+  }) : ''
   const staticImg = (locationOne && locationOne !== '직접 입력') ? 
     (key ? (buildingsObj[key.slice(0, 2) as keyof typeof buildingsObj] as { [key: string]: { ko: { name: string }, en: { name: string } } })[key]?.image : buildingsObj.input.image) 
     : buildingsObj.input.image
