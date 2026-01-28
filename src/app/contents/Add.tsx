@@ -6,15 +6,14 @@ import AddStepOne from './AddStepOne'
 import AddSteppers from './AddSteppers'
 import AddStepThree from './AddStepThree'
 import AddStepTwo from './AddStepTwo'
+import { Dayjs } from 'dayjs'
 
 interface Props {
   borrow: boolean
 }
 
 interface Clock {
-  gmt: {
-    getTime: () => number
-  }
+  gmt: Date
   year: number
   month: number
   day: number
@@ -160,37 +159,37 @@ function Add({ borrow }: Props) {
     setAddSteps(2)
   }
 
-  const onChangeFrom = (event) => {
+  const onChangeFrom = (event: Dayjs) => {
     setFromTo({
       ...fromTo,
       from: {
-        gmt: event.$d,
-        year: event.$y,
-        month: event.$M + 1,
-        day: event.$D,
-        hour: event.$H,
-        minute: event.$m,
+        gmt: event.toDate(),
+        year: event.year(),
+        month: event.month() + 1,
+        day: event.date(),
+        hour: event.hour(),
+        minute: event.minute(),
       },
     })
-    if (fromTo?.to && event.$d.getTime() <= fromTo.to?.gmt.getTime()) {
+    if (fromTo?.to && event.toDate().getTime() <= fromTo.to?.gmt.getTime()) {
       setAddSteps(3)
     } else {
       setAddSteps(2)
     }
   }
-  const onChangeTo = (event) => {
+  const onChangeTo = (event: Dayjs) => {
     setFromTo({
       ...fromTo,
       to: {
-        gmt: event.$d,
-        year: event.$y,
-        month: event.$M + 1,
-        day: event.$D,
-        hour: event.$H,
-        minute: event.$m,
+        gmt: event.toDate(),
+        year: event.year(),
+        month: event.month() + 1,
+        day: event.date(),
+        hour: event.hour(),
+        minute: event.minute(),
       },
     })
-    if (fromTo?.from && fromTo.from?.gmt.getTime() <= event.$d.getTime()) {
+    if (fromTo?.from && fromTo.from?.gmt.getTime() <= event.toDate().getTime()) {
       setAddSteps(3)
     } else {
       setAddSteps(2)
