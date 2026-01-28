@@ -14,9 +14,9 @@
     --bg-sidenav: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     --border: #e0e0e0;
     --shadow: rgba(0, 0, 0, 0.1);
-    --bg-tier-1: #f9fbe7;
-    --bg-tier-2: #f0f4c3;
-    --bg-tier-3: #e6ee9c;
+    --bg-tier-1: #f8f4f1;
+    --bg-tier-2: #efeae7;
+    --bg-tier-3: #ebd2be;
 }
 
 [data-theme='dark'],
