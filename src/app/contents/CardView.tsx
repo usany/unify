@@ -13,7 +13,6 @@ const CardView = ({message}: {message: {id: string; action: number; locationOne:
   return (
     <div className="flex justify-center gap-5">
       <Tilt>
-        {/* {onTransfer && <CardViewTransfer />} */}
         <Card
           className='colorTwo'
           sx={{

@@ -163,7 +163,7 @@ function BoardMap() {
     }
   }, [selectedValueTwo])
   return (
-    <div className="flex flex-col justify-center p-5">
+    <div className="flex flex-col justify-center px-5">
       <br />
       <div className='flex pb-5 gap-1'>
         {campusesArray.map((value) => {
