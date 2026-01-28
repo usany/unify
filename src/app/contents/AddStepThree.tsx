@@ -1,10 +1,11 @@
 import { useLanguage } from '@/context/LanguageContext'
 import AddStepTitle from './AddStepTitle'
 import Pickers from './Pickers'
+import { Dayjs } from 'dayjs'
 
 interface Props {
-  onChangeFrom: (event: {}) => void
-  onChangeTo: (event: {}) => void
+  onChangeFrom: (event: Dayjs) => void
+  onChangeTo: (event: Dayjs) => void
 }
 
 const AddStepThree = ({ onChangeFrom, onChangeTo }: Props) => {
