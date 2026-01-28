@@ -11,7 +11,7 @@
     --bg-badge: #e8f5e8;
     --text-main: #333333;
     --text-muted: #666666;
-    --bg-sidenav: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --bg-sidenav: linear-gradient(135deg, #f8f4f1 0%, #efeae7 100%);
     --border: #e0e0e0;
     --shadow: rgba(0, 0, 0, 0.1);
     --bg-tier-1: #f8f4f1;
@@ -31,7 +31,7 @@
     --bg-badge: #1e3a1e;
     --text-main: #ffffff;
     --text-muted: #e0e0e0;
-    --bg-sidenav: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+    --bg-sidenav: linear-gradient(135deg, #3d4e3d 0%, #2d3e2d 100%);
     --border: #444444;
     --shadow: rgba(0, 0, 0, 0.3);
     --bg-tier-1: #3d4e3d;
