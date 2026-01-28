@@ -1,7 +1,6 @@
 'use client';
 
 import styles from './root.module.css';
-import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
 import { LinkItem } from '@/types/links';
 import links from 'links';
