@@ -135,7 +135,7 @@ export default function TableOfContents({ pageId, isTocOpen, toggleToc }: TableO
                     onClick={toggleToc}
                     aria-label={isTocOpen ? translation.hideToc : translation.showToc}
                 >
-                    {isTocOpen ? '−' : '+'}
+                    {isTocOpen ? '-' : '+'}
                 </button>
             </div>
             {isTocOpen && (
