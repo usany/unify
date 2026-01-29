@@ -6,7 +6,7 @@
     --bg-body: var(--bg-tier-3);
     --bg-topbar: var(--bg-tier-2);
     --bg-card: var(--bg-tier-3);
-    --bg-card-hover: #e8f5e8;
+    --bg-card-hover: var(--bg-tier-3);
     --bg-comment: var(--bg-tier-3);
     --bg-badge: #e8f5e8;
     --border: #e0e0e0;
@@ -27,7 +27,7 @@
     --bg-body: var(--bg-tier-3);
     --bg-topbar: var(--bg-tier-2);
     --bg-card: var(--bg-tier-3);
-    --bg-card-hover: #263626;
+    --bg-card-hover: var(--bg-tier-3);
     --bg-comment: var(--bg-tier-3);
     --bg-badge: #1e3a1e;
     --border: #444444;
