@@ -9,8 +9,8 @@
     --bg-card-hover: #e8f5e8;
     --bg-comment: #f0f4c3;
     --bg-badge: #e8f5e8;
-    --border: #e0e0e0;
 
+    --border: #e0e0e0;
     --text-main: #333333;
     --text-muted: #666666;
     --bg-sidenav: linear-gradient(135deg, #f0f4c3 0%, #f0fad5 100%);
@@ -31,8 +31,8 @@
     --bg-card-hover: #263626;
     --bg-comment: #2d3e2d;
     --bg-badge: #1e3a1e;
-    --border: #444444;
     
+    --border: #444444;
     --text-main: #ffffff;
     --text-muted: #e0e0e0;
     --bg-sidenav: linear-gradient(135deg, #2d3e2d 0%, #37504f 100%);

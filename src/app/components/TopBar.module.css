@@ -6,7 +6,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: var(--bg-topbar);
+  background: var(--bg-tier-2);
   border-bottom: 1px solid var(--border);
   z-index: 50;
   box-shadow: 0 2px 4px var(--shadow);
