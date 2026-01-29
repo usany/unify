@@ -102,9 +102,9 @@
 
 .navLink.active {
   /* color: white; */
-  background: rgba(255, 255, 255, 0.15);
-  border-left-color: white;
-  font-weight: 500;
+  background: var(--bg-card);
+  border-left-color: var(--primary);
+  /* font-weight: 500; */
 }
 
 /* .navLink.active::before {
