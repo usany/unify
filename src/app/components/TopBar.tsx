@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import links from 'links';
 import { useLanguage } from '@/app/context/LanguageContext';
 import { useTheme } from '@/app/context/ThemeContext';
+import Link from 'next/link';
 
 interface TopBarProps {
   language: 'ko' | 'en';
@@ -40,7 +41,7 @@ export default function TopBar({ language }: TopBarProps) {
   return (
     <>
       <div className={styles.topBar}>
-        <a href="/" className={styles.homeButton}>KHUSAN</a>
+        <Link href="/" className={styles.homeButton}>KHUSAN</Link>
         <div className={styles.topBarActions}>
           <button
             className={styles.toggleButton}
