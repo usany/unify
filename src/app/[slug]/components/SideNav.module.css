@@ -122,9 +122,9 @@
   /* transition: margin 0.3s ease; */
 }
 
-.minified .navIcon {
+/* .minified .navIcon {
   margin-right: 0;
-}
+} */
 
 .navLabel {
   font-size: 0.95rem;
@@ -146,25 +146,25 @@
   overflow: hidden;
 }
 
-.minified .navFooter {
+/* .minified .navFooter {
   padding: 1.5rem 0.5rem;
   text-align: center;
 }
 
 .navInfo {
   text-align: center;
-}
+} */
 
-.navVersion {
+/* .navVersion {
   color: rgba(255, 255, 255, 0.6);
   font-size: 0.75rem;
   margin: 0;
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-}
+} */
 
-.minified .navVersion {
+/* .minified .navVersion {
   font-size: 0.65rem;
-}
+} */
 
 /* Main content wrapper to prevent overlap */
 /* Removed body padding as it's handled by main padding-top in layout.tsx or margins in components */
