@@ -55,7 +55,6 @@
 
 .navList {
   flex: 1;
-  list-style: none;
   padding: 1rem 0;
   overflow-y: auto;
   overflow-x: hidden;
