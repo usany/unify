@@ -3,13 +3,12 @@
 :root {
     --primary: #2e7d32;
     --primary-hover: #1b5e20;
-    --bg-body: #e6ee9c;
-    --bg-topbar: #f0f4c3;
-    --bg-card: #e6ee9c;
+    --bg-body: var(--bg-tier-3);
+    --bg-topbar: var(--bg-tier-2);
+    --bg-card: var(--bg-tier-3);
     --bg-card-hover: #e8f5e8;
-    --bg-comment: #f0f4c3;
+    --bg-comment: var(--bg-tier-3);
     --bg-badge: #e8f5e8;
-
     --border: #e0e0e0;
     --text-main: #333333;
     --text-muted: #666666;
@@ -25,13 +24,12 @@
 .dark {
     --primary: #66bb6a;
     --primary-hover: #81c784;
-    --bg-body: #1d2e1d;
-    --bg-topbar: #2d3e2d;
-    --bg-card: #1d2e1d;
+    --bg-body: var(--bg-tier-3);
+    --bg-topbar: var(--bg-tier-2);
+    --bg-card: var(--bg-tier-3);
     --bg-card-hover: #263626;
-    --bg-comment: #2d3e2d;
+    --bg-comment: var(--bg-tier-3);
     --bg-badge: #1e3a1e;
-    
     --border: #444444;
     --text-main: #ffffff;
     --text-muted: #e0e0e0;
