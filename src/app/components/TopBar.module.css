@@ -118,7 +118,7 @@
   width: 100%;
   padding: 1rem;
   margin-bottom: 0.5rem;
-  background: var(--bg-card);
+  background: var(--bg-tier-1);
   border: 1px solid var(--border);
   border-radius: 4px;
   text-decoration: none;
@@ -129,7 +129,7 @@
 }
 
 .buttonGroup .button:hover {
-  background: var(--bg-card-hover);
+  background: var(--bg-tier-hover);
   border-color: var(--border);
   transform: translateY(-1px);
 }
