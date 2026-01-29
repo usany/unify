@@ -51,7 +51,6 @@
 .toggleButton {
   background: transparent;
   border: none;
-  color: rgba(255, 255, 255, 0.6);
   cursor: pointer;
   padding: 4px;
   display: flex;
@@ -59,10 +58,6 @@
   justify-content: center;
   border-radius: 4px;
   transition: all 0.2s ease;
-}
-
-.toggleButton:hover {
-  color: white;
 }
 
 .navList {
