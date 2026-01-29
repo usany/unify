@@ -81,11 +81,11 @@ export default memo(function SideNav({
         ))}
       </ul>
 
-      <div className={styles.navFooter}>
+      {/* <div className={styles.navFooter}>
         <div className={styles.navInfo}>
           <p className={styles.navVersion}>v1.0.0</p>
         </div>
-      </div>
+      </div> */}
     </nav>
   );
 });
