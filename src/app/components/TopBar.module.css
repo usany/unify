@@ -154,10 +154,6 @@
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .topBar {
-    padding: 0.5rem 1rem;
-  }
-
   .homeButton {
     font-size: 0.9rem;
   }
@@ -172,7 +168,7 @@
     gap: 0.25rem;
   }
 
-  .buttonGroup.visible {
+  /* .buttonGroup.visible {
     padding: 1.5rem 1rem;
-  }
+  } */
 }
