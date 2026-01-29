@@ -35,8 +35,8 @@
     --text-muted: #e0e0e0;
     --bg-sidenav: linear-gradient(135deg, #2d3e2d 0%, #2d3f2e 100%);
     --shadow: rgba(0, 0, 0, 0.3);
-    --bg-tier-hover: #2d3f2e;
-    --bg-tier-1: #304000;
+    --bg-tier-hover: #2d3f4f;
+    --bg-tier-1: #415111;
     --bg-tier-2: #2d3e2d;
     --bg-tier-3: #1d2e1d;
 }
