@@ -104,6 +104,7 @@
 .navLink.active {
   /* color: white; */
   background: var(--bg-card);
+  color: var(--primary);
   border-left-color: var(--primary);
   /* font-weight: 500; */
 }
