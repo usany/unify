@@ -30,7 +30,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <ThemeProvider initialTheme={theme as 'light' | 'dark'}>
               <MuiThemeProvider>
                 <RainAnimation />
-                <TopBar language={language as 'ko' | 'en'} />
+                <TopBar />
                 <main style={{ paddingTop: '60px' }}>
                   {children}
                 </main>
