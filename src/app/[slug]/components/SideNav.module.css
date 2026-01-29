@@ -114,12 +114,12 @@
 
 .navIcon {
   font-size: 1.25rem;
-  margin-right: 0.75rem;
+  padding-right: 0.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 24px;
-  transition: margin 0.3s ease;
+  /* min-width: 24px; */
+  /* transition: margin 0.3s ease; */
 }
 
 .minified .navIcon {
