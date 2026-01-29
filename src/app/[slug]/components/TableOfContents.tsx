@@ -28,9 +28,9 @@ export default function TableOfContents({ pageId, isTocOpen, toggleToc }: TableO
             hideToc: 'Hide abstract'
         },
         ko: {
-            title: '개요',
-            showToc: '개요 보기',
-            hideToc: '개요 숨기기'
+            title: '요약',
+            showToc: '요약 보기',
+            hideToc: '요약 숨기기'
         }
     };
     
@@ -135,7 +135,7 @@ export default function TableOfContents({ pageId, isTocOpen, toggleToc }: TableO
                     onClick={toggleToc}
                     aria-label={isTocOpen ? translation.hideToc : translation.showToc}
                 >
-                    {isTocOpen ? '-' : '+'}
+                    {isTocOpen ? '−' : '+'}
                 </button>
             </div>
             {isTocOpen && (
