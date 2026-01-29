@@ -7,16 +7,11 @@ import { useLanguage } from '@/app/context/LanguageContext';
 import { useTheme } from '@/app/context/ThemeContext';
 import Link from 'next/link';
 
-interface TopBarProps {
-  language: 'ko' | 'en';
-}
-
-export default function TopBar({ language }: TopBarProps) {
+export default function TopBar() {
   const [showLinks, setShowLinks] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const { theme, toggleTheme } = useTheme();
-  const { language: currentLanguage, toggleLanguage: contextToggleLanguage } = useLanguage();
-  const isEnglish = currentLanguage === 'en';
+  const { language, toggleLanguage } = useLanguage();
   const pathname = usePathname();
 
   useEffect(() => {
@@ -34,9 +29,6 @@ export default function TopBar({ language }: TopBarProps) {
     toggleTheme();
   };
 
-  const toggleLanguage = () => {
-    contextToggleLanguage();
-  };
 
   return (
     <>
@@ -55,7 +47,7 @@ export default function TopBar({ language }: TopBarProps) {
             onClick={toggleLanguage}
             aria-label="Toggle language"
           >
-            {isEnglish ? 'En' : 'Ko'}
+            {language === 'en' ? 'En' : 'Ko'}
           </button>
           {pathname !== '/' && isSmallScreen && (
             <button
