@@ -4,7 +4,6 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useState, useEffect, memo } from 'react';
 import styles from './SideNav.module.css';
-import getLinks from 'links';
 import { useLanguage } from '@/app/context/LanguageContext';
 import { LinkItem } from '@/types/links';
 import links from 'links';
@@ -14,7 +13,6 @@ import links from 'links';
 //   href: string;
 //   icon?: string;
 // }
-
 
 export default memo(function SideNav({
   isMinified = false,
