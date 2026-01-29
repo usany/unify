@@ -47,7 +47,7 @@
 }
 
 .toggleButton:hover {
-  background: var(--bg-card-hover);
+  background: var(--bg-tier-hover);
   border-color: var(--border);
   transform: translateY(-1px);
 }
