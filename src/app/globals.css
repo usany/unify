@@ -15,6 +15,7 @@
     --text-muted: #666666;
     --bg-sidenav: linear-gradient(135deg, #f0f4c3 0%, #f0fad5 100%);
     --shadow: rgba(0, 0, 0, 0.1);
+    --bg-tier-hover: #f0f4c3;
     --bg-tier-1: #f0fad5;
     --bg-tier-2: #f0f4c3;
     --bg-tier-3: #e6ee9c;
@@ -36,6 +37,7 @@
     --text-muted: #e0e0e0;
     --bg-sidenav: linear-gradient(135deg, #2d3e2d 0%, #37504f 100%);
     --shadow: rgba(0, 0, 0, 0.3);
+    --bg-tier-hover: #304000;
     --bg-tier-1: #37504f;
     --bg-tier-2: #2d3e2d;
     --bg-tier-3: #1d2e1d;
