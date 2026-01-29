@@ -37,9 +37,6 @@
 }
 
 .navTitle {
-  /* color: white; */
-  /* margin: 0; */
-  /* text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); */
   font-size: 1.25rem;
   font-weight: 600;
   opacity: 1;
@@ -65,25 +62,15 @@
 }
 
 .toggleButton:hover {
-  /* background: rgba(255, 255, 255, 0.1); */
   color: white;
-}
-
-.minified .toggleButton {
-  margin: 0 auto;
 }
 
 .navList {
   flex: 1;
   list-style: none;
-  margin: 0;
   padding: 1rem 0;
   overflow-y: auto;
   overflow-x: hidden;
-}
-
-.navItem {
-  margin: 0;
 }
 
 .navLink {
@@ -226,13 +213,5 @@
 @media (max-width: 1023px) {
   .sideNav {
     display: none;
-  }
-
-  .mainContent {
-    margin-left: 0;
-  }
-
-  .mainContentMinified {
-    margin-left: 0;
   }
 }
