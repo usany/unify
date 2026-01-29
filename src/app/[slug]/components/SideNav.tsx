@@ -46,7 +46,7 @@ export default memo(function SideNav({
   return (
     <nav className={`${styles.sideNav} ${isMinified ? styles.minified : ''}`}>
       <div className={styles.navHeader}>
-        <h3 className={styles.navTitle}>Navigation</h3>
+        <h3 className={styles.navTitle}>{language === 'en' ? 'Contents' : '목차'}</h3>
         {onToggle && (
           <button
             onClick={onToggle}
