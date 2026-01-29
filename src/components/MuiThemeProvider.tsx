@@ -69,7 +69,7 @@ export default function MuiThemeProvider({ children }: MuiThemeProviderProps) {
             backgroundColor: theme === 'dark' ? '#415111' : '#f0fbe6',
             color: theme === 'dark' ? '#ffffff' : '#000000',
             ':hover': {
-              backgroundColor: theme === 'dark' ? '#2d3f4f' : '#f0fad5',
+              backgroundColor: theme === 'dark' ? '#3d4e3d' : '#f0fad5',
             },
           },
         },
