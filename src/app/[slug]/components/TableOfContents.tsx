@@ -23,14 +23,14 @@ export default function TableOfContents({ pageId, isTocOpen, toggleToc }: TableO
     const { language } = useLanguage();
     const translations = {
         en: {
-            title: 'On this page',
-            showToc: 'Show table of contents',
-            hideToc: 'Hide table of contents'
+            title: 'Abstract',
+            showToc: 'Show abstract',
+            hideToc: 'Hide abstract'
         },
         ko: {
-            title: '목차',
-            showToc: '목차 보기',
-            hideToc: '목차 숨기기'
+            title: '요약',
+            showToc: '요약 보기',
+            hideToc: '요약 숨기기'
         }
     };
     
