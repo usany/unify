@@ -5,18 +5,19 @@
     --primary-hover: #1b5e20;
     --bg-body: #e6ee9c;
     --bg-topbar: #f0f4c3;
-    --bg-card: #f0f4c3;
+    --bg-card: #e6ee9c;
     --bg-card-hover: #e8f5e8;
     --bg-comment: #f0f4c3;
     --bg-badge: #e8f5e8;
+    --border: #e0e0e0;
+
     --text-main: #333333;
     --text-muted: #666666;
-    --bg-sidenav: linear-gradient(135deg, #f8f4f1 0%, #efeae7 100%);
-    --border: #eq0e0e0;
+    --bg-sidenav: linear-gradient(135deg, #f0f4c3 0%, #f0fad5 100%);
     --shadow: rgba(0, 0, 0, 0.1);
-    --bg-tier-1: #f8f4f1;
-    --bg-tier-2: #efeae7;
-    --bg-tier-3: #ebd2be;
+    --bg-tier-1: #f0fad5;
+    --bg-tier-2: #f0f4c3;
+    --bg-tier-3: #e6ee9c;
 }
 
 [data-theme='dark'],
@@ -25,16 +26,17 @@
     --primary-hover: #81c784;
     --bg-body: #1d2e1d;
     --bg-topbar: #2d3e2d;
-    --bg-card: #2d3e2d;
+    --bg-card: #1d2e1d;
     --bg-card-hover: #263626;
     --bg-comment: #2d3e2d;
     --bg-badge: #1e3a1e;
+    --border: #444444;
+    
     --text-main: #ffffff;
     --text-muted: #e0e0e0;
-    --bg-sidenav: linear-gradient(135deg, #3d4e3d 0%, #2d3e2d 100%);
-    --border: #444444;
+    --bg-sidenav: linear-gradient(135deg, #2d3e2d 0%, #37504f 100%);
     --shadow: rgba(0, 0, 0, 0.3);
-    --bg-tier-1: #3d4e3d;
+    --bg-tier-1: #37504f;
     --bg-tier-2: #2d3e2d;
     --bg-tier-3: #1d2e1d;
 }
