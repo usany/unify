@@ -26,7 +26,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
     content: '',
     password: ''
   });
-  const [isSubmitting, setIsSubmitting] = useState(false``);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [replyingTo, setReplyingTo] = useState<number | null>(null);
   const [editingComment, setEditingComment] = useState<number | null>(null);
   const [editContent, setEditContent] = useState('');
