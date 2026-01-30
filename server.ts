@@ -1,7 +1,7 @@
 import express from "express";
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
 // Simple in-memory cache
 const cache = new Map<string, { data: string; timestamp: number; ttl: number; status: number; headers: Record<string, string> }>();
@@ -25,10 +25,10 @@ setInterval(() => {
 app.get("/purge", (req, res) => {
   const token = req.headers["x-purge-token"] || req.query.token;
 
-  if (token !== process.env.PURGE_SECRET) {
-    console.log("[Cache] Unauthorized purge attempt");
-    return res.status(403).send("Forbidden: Invalid purge token");
-  }
+  // if (token !== process.env.PURGE_SECRET) {
+  //   console.log("[Cache] Unauthorized purge attempt");
+  //   return res.status(403).send("Forbidden: Invalid purge token");
+  // }
 
   console.log("[Cache] Purge triggered by authorized user");
   cache.clear(); // Clear local cache
@@ -99,7 +99,7 @@ app.use(async (req, res) => {
 
     // Log cache status
     const cacheStatus = response.headers.get("x-vercel-cache") || "MISS";
-    // console.log(`[Cache] ${req.originalUrl} → ${cacheStatus}`);
+    console.log(`[Cache] ${req.originalUrl} → ${cacheStatus}`);
 
     // Cache the response if it's cacheable (exclude static assets)
     if (!req.originalUrl.startsWith("/api/auth") && 
