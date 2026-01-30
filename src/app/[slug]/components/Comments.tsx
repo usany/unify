@@ -57,8 +57,8 @@ export default memo(function Comments({ slug }: CommentsProps) {
     fetchComments();
   }, [slug]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
     
     if (!newComment.author.trim() || !newComment.email.trim() || !newComment.content.trim()) {
       return;
@@ -186,7 +186,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
           <div className={styles.editForm}>
             <textarea
               value={editContent}
-              onChange={(e) => setEditContent(e.target.value)}
+              onChange={(event) => setEditContent(event.target.value)}
               className={styles.editTextarea}
               rows={3}
             />
@@ -238,7 +238,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
             type="text"
             id="author"
             value={newComment.author}
-            onChange={(e) => handleInputChange('author', e.target.value)}
+            onChange={(event) => handleInputChange('author', event.target.value)}
             className={styles.input}
             placeholder="Enter your name"
             required
