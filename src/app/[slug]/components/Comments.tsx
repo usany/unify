@@ -26,7 +26,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
     content: '',
     password: ''
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false``);
   const [replyingTo, setReplyingTo] = useState<number | null>(null);
   const [editingComment, setEditingComment] = useState<number | null>(null);
   const [editContent, setEditContent] = useState('');
@@ -186,7 +186,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
           <div className={styles.editForm}>
             <textarea
               value={editContent}
-              onChange={(event) => setEditContent(event.target.value)}
+              onChange={(event) => setEditContent(event.target.valuevent)}
               className={styles.editTextarea}
               rows={3}
             />
@@ -238,7 +238,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
             type="text"
             id="author"
             value={newComment.author}
-            onChange={(event) => handleInputChange('author', event.target.value)}
+            onChange={(event) => handleInputChange('author', event.target.valuevent)}
             className={styles.input}
             placeholder="Enter your name"
             required
@@ -251,7 +251,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
             type="email"
             id="email"
             value={newComment.email}
-            onChange={(e) => handleInputChange('email', e.target.value)}
+            onChange={(event) => handleInputChange('email', event.target.valuevent)}
             className={styles.input}
             placeholder="Enter your email"
             required
@@ -263,7 +263,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
           <textarea
             id="content"
             value={newComment.content}
-            onChange={(e) => handleInputChange('content', e.target.value)}
+            onChange={(event) => handleInputChange('content', event.target.valuevent)}
             className={styles.textarea}
             placeholder="Share your thoughts..."
             rows={4}
@@ -277,7 +277,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
             type="password"
             id="password"
             value={newComment.password}
-            onChange={(e) => handleInputChange('password', e.target.value)}
+            onChange={(event) => handleInputChange('password', event.target.valuevent)}
             className={styles.input}
             placeholder="Enter a password to delete this comment later"
           />
@@ -329,7 +329,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
             <input
               type="password"
               value={deletePassword}
-              onChange={(e) => setDeletePassword(e.target.value)}
+              onChange={(event) => setDeletePassword(event.target.valuevent)}
               className={styles.input}
               placeholder="Enter password"
               autoFocus
