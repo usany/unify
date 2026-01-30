@@ -99,7 +99,7 @@ app.use(async (req, res) => {
 
     // Log cache status
     const cacheStatus = response.headers.get("x-vercel-cache") || "MISS";
-    console.log(`[Cache] ${req.originalUrl} → ${cacheStatus}`);
+    // console.log(`[Cache] ${req.originalUrl} → ${cacheStatus}`);
 
     // Cache the response if it's cacheable (exclude static assets)
     if (!req.originalUrl.startsWith("/api/auth") && 
