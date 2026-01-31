@@ -1,9 +1,12 @@
 // Database client for D1
 // Local development fallback database
+
+// Global in-memory storage that persists across requests
+let globalComments: Comment[] = [];
+let globalNextId = 1;
+
 class LocalDevDB {
   private static instance: LocalDevDB;
-  private comments: Comment[] = [];
-  private nextId = 1;
 
   static getInstance(): LocalDevDB {
     if (!LocalDevDB.instance) {
@@ -19,19 +22,19 @@ class LocalDevDB {
   }
 
   getComments() {
-    return this.comments;
+    return globalComments;
   }
 
   addComment(comment: Comment) {
-    this.comments.push(comment);
+    globalComments.push(comment);
   }
 
   getComment(id: number) {
-    return this.comments.find(c => c.id === id);
+    return globalComments.find(c => c.id === id);
   }
 
   updateComment(id: number, content: string) {
-    const comment = this.comments.find(c => c.id === id);
+    const comment = globalComments.find(c => c.id === id);
     if (comment) {
       comment.content = content;
       comment.updated_at = new Date().toISOString();
@@ -54,11 +57,11 @@ class LocalDevDB {
       throw new Error('Incorrect password');
     }
     
-    const initialLength = this.comments.length;
-    this.comments = this.comments.filter(c => c.id !== id);
+    const initialLength = globalComments.length;
+    globalComments = globalComments.filter(c => c.id !== id);
     return {
       success: true,
-      meta: { changes: initialLength - this.comments.length }
+      meta: { changes: initialLength - globalComments.length }
     };
   }
 }
@@ -94,7 +97,7 @@ class LocalDevQuery {
     if (this.query.includes('INSERT')) {
       const [slug, author, email, content, password] = this.params;
       const newComment: Comment = {
-        id: this.db['nextId']++,
+        id: globalNextId++,
         slug,
         author,
         email,
@@ -140,7 +143,7 @@ export class DatabaseClient {
   private isLocalDev: boolean;
 
   constructor(env: any) {
-    this.isLocalDev = process.env.NODE_ENV === 'development';
+    this.isLocalDev = env?.NODE_ENV === 'development';
     if (env?.instructions_db) {
       this.db = env.instructions_db;
     } else if (this.isLocalDev) {

@@ -8,7 +8,11 @@
     "start": "next start",
     "lint": "biome check",
     "format": "biome format --write",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy"
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "db:init": "node scripts/init-db.js",
+    "db:migrate": "npx wrangler d1 migrations apply instructions-db",
+    "db:info": "npx wrangler d1 info instructions-db",
+    "db:local": "npx wrangler d1 execute instructions-db --local --file=schema.sql"
   },
   "dependencies": {
     "@cloudflare/workers-types": "^4.20260111.0",

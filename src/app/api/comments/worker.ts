@@ -30,7 +30,7 @@ async function handleGet(url: URL, env: any) {
   }
 
   try {
-    const result = await env.DB.prepare('SELECT * FROM comments WHERE page_id = ? ORDER BY created_at DESC')
+    const result = await env.instructions_db.prepare('SELECT * FROM comments WHERE slug = ? ORDER BY created_at DESC')
       .bind(pageId)
       .all();
     
@@ -61,11 +61,11 @@ async function handlePost(request: Request, env: any) {
 
     const id = Date.now().toString();
     
-    await env.DB.prepare('INSERT INTO comments (id, page_id, author, content, parent_id) VALUES (?, ?, ?, ?, ?)')
-      .bind(id, pageId, author, content, parentId || null)
+    await env.instructions_db.prepare('INSERT INTO comments (slug, author, content, parent_id) VALUES (?, ?, ?, ?)')
+      .bind(pageId, author, content, parentId || null)
       .run();
 
-    const comment = await env.DB.prepare('SELECT * FROM comments WHERE id = ?')
+    const comment = await env.instructions_db.prepare('SELECT * FROM comments WHERE id = ?')
       .bind(id)
       .first();
 
@@ -93,11 +93,11 @@ async function handlePut(request: Request, env: any) {
       });
     }
 
-    await env.DB.prepare('UPDATE comments SET content = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?')
+    await env.instructions_db.prepare('UPDATE comments SET content = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?')
       .bind(content, id)
       .run();
 
-    const comment = await env.DB.prepare('SELECT * FROM comments WHERE id = ?')
+    const comment = await env.instructions_db.prepare('SELECT * FROM comments WHERE id = ?')
       .bind(id)
       .first();
 
@@ -123,7 +123,7 @@ async function handleDelete(url: URL, env: any) {
   }
 
   try {
-    await env.DB.prepare('DELETE FROM comments WHERE id = ?')
+    await env.instructions_db.prepare('DELETE FROM comments WHERE id = ?')
       .bind(id)
       .run();
 

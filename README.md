@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Instructions Application
+
+A Next.js application with Cloudflare D1 database integration for managing comments and instructions.
+
+## Features
+
+- **Next.js 15** with App Router
+- **Cloudflare D1** database for data persistence
+- **TypeScript** for type safety
+- **Tailwind CSS** for styling
+- **Comments system** with threading support
+- **Cloudflare Workers** deployment
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 18+ 
+- Cloudflare account with D1 enabled
+- Wrangler CLI (`npm install -g wrangler`)
+
+### Installation
+
+1. Clone the repository and install dependencies:
+```bash
+npm install
+```
+
+2. Set up the database:
+```bash
+npm run db:init
+```
+
+3. Run the development server:
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Database Setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This application uses Cloudflare D1 as the database. The schema is defined in `schema.sql` and includes:
+
+- **comments**: Main comments table with threading support
+- **users**: User accounts (for future features)  
+- **pages**: Page metadata tracking
+
+### Database Commands
+
+```bash
+# Initialize database with schema
+npm run db:init
+
+# Apply migrations
+npm run db:migrate
+
+# View database info
+npm run db:info
+
+# Local development setup
+npm run db:local
+```
+
+For detailed database setup instructions, see [DATABASE.md](./DATABASE.md).
+
+## API Endpoints
+
+- `/api/comments/worker` - Comments CRUD operations
+- `/api/db-test` - Database connection test endpoint
+
+## Development
+
+### Local Development
+
+The app includes a fallback in-memory database for local development, so you can develop without needing a live D1 connection.
+
+### Code Style
+
+This project uses Biome for linting and formatting:
+```bash
+npm run lint    # Check code style
+npm run format  # Format code
+```
+
+## Deployment
+
+Deploy to Cloudflare Pages:
+```bash
+npm run deploy
+```
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Cloudflare D1 Documentation](https://developers.cloudflare.com/d1/)
+- [Wrangler Documentation](https://developers.cloudflare.com/workers/wrangler/)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
