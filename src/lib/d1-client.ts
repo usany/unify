@@ -1,7 +1,9 @@
 // Cloudflare D1 Client Utility
 // Simplified database client for consistent D1 operations
 
-import { createDBClient } from './db';
+export function createDBClient(env: any): DatabaseClient {
+  return new DatabaseClient(env);
+}
 
 export interface D1Result<T = any> {
   success: boolean;
