@@ -1,5 +1,18 @@
 // Database client for Azure SQL Database
-import * as sql from 'mssql';
+// Dynamically import mssql to handle environments where it might not be available
+let sql: typeof import('mssql') | null = null;
+
+async function loadMssql() {
+  if (!sql) {
+    try {
+      sql = await import('mssql');
+    } catch (error) {
+      console.warn('mssql package not available, Azure SQL connections will not work:', error);
+      return null;
+    }
+  }
+  return sql;
+}
 
 // Local development fallback database
 class LocalDevDB {
@@ -138,9 +151,14 @@ export interface Comment {
 }
 
 // Connection pool for Azure SQL Database
-let pool: sql.ConnectionPool | null = null;
+let pool: any = null;
 
-async function getConnectionPool(): Promise<sql.ConnectionPool> {
+async function getConnectionPool(): Promise<any> {
+  const mssql = await loadMssql();
+  if (!mssql) {
+    throw new Error('mssql package is not available. Cannot connect to Azure SQL Database.');
+  }
+
   if (pool) {
     try {
       // Check if pool is still connected
@@ -187,7 +205,7 @@ async function getConnectionPool(): Promise<sql.ConnectionPool> {
     throw new Error('Azure SQL Database connection is not configured. Please set AZURE_SQL_CONNECTION_STRING or provide AZURE_SQL_DATABASE, AZURE_SQL_USER, and AZURE_SQL_PASSWORD environment variables.');
   }
 
-  const config: sql.config = {
+  const config: any = {
     server,
     database,
     user,
@@ -204,7 +222,7 @@ async function getConnectionPool(): Promise<sql.ConnectionPool> {
     },
   };
 
-  pool = new sql.ConnectionPool(config);
+  pool = new mssql.ConnectionPool(config);
   await pool.connect();
   return pool;
 }
@@ -220,12 +238,14 @@ export class DatabaseClient {
     const hasAzureSQL = !!(process.env.AZURE_SQL_CONNECTION_STRING || 
       (process.env.AZURE_SQL_DATABASE && process.env.AZURE_SQL_USER && process.env.AZURE_SQL_PASSWORD));
     
-    this.useAzureSQL = hasAzureSQL && !this.isLocalDev;
+    // Use Azure SQL if configured (even in local dev if explicitly configured)
+    // But prefer local dev fallback if Azure SQL is not configured
+    this.useAzureSQL = hasAzureSQL;
     
     if (env?.instructions_db && !this.useAzureSQL) {
       // Fallback to D1 if available and not using Azure SQL
       this.db = env.instructions_db;
-    } else if (this.isLocalDev && !hasAzureSQL) {
+    } else if (!this.useAzureSQL) {
       // Local development fallback - use singleton in-memory storage
       this.db = LocalDevDB.getInstance();
     }
@@ -246,9 +266,13 @@ export class DatabaseClient {
     const db = await this.getDb();
     
     if (this.useAzureSQL) {
-      const pool = db as sql.ConnectionPool;
+      const mssql = await loadMssql();
+      if (!mssql) {
+        throw new Error('mssql package is not available');
+      }
+      const pool = db as any;
       const request = pool.request();
-      request.input('slug', sql.NVarChar, slug);
+      request.input('slug', mssql.NVarChar, slug);
       const result = await request.query<Comment>(
         'SELECT * FROM comments WHERE slug = @slug ORDER BY created_at DESC'
       );
@@ -266,13 +290,17 @@ export class DatabaseClient {
     const db = await this.getDb();
     
     if (this.useAzureSQL) {
-      const pool = db as sql.ConnectionPool;
+      const mssql = await loadMssql();
+      if (!mssql) {
+        throw new Error('mssql package is not available');
+      }
+      const pool = db as any;
       const request = pool.request();
-      request.input('slug', sql.NVarChar, slug);
-      request.input('author', sql.NVarChar, author);
-      request.input('email', sql.NVarChar, email);
-      request.input('content', sql.NVarChar, content);
-      request.input('password', sql.NVarChar, password || '');
+      request.input('slug', mssql.NVarChar, slug);
+      request.input('author', mssql.NVarChar, author);
+      request.input('email', mssql.NVarChar, email);
+      request.input('content', mssql.NVarChar, content);
+      request.input('password', mssql.NVarChar, password || '');
       
       const result = await request.query<Comment>(
         `INSERT INTO comments (slug, author, email, content, password, created_at, updated_at) 
@@ -297,10 +325,14 @@ export class DatabaseClient {
     const db = await this.getDb();
     
     if (this.useAzureSQL) {
-      const pool = db as sql.ConnectionPool;
+      const mssql = await loadMssql();
+      if (!mssql) {
+        throw new Error('mssql package is not available');
+      }
+      const pool = db as any;
       const request = pool.request();
-      request.input('id', sql.Int, id);
-      request.input('content', sql.NVarChar, content);
+      request.input('id', mssql.Int, id);
+      request.input('content', mssql.NVarChar, content);
       
       const result = await request.query<Comment>(
         `UPDATE comments 
@@ -326,9 +358,13 @@ export class DatabaseClient {
     const db = await this.getDb();
     
     if (this.useAzureSQL) {
-      const pool = db as sql.ConnectionPool;
+      const mssql = await loadMssql();
+      if (!mssql) {
+        throw new Error('mssql package is not available');
+      }
+      const pool = db as any;
       const request = pool.request();
-      request.input('id', sql.Int, id);
+      request.input('id', mssql.Int, id);
       
       // First, get the comment to verify password
       const commentResult = await request.query<{ password: string }>(
