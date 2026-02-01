@@ -1,5 +1,5 @@
 // Database client for Azure SQL Database
-import sql from 'mssql';
+import * as sql from 'mssql';
 
 // Local development fallback database
 class LocalDevDB {
@@ -141,32 +141,57 @@ export interface Comment {
 let pool: sql.ConnectionPool | null = null;
 
 async function getConnectionPool(): Promise<sql.ConnectionPool> {
-  if (pool && pool.connected) {
-    return pool;
-  }
-
-  let connectionString = process.env.AZURE_SQL_CONNECTION_STRING || process.env.DATABASE_URL;
-  
-  // If no connection string, build it from individual components
-  if (!connectionString) {
-    const server = process.env.AZURE_SQL_SERVER || 'remake.database.windows.net';
-    const database = process.env.AZURE_SQL_DATABASE;
-    const user = process.env.AZURE_SQL_USER;
-    const password = process.env.AZURE_SQL_PASSWORD;
-    
-    if (!database || !user || !password) {
-      throw new Error('Azure SQL Database connection is not configured. Please set AZURE_SQL_CONNECTION_STRING or provide AZURE_SQL_DATABASE, AZURE_SQL_USER, and AZURE_SQL_PASSWORD environment variables.');
+  if (pool) {
+    try {
+      // Check if pool is still connected
+      const request = pool.request();
+      await request.query('SELECT 1');
+      return pool;
+    } catch (error) {
+      // Pool is disconnected, reset it
+      pool = null;
     }
-    
-    connectionString = `Server=${server};Database=${database};User Id=${user};Password=${password};Encrypt=true;TrustServerCertificate=false`;
   }
 
-  if (!connectionString) {
-    throw new Error('Azure SQL Database connection string is not configured.');
+  // Parse connection string or use individual components
+  let server = 'remake.database.windows.net';
+  let database = '';
+  let user = '';
+  let password = '';
+
+  const connectionString = process.env.AZURE_SQL_CONNECTION_STRING || process.env.DATABASE_URL;
+  
+  if (connectionString) {
+    // Parse connection string
+    const parts = connectionString.split(';');
+    for (const part of parts) {
+      const [key, ...valueParts] = part.split('=');
+      if (key && valueParts.length > 0) {
+        const keyLower = key.trim().toLowerCase();
+        const value = valueParts.join('=').trim();
+        if (keyLower === 'server') server = value;
+        else if (keyLower === 'database') database = value;
+        else if (keyLower === 'user id' || keyLower === 'uid') user = value;
+        else if (keyLower === 'password' || keyLower === 'pwd') password = value;
+      }
+    }
+  } else {
+    // Use individual environment variables
+    server = process.env.AZURE_SQL_SERVER || 'remake.database.windows.net';
+    database = process.env.AZURE_SQL_DATABASE || '';
+    user = process.env.AZURE_SQL_USER || '';
+    password = process.env.AZURE_SQL_PASSWORD || '';
+  }
+
+  if (!database || !user || !password) {
+    throw new Error('Azure SQL Database connection is not configured. Please set AZURE_SQL_CONNECTION_STRING or provide AZURE_SQL_DATABASE, AZURE_SQL_USER, and AZURE_SQL_PASSWORD environment variables.');
   }
 
   const config: sql.config = {
-    connectionString,
+    server,
+    database,
+    user,
+    password,
     options: {
       encrypt: true,
       trustServerCertificate: false,
