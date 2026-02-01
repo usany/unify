@@ -29,13 +29,24 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'slug, author, email, and content are required' }, { status: 400 });
     }
 
+    console.log('Creating comment with:', { slug, author, email, hasContent: !!content });
+    console.log('Azure SQL configured:', !!(process.env.AZURE_SQL_CONNECTION_STRING || 
+      (process.env.AZURE_SQL_DATABASE && process.env.AZURE_SQL_USER && process.env.AZURE_SQL_PASSWORD)));
+
     const db = createDBClient(process.env);
     const comment = await db.createComment(slug, author, email, content, password);
 
+    console.log('Comment created successfully:', comment.id);
     return NextResponse.json({ comment }, { status: 201 });
   } catch (error) {
     console.error('Error creating comment:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const errorStack = error instanceof Error ? error.stack : undefined;
+    console.error('Error details:', { errorMessage, errorStack });
+    return NextResponse.json({ 
+      error: 'Internal server error',
+      message: errorMessage 
+    }, { status: 500 });
   }
 }
 

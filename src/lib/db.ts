@@ -7,8 +7,13 @@ async function loadMssql(): Promise<any> {
     try {
       // @ts-ignore - Dynamic import for optional dependency
       sql = await import('mssql');
-    } catch (error) {
-      console.warn('mssql package not available, Azure SQL connections will not work:', error);
+    } catch (error: any) {
+      const errorMsg = error?.message || String(error);
+      if (errorMsg.includes('Cannot find module') || errorMsg.includes('MODULE_NOT_FOUND')) {
+        console.warn('mssql package is not installed. To use Azure SQL Database, please run: pnpm add mssql');
+      } else {
+        console.warn('mssql package not available, Azure SQL connections will not work:', errorMsg);
+      }
       return null;
     }
   }
@@ -157,17 +162,24 @@ let pool: any = null;
 async function getConnectionPool(): Promise<any> {
   const mssql = await loadMssql();
   if (!mssql) {
-    throw new Error('mssql package is not available. Cannot connect to Azure SQL Database.');
+    throw new Error('mssql package is not available. Cannot connect to Azure SQL Database. Please install mssql package or use an alternative database.');
   }
 
   if (pool) {
     try {
-      // Check if pool is still connected
+      // Check if pool is still connected by attempting a simple query
       const request = pool.request();
       await request.query('SELECT 1');
       return pool;
     } catch (error) {
-      // Pool is disconnected, reset it
+      // Pool is disconnected or in error state, reset it
+      try {
+        if (pool && typeof pool.close === 'function') {
+          await pool.close();
+        }
+      } catch (closeError) {
+        // Ignore close errors
+      }
       pool = null;
     }
   }
@@ -223,9 +235,24 @@ async function getConnectionPool(): Promise<any> {
     },
   };
 
-  pool = new mssql.ConnectionPool(config);
-  await pool.connect();
-  return pool;
+  try {
+    pool = new mssql.ConnectionPool(config);
+    await pool.connect();
+    return pool;
+  } catch (error: any) {
+    pool = null;
+    const errorMessage = error?.message || 'Unknown error';
+    if (errorMessage.includes('Login failed') || errorMessage.includes('authentication')) {
+      throw new Error(`Azure SQL Database authentication failed: ${errorMessage}. Please check your credentials.`);
+    }
+    if (errorMessage.includes('timeout') || errorMessage.includes('ECONNREFUSED') || errorMessage.includes('getaddrinfo')) {
+      throw new Error(`Cannot connect to Azure SQL Database at ${server}. Please check your connection settings and firewall rules.`);
+    }
+    if (errorMessage.includes('Invalid object name') || errorMessage.includes('does not exist')) {
+      throw new Error(`Database table does not exist. Please run the migration file migrations/0001_comments_schema_azure.sql on your Azure SQL Database.`);
+    }
+    throw new Error(`Failed to connect to Azure SQL Database: ${errorMessage}`);
+  }
 }
 
 export class DatabaseClient {
@@ -235,26 +262,62 @@ export class DatabaseClient {
 
   constructor(env: any) {
     this.isLocalDev = process.env.NODE_ENV === 'development';
-    // Check if Azure SQL connection string is available
-    const hasAzureSQL = !!(process.env.AZURE_SQL_CONNECTION_STRING || 
-      (process.env.AZURE_SQL_DATABASE && process.env.AZURE_SQL_USER && process.env.AZURE_SQL_PASSWORD));
+    // Check if Azure SQL connection string is available and valid
+    const hasConnectionString = !!(process.env.AZURE_SQL_CONNECTION_STRING && 
+      process.env.AZURE_SQL_CONNECTION_STRING.trim().length > 0);
+    const hasIndividualVars = !!(process.env.AZURE_SQL_DATABASE && 
+      process.env.AZURE_SQL_DATABASE.trim().length > 0 &&
+      process.env.AZURE_SQL_USER && 
+      process.env.AZURE_SQL_USER.trim().length > 0 &&
+      process.env.AZURE_SQL_PASSWORD && 
+      process.env.AZURE_SQL_PASSWORD.trim().length > 0);
+    const hasAzureSQL = hasConnectionString || hasIndividualVars;
     
     // Use Azure SQL if configured (even in local dev if explicitly configured)
     // But prefer local dev fallback if Azure SQL is not configured
+    // Note: mssql package availability will be checked at runtime
     this.useAzureSQL = hasAzureSQL;
     
-    if (env?.instructions_db && !this.useAzureSQL) {
-      // Fallback to D1 if available and not using Azure SQL
+    // Always set up fallback databases in case Azure SQL fails
+    if (env?.instructions_db) {
+      // Fallback to D1 if available
       this.db = env.instructions_db;
     } else if (!this.useAzureSQL) {
       // Local development fallback - use singleton in-memory storage
       this.db = LocalDevDB.getInstance();
+    } else {
+      // Even if using Azure SQL, set up in-memory fallback for development
+      if (this.isLocalDev) {
+        this.db = LocalDevDB.getInstance();
+      }
     }
   }
 
   private async getDb() {
     if (this.useAzureSQL) {
-      return await getConnectionPool();
+      try {
+        // Check if mssql is available before trying to connect
+        const mssql = await loadMssql();
+        if (!mssql) {
+          // mssql package not available, fall back to alternative database
+          if (this.db) {
+            console.warn('mssql package is not available. Falling back to alternative database. To use Azure SQL, please install: pnpm add mssql');
+            this.useAzureSQL = false; // Disable Azure SQL for this instance
+            return this.db;
+          }
+          throw new Error('mssql package is not available and no fallback database is configured. Please install mssql (pnpm add mssql) or configure an alternative database.');
+        }
+        return await getConnectionPool();
+      } catch (error) {
+        // If Azure SQL connection fails and we have a fallback, use it
+        if (this.db) {
+          console.warn('Azure SQL connection failed, falling back to alternative database:', error instanceof Error ? error.message : error);
+          this.useAzureSQL = false; // Disable Azure SQL for this instance to avoid repeated failures
+          return this.db;
+        }
+        // Otherwise, throw the error
+        throw error;
+      }
     }
     if (!this.db) {
       throw new Error('Database not initialized. Make sure instructions_db binding is available or Azure SQL connection is configured.');
@@ -279,11 +342,11 @@ export class DatabaseClient {
       );
       return (result.recordset || []) as Comment[];
     } else {
-      const result = await db
-        .prepare('SELECT * FROM comments WHERE slug = ? ORDER BY created_at DESC')
-        .bind(slug)
-        .all();
-      return result.results as Comment[];
+    const result = await db
+      .prepare('SELECT * FROM comments WHERE slug = ? ORDER BY created_at DESC')
+      .bind(slug)
+      .all();
+    return result.results as Comment[];
     }
   }
 
@@ -303,22 +366,36 @@ export class DatabaseClient {
       request.input('content', mssql.NVarChar, content);
       request.input('password', mssql.NVarChar, password || '');
       
-      const result = await request.query(
-        `INSERT INTO comments (slug, author, email, content, password, created_at, updated_at) 
-         OUTPUT INSERTED.*
-         VALUES (@slug, @author, @email, @content, @password, GETUTCDATE(), GETUTCDATE())`
-      );
-      
-      if (result.recordset && result.recordset.length > 0) {
-        return result.recordset[0] as Comment;
+      try {
+        const result = await request.query(
+          `INSERT INTO comments (slug, author, email, content, password, created_at, updated_at) 
+           OUTPUT INSERTED.*
+           VALUES (@slug, @author, @email, @content, @password, GETUTCDATE(), GETUTCDATE())`
+        );
+        
+        if (result.recordset && result.recordset.length > 0) {
+          return result.recordset[0] as Comment;
+        }
+        throw new Error('Failed to create comment: No record returned from INSERT');
+      } catch (error: any) {
+        const errorMessage = error?.message || 'Unknown error';
+        if (errorMessage.includes('Invalid object name') || errorMessage.includes('does not exist')) {
+          throw new Error('Comments table does not exist. Please run the migration file migrations/0001_comments_schema_azure.sql on your Azure SQL Database.');
+        }
+        if (errorMessage.includes('Cannot insert duplicate key') || errorMessage.includes('UNIQUE constraint')) {
+          throw new Error('A comment with this information already exists.');
+        }
+        if (errorMessage.includes('String or binary data would be truncated')) {
+          throw new Error('Comment data is too long. Please shorten your input.');
+        }
+        throw new Error(`Failed to create comment: ${errorMessage}`);
       }
-      throw new Error('Failed to create comment');
     } else {
-      const result = await db
-        .prepare('INSERT INTO comments (slug, author, email, content, password) VALUES (?, ?, ?, ?, ?) RETURNING *')
-        .bind(slug, author, email, content, password || '')
-        .first();
-      return result as Comment;
+    const result = await db
+      .prepare('INSERT INTO comments (slug, author, email, content, password) VALUES (?, ?, ?, ?, ?) RETURNING *')
+      .bind(slug, author, email, content, password || '')
+      .first();
+    return result as Comment;
     }
   }
 
@@ -347,11 +424,11 @@ export class DatabaseClient {
       }
       return null;
     } else {
-      const result = await db
-        .prepare('UPDATE comments SET content = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ? RETURNING *')
-        .bind(content, id)
-        .first();
-      return result as Comment | null;
+    const result = await db
+      .prepare('UPDATE comments SET content = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ? RETURNING *')
+      .bind(content, id)
+      .first();
+    return result as Comment | null;
     }
   }
 
@@ -392,24 +469,24 @@ export class DatabaseClient {
       
       return (deleteResult.rowsAffected[0] || 0) > 0;
     } else {
-      // First, get the comment to verify password
-      const comment = await db
-        .prepare('SELECT password FROM comments WHERE id = ?')
-        .bind(id)
-        .first();
-      
-      if (!comment) {
-        return false;
-      }
-      
-      // If comment has a password, verify it matches
-      if (comment.password && comment.password !== '' && comment.password !== password) {
-        throw new Error('Incorrect password');
-      }
-      
-      // Delete the comment
-      const result = await db.prepare('DELETE FROM comments WHERE id = ?').bind(id).run();
-      return result.success && (result.meta?.changes || 0) > 0;
+    // First, get the comment to verify password
+    const comment = await db
+      .prepare('SELECT password FROM comments WHERE id = ?')
+      .bind(id)
+      .first();
+    
+    if (!comment) {
+      return false;
+    }
+    
+    // If comment has a password, verify it matches
+    if (comment.password && comment.password !== '' && comment.password !== password) {
+      throw new Error('Incorrect password');
+    }
+    
+    // Delete the comment
+    const result = await db.prepare('DELETE FROM comments WHERE id = ?').bind(id).run();
+    return result.success && (result.meta?.changes || 0) > 0;
     }
   }
 }

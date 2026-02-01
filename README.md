@@ -35,21 +35,59 @@ This project uses Azure SQL Database for comments storage. The database is confi
 
 ### Environment Variables
 
-Configure the following environment variables for Azure SQL Database connection:
+To get the values for these environment variables, you need to access your Azure SQL Database:
+
+1. **Go to Azure Portal** (https://portal.azure.com)
+2. **Navigate to your SQL Database** (search for "SQL databases" in the portal)
+3. **Find your database** that uses server `remake.database.windows.net`
+4. **Get the connection details:**
+   - **Server name**: `remake.database.windows.net` (or your specific server)
+   - **Database name**: Found in the database overview page
+   - **Username**: Usually in format `username@remake` or just `username`
+   - **Password**: The password you set when creating the SQL server
+
+#### For Local Development
+
+Create a `.env.local` file in the project root (see `.env.local.example` for template):
 
 **Option 1: Full Connection String**
 ```bash
-AZURE_SQL_CONNECTION_STRING=Server=remake.database.windows.net;Database=<database_name>;User Id=<username>;Password=<password>;Encrypt=true;TrustServerCertificate=false
+AZURE_SQL_CONNECTION_STRING=Server=remake.database.windows.net;Database=your_database_name;User Id=your_username@remake;Password=your_password;Encrypt=true;TrustServerCertificate=false
 ```
 
-**Option 2: Individual Components**
+**Option 2: Individual Components (Recommended)**
 ```bash
-AZURE_SQL_DATABASE=<database_name>
-AZURE_SQL_USER=<username>
-AZURE_SQL_PASSWORD=<password>
+AZURE_SQL_SERVER=remake.database.windows.net
+AZURE_SQL_DATABASE=your_database_name
+AZURE_SQL_USER=your_username@remake
+AZURE_SQL_PASSWORD=your_password
 ```
 
-The connection will default to `remake.database.windows.net` as the server if not specified in the connection string.
+**Note**: The server defaults to `remake.database.windows.net` if `AZURE_SQL_SERVER` is not specified.
+
+#### For Production (Cloudflare Workers)
+
+Set these as secrets in Cloudflare:
+
+```bash
+# Using Wrangler CLI
+wrangler secret put AZURE_SQL_DATABASE
+wrangler secret put AZURE_SQL_USER
+wrangler secret put AZURE_SQL_PASSWORD
+
+# Or set AZURE_SQL_CONNECTION_STRING instead
+wrangler secret put AZURE_SQL_CONNECTION_STRING
+```
+
+Or configure in `wrangler.jsonc` (not recommended for secrets, use secrets instead):
+```jsonc
+{
+  "vars": {
+    "AZURE_SQL_SERVER": "remake.database.windows.net",
+    "AZURE_SQL_DATABASE": "your_database_name"
+  }
+}
+```
 
 ### Database Schema
 
