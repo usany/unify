@@ -1,10 +1,11 @@
 // Database client for Azure SQL Database
 // Dynamically import mssql to handle environments where it might not be available
-let sql: typeof import('mssql') | null = null;
+let sql: any = null;
 
-async function loadMssql() {
+async function loadMssql(): Promise<any> {
   if (!sql) {
     try {
+      // @ts-ignore - Dynamic import for optional dependency
       sql = await import('mssql');
     } catch (error) {
       console.warn('mssql package not available, Azure SQL connections will not work:', error);
@@ -273,10 +274,10 @@ export class DatabaseClient {
       const pool = db as any;
       const request = pool.request();
       request.input('slug', mssql.NVarChar, slug);
-      const result = await request.query<Comment>(
+      const result = await request.query(
         'SELECT * FROM comments WHERE slug = @slug ORDER BY created_at DESC'
       );
-      return result.recordset;
+      return (result.recordset || []) as Comment[];
     } else {
       const result = await db
         .prepare('SELECT * FROM comments WHERE slug = ? ORDER BY created_at DESC')
@@ -302,14 +303,14 @@ export class DatabaseClient {
       request.input('content', mssql.NVarChar, content);
       request.input('password', mssql.NVarChar, password || '');
       
-      const result = await request.query<Comment>(
+      const result = await request.query(
         `INSERT INTO comments (slug, author, email, content, password, created_at, updated_at) 
          OUTPUT INSERTED.*
          VALUES (@slug, @author, @email, @content, @password, GETUTCDATE(), GETUTCDATE())`
       );
       
       if (result.recordset && result.recordset.length > 0) {
-        return result.recordset[0];
+        return result.recordset[0] as Comment;
       }
       throw new Error('Failed to create comment');
     } else {
@@ -334,7 +335,7 @@ export class DatabaseClient {
       request.input('id', mssql.Int, id);
       request.input('content', mssql.NVarChar, content);
       
-      const result = await request.query<Comment>(
+      const result = await request.query(
         `UPDATE comments 
          SET content = @content, updated_at = GETUTCDATE() 
          OUTPUT INSERTED.*
@@ -342,7 +343,7 @@ export class DatabaseClient {
       );
       
       if (result.recordset && result.recordset.length > 0) {
-        return result.recordset[0];
+        return result.recordset[0] as Comment;
       }
       return null;
     } else {
@@ -367,7 +368,7 @@ export class DatabaseClient {
       request.input('id', mssql.Int, id);
       
       // First, get the comment to verify password
-      const commentResult = await request.query<{ password: string }>(
+      const commentResult = await request.query(
         'SELECT password FROM comments WHERE id = @id'
       );
       
@@ -375,7 +376,7 @@ export class DatabaseClient {
         return false;
       }
       
-      const comment = commentResult.recordset[0];
+      const comment = commentResult.recordset[0] as { password: string };
       
       // If comment has a password, verify it matches
       if (comment.password && comment.password !== '' && comment.password !== password) {
@@ -384,7 +385,7 @@ export class DatabaseClient {
       
       // Delete the comment
       const deleteRequest = pool.request();
-      deleteRequest.input('id', sql.Int, id);
+      deleteRequest.input('id', mssql.Int, id);
       const deleteResult = await deleteRequest.query(
         'DELETE FROM comments WHERE id = @id'
       );
