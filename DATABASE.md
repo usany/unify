@@ -73,10 +73,10 @@ npm run db:local
 
 ## Database Connection
 
-The database client is configured in `src/lib/db.ts`:
+The database client is configured in `src/lib/d1-client.ts`:
 
 ```typescript
-import { createDBClient } from '@/lib/db';
+import { createDBClient } from '@/lib/d1-client';
 
 // In your API route or worker:
 const db = createDBClient(env);
