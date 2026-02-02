@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:remote": "npx wrangler dev --remote --port 3000",
     "build": "next build",
     "start": "next start",
     "lint": "biome check",
