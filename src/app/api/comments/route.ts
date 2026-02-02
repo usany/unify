@@ -46,6 +46,7 @@ export async function POST(request: NextRequest) {
     );
 
     const comment = result.results?.[0];
+    console.log(result)
     if (!result.success || !comment) {
       return NextResponse.json({ error: 'Failed to create comment' }, { status: 500 });
     }
@@ -116,7 +117,7 @@ export async function DELETE(request: NextRequest) {
       'DELETE FROM comments WHERE id = ?',
       [id]
     );
-
+    console.log(deleteResult)
     if (!deleteResult.success || (deleteResult.meta?.changes || 0) === 0) {
       return NextResponse.json({ error: 'Failed to delete comment' }, { status: 500 });
     }

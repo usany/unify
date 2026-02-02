@@ -158,7 +158,7 @@ export default function Comments({ slug }: CommentsProps) {
       });
 
       if (!response.ok) {
-        const errorData = await response.json() as any;
+        const errorData = await response.json() as { error: string };
         throw new Error(errorData.error || 'Failed to delete comment');
       }
 
