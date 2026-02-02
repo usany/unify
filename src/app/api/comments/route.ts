@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createD1Client } from '@/lib/d1-client';
+import { createD1Client } from '@/lib/d1-client-simple';
 import { getCloudflareContext } from '@opennextjs/cloudflare';
 
 export async function GET(request: NextRequest) {
