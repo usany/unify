@@ -533,34 +533,34 @@ export class D1Client {
   }
 
   // Batch execute multiple statements
-  async batch(queries: Array<{ query: string; params?: any[] }>): Promise<D1Result[]> {
-    if (this.fallbackClient) {
-      return queries.map(() => ({ success: true, results: [], meta: { changes: 0 } }));
-    }
+//   async batch(queries: Array<{ query: string; params?: any[] }>): Promise<D1Result[]> {
+//     if (this.fallbackClient) {
+//       return queries.map(() => ({ success: true, results: [], meta: { changes: 0 } }));
+//     }
 
-    try {
-      const statements = queries.map(({ query, params = [] }) => {
-        const stmt = this.db.prepare(query);
-        return params.length > 0 ? stmt.bind(...params) : stmt;
-      });
+//     try {
+//       const statements = queries.map(({ query, params = [] }) => {
+//         const stmt = this.db.prepare(query);
+//         return params.length > 0 ? stmt.bind(...params) : stmt;
+//       });
 
-      const results = await this.db.batch(statements);
+//       const results = await this.db.batch(statements);
 
-      return results.map((result: any) => ({
-        success: result.success || true,
-        results: result.results || [],
-        meta: result.meta || { changes: 0 }
-      }));
-    } catch (error) {
-      console.error('D1 Batch Error:', error);
-      return queries.map(() => ({
-        success: false,
-        results: [],
-        meta: { changes: 0 }
-      }));
-    }
-  }
-}
+//       return results.map((result: any) => ({
+//         success: result.success || true,
+//         results: result.results || [],
+//         meta: result.meta || { changes: 0 }
+//       }));
+//     } catch (error) {
+//       console.error('D1 Batch Error:', error);
+//       return queries.map(() => ({
+//         success: false,
+//         results: [],
+//         meta: { changes: 0 }
+//       }));
+//     }
+//   }
+// }
 
 // Helper function to create D1 client
 export function createD1Client(env: any): D1Client {
