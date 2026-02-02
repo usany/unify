@@ -18,7 +18,7 @@ interface CommentsProps {
   slug: string;
 }
 
-export default memo(function Comments({ slug }: CommentsProps) {
+export default function Comments({ slug }: CommentsProps) {
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState({
     author: '',
@@ -356,4 +356,4 @@ export default memo(function Comments({ slug }: CommentsProps) {
       )}
     </div>
   );
-});
+};
