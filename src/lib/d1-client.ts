@@ -1,7 +1,61 @@
 // Cloudflare D1 Client Utility
 // Simplified database client for consistent D1 operations
+
+export interface Comment {
+  id: number;
+  slug: string;
+  author: string;
+  email: string;
+  content: string;
+  password?: string;
+  created_at: string;
+  updated_at: string;
+}
+
 let globalComments: Comment[] = [];
 let globalNextId = 1;
+let isLoaded = false;
+
+async function loadLocalComments() {
+  if (isLoaded || typeof process === 'undefined' || process.env?.NODE_ENV !== 'development' || typeof window !== 'undefined') {
+    return;
+  }
+
+  try {
+    // Dynamic import to avoid edge bundling issues
+    const fs = await import('fs');
+    const path = await import('path');
+    const storageFile = path.join(process.cwd(), '.comments.json');
+
+    if (fs.existsSync(storageFile)) {
+      const data = JSON.parse(fs.readFileSync(storageFile, 'utf8'));
+      globalComments = data.comments || [];
+      globalNextId = data.nextId || 1;
+      isLoaded = true;
+    }
+  } catch (error) {
+    // Silently ignore if fs/path not available (e.g. on edge during dev-like env)
+  }
+}
+
+async function saveLocalComments() {
+  if (typeof process === 'undefined' || process.env?.NODE_ENV !== 'development' || typeof window !== 'undefined') {
+    return;
+  }
+
+  try {
+    const fs = await import('fs');
+    const path = await import('path');
+    const storageFile = path.join(process.cwd(), '.comments.json');
+
+    fs.writeFileSync(storageFile, JSON.stringify({
+      comments: globalComments,
+      nextId: globalNextId
+    }, null, 2));
+  } catch (error) {
+    console.error('Error saving comments to storage:', error);
+  }
+}
 
 class LocalDevDB {
   private static instance: LocalDevDB;
@@ -13,50 +67,48 @@ class LocalDevDB {
     return LocalDevDB.instance;
   }
 
-  private constructor() {}
+  private constructor() { }
 
   prepare(query: string) {
     return new LocalDevQuery(this, query);
+  }
+
+  async ensureLoaded() {
+    await loadLocalComments();
   }
 
   getComments() {
     return globalComments;
   }
 
-  addComment(comment: Comment) {
+  async addComment(comment: Comment) {
+    await this.ensureLoaded();
     globalComments.push(comment);
+    await saveLocalComments();
   }
 
-  getComment(id: number) {
+  async getComment(id: number) {
+    await this.ensureLoaded();
     return globalComments.find(c => c.id === id);
   }
 
-  updateComment(id: number, content: string) {
+  async updateComment(id: number, content: string) {
+    await this.ensureLoaded();
     const comment = globalComments.find(c => c.id === id);
     if (comment) {
       comment.content = content;
       comment.updated_at = new Date().toISOString();
+      await saveLocalComments();
       return comment;
     }
     return null;
   }
 
-  deleteComment(id: number, password?: string) {
-    const comment = this.getComment(id);
-    if (!comment) {
-      return {
-        success: true,
-        meta: { changes: 0 }
-      };
-    }
-    
-    // If comment has a password, verify it matches
-    if (comment.password && comment.password !== '' && comment.password !== password) {
-      throw new Error('Incorrect password');
-    }
-    
+  async deleteComment(id: number) {
+    await this.ensureLoaded();
     const initialLength = globalComments.length;
     globalComments = globalComments.filter(c => c.id !== id);
+    await saveLocalComments();
     return {
       success: true,
       meta: { changes: initialLength - globalComments.length }
@@ -79,6 +131,7 @@ class LocalDevQuery {
   }
 
   async all() {
+    await this.db.ensureLoaded();
     if (this.query.includes('WHERE slug =')) {
       const slug = this.params[0];
       return {
@@ -91,6 +144,7 @@ class LocalDevQuery {
   }
 
   async first() {
+    await this.db.ensureLoaded();
     if (this.query.includes('INSERT')) {
       const [slug, author, email, content, password] = this.params;
       const newComment: Comment = {
@@ -103,22 +157,23 @@ class LocalDevQuery {
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
       };
-      this.db.addComment(newComment);
+      await this.db.addComment(newComment);
       return newComment;
     } else if (this.query.includes('UPDATE')) {
       const [content, id] = this.params;
-      return this.db.updateComment(id, content);
+      return await this.db.updateComment(id, content);
     } else if (this.query.includes('SELECT') && this.query.includes('WHERE id =')) {
       const id = this.params[0];
-      return this.db.getComment(id) || null;
+      return await this.db.getComment(id) || null;
     }
     return null;
   }
 
   async run() {
+    await this.db.ensureLoaded();
     if (this.query.includes('DELETE')) {
-      const [id, password] = this.params;
-      return this.db.deleteComment(id, password);
+      const [id] = this.params;
+      return await this.db.deleteComment(id);
     }
     return { success: true, meta: { changes: 0 } };
   }
@@ -129,12 +184,20 @@ export class DatabaseClient {
   private isLocalDev: boolean;
 
   constructor(env: any) {
-    this.isLocalDev = env?.NODE_ENV === 'development';
-    if (env?.instructions_db) {
-      this.db = env.instructions_db;
-    } else if (this.isLocalDev) {
-      // Local development fallback - use singleton in-memory storage
+    this.isLocalDev = (env?.NODE_ENV === 'development') || (process.env.NODE_ENV === 'development');
+
+    // Check if instructions_db is a valid D1 object (has prepare function)
+    const isD1 = env?.instructions_db && typeof env.instructions_db.prepare === 'function';
+
+    // Prioritize local development fallback in development mode
+    if (this.isLocalDev) {
       this.db = LocalDevDB.getInstance();
+    } else if (isD1) {
+      this.db = env.instructions_db;
+    } else {
+      // In production, failure to find D1 is an error
+      // In dev-like environments without full local flag, we still try D1 if available
+      this.db = null;
     }
   }
 
@@ -175,22 +238,22 @@ export class DatabaseClient {
 
   async deleteComment(id: number, password?: string): Promise<boolean> {
     const db = this.getDb();
-    
+
     // First, get the comment to verify password
     const comment = await db
       .prepare('SELECT password FROM comments WHERE id = ?')
       .bind(id)
       .first();
-    
+
     if (!comment) {
       return false;
     }
-    
+
     // If comment has a password, verify it matches
     if (comment.password && comment.password !== '' && comment.password !== password) {
       throw new Error('Incorrect password');
     }
-    
+
     // Delete the comment
     const result = await db.prepare('DELETE FROM comments WHERE id = ?').bind(id).run();
     return result.success && (result.meta?.changes || 0) > 0;
@@ -217,16 +280,19 @@ export class D1Client {
   private fallbackClient: any;
 
   constructor(env: any) {
-    this.isLocalDev = env?.NODE_ENV === 'development';
-    
-    if (env?.instructions_db) {
+    this.isLocalDev = (env?.NODE_ENV === 'development') || (process.env.NODE_ENV === 'development');
+
+    // Check if instructions_db is a valid D1 object (has prepare function)
+    const isD1 = env?.instructions_db && typeof env.instructions_db.prepare === 'function';
+
+    // Prioritize local development fallback in development mode
+    if (this.isLocalDev) {
+      this.fallbackClient = createDBClient(env);
+      this.db = null;
+    } else if (isD1) {
       // Production/remote D1 database
       this.db = env.instructions_db;
       this.fallbackClient = null;
-    } else if (this.isLocalDev) {
-      // Local development - use the existing fallback database
-      this.fallbackClient = createDBClient(env);
-      this.db = null;
     } else {
       throw new Error('D1 database binding "instructions_db" not found in environment');
     }
@@ -244,9 +310,12 @@ export class D1Client {
     try {
       const stmt = this.db.prepare(query);
       const boundStmt = params.length > 0 ? stmt.bind(...params) : stmt;
-      
-      // Determine if it's a SELECT query or a modification query
-      if (query.trim().toLowerCase().startsWith('select')) {
+
+      // Determine if it's a SELECT query or a modification query with RETURNING
+      const isSelect = query.trim().toLowerCase().startsWith('select');
+      const isReturning = query.trim().toLowerCase().includes('returning');
+
+      if (isSelect || isReturning) {
         const result = await boundStmt.all();
         return {
           success: true,
@@ -324,7 +393,7 @@ export class D1Client {
           ] as T[]
         };
       }
-      
+
       if (query.includes('SELECT COUNT(*)') && query.includes('comments')) {
         // For simplicity, just return 0 for count in local dev
         return {
@@ -332,48 +401,48 @@ export class D1Client {
           results: [{ count: 0 }] as T[]
         };
       }
-      
+
       if (query.includes('SELECT * FROM pages')) {
         return {
           success: true,
           results: [] as T[]
         };
       }
-      
+
       // Handle UPDATE queries that use RETURNING
       if (query.includes('UPDATE comments') && query.includes('RETURNING')) {
         const [content, id] = params;
-        
+
         const db = this.fallbackClient.getDb();
         const result = await db
           .prepare(query)
           .bind(...params)
           .first();
-        
+
         return {
           success: true,
           results: result ? [result] as T[] : [] as T[],
           meta: { changes: result ? 1 : 0 }
         };
       }
-      
+
       // Handle INSERT queries that use RETURNING
       if (query.includes('INSERT INTO comments') && query.includes('RETURNING')) {
         const [slug, author, email, content, password] = params;
-        
+
         const db = this.fallbackClient.getDb();
         const result = await db
           .prepare(query)
           .bind(...params)
           .first();
-        
+
         return {
           success: true,
           results: result ? [result] as T[] : [] as T[],
           meta: { changes: 1 }
         };
       }
-      
+
       // For other SELECT queries, try to use getComments
       if (query.includes('SELECT * FROM comments') && query.includes('WHERE slug =')) {
         const slug = params[0];
@@ -383,7 +452,7 @@ export class D1Client {
           results: comments as T[]
         };
       }
-      
+
       return { success: true, results: [] as T[] };
     } catch (error) {
       console.error('Fallback execute error:', error);
@@ -395,13 +464,13 @@ export class D1Client {
     try {
       if (query.includes('SELECT password FROM comments') && query.includes('WHERE id =')) {
         const id = params[0];
-        
+
         // Use the DatabaseClient's getDb() to access the underlying LocalDevDB
         const db = this.fallbackClient.getDb();
         const comment = db.getComment(id);
         return comment ? { password: comment.password || '' } as T : null;
       }
-      
+
       // Handle other SELECT queries that return single results
       if (query.includes('SELECT') && query.includes('WHERE id =')) {
         const id = params[0];
@@ -409,7 +478,7 @@ export class D1Client {
         const comment = db.getComment(id);
         return comment as T || null;
       }
-      
+
       return null;
     } catch (error) {
       console.error('Fallback first error:', error);
@@ -421,20 +490,20 @@ export class D1Client {
     try {
       if (query.includes('INSERT INTO comments')) {
         const [slug, author, email, content, password] = params;
-        
+
         const db = this.fallbackClient.getDb();
         const result = await db
           .prepare('INSERT INTO comments (slug, author, email, content, password) VALUES (?, ?, ?, ?, ?) RETURNING *')
           .bind(slug, author, email, content, password || '')
           .first();
-        
-        return { 
-          success: true, 
+
+        return {
+          success: true,
           meta: { changes: 1 },
           results: result ? [result] : []
         };
       }
-      
+
       if (query.includes('UPDATE comments') && query.includes('SET content =')) {
         const [content, id] = params;
         const db = this.fallbackClient.getDb();
@@ -442,20 +511,20 @@ export class D1Client {
           .prepare('UPDATE comments SET content = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ? RETURNING *')
           .bind(content, id)
           .first();
-        return { 
-          success: !!result, 
+        return {
+          success: !!result,
           meta: { changes: result ? 1 : 0 },
           results: result ? [result] : []
         };
       }
-      
+
       if (query.includes('DELETE FROM comments')) {
         const [id] = params;
         const db = this.fallbackClient.getDb();
-        const result = await db.prepare('DELETE FROM comments WHERE id = ?').bind(id).run();
+        const result = await db.deleteComment(id);
         return { success: result.success, meta: { changes: result.meta?.changes || 0 } };
       }
-      
+
       return { success: true, meta: { changes: 0 } };
     } catch (error) {
       console.error('Fallback run error:', error);
@@ -474,9 +543,9 @@ export class D1Client {
         const stmt = this.db.prepare(query);
         return params.length > 0 ? stmt.bind(...params) : stmt;
       });
-      
+
       const results = await this.db.batch(statements);
-      
+
       return results.map((result: any) => ({
         success: result.success || true,
         results: result.results || [],

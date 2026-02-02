@@ -57,9 +57,9 @@ export default memo(function Comments({ slug }: CommentsProps) {
     fetchComments();
   }, [slug]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+
     if (!newComment.author.trim() || !newComment.email.trim() || !newComment.content.trim()) {
       return;
     }
@@ -181,12 +181,12 @@ export default memo(function Comments({ slug }: CommentsProps) {
             <span className={styles.timestamp}>{new Date(comment.created_at).toLocaleString()}</span>
           </div>
         </div>
-        
+
         {isEditing ? (
           <div className={styles.editForm}>
             <textarea
               value={editContent}
-              onChange={(e) => setEditContent(e.target.value)}
+              onChange={(event) => setEditContent(event.target.value)}
               className={styles.editTextarea}
               rows={3}
             />
@@ -210,13 +210,13 @@ export default memo(function Comments({ slug }: CommentsProps) {
         )}
 
         <div className={styles.commentActions}>
-          <button 
+          <button
             onClick={() => handleEdit(comment.id, comment.content)}
             className={styles.editButton}
           >
             Edit
           </button>
-          <button 
+          <button
             onClick={() => setShowDeleteModal(comment.id)}
             className={styles.deleteButton}
           >
@@ -226,10 +226,10 @@ export default memo(function Comments({ slug }: CommentsProps) {
       </div>
     );
   };
-    return (
+  return (
     <div className={styles.commentsSection}>
       <h3 className={styles.commentsTitle}>Comments</h3>
-      
+
       {/* Comment Form */}
       <form onSubmit={handleSubmit} className={styles.commentForm}>
         <div className={styles.formGroup}>
@@ -238,53 +238,53 @@ export default memo(function Comments({ slug }: CommentsProps) {
             type="text"
             id="author"
             value={newComment.author}
-            onChange={(e) => handleInputChange('author', e.target.value)}
+            onChange={(event) => handleInputChange('author', event.target.value)}
             className={styles.input}
             placeholder="Enter your name"
             required
           />
         </div>
-        
+
         <div className={styles.formGroup}>
           <label htmlFor="email" className={styles.label}>Email</label>
           <input
             type="email"
             id="email"
             value={newComment.email}
-            onChange={(e) => handleInputChange('email', e.target.value)}
+            onChange={(event) => handleInputChange('email', event.target.value)}
             className={styles.input}
             placeholder="Enter your email"
             required
           />
         </div>
-        
+
         <div className={styles.formGroup}>
           <label htmlFor="content" className={styles.label}>Comment</label>
           <textarea
             id="content"
             value={newComment.content}
-            onChange={(e) => handleInputChange('content', e.target.value)}
+            onChange={(event) => handleInputChange('content', event.target.value)}
             className={styles.textarea}
             placeholder="Share your thoughts..."
             rows={4}
             required
           />
         </div>
-        
+
         <div className={styles.formGroup}>
           <label htmlFor="password" className={styles.label}>Password (for deletion)</label>
           <input
             type="password"
             id="password"
             value={newComment.password}
-            onChange={(e) => handleInputChange('password', e.target.value)}
+            onChange={(event) => handleInputChange('password', event.target.value)}
             className={styles.input}
             placeholder="Enter a password to delete this comment later"
           />
         </div>
-        
-        <button 
-          type="submit" 
+
+        <button
+          type="submit"
           disabled={isSubmitting}
           className={styles.submitButton}
         >
@@ -329,7 +329,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
             <input
               type="password"
               value={deletePassword}
-              onChange={(e) => setDeletePassword(e.target.value)}
+              onChange={(event) => setDeletePassword(event.target.value)}
               className={styles.input}
               placeholder="Enter password"
               autoFocus
