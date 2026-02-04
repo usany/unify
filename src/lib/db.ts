@@ -184,38 +184,56 @@ async function getConnectionPool(): Promise<any> {
     }
   }
 
-  // Parse connection string or use individual components
-  let server = 'remake.database.windows.net';
-  let database = '';
-  let user = '';
-  let password = '';
+  // Use individual environment variables
+  let server = process.env.AZURE_SQL_SERVER;
+  let database = process.env.AZURE_SQL_DATABASE;
+  let user = process.env.AZURE_SQL_USER;
+  let password = process.env.AZURE_SQL_PASSWORD;
 
-  const connectionString = process.env.AZURE_SQL_CONNECTION_STRING || process.env.DATABASE_URL;
-  
-  if (connectionString) {
-    // Parse connection string
-    const parts = connectionString.split(';');
-    for (const part of parts) {
-      const [key, ...valueParts] = part.split('=');
-      if (key && valueParts.length > 0) {
-        const keyLower = key.trim().toLowerCase();
-        const value = valueParts.join('=').trim();
-        if (keyLower === 'server') server = value;
-        else if (keyLower === 'database') database = value;
-        else if (keyLower === 'user id' || keyLower === 'uid') user = value;
-        else if (keyLower === 'password' || keyLower === 'pwd') password = value;
-      }
-    }
-  } else {
-    // Use individual environment variables
-    server = process.env.AZURE_SQL_SERVER || 'remake.database.windows.net';
-    database = process.env.AZURE_SQL_DATABASE || '';
-    user = process.env.AZURE_SQL_USER || '';
-    password = process.env.AZURE_SQL_PASSWORD || '';
+  if (server) {
+    let normalized = server.trim();
+    normalized = normalized.replace(/^['"]+|['"]+$/g, '');
+    normalized = normalized.replace(/;+$/g, '');
+    normalized = normalized.replace(/^tcp:/i, '');
+    normalized = normalized.replace(/^server=/i, '');
+    normalized = normalized.trim();
+    normalized = normalized.replace(/^['"]+|['"]+$/g, '');
+    normalized = normalized.split(',')[0]?.trim() || normalized;
+    server = normalized;
   }
 
-  if (!database || !user || !password) {
-    throw new Error('Azure SQL Database connection is not configured. Please set AZURE_SQL_CONNECTION_STRING or provide AZURE_SQL_DATABASE, AZURE_SQL_USER, and AZURE_SQL_PASSWORD environment variables.');
+  if (database) {
+    let normalized = database.trim();
+    normalized = normalized.replace(/^['"]+|['"]+$/g, '');
+    normalized = normalized.replace(/;+$/g, '');
+    normalized = normalized.replace(/^database=/i, '');
+    normalized = normalized.trim();
+    normalized = normalized.replace(/^['"]+|['"]+$/g, '');
+    database = normalized;
+  }
+
+  if (user) {
+    let normalized = user.trim();
+    normalized = normalized.replace(/^['"]+|['"]+$/g, '');
+    normalized = normalized.replace(/;+$/g, '');
+    normalized = normalized.replace(/^(user id|uid|user)=/i, '');
+    normalized = normalized.trim();
+    normalized = normalized.replace(/^['"]+|['"]+$/g, '');
+    user = normalized;
+  }
+
+  if (password) {
+    let normalized = password.trim();
+    normalized = normalized.replace(/^['"]+|['"]+$/g, '');
+    normalized = normalized.replace(/;+$/g, '');
+    normalized = normalized.replace(/^(password|pwd)=/i, '');
+    normalized = normalized.trim();
+    normalized = normalized.replace(/^['"]+|['"]+$/g, '');
+    password = normalized;
+  }
+
+  if (!server || !database || !user || !password) {
+    throw new Error('Azure SQL Database connection is not configured. Please provide AZURE_SQL_SERVER, AZURE_SQL_DATABASE, AZURE_SQL_USER, and AZURE_SQL_PASSWORD environment variables.');
   }
 
   const config: any = {
@@ -242,11 +260,12 @@ async function getConnectionPool(): Promise<any> {
   } catch (error: any) {
     pool = null;
     const errorMessage = error?.message || 'Unknown error';
+    const errorCode = error?.code ? ` (code: ${String(error.code)})` : '';
     if (errorMessage.includes('Login failed') || errorMessage.includes('authentication')) {
-      throw new Error(`Azure SQL Database authentication failed: ${errorMessage}. Please check your credentials.`);
+      throw new Error(`Azure SQL Database authentication failed: ${errorMessage}${errorCode}. Please check your credentials.`);
     }
     if (errorMessage.includes('timeout') || errorMessage.includes('ECONNREFUSED') || errorMessage.includes('getaddrinfo')) {
-      throw new Error(`Cannot connect to Azure SQL Database at ${server}. Please check your connection settings and firewall rules.`);
+      throw new Error(`Cannot connect to Azure SQL Database at ${server}: ${errorMessage}${errorCode}. Please check your connection settings and firewall rules.`);
     }
     if (errorMessage.includes('Invalid object name') || errorMessage.includes('does not exist')) {
       throw new Error(`Database table does not exist. Please run the migration file migrations/0001_comments_schema_azure.sql on your Azure SQL Database.`);
@@ -262,16 +281,14 @@ export class DatabaseClient {
 
   constructor(env: any) {
     this.isLocalDev = process.env.NODE_ENV === 'development';
-    // Check if Azure SQL connection string is available and valid
-    const hasConnectionString = !!(process.env.AZURE_SQL_CONNECTION_STRING && 
-      process.env.AZURE_SQL_CONNECTION_STRING.trim().length > 0);
+    // Check if Azure SQL environment variables are available and valid
     const hasIndividualVars = !!(process.env.AZURE_SQL_DATABASE && 
       process.env.AZURE_SQL_DATABASE.trim().length > 0 &&
       process.env.AZURE_SQL_USER && 
       process.env.AZURE_SQL_USER.trim().length > 0 &&
       process.env.AZURE_SQL_PASSWORD && 
       process.env.AZURE_SQL_PASSWORD.trim().length > 0);
-    const hasAzureSQL = hasConnectionString || hasIndividualVars;
+    const hasAzureSQL = hasIndividualVars;
     
     // Use Azure SQL if configured (even in local dev if explicitly configured)
     // But prefer local dev fallback if Azure SQL is not configured
@@ -279,17 +296,9 @@ export class DatabaseClient {
     this.useAzureSQL = hasAzureSQL;
     
     // Always set up fallback databases in case Azure SQL fails
-    if (env?.instructions_db) {
-      // Fallback to D1 if available
-      this.db = env.instructions_db;
-    } else if (!this.useAzureSQL) {
+    if (!this.useAzureSQL) {
       // Local development fallback - use singleton in-memory storage
       this.db = LocalDevDB.getInstance();
-    } else {
-      // Even if using Azure SQL, set up in-memory fallback for development
-      if (this.isLocalDev) {
-        this.db = LocalDevDB.getInstance();
-      }
     }
   }
 
@@ -338,7 +347,7 @@ export class DatabaseClient {
       const request = pool.request();
       request.input('slug', mssql.NVarChar, slug);
       const result = await request.query(
-        'SELECT * FROM comments WHERE slug = @slug ORDER BY created_at DESC'
+        'SELECT * FROM dbo.comments WHERE slug = @slug ORDER BY created_at DESC'
       );
       return (result.recordset || []) as Comment[];
     } else {
@@ -368,7 +377,7 @@ export class DatabaseClient {
       
       try {
         const result = await request.query(
-          `INSERT INTO comments (slug, author, email, content, password, created_at, updated_at) 
+          `INSERT INTO dbo.comments (slug, author, email, content, password, created_at, updated_at) 
            OUTPUT INSERTED.*
            VALUES (@slug, @author, @email, @content, @password, GETUTCDATE(), GETUTCDATE())`
         );
@@ -413,7 +422,7 @@ export class DatabaseClient {
       request.input('content', mssql.NVarChar, content);
       
       const result = await request.query(
-        `UPDATE comments 
+        `UPDATE dbo.comments 
          SET content = @content, updated_at = GETUTCDATE() 
          OUTPUT INSERTED.*
          WHERE id = @id`
@@ -446,7 +455,7 @@ export class DatabaseClient {
       
       // First, get the comment to verify password
       const commentResult = await request.query(
-        'SELECT password FROM comments WHERE id = @id'
+        'SELECT password FROM dbo.comments WHERE id = @id'
       );
       
       if (!commentResult.recordset || commentResult.recordset.length === 0) {
@@ -464,7 +473,7 @@ export class DatabaseClient {
       const deleteRequest = pool.request();
       deleteRequest.input('id', mssql.Int, id);
       const deleteResult = await deleteRequest.query(
-        'DELETE FROM comments WHERE id = @id'
+        'DELETE FROM dbo.comments WHERE id = @id'
       );
       
       return (deleteResult.rowsAffected[0] || 0) > 0;

@@ -30,8 +30,12 @@ export async function POST(request: NextRequest) {
     }
 
     console.log('Creating comment with:', { slug, author, email, hasContent: !!content });
-    console.log('Azure SQL configured:', !!(process.env.AZURE_SQL_CONNECTION_STRING || 
-      (process.env.AZURE_SQL_DATABASE && process.env.AZURE_SQL_USER && process.env.AZURE_SQL_PASSWORD)));
+    console.log('Azure SQL configured:', !!(
+      process.env.AZURE_SQL_SERVER &&
+      process.env.AZURE_SQL_DATABASE &&
+      process.env.AZURE_SQL_USER &&
+      process.env.AZURE_SQL_PASSWORD
+    ));
 
     const db = createDBClient(process.env);
     const comment = await db.createComment(slug, author, email, content, password);
