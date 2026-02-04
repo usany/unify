@@ -1,7 +1,10 @@
 import express from "express";
 
 const app = express();
-const PORT = 3000;
+const PORT = Number(process.env.PORT || process.env.WEBSITES_PORT || 3000);
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Simple in-memory cache
 const cache = new Map<string, { data: string; timestamp: number; ttl: number; status: number; headers: Record<string, string> }>();
@@ -127,6 +130,6 @@ app.use(async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Proxy server running on http://localhost:${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Proxy server running on http://0.0.0.0:${PORT}`);
 });
