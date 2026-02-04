@@ -122,7 +122,7 @@ app.use(async (req, res) => {
     
     res.status(response.status).send(body);
   } catch (err) {
-    console.error("Proxy error:", err);
+    console.log("Proxy error:", err);
     res.status(500).send("Internal proxy error");
   }
 });
