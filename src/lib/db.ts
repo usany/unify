@@ -190,50 +190,8 @@ async function getConnectionPool(): Promise<any> {
   let user = process.env.AZURE_SQL_USER;
   let password = process.env.AZURE_SQL_PASSWORD;
 
-  if (server) {
-    let normalized = server.trim();
-    normalized = normalized.replace(/^['"]+|['"]+$/g, '');
-    normalized = normalized.replace(/;+$/g, '');
-    normalized = normalized.replace(/^tcp:/i, '');
-    normalized = normalized.replace(/^server=/i, '');
-    normalized = normalized.trim();
-    normalized = normalized.replace(/^['"]+|['"]+$/g, '');
-    normalized = normalized.split(',')[0]?.trim() || normalized;
-    server = normalized;
-  }
-
-  if (database) {
-    let normalized = database.trim();
-    normalized = normalized.replace(/^['"]+|['"]+$/g, '');
-    normalized = normalized.replace(/;+$/g, '');
-    normalized = normalized.replace(/^database=/i, '');
-    normalized = normalized.trim();
-    normalized = normalized.replace(/^['"]+|['"]+$/g, '');
-    database = normalized;
-  }
-
-  if (user) {
-    let normalized = user.trim();
-    normalized = normalized.replace(/^['"]+|['"]+$/g, '');
-    normalized = normalized.replace(/;+$/g, '');
-    normalized = normalized.replace(/^(user id|uid|user)=/i, '');
-    normalized = normalized.trim();
-    normalized = normalized.replace(/^['"]+|['"]+$/g, '');
-    user = normalized;
-  }
-
-  if (password) {
-    let normalized = password.trim();
-    normalized = normalized.replace(/^['"]+|['"]+$/g, '');
-    normalized = normalized.replace(/;+$/g, '');
-    normalized = normalized.replace(/^(password|pwd)=/i, '');
-    normalized = normalized.trim();
-    normalized = normalized.replace(/^['"]+|['"]+$/g, '');
-    password = normalized;
-  }
-
-  if (!server || !database || !user || !password) {
-    throw new Error('Azure SQL Database connection is not configured. Please provide AZURE_SQL_SERVER, AZURE_SQL_DATABASE, AZURE_SQL_USER, and AZURE_SQL_PASSWORD environment variables.');
+  if (!database || !user || !password) {
+    throw new Error('Azure SQL Database connection is not configured. Please provide AZURE_SQL_DATABASE, AZURE_SQL_USER, and AZURE_SQL_PASSWORD environment variables.');
   }
 
   const config: any = {
@@ -260,12 +218,11 @@ async function getConnectionPool(): Promise<any> {
   } catch (error: any) {
     pool = null;
     const errorMessage = error?.message || 'Unknown error';
-    const errorCode = error?.code ? ` (code: ${String(error.code)})` : '';
     if (errorMessage.includes('Login failed') || errorMessage.includes('authentication')) {
-      throw new Error(`Azure SQL Database authentication failed: ${errorMessage}${errorCode}. Please check your credentials.`);
+      throw new Error(`Azure SQL Database authentication failed: ${errorMessage}. Please check your credentials.`);
     }
     if (errorMessage.includes('timeout') || errorMessage.includes('ECONNREFUSED') || errorMessage.includes('getaddrinfo')) {
-      throw new Error(`Cannot connect to Azure SQL Database at ${server}: ${errorMessage}${errorCode}. Please check your connection settings and firewall rules.`);
+      throw new Error(`Cannot connect to Azure SQL Database at ${server}. Please check your connection settings and firewall rules.`);
     }
     if (errorMessage.includes('Invalid object name') || errorMessage.includes('does not exist')) {
       throw new Error(`Database table does not exist. Please run the migration file migrations/0001_comments_schema_azure.sql on your Azure SQL Database.`);
@@ -347,7 +304,7 @@ export class DatabaseClient {
       const request = pool.request();
       request.input('slug', mssql.NVarChar, slug);
       const result = await request.query(
-        'SELECT * FROM dbo.comments WHERE slug = @slug ORDER BY created_at DESC'
+        'SELECT * FROM comments WHERE slug = @slug ORDER BY created_at DESC'
       );
       return (result.recordset || []) as Comment[];
     } else {
@@ -377,7 +334,7 @@ export class DatabaseClient {
       
       try {
         const result = await request.query(
-          `INSERT INTO dbo.comments (slug, author, email, content, password, created_at, updated_at) 
+          `INSERT INTO comments (slug, author, email, content, password, created_at, updated_at) 
            OUTPUT INSERTED.*
            VALUES (@slug, @author, @email, @content, @password, GETUTCDATE(), GETUTCDATE())`
         );
@@ -422,7 +379,7 @@ export class DatabaseClient {
       request.input('content', mssql.NVarChar, content);
       
       const result = await request.query(
-        `UPDATE dbo.comments 
+        `UPDATE comments 
          SET content = @content, updated_at = GETUTCDATE() 
          OUTPUT INSERTED.*
          WHERE id = @id`
@@ -455,7 +412,7 @@ export class DatabaseClient {
       
       // First, get the comment to verify password
       const commentResult = await request.query(
-        'SELECT password FROM dbo.comments WHERE id = @id'
+        'SELECT password FROM comments WHERE id = @id'
       );
       
       if (!commentResult.recordset || commentResult.recordset.length === 0) {
@@ -473,7 +430,7 @@ export class DatabaseClient {
       const deleteRequest = pool.request();
       deleteRequest.input('id', mssql.Int, id);
       const deleteResult = await deleteRequest.query(
-        'DELETE FROM dbo.comments WHERE id = @id'
+        'DELETE FROM comments WHERE id = @id'
       );
       
       return (deleteResult.rowsAffected[0] || 0) > 0;
