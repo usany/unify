@@ -1,10 +1,7 @@
 import express from "express";
 
 const app = express();
-const PORT = Number(process.env.PORT || process.env.WEBSITES_PORT || 3000);
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+const PORT = 3000
 
 // Simple in-memory cache
 const cache = new Map<string, { data: string; timestamp: number; ttl: number; status: number; headers: Record<string, string> }>();
