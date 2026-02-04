@@ -57,7 +57,7 @@
 .tocItemLevel1,
 .tocItemLevel2,
 .tocItemLevel3 {
-    margin: 0;
+    list-style: none;
 }
 
 .tocItemLevel2 {
