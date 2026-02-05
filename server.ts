@@ -29,7 +29,6 @@ app.get("/purge", (req, res) => {
   //   console.log("[Cache] Unauthorized purge attempt");
   //   return res.status(403).send("Forbidden: Invalid purge token");
   // }
-
   console.log("[Cache] Purge triggered by authorized user");
   cache.clear(); // Clear local cache
   res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
