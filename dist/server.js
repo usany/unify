@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const app = (0, express_1.default)();
-const PORT = Number.parseInt(process.env.PORT ?? "3000", 10);
+const PORT = 3000;
 // Simple in-memory cache
 const cache = new Map();
 // Cache cleanup interval (run every 5 minutes)

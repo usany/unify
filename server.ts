@@ -2,7 +2,6 @@ import express from "express";
 
 const app = express();
 const PORT = 3000;
-
 // Simple in-memory cache
 const cache = new Map<string, { data: string; timestamp: number; ttl: number; status: number; headers: Record<string, string> }>();
 
