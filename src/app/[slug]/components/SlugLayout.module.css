@@ -92,6 +92,9 @@
   font-weight: 600;
   color: var(--primary);
 }
+.content ul {
+  list-style: disc;
+}
 
 
 .responsiveBox {
@@ -257,13 +260,13 @@
 }
 
 @media (max-width: 768px) {
-  .contentWrapper {
+  /* .contentWrapper {
     padding: 1rem;
   }
 
   .header {
     margin-bottom: 1.5rem;
-  }
+  } */
 
   .title {
     font-size: 1.25rem;
