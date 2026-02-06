@@ -4,11 +4,16 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "remote": "npx wrangler dev --remote --port 3000",
     "build": "next build",
     "start": "next start",
     "lint": "biome check",
     "format": "biome format --write",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy"
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "db:init": "node scripts/init-db.js",
+    "db:migrate": "npx wrangler d1 migrations apply instructions-db",
+    "db:info": "npx wrangler d1 info instructions-db",
+    "db:local": "npx wrangler d1 execute instructions-db --local --file=schema.sql"
   },
   "dependencies": {
     "@cloudflare/workers-types": "^4.20260111.0",
@@ -31,7 +36,6 @@
     "embla-carousel-react": "^8.6.0",
     "lucide-react": "^0.381.0",
     "motion": "^11.18.2",
-    "mssql": "^11.0.1",
     "next": "15.5.9",
     "react": "19.2.3",
     "react-dom": "19.2.3",
