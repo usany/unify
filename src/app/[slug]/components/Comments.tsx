@@ -39,7 +39,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
   const fetchComments = async () => {
     try {
       setError(null);
-      const response = await fetch(`/api/comments?slug=${slug}`);
+      const response = await fetch(`http://localhost:8787/api/comments/${slug}`);
       if (!response.ok) {
         throw new Error('Failed to fetch comments');
       }
@@ -70,7 +70,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
     setError(null);
 
     try {
-      const response = await fetch('/api/comments', {
+      const response = await fetch(`http://localhost:8787/api/comments/${slug}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -111,7 +111,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
     if (editingComment && editContent.trim()) {
       try {
         setError(null);
-        const response = await fetch('/api/comments', {
+        const response = await fetch(`http://localhost:8787/api/comment/${slug}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -148,7 +148,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
 
     try {
       setError(null);
-      const response = await fetch('/api/comments', {
+      const response = await fetch(`http://localhost:8787/api/comments/${commentId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
