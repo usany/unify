@@ -39,7 +39,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
   const { data: commentsData, isLoading, error: fetchError, refetch } = useQuery(
     ['comments', slug],
     async () => {
-      const response = await fetch(`http://localhost:3000/api/comments/${slug}`);
+      const response = await fetch(`http://localhost:8787/api/comments/${slug}`);
       if (!response.ok) {
         throw new Error('Failed to fetch comments');
       }
@@ -62,7 +62,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
       content: string;
       password: string;
     }) => {
-      const response = await fetch(`http://localhost:3000/api/comments/${commentData.slug}`, {
+      const response = await fetch(`http://localhost:8787/api/comments/${commentData.slug}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -121,7 +121,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
   // Edit comment mutation
   const editCommentMutation = useMutation(
     async (editData: { id: number; content: string }) => {
-      const response = await fetch(`http://localhost:3000/api/comment/${slug}`, {
+      const response = await fetch(`http://localhost:8787/api/comment/${slug}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -162,7 +162,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
   // Delete comment mutation
   const deleteCommentMutation = useMutation(
     async (deleteData: { id: number; password: string }) => {
-      const response = await fetch(`http://localhost:3000/api/comments/${deleteData.id}`, {
+      const response = await fetch(`http://localhost:8787/api/comments/${deleteData.id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

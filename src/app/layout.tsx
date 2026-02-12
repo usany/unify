@@ -3,6 +3,7 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import { LanguageProvider } from '@/app/context/LanguageContext';
 import { ThemeProvider } from '@/app/context/ThemeContext';
 import MuiThemeProvider from '@/components/MuiThemeProvider';
+import QueryProvider from '@/components/QueryProvider';
 import RainAnimation from '@/components/RainAnimation';
 import Script from 'next/script';
 import type { Metadata } from 'next';
@@ -29,11 +30,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <LanguageProvider initialLanguage={language as 'ko' | 'en'}>
             <ThemeProvider initialTheme={theme as 'light' | 'dark'}>
               <MuiThemeProvider>
-                <RainAnimation />
-                <TopBar />
-                <main style={{ paddingTop: '60px' }}>
-                  {children}
-                </main>
+                <QueryProvider>
+                  <RainAnimation />
+                  <TopBar />
+                  <main style={{ paddingTop: '60px' }}>
+                    {children}
+                  </main>
+                </QueryProvider>
               </MuiThemeProvider>
             </ThemeProvider>
           </LanguageProvider>
