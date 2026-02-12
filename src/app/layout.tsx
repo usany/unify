@@ -7,6 +7,7 @@ import RainAnimation from '@/components/RainAnimation';
 import Script from 'next/script';
 import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -21,23 +22,27 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const cookieStore = await cookies();
   const theme = cookieStore.get('theme')?.value || 'light';
   const language = cookieStore.get('language')?.value || 'ko';
+  
+  const queryClient = new QueryClient();
 
   return (
     <html lang={language} className={theme} data-theme={theme}>
       <body>
-        <AppRouterCacheProvider>
-          <LanguageProvider initialLanguage={language as 'ko' | 'en'}>
-            <ThemeProvider initialTheme={theme as 'light' | 'dark'}>
-              <MuiThemeProvider>
-                <RainAnimation />
-                <TopBar />
-                <main style={{ paddingTop: '60px' }}>
-                  {children}
-                </main>
-              </MuiThemeProvider>
-            </ThemeProvider>
-          </LanguageProvider>
-        </AppRouterCacheProvider>
+        <QueryClientProvider client={queryClient}>
+          <AppRouterCacheProvider>
+            <LanguageProvider initialLanguage={language as 'ko' | 'en'}>
+              <ThemeProvider initialTheme={theme as 'light' | 'dark'}>
+                <MuiThemeProvider>
+                  <RainAnimation />
+                  <TopBar />
+                  <main style={{ paddingTop: '60px' }}>
+                    {children}
+                  </main>
+                </MuiThemeProvider>
+              </ThemeProvider>
+            </LanguageProvider>
+          </AppRouterCacheProvider>
+        </QueryClientProvider>
 
         <Script
           src="https://open.spotify.com/embed/iframe-api/v1"

@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, memo } from 'react';
+import React, { useState, memo } from 'react';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
 import styles from './Comments.module.css';
 
 interface Comment {
@@ -19,7 +20,7 @@ interface CommentsProps {
 }
 
 export default memo(function Comments({ slug }: CommentsProps) {
-  const [comments, setComments] = useState<Comment[]>([]);
+  const queryClient = useQueryClient();
   const [newComment, setNewComment] = useState({
     author: '',
     email: '',
@@ -32,30 +33,58 @@ export default memo(function Comments({ slug }: CommentsProps) {
   const [editContent, setEditContent] = useState('');
   const [deletePassword, setDeletePassword] = useState('');
   const [showDeleteModal, setShowDeleteModal] = useState<number | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch comments from API
-  const fetchComments = async () => {
-    try {
-      setError(null);
-      const response = await fetch(`http://localhost:8787/api/comments/${slug}`);
+  // Fetch comments using React Query
+  const { data: commentsData, isLoading, error: fetchError, refetch } = useQuery(
+    ['comments', slug],
+    async () => {
+      const response = await fetch(`http://localhost:3000/api/comments/${slug}`);
       if (!response.ok) {
         throw new Error('Failed to fetch comments');
       }
-      const data = await response.json() as { comments: any[] };
-      setComments(data.comments || []);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load comments');
-    } finally {
-      setIsLoading(false);
+      const data = await response.json() as { comments: Comment[] };
+      return data.comments || [];
+    },
+    {
+      enabled: !!slug,
     }
-  };
+  );
 
-  // Load comments when component mounts
-  useEffect(() => {
-    fetchComments();
-  }, [slug]);
+  const comments = commentsData || [];
+
+  // Post comment mutation
+  const postCommentMutation = useMutation(
+    async (commentData: {
+      slug: string;
+      author: string;
+      email: string;
+      content: string;
+      password: string;
+    }) => {
+      const response = await fetch(`http://localhost:3000/api/comments/${commentData.slug}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(commentData)
+      });
+      if (!response.ok) {
+        throw new Error('Failed to post comment');
+      }
+      return response.json();
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['comments', slug]);
+        setNewComment({ author: '', email: '', content: '', password: '' });
+        setReplyingTo(null);
+      },
+      onError: (err: Error) => {
+        setError(err.message || 'Failed to post comment');
+      }
+    }
+  );
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -68,34 +97,16 @@ export default memo(function Comments({ slug }: CommentsProps) {
 
     setIsSubmitting(true);
     setError(null);
-
-    try {
-      const response = await fetch(`http://localhost:8787/api/comments/${slug}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          slug,
-          author: newComment.author,
-          email: newComment.email,
-          content: newComment.content,
-          password: newComment.password
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to post comment');
-      }
-
-      await fetchComments(); // Refresh comments
-      setNewComment({ author: '', email: '', content: '', password: '' });
-      setReplyingTo(null);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to post comment');
-    } finally {
-      setIsSubmitting(false);
-    }
+    
+    postCommentMutation.mutate({
+      slug,
+      author: newComment.author,
+      email: newComment.email,
+      content: newComment.content,
+      password: newComment.password
+    });
+    
+    setIsSubmitting(false);
   };
 
   const handleInputChange = (field: 'author' | 'email' | 'content' | 'password', value: string) => {
@@ -107,31 +118,39 @@ export default memo(function Comments({ slug }: CommentsProps) {
     setEditContent(content);
   };
 
-  const handleSaveEdit = async () => {
-    if (editingComment && editContent.trim()) {
-      try {
-        setError(null);
-        const response = await fetch(`http://localhost:8787/api/comment/${slug}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            id: editingComment,
-            content: editContent
-          })
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to update comment');
-        }
-
-        await fetchComments(); // Refresh comments
+  // Edit comment mutation
+  const editCommentMutation = useMutation(
+    async (editData: { id: number; content: string }) => {
+      const response = await fetch(`http://localhost:3000/api/comment/${slug}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(editData)
+      });
+      if (!response.ok) {
+        throw new Error('Failed to update comment');
+      }
+      return response.json();
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['comments', slug]);
         setEditingComment(null);
         setEditContent('');
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to update comment');
+      },
+      onError: (err: Error) => {
+        setError(err.message || 'Failed to update comment');
       }
+    }
+  );
+
+  const handleSaveEdit = async () => {
+    if (editingComment && editContent.trim()) {
+      editCommentMutation.mutate({
+        id: editingComment,
+        content: editContent
+      });
     }
   };
 
@@ -140,36 +159,47 @@ export default memo(function Comments({ slug }: CommentsProps) {
     setEditContent('');
   };
 
+  // Delete comment mutation
+  const deleteCommentMutation = useMutation(
+    async (deleteData: { id: number; password: string }) => {
+      const response = await fetch(`http://localhost:3000/api/comments/${deleteData.id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: deleteData.id,
+          password: deleteData.password
+        })
+      });
+      if (!response.ok) {
+        const errorData = await response.json() as any;
+        throw new Error(errorData.error || 'Failed to delete comment');
+      }
+      return response.json();
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['comments', slug]);
+        setShowDeleteModal(null);
+        setDeletePassword('');
+      },
+      onError: (err: Error) => {
+        setError(err.message || 'Failed to delete comment');
+      }
+    }
+  );
+
   const handleDelete = async (commentId: number, password: string) => {
     if (!password.trim()) {
       setError('Password is required to delete comment');
       return;
     }
 
-    try {
-      setError(null);
-      const response = await fetch(`http://localhost:8787/api/comments/${commentId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          id: commentId,
-          password
-        })
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json() as any;
-        throw new Error(errorData.error || 'Failed to delete comment');
-      }
-
-      await fetchComments(); // Refresh comments
-      setShowDeleteModal(null);
-      setDeletePassword('');
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to delete comment');
-    }
+    deleteCommentMutation.mutate({
+      id: commentId,
+      password
+    });
   };
 
   const CommentItem = ({ comment }: { comment: Comment }) => {
@@ -287,17 +317,17 @@ export default memo(function Comments({ slug }: CommentsProps) {
         
         <button 
           type="submit" 
-          disabled={isSubmitting}
+          disabled={isSubmitting || postCommentMutation.isLoading}
           className={styles.submitButton}
         >
-          {isSubmitting ? 'Posting...' : 'Post Comment'}
+          {isSubmitting || postCommentMutation.isLoading ? 'Posting...' : 'Post Comment'}
         </button>
       </form>
 
       {/* Error Display */}
-      {error && (
+      {(error || fetchError) && (
         <div className={styles.errorMessage}>
-          <span>{error}</span>
+          <span>{error || (fetchError instanceof Error ? fetchError.message : 'An error occurred')}</span>
           <button onClick={() => setError(null)} className={styles.errorClose}>×</button>
         </div>
       )}
