@@ -6,15 +6,18 @@ import {
   SearchCheck,
   Siren,
   UserRound,
+  Pencil, 
+  Presentation, 
+  Umbrella
 } from 'lucide-react';
 
 const links: Links = {
   en: [
     { label: 'Documentation', href: '/docs', icon: '📚' },
     { label: 'Platform', href: '/platform', icon: '🌐' },
-    { label: 'Status', href: '/status', icon: '📊' },
-    { label: 'Register', href: '/register', icon: '📝' },
-    { label: 'Board', href: '/board', icon: '📋' },
+    { label: 'Status', href: '/status', icon: <Umbrella />},
+    { label: 'Register', href: '/register', icon: <Pencil /> },
+    { label: 'Board', href: '/board', icon: <Presentation /> },
     { label: 'Profile', href: '/profile', icon: <UserRound /> },
     { label: 'Search', href: '/search', icon: <SearchCheck /> },
     { label: 'Chat', href: '/chat', icon: <MessagesSquare /> },
@@ -25,9 +28,9 @@ const links: Links = {
   ko: [
     { label: '문서', href: '/docs', icon: '📚' },
     { label: '플랫폼', href: '/platform', icon: '🌐' },
-    { label: '상태', href: '/status', icon: '📊' },
-    { label: '등록', href: '/register', icon: '📝' },
-    { label: '게시판', href: '/board', icon: '📋' },
+    { label: '상태', href: '/status', icon: <Umbrella /> },
+    { label: '등록', href: '/register', icon: <Pencil /> },
+    { label: '게시판', href: '/board', icon: <Presentation /> },
     { label: '프로필', href: '/profile', icon: <UserRound /> },
     { label: '검색', href: '/search', icon: <SearchCheck /> },
     { label: '채팅', href: '/chat', icon: <MessagesSquare /> },
