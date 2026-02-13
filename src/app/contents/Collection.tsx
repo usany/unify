@@ -1,5 +1,5 @@
 import { AnimatedGroup } from '../../components/motion-primitives/animated-group'
-import staticImg from '../../../public/applicationImage.jpg'
+import staticImg from '../../../public/application.jpg'
 import Image from 'next/image'
 function Collection() {
   const images = [staticImg, staticImg, staticImg]
