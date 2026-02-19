@@ -2,6 +2,7 @@
 
 import React, { useState, memo } from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { useLanguage } from '../../context/LanguageContext';
 import styles from './Comments.module.css';
 
 interface Comment {
@@ -20,6 +21,68 @@ interface CommentsProps {
 }
 
 export default memo(function Comments({ slug }: CommentsProps) {
+  const { language } = useLanguage();
+  
+  const translations: Record<string, Record<string, string>> = {
+    en: {
+      title: 'Comments',
+      nameLabel: 'Name',
+      emailLabel: 'Email',
+      commentLabel: 'Comment',
+      passwordLabel: 'Password (for deletion)',
+      namePlaceholder: 'Enter your name',
+      emailPlaceholder: 'Enter your email',
+      commentPlaceholder: 'Share your thoughts...',
+      passwordPlaceholder: 'Enter a password to delete this comment later',
+      postComment: 'Post Comment',
+      posting: 'Posting...',
+      edit: 'Edit',
+      save: 'Save',
+      cancel: 'Cancel',
+      delete: 'Delete',
+      deleteComment: 'Delete Comment',
+      deletePasswordPrompt: 'Enter the password to delete this comment:',
+      enterPassword: 'Enter password',
+      noComments: 'No comments yet. Be the first to share your thoughts!',
+      loadingComments: 'Loading comments...',
+      passwordRequired: 'Password is required to delete comment',
+      failedToFetch: 'Failed to fetch comments',
+      failedToPost: 'Failed to post comment',
+      failedToUpdate: 'Failed to update comment',
+      failedToDelete: 'Failed to delete comment',
+      anErrorOccurred: 'An error occurred'
+    },
+    ko: {
+      title: '댓글',
+      nameLabel: '이름',
+      emailLabel: '이메일',
+      commentLabel: '댓글',
+      passwordLabel: '비밀번호 (삭제용)',
+      namePlaceholder: '이름을 입력하세요',
+      emailPlaceholder: '이메일을 입력하세요',
+      commentPlaceholder: '의견을 공유하세요...',
+      passwordPlaceholder: '나중에 댓글을 삭제할 비밀번호를 입력하세요',
+      postComment: '댓글 작성',
+      posting: '작성 중...',
+      edit: '수정',
+      save: '저장',
+      cancel: '취소',
+      delete: '삭제',
+      deleteComment: '댓글 삭제',
+      deletePasswordPrompt: '이 댓글을 삭제할 비밀번호를 입력하세요:',
+      enterPassword: '비밀번호 입력',
+      noComments: '아직 댓글이 없습니다. 첫 번째로 의견을 공유해보세요!',
+      loadingComments: '댓글 로딩 중...',
+      passwordRequired: '댓글을 삭제하려면 비밀번호가 필요합니다',
+      failedToFetch: '댓글을 가져오는데 실패했습니다',
+      failedToPost: '댓글 작성에 실패했습니다',
+      failedToUpdate: '댓글 수정에 실패했습니다',
+      failedToDelete: '댓글 삭제에 실패했습니다',
+      anErrorOccurred: '오류가 발생했습니다'
+    }
+  };
+  
+  const t = translations[language] || translations.ko;
   const queryClient = useQueryClient();
   const [newComment, setNewComment] = useState({
     author: '',
@@ -140,7 +203,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
         setEditContent('');
       },
       onError: (err: Error) => {
-        setError(err.message || 'Failed to update comment');
+        setError(err.message || t.failedToUpdate);
       }
     }
   );
@@ -174,7 +237,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
       });
       if (!response.ok) {
         const errorData = await response.json() as any;
-        throw new Error(errorData.error || 'Failed to delete comment');
+        throw new Error(errorData.error || t.failedToDelete);
       }
       return response.json();
     },
@@ -185,14 +248,14 @@ export default memo(function Comments({ slug }: CommentsProps) {
         setDeletePassword('');
       },
       onError: (err: Error) => {
-        setError(err.message || 'Failed to delete comment');
+        setError(err.message || t.failedToDelete);
       }
     }
   );
 
   const handleDelete = async (commentId: number, password: string) => {
     if (!password.trim()) {
-      setError('Password is required to delete comment');
+      setError(t.passwordRequired);
       return;
     }
 
@@ -227,13 +290,13 @@ export default memo(function Comments({ slug }: CommentsProps) {
                 onClick={handleSaveEdit}
                 className={styles.saveButton}
               >
-                Save
+                {t.save}
               </button>
               <button
                 onClick={handleCancelEdit}
                 className={styles.cancelButton}
               >
-                Cancel
+                {t.cancel}
               </button>
             </div>
           </div>
@@ -246,13 +309,13 @@ export default memo(function Comments({ slug }: CommentsProps) {
             onClick={() => handleEdit(comment.id, comment.content)}
             className={styles.editButton}
           >
-            Edit
+            {t.edit}
           </button>
           <button 
             onClick={() => setShowDeleteModal(comment.id)}
             className={styles.deleteButton}
           >
-            Delete
+            {t.delete}
           </button>
         </div>
       </div>
@@ -260,58 +323,58 @@ export default memo(function Comments({ slug }: CommentsProps) {
   };
     return (
     <div className={styles.commentsSection}>
-      <h3 className={styles.commentsTitle}>Comments</h3>
+      <h3 className={styles.commentsTitle}>{t.title}</h3>
       
       {/* Comment Form */}
       <form onSubmit={handleSubmit} className={styles.commentForm}>
         <div className={styles.formGroup}>
-          <label htmlFor="author" className={styles.label}>Name</label>
+          <label htmlFor="author" className={styles.label}>{t.nameLabel}</label>
           <input
             type="text"
             id="author"
             value={newComment.author}
             onChange={(event) => handleInputChange('author', event.target.value)}
             className={styles.input}
-            placeholder="Enter your name"
+            placeholder={t.namePlaceholder}
             required
           />
         </div>
         
         <div className={styles.formGroup}>
-          <label htmlFor="email" className={styles.label}>Email</label>
+          <label htmlFor="email" className={styles.label}>{t.emailLabel}</label>
           <input
             type="email"
             id="email"
             value={newComment.email}
             onChange={(event) => handleInputChange('email', event.target.value)}
             className={styles.input}
-            placeholder="Enter your email"
+            placeholder={t.emailPlaceholder}
             required
           />
         </div>
         
         <div className={styles.formGroup}>
-          <label htmlFor="content" className={styles.label}>Comment</label>
+          <label htmlFor="content" className={styles.label}>{t.commentLabel}</label>
           <textarea
             id="content"
             value={newComment.content}
             onChange={(event) => handleInputChange('content', event.target.value)}
             className={styles.textarea}
-            placeholder="Share your thoughts..."
+            placeholder={t.commentPlaceholder}
             rows={4}
             required
           />
         </div>
         
         <div className={styles.formGroup}>
-          <label htmlFor="password" className={styles.label}>Password (for deletion)</label>
+          <label htmlFor="password" className={styles.label}>{t.passwordLabel}</label>
           <input
             type="password"
             id="password"
             value={newComment.password}
             onChange={(event) => handleInputChange('password', event.target.value)}
             className={styles.input}
-            placeholder="Enter a password to delete this comment later"
+            placeholder={t.passwordPlaceholder}
           />
         </div>
         
@@ -320,14 +383,14 @@ export default memo(function Comments({ slug }: CommentsProps) {
           disabled={isSubmitting || postCommentMutation.isLoading}
           className={styles.submitButton}
         >
-          {isSubmitting || postCommentMutation.isLoading ? 'Posting...' : 'Post Comment'}
+          {isSubmitting || postCommentMutation.isLoading ? t.posting : t.postComment}
         </button>
       </form>
 
       {/* Error Display */}
       {(error || fetchError) && (
         <div className={styles.errorMessage}>
-          <span>{error || (fetchError instanceof Error ? fetchError.message : 'An error occurred')}</span>
+          <span>{error || (fetchError instanceof Error ? fetchError.message : t.anErrorOccurred)}</span>
           <button onClick={() => setError(null)} className={styles.errorClose}>×</button>
         </div>
       )}
@@ -335,7 +398,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
       {/* Loading State */}
       {isLoading && (
         <div className={styles.loadingMessage}>
-          <span>Loading comments...</span>
+          <span>{t.loadingComments}</span>
         </div>
       )}
 
@@ -343,7 +406,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
       {!isLoading && (
         <div className={styles.commentsList}>
           {comments.length === 0 ? (
-            <p className={styles.noComments}>No comments yet. Be the first to share your thoughts!</p>
+            <p className={styles.noComments}>{t.noComments}</p>
           ) : (
             comments.map(comment => (
               <CommentItem key={comment.id} comment={comment} />
@@ -356,14 +419,14 @@ export default memo(function Comments({ slug }: CommentsProps) {
       {showDeleteModal && (
         <div className={styles.modalOverlay}>
           <div className={styles.modal}>
-            <h3>Delete Comment</h3>
-            <p>Enter the password to delete this comment:</p>
+            <h3>{t.deleteComment}</h3>
+            <p>{t.deletePasswordPrompt}</p>
             <input
               type="password"
               value={deletePassword}
               onChange={(event) => setDeletePassword(event.target.value)}
               className={styles.input}
-              placeholder="Enter password"
+              placeholder={t.enterPassword}
               autoFocus
             />
             <div className={styles.modalActions}>
@@ -371,7 +434,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
                 onClick={() => handleDelete(showDeleteModal, deletePassword)}
                 className={styles.deleteButton}
               >
-                Delete
+                {t.delete}
               </button>
               <button
                 onClick={() => {
@@ -380,7 +443,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
                 }}
                 className={styles.cancelButton}
               >
-                Cancel
+                {t.cancel}
               </button>
             </div>
           </div>
