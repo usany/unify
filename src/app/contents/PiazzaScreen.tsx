@@ -26,7 +26,9 @@ function PiazzaScreen() {
       profileImageUrl: 'https://ijsfbngiyhgvolsprxeh.supabase.co/storage/v1/object/public/remake/animalprofileBlue.png',
       profileImage: true,
     }
-    setMessages([...messages, message])
+    if (message.msg) {
+      setMessages([...messages, message])
+    }
   }
   // const messagesArray = [{
   //   id: 'KHUSAN',
