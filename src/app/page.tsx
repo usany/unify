@@ -31,7 +31,13 @@ export default function RootPage() {
         </p>
         <div className={`${styles.buttonGroup}`}>
           {links[language].map((link: LinkItem, index: number) => (
-            <Button key={index} href={link.href} variant='outlined' className={'colorOne'}>
+            <Button 
+              key={index} 
+              href={link.href} 
+              variant='outlined' 
+              className={'colorOne'}
+              startIcon={link.icon}
+            >
               {link.label}
             </Button>
           ))}
