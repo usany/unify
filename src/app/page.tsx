@@ -5,6 +5,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import { LinkItem } from '@/types/links';
 import links from 'links';
 import { Button } from '@mui/material';
+import RainAnimation from '@/components/RainAnimation';
 
 const translations = {
   en: {
@@ -21,18 +22,21 @@ export default function RootPage() {
   const { language } = useLanguage();
   const translation = translations[language];
   return (
-    <section className={styles.hero}>
-      <h1 className={styles.title}>{translation.title}</h1>
-      <p className={styles.subtitle}>
-        {translation.subtitle}
-      </p>
-      <div className={`${styles.buttonGroup}`}>
-        {links[language].map((link: LinkItem, index: number) => (
-          <Button key={index} href={link.href} variant='outlined' className={'colorOne'}>
-            {link.label}
-          </Button>
-        ))}
-      </div>
-    </section>
+    <>
+      <RainAnimation />
+      <section className={styles.hero}>
+        <h1 className={styles.title}>{translation.title}</h1>
+        <p className={styles.subtitle}>
+          {translation.subtitle}
+        </p>
+        <div className={`${styles.buttonGroup}`}>
+          {links[language].map((link: LinkItem, index: number) => (
+            <Button key={index} href={link.href} variant='outlined' className={'colorOne'}>
+              {link.label}
+            </Button>
+          ))}
+        </div>
+      </section>
+    </>
   );
 }

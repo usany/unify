@@ -23,15 +23,26 @@ export default function RainAnimation() {
   const { theme } = useTheme();
   const [rainDrops, setRainDrops] = useState<RainDrop[]>([]);
   const [splashes, setSplashes] = useState<Splash[]>([]);
+  const [shouldStart, setShouldStart] = useState(false);
 
   useEffect(() => {
-    const generateDrops = () => {
+    // Wait for page layout to be completely settled before starting animation
+    const timer = setTimeout(() => {
+      setShouldStart(true);
+    }, 500); // Longer delay to ensure layout is settled
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!shouldStart) return;
+    const generateDrops = (isInitial = false) => {
       const drops: RainDrop[] = [];
       const newSplashes: Splash[] = [];
       const dropCount = 10;
 
       for (let i = 0; i < dropCount; i++) {
-        const animationDelay = Math.random();
+        const animationDelay = isInitial ? 0 : Math.random(); // No delay for initial appearance
         const left = Math.random() * 100;
         const animationDuration = Math.random() + 3;
         
@@ -59,8 +70,8 @@ export default function RainAnimation() {
       setSplashes(newSplashes);
     };
 
-    // Initial generation
-    generateDrops();
+    // Initial generation with no delay
+    generateDrops(true);
     
     // Create staggered intervals for each splash position
     const splashIntervals: NodeJS.Timeout[] = [];
@@ -82,17 +93,17 @@ export default function RainAnimation() {
     }
 
     // Regenerate all positions every 5 seconds
-    const dropInterval = setInterval(generateDrops, 5000);
+    const dropInterval = setInterval(() => generateDrops(false), 5000);
 
     return () => {
       splashIntervals.forEach(interval => clearInterval(interval));
       clearInterval(dropInterval);
     };
-  }, []);
+  }, [shouldStart]);
 
   return (
     <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden">
-      {rainDrops.map((drop) => (
+      {shouldStart && rainDrops.map((drop) => (
         <div
           key={drop.id}
           className="rain-drop"
@@ -107,7 +118,7 @@ export default function RainAnimation() {
           }}
         />
       ))}
-      {splashes.map((splash) => (
+      {shouldStart && splashes.map((splash) => (
         <div
           key={`${splash.id}-${splash.key}`}
           className="rain-splash"
