@@ -388,12 +388,12 @@ export default memo(function Comments({ slug }: CommentsProps) {
       </form>
 
       {/* Error Display */}
-      {(error || fetchError) && (
+      {/* {(error || fetchError) && (
         <div className={styles.errorMessage}>
           <span>{error || (fetchError instanceof Error ? fetchError.message : t.anErrorOccurred)}</span>
           <button onClick={() => setError(null)} className={styles.errorClose}>×</button>
         </div>
-      )}
+      )} */}
 
       {/* Loading State */}
       {isLoading && (
