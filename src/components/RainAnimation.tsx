@@ -31,7 +31,8 @@ export default function RainAnimation() {
       const dropCount = 10;
 
       for (let i = 0; i < dropCount; i++) {
-        const animationDelay = Math.random();
+        // Force zero delay for all drops to prevent stuck appearance
+        const animationDelay = 0; // Always start immediately
         const left = Math.random() * 100;
         const animationDuration = Math.random() + 3;
         
@@ -48,7 +49,7 @@ export default function RainAnimation() {
         newSplashes.push({
           id: i,
           left,
-          animationDelay: animationDelay + animationDuration,
+          animationDelay: animationDuration, // Splash starts when drop reaches bottom
           key: 0, // Initial key
         });
         
@@ -91,7 +92,7 @@ export default function RainAnimation() {
   }, []);
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden">
+    <div className="fixed inset-0 pointer-events-none z-[60] overflow-hidden">
       {rainDrops.map((drop) => (
         <div
           key={drop.id}
