@@ -92,7 +92,7 @@ export default function RainAnimation() {
   }, []);
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-[60] overflow-hidden">
+    <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden">
       {rainDrops.map((drop) => (
         <div
           key={drop.id}
