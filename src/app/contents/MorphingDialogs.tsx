@@ -1,5 +1,5 @@
 import CardView from './CardView';
-
+import staticImg from '../assets/blue.png'
 const MorphingDialogs = () => {
   const now = Date.now();
   const mockMessage = {
@@ -10,8 +10,10 @@ const MorphingDialogs = () => {
     locationTwo: '자료열람실',
     startTime: Date.now(),
     finishTime: Date.now(),
+    creatorProfileImage: true,
+    creatorDefaultProfile: staticImg.src,
+    creatorProfileImageUrl: staticImg.src
   }
-  console.log(mockMessage.id)
   return (
     <CardView message={mockMessage}/>
   )
