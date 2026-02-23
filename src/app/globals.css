@@ -4,6 +4,14 @@
   background-color: var(--bg-tier-1);
 }
 
+.bg-tier-2 {
+  background-color: var(--bg-tier-2);
+}
+
+.bg-tier-3 {
+  background-color: var(--bg-tier-3);
+}
+
 :root {
     --primary: #2e7d32;
     --primary-hover: #1b5e20;
