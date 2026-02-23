@@ -7,8 +7,9 @@ import CardViewTime from './CardViewTime'
 import CardViewTop from './CardViewTop'
 import Tilt from 'react-parallax-tilt'
 import getShadowColor from './getShadowColor'
-
+import { buildingsObj } from './locationsBuildings'
 const CardView = ({message}: {message: {id: string; action: number; locationOne: string; locationTwo: string; startTime: number; finishTime: number}}) => {
+  const staticImg = buildingsObj['input']?.image
   const shadowColor = getShadowColor(message.id[message.id.length - 1])
   return (
     <div className="flex justify-center gap-5">
@@ -33,7 +34,7 @@ const CardView = ({message}: {message: {id: string; action: number; locationOne:
                   height: 141 * 0.9,
                   borderRadius: '10px'
                 }}
-                image={''}
+                image={staticImg?.src}
               />
             </div>
             <div className="flex flex-col pt-1 gap-1 text-xs">
