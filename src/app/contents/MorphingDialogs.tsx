@@ -4,6 +4,7 @@ const MorphingDialogs = () => {
   const now = Date.now();
   const mockMessage = {
     id: now.toString().slice(-7),
+    item: '우산',
     action: 1,
     locationOne: '서울 중도',
     locationTwo: '자료열람실',
