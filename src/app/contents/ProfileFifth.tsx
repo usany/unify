@@ -64,7 +64,7 @@ const ProfileFifth = () => {
                     return (
                       <text
                         x={viewBox.cx}
-                        y={viewBox.cy}
+                        y={(viewBox.cy || 0)-10}
                         textAnchor="middle"
                         onClick={() => {
                           setCompletedAction('')
@@ -72,14 +72,14 @@ const ProfileFifth = () => {
                       >
                         <tspan
                           x={viewBox.cx}
-                          y={viewBox.cy}
+                          y={(viewBox.cy || 0)-10}
                           className="fill-foreground text-3xl font-bold"
                         >
                           {totalNumber.toLocaleString()}
                         </tspan>
                         <tspan
                           x={viewBox.cx}
-                          y={(viewBox.cy || 0) + 24}
+                          y={(viewBox.cy || 0)+14}
                           className="fill-foreground"
                         >
                           {language === 'en' ? 'Activities Completed' : '활동 완료'}

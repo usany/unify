@@ -6,6 +6,7 @@ import links from 'links';
 import { useLanguage } from '@/app/context/LanguageContext';
 import { useTheme } from '@/app/context/ThemeContext';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function TopBar() {
   const [showLinks, setShowLinks] = useState(false);
@@ -33,21 +34,38 @@ export default function TopBar() {
   return (
     <>
       <div className={styles.topBar}>
-        <Link href="/" className={styles.homeButton}>KHUSAN</Link>
+        <Link href="/" className={styles.homeButton}>
+          <Image
+            src="/favicons.png"
+            alt="KHUSAN"
+            width={84}
+            height={24}
+          />
+          {/* <span>KHUSAN</span> */}
+        </Link>
         <div className={styles.topBarActions}>
           <button
             className={styles.toggleButton}
             onClick={toggleDarkMode}
             aria-label="Toggle dark mode"
           >
-            {theme === 'dark' ? '🌙' : '☀️'}
+            {theme === 'dark' ? (
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+              </svg>
+            ) : (
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="5"></circle>
+                <path d="m12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+              </svg>
+            )}
           </button>
           <button
             className={styles.toggleButton}
             onClick={toggleLanguage}
             aria-label="Toggle language"
           >
-            {language === 'en' ? 'En' : 'Ko'}
+            {language === 'en' ? 'ENG' : '한국어'}
           </button>
           {pathname !== '/' && isSmallScreen && (
             <button

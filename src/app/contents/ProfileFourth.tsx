@@ -17,7 +17,7 @@ const ProfileCard = ({allies}: {allies?: string}) => {
 }
 const ProfileThird = () => {
   return (
-    <div className='flex'>
+    <div className='flex justify-center'>
       <ProfileCard />
       <ProfileCard allies={'followers'} />
       <ProfileCard allies={'followings'} />
