@@ -501,10 +501,19 @@ export default memo(function Comments({ slug }: CommentsProps) {
           <div className={styles.modal}>
             <h3>{t.edit}</h3>
             <p>{t.editPasswordPrompt}</p>
+            {error && (
+              <div className={styles.errorMessage}>
+                <span>{error}</span>
+                <button onClick={() => setError(null)} className={styles.errorClose}>×</button>
+              </div>
+            )}
             <input
               type="password"
               value={editPassword}
-              onChange={(event) => setEditPassword(event.target.value)}
+              onChange={(event) => {
+                setEditPassword(event.target.value);
+                setError(null); // Clear error when user starts typing
+              }}
               className={styles.input}
               placeholder={t.enterPassword}
               autoFocus
@@ -520,6 +529,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
                 onClick={() => {
                   setShowEditModal(null);
                   setEditPassword('');
+                  setError(null);
                 }}
                 className={styles.cancelButton}
               >
