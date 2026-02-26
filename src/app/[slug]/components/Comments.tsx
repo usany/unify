@@ -341,18 +341,6 @@ export default memo(function Comments({ slug }: CommentsProps) {
           />
         </div>
         
-        {/* <div className={styles.formGroup}>
-          <label htmlFor="email" className={styles.label}>{t.emailLabel}</label>
-          <input
-            type="email"
-            id="email"
-            value={newComment.email}
-            onChange={(event) => handleInputChange('email', event.target.value)}
-            className={styles.input}
-            placeholder={t.emailPlaceholder}
-            required
-          />
-        </div> */}
         
         <div className={styles.formGroup}>
           <label htmlFor="content" className={styles.label}>{t.commentLabel}</label>
