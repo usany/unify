@@ -41,6 +41,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
       delete: 'Delete',
       deleteComment: 'Delete Comment',
       deletePasswordPrompt: 'Enter the password to delete this comment:',
+      editPasswordPrompt: 'Enter the password to edit this comment:',
       enterPassword: 'Enter password',
       noComments: 'No comments yet. Be the first to share your thoughts!',
       loadingComments: 'Loading comments...',
@@ -69,6 +70,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
       delete: '삭제',
       deleteComment: '댓글 삭제',
       deletePasswordPrompt: '이 댓글을 삭제할 비밀번호를 입력하세요:',
+      editPasswordPrompt: '이 댓글을 수정할 비밀번호를 입력하세요:',
       enterPassword: '비밀번호 입력',
       noComments: '아직 댓글이 없습니다. 첫 번째로 의견을 공유해보세요!',
       loadingComments: '댓글 로딩 중...',
@@ -93,6 +95,8 @@ export default memo(function Comments({ slug }: CommentsProps) {
   const [editContent, setEditContent] = useState('');
   const [deletePassword, setDeletePassword] = useState('');
   const [showDeleteModal, setShowDeleteModal] = useState<number | null>(null);
+  const [editPassword, setEditPassword] = useState('');
+  const [showEditModal, setShowEditModal] = useState<number | null>(null);
   const [replyingTo, setReplyingTo] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -172,14 +176,13 @@ export default memo(function Comments({ slug }: CommentsProps) {
     setNewComment(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleEdit = (commentId: number, content: string) => {
-    setEditingComment(commentId);
-    setEditContent(content);
+  const handleEdit = (commentId: number) => {
+    setShowEditModal(commentId);
   };
 
   // Edit comment mutation
   const editCommentMutation = useMutation(
-    async (editData: { id: number; content: string }) => {
+    async (editData: { id: number; content: string; password: string }) => {
       const response = await fetch(`https://express-d1-app.ckd-qja.workers.dev/api/comments/${slug}`, {
         method: 'PUT',
         headers: {
@@ -188,7 +191,8 @@ export default memo(function Comments({ slug }: CommentsProps) {
         body: JSON.stringify(editData)
       });
       if (!response.ok) {
-        throw new Error('Failed to update comment');
+        const errorData = await response.json() as any;
+        throw new Error(errorData.error || t.failedToUpdate);
       }
       return response.json();
     },
@@ -197,6 +201,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
         queryClient.invalidateQueries(['comments', slug]);
         setEditingComment(null);
         setEditContent('');
+        setEditPassword('');
       },
       onError: (err: Error) => {
         setError(err.message || t.failedToUpdate);
@@ -208,14 +213,31 @@ export default memo(function Comments({ slug }: CommentsProps) {
     if (editingComment && editContent.trim()) {
       editCommentMutation.mutate({
         id: editingComment,
-        content: editContent
+        content: editContent,
+        password: editPassword
       });
+    }
+  };
+
+  const handleEditWithPassword = (commentId: number, password: string) => {
+    if (!password.trim()) {
+      setError(t.passwordRequired);
+      return;
+    }
+    
+    const comment = comments.find(c => c.id === commentId);
+    if (comment) {
+      setEditingComment(commentId);
+      setEditContent(comment.content);
+      setEditPassword(password);
+      setShowEditModal(null);
     }
   };
 
   const handleCancelEdit = () => {
     setEditingComment(null);
     setEditContent('');
+    setEditPassword('');
   };
 
   // Delete comment mutation
@@ -307,7 +329,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
 
         <div className={styles.commentActions}>
           <button 
-            onClick={() => handleEdit(comment.id, comment.content)}
+            onClick={() => handleEdit(comment.id)}
             className={styles.editButton}
           >
             {t.edit}
@@ -429,6 +451,41 @@ export default memo(function Comments({ slug }: CommentsProps) {
                 onClick={() => {
                   setShowDeleteModal(null);
                   setDeletePassword('');
+                }}
+                className={styles.cancelButton}
+              >
+                {t.cancel}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Password Modal */}
+      {showEditModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <h3>{t.edit}</h3>
+            <p>{t.editPasswordPrompt}</p>
+            <input
+              type="password"
+              value={editPassword}
+              onChange={(event) => setEditPassword(event.target.value)}
+              className={styles.input}
+              placeholder={t.enterPassword}
+              autoFocus
+            />
+            <div className={styles.modalActions}>
+              <button
+                onClick={() => handleEditWithPassword(showEditModal, editPassword)}
+                className={styles.editButton}
+              >
+                {t.edit}
+              </button>
+              <button
+                onClick={() => {
+                  setShowEditModal(null);
+                  setEditPassword('');
                 }}
                 className={styles.cancelButton}
               >
