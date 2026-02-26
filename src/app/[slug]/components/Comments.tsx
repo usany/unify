@@ -219,6 +219,40 @@ export default memo(function Comments({ slug }: CommentsProps) {
     }
   };
 
+  const handleCheckEditPassword = async (commentId: number, password: string) => {
+    if (!password.trim()) {
+      setError(t.passwordRequired);
+      return;
+    }
+
+    try {
+      // First, verify the password by making a request to check it
+      const response = await fetch(`https://express-d1-app.ckd-qja.workers.dev/api/comments/${commentId}/verify-password`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json() as any;
+        throw new Error(errorData.error || 'Password verification failed');
+      }
+
+      // If password is correct, proceed with edit
+      const comment = comments.find(c => c.id === commentId);
+      if (comment) {
+        setEditingComment(commentId);
+        setEditContent(comment.content);
+        setEditPassword(password);
+        setShowEditModal(null);
+      }
+    } catch (err: any) {
+      setError(err.message || 'Password verification failed');
+    }
+  };
+
   const handleEditWithPassword = (commentId: number, password: string) => {
     if (!password.trim()) {
       setError(t.passwordRequired);
@@ -477,7 +511,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
             />
             <div className={styles.modalActions}>
               <button
-                onClick={() => handleEditWithPassword(showEditModal, editPassword)}
+                onClick={() => handleCheckEditPassword(showEditModal, editPassword)}
                 className={styles.editButton}
               >
                 {t.edit}
