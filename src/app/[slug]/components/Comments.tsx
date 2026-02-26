@@ -270,7 +270,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
           <span className={styles.author}>{comment.author}</span>
           <div className={styles.commentMeta}>
             <span className={styles.timestamp}>
-              {comment.updated_at 
+              {comment.updated_at !== comment.created_at
                 ? `Updated: ${new Date(comment.updated_at).toLocaleString()} (Created: ${new Date(comment.created_at).toLocaleString()})`
                 : new Date(comment.created_at).toLocaleString()
               }
