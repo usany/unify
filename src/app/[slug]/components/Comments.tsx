@@ -9,7 +9,6 @@ interface Comment {
   id: number;
   slug: string;
   author: string;
-  email: string;
   content: string;
   password?: string;
   created_at: string;
@@ -86,7 +85,6 @@ export default memo(function Comments({ slug }: CommentsProps) {
   const queryClient = useQueryClient();
   const [newComment, setNewComment] = useState({
     author: '',
-    email: '',
     content: '',
     password: ''
   });
@@ -121,7 +119,6 @@ export default memo(function Comments({ slug }: CommentsProps) {
     async (commentData: {
       slug: string;
       author: string;
-      email: string;
       content: string;
       password: string;
     }) => {
@@ -140,7 +137,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(['comments', slug]);
-        setNewComment({ author: '', email: '', content: '', password: '' });
+        setNewComment({ author: '', content: '', password: '' });
         setReplyingTo(null);
       },
       onError: (err: Error) => {
@@ -153,8 +150,8 @@ export default memo(function Comments({ slug }: CommentsProps) {
     event.preventDefault();
     
     // Safety check: ensure all required fields exist and are not empty
-    if (!newComment.author || !newComment.email || !newComment.content ||
-        !newComment.author.trim() || !newComment.email.trim() || !newComment.content.trim()) {
+    if (!newComment.author || !newComment.content ||
+        !newComment.author.trim() || !newComment.content.trim()) {
       return;
     }
 
@@ -164,7 +161,6 @@ export default memo(function Comments({ slug }: CommentsProps) {
     postCommentMutation.mutate({
       slug,
       author: newComment.author,
-      email: newComment.email,
       content: newComment.content,
       password: newComment.password
     });
@@ -172,7 +168,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
     setIsSubmitting(false);
   };
 
-  const handleInputChange = (field: 'author' | 'email' | 'content' | 'password', value: string) => {
+  const handleInputChange = (field: 'author' | 'content' | 'password', value: string) => {
     setNewComment(prev => ({ ...prev, [field]: value }));
   };
 
