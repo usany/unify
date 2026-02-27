@@ -253,26 +253,26 @@ export default memo(function Comments({ slug }: CommentsProps) {
     }
   };
 
-  const handleEditWithPassword = (commentId: number, password: string) => {
-    if (!password.trim()) {
-      setError(t.passwordRequired);
-      return;
-    }
+  // const handleEditWithPassword = (commentId: number, password: string) => {
+  //   if (!password.trim()) {
+  //     setError(t.passwordRequired);
+  //     return;
+  //   }
     
-    const comment = comments.find(c => c.id === commentId);
-    if (comment) {
-      setEditingComment(commentId);
-      setEditContent(comment.content);
-      setEditPassword(password);
-      setShowEditModal(null);
-    }
-  };
+  //   const comment = comments.find(c => c.id === commentId);
+  //   if (comment) {
+  //     setEditingComment(commentId);
+  //     setEditContent(comment.content);
+  //     setEditPassword(password);
+  //     setShowEditModal(null);
+  //   }
+  // };
 
-  const handleCancelEdit = () => {
-    setEditingComment(null);
-    setEditContent('');
-    setEditPassword('');
-  };
+  // const handleCancelEdit = () => {
+  //   setEditingComment(null);
+  //   setEditContent('');
+  //   setEditPassword('');
+  // };
 
   // Delete comment mutation
   const deleteCommentMutation = useMutation(
