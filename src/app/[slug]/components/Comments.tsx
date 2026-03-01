@@ -1,4 +1,4 @@
-"use client";
+"use client";œ
 
 import React, { useState, memo } from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
@@ -50,7 +50,11 @@ export default memo(function Comments({ slug }: CommentsProps) {
       failedToPost: 'Failed to post comment',
       failedToUpdate: 'Failed to update comment',
       failedToDelete: 'Failed to delete comment',
-      anErrorOccurred: 'An error occurred'
+      anErrorOccurred: 'An error occurred',
+      reply: 'Reply',
+      replyTo: 'Reply to',
+      cancelReply: 'Cancel Reply',
+      postReply: 'Post Reply'
     },
     ko: {
       title: '댓글',
@@ -79,7 +83,11 @@ export default memo(function Comments({ slug }: CommentsProps) {
       failedToPost: '댓글 작성에 실패했습니다',
       failedToUpdate: '댓글 수정에 실패했습니다',
       failedToDelete: '댓글 삭제에 실패했습니다',
-      anErrorOccurred: '오류가 발생했습니다'
+      anErrorOccurred: '오류가 발생했습니다',
+      reply: '답글',
+      replyTo: '답글 달기',
+      cancelReply: '답글 취소',
+      postReply: '답글 작성'
     }
   };
   
@@ -150,6 +158,39 @@ export default memo(function Comments({ slug }: CommentsProps) {
     }
   );
 
+  // Reply comment mutation
+  const replyCommentMutation = useMutation(
+    async (replyData: {
+      slug: string;
+      author: string;
+      content: string;
+      password: string;
+      parent_id: number;
+    }) => {
+      const response = await fetch(`https://express-d1-app.ckd-qja.workers.dev/api/comments/${replyData.slug}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(replyData)
+      });
+      if (!response.ok) {
+        throw new Error('Failed to post reply');
+      }
+      return response.json();
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['comments', slug]);
+        setNewComment({ author: '', content: '', password: '' });
+        setReplyingTo(null);
+      },
+      onError: (err: Error) => {
+        setError(err.message || 'Failed to post reply');
+      }
+    }
+  );
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     
@@ -162,18 +203,44 @@ export default memo(function Comments({ slug }: CommentsProps) {
     setIsSubmitting(true);
     setError(null);
     
-    postCommentMutation.mutate({
-      slug,
-      author: newComment.author,
-      content: newComment.content,
-      password: newComment.password
-    });
+    if (replyingTo !== null) {
+      // Post as reply
+      replyCommentMutation.mutate({
+        slug,
+        author: newComment.author,
+        content: newComment.content,
+        password: newComment.password,
+        parent_id: replyingTo
+      });
+    } else {
+      // Post as regular comment
+      postCommentMutation.mutate({
+        slug,
+        author: newComment.author,
+        content: newComment.content,
+        password: newComment.password
+      });
+    }
     
     setIsSubmitting(false);
   };
 
   const handleInputChange = (field: 'author' | 'content' | 'password', value: string) => {
     setNewComment(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleReply = (commentId: number) => {
+    setReplyingTo(commentId);
+    // Scroll to comment form
+    const commentForm = document.querySelector(`.${styles.commentForm}`);
+    if (commentForm) {
+      commentForm.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleCancelReply = () => {
+    setReplyingTo(null);
+    setNewComment({ author: '', content: '', password: '' });
   };
 
   const handleEdit = (commentId: number) => {
@@ -369,6 +436,12 @@ export default memo(function Comments({ slug }: CommentsProps) {
             {t.edit}
           </button>
           <button 
+            onClick={() => handleReply(comment.id)}
+            className={styles.replyButton}
+          >
+            {t.reply}
+          </button>
+          <button 
             onClick={() => setShowDeleteModal(comment.id)}
             className={styles.deleteButton}
           >
@@ -384,6 +457,18 @@ export default memo(function Comments({ slug }: CommentsProps) {
       
       {/* Comment Form */}
       <form onSubmit={handleSubmit} className={styles.commentForm}>
+        {replyingTo !== null && (
+          <div className={styles.replyContext}>
+            <span>{t.replyTo} {comments.find(c => c.id === replyingTo)?.author}</span>
+            <button 
+              type="button"
+              onClick={handleCancelReply}
+              className={styles.cancelReplyButton}
+            >
+              {t.cancelReply}
+            </button>
+          </div>
+        )}
         <div className={styles.formGroup}>
           <label htmlFor="author" className={styles.label}>{t.nameLabel}</label>
           <input
@@ -425,10 +510,13 @@ export default memo(function Comments({ slug }: CommentsProps) {
         
         <button 
           type="submit" 
-          disabled={isSubmitting || postCommentMutation.isLoading}
+          disabled={isSubmitting || postCommentMutation.isLoading || replyCommentMutation.isLoading}
           className={styles.submitButton}
         >
-          {isSubmitting || postCommentMutation.isLoading ? t.posting : t.postComment}
+          {isSubmitting || postCommentMutation.isLoading || replyCommentMutation.isLoading 
+            ? (replyingTo !== null ? t.posting : t.posting) 
+            : (replyingTo !== null ? t.postReply : t.postComment)
+          }
         </button>
       </form>
 
