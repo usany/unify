@@ -268,11 +268,11 @@ export default memo(function Comments({ slug }: CommentsProps) {
   //   }
   // };
 
-  // const handleCancelEdit = () => {
-  //   setEditingComment(null);
-  //   setEditContent('');
-  //   setEditPassword('');
-  // };
+  const handleCancelEdit = () => {
+    setEditingComment(null);
+    setEditContent('');
+    setEditPassword('');
+  };
 
   // Delete comment mutation
   const deleteCommentMutation = useMutation(
