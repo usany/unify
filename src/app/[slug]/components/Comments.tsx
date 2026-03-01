@@ -1,4 +1,4 @@
-"use client";œ
+"use client";
 
 import React, { useState, memo } from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
