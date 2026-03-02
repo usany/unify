@@ -223,11 +223,30 @@
   border-left: 3px solid var(--bg-badge);
   padding-left: 1rem;
   margin-top: 1rem;
+  background: var(--bg-comment-reply);
 }
 
 .replies {
   margin-top: 1rem;
   padding-left: 1rem;
+}
+
+/* Nested reply indentation */
+.replies .comment {
+  margin-left: 1rem;
+}
+
+.replies .comment.reply {
+  margin-left: 0;
+}
+
+/* Multi-level nesting support */
+.replies .replies .comment {
+  margin-left: 1rem;
+}
+
+.replies .replies .comment.reply {
+  margin-left: 0;
 }
 
 .replyForm {

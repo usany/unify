@@ -385,14 +385,48 @@ export default memo(function Comments({ slug }: CommentsProps) {
     });
   };
 
-  const CommentItem = ({ comment }: { comment: Comment }) => {
+  // Organize comments hierarchically
+  const organizeComments = (comments: Comment[]): Comment[] => {
+    const commentMap = new Map<number, Comment & { replies: Comment[] }>();
+    const rootComments: (Comment & { replies: Comment[] })[] = [];
+
+    // First pass: create comment objects with empty replies array
+    comments.forEach(comment => {
+      commentMap.set(comment.id, { ...comment, replies: [] });
+    });
+
+    // Second pass: organize into hierarchy
+    comments.forEach(comment => {
+      const commentWithReplies = commentMap.get(comment.id)!;
+      
+      if (comment.reply_to) {
+        const parent = commentMap.get(comment.reply_to);
+        if (parent) {
+          parent.replies.push(commentWithReplies);
+        }
+      } else {
+        rootComments.push(commentWithReplies);
+      }
+    });
+
+    return rootComments;
+  };
+
+  const CommentItem = ({ comment, level = 0 }: { comment: Comment & { replies?: Comment[] }; level?: number }) => {
     const isEditing = editingComment === comment.id;
+    const isReply = comment.reply_to !== undefined;
+    const replies = comment.replies || [];
 
     return (
-      <div className={styles.comment}>
+      <div className={`${styles.comment} ${isReply ? styles.reply : ''}`}>
         <div className={styles.commentHeader}>
           <span className={styles.author}>{comment.author}</span>
           <div className={styles.commentMeta}>
+            {isReply && (
+              <span className={styles.replyBadge}>
+                {t.reply}
+              </span>
+            )}
             <span className={styles.timestamp}>
               {comment.updated_at && comment.updated_at !== comment.created_at
                 ? `Updated: ${new Date(comment.updated_at).toLocaleString()} (Created: ${new Date(comment.created_at).toLocaleString()})`
@@ -449,6 +483,15 @@ export default memo(function Comments({ slug }: CommentsProps) {
             {t.delete}
           </button>
         </div>
+
+        {/* Render replies */}
+        {replies.length > 0 && (
+          <div className={styles.replies}>
+            {replies.map(reply => (
+              <CommentItem key={reply.id} comment={reply} level={level + 1} />
+            ))}
+          </div>
+        )}
       </div>
     );
   };
@@ -542,7 +585,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
           {comments.length === 0 ? (
             <p className={styles.noComments}>{t.noComments}</p>
           ) : (
-            comments.map(comment => (
+            organizeComments(comments).map(comment => (
               <CommentItem key={comment.id} comment={comment} />
             ))
           )}
