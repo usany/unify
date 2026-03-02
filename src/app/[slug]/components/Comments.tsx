@@ -13,6 +13,7 @@ interface Comment {
   password?: string;
   created_at: string;
   updated_at?: string;
+  reply_to?: number;
 }
 
 interface CommentsProps {
