@@ -134,6 +134,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
       author: string;
       content: string;
       password: string;
+      reply_to?: number;
     }) => {
       const response = await fetch(`https://express-d1-app.ckd-qja.workers.dev/api/comments/${commentData.slug}`, {
         method: 'POST',
@@ -166,7 +167,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
       author: string;
       content: string;
       password: string;
-      reply_to: number;
+      reply_to?: number;
     }) => {
       const response = await fetch(`https://express-d1-app.ckd-qja.workers.dev/api/comments/${replyData.slug}`, {
         method: 'POST',
