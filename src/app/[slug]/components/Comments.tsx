@@ -327,7 +327,6 @@ export default memo(function Comments({ slug }: CommentsProps) {
   //     setError(t.passwordRequired);
   //     return;
   //   }
-    
   //   const comment = comments.find(c => c.id === commentId);
   //   if (comment) {
   //     setEditingComment(commentId);
