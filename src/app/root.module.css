@@ -96,7 +96,7 @@
 
 .cardLine {
   height: 8px;
-  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  background: linear-gradient(90deg, var(--text-main), var(--text-muted));
   border-radius: 4px;
   opacity: 0.6;
 }
@@ -230,7 +230,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: var(--bg-body);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
