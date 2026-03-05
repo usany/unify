@@ -44,7 +44,7 @@ export default function RootPage() {
           {translation.subtitle}
         </p>
       </section>
-      <section className={styles.hero}>
+      <section className={styles.heroContent}>
         <div className={styles.heroVisual}>
           <div className={styles.floatingCard}>
             <div className={styles.cardContent}>
