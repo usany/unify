@@ -37,11 +37,11 @@
 .buttonGroup {
   display: grid;
   gap: 0.75rem;
-  padding-top: 1.5rem;
+  /* padding-top: 1.5rem; */
   justify-content: center;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  max-width: 800px;
-  width: 100%;
+  /* max-width: 800px;
+  width: 100%; */
 }
 
 @media (min-width: 1024px) {
