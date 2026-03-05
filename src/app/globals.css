@@ -34,6 +34,7 @@
     --bg-tier-1: #f0fbe6;
     --bg-tier-2: #f0f4c3;
     --bg-tier-3: #e6ee9c;
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 [data-theme='dark'],
@@ -55,6 +56,9 @@
     --bg-tier-1: #415111;
     --bg-tier-2: #2d3e2d;
     --bg-tier-3: #1d2e1d;
+    --primary-color: #f9fafb;
+    --secondary-color: #d1d5db;
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 body {
