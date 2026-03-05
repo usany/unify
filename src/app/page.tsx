@@ -43,7 +43,7 @@ const translations = {
       },
       q3: {
         question: '서비스 개선에 대한 의견을 낼 수 있나요?',
-        answer: '서비스 개선 사항을 ahncb@khu.ac.kr으로 보내주세요. 어떠한 내용도 감사하게 받고 있습니다.'
+        answer: '서비스 개선 사항을 ahncb@khu.ac.kr으로 보내주세요. 어떠한 의견도 감사하게 받고 있습니다.'
       },
     },
   }
