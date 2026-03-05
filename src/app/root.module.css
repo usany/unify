@@ -254,13 +254,13 @@
   align-items: center;
   padding: 1.5rem;
   border-bottom: 1px solid #e5e7eb;
+  color: var(--text-primary);
 }
 
 .modalHeader h2 {
   margin: 0;
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--text-primary, #111827);
 }
 
 .closeButton {
@@ -287,15 +287,14 @@
   padding: 1.5rem;
   overflow-y: auto;
   max-height: calc(80vh - 100px);
+  color: var(--text-primary);
 }
 
 .modalBody div {
   margin-bottom: 1rem;
   line-height: 1.6;
-  color: var(--text-primary, #111827);
 }
 
 .modalBody div:first-child {
   font-weight: 600;
-  color: var(--primary, #6366f1);
 }
