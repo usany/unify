@@ -19,12 +19,12 @@ const translations = {
         answer: 'KHUSAN is an advanced AI-powered documentation platform that helps you create, manage, and search documentation efficiently.'
       },
       q2: {
-        question: 'How does the AI search work?',
-        answer: 'Our AI search uses natural language processing to understand your queries and provide relevant results from your documentation.'
+        question: 'Can anyone use KHUSAN?',
+        answer: 'Anyone can use KHUSAN at Seoul, International, and Gwangneung campuses.'
       },
       q3: {
-        question: 'Can I use KHUSAN for my team?',
-        answer: 'Yes! KHUSAN is designed for teams of all sizes with collaborative features and role-based access control.'
+        question: 'Want to withdraw from KHUSAN.',
+        answer: 'You can withdraw from the bottom of your profile.'
       }
     },
   },
@@ -38,12 +38,12 @@ const translations = {
         answer: '쿠우산은 문서를 효율적으로 생성, 관리 및 검색할 수 있도록 도와주는 고급 AI 기반 문서 플랫폼입니다.'
       },
       q2: {
-        question: 'AI 검색은 어떻게 작동하나요?',
-        answer: '당사의 AI 검색은 자연어 처리를 사용하여 쿼리를 이해하고 문서에서 관련 결과를 제공합니다.'
+        question: '누구나 쿠우산을 이용할 수 있나요?',
+        answer: '누구나 서울, 국제, 광릉 캠퍼스에서 쿠우산을 이용할 수 있습니다.'
       },
       q3: {
-        question: '팀에서 쿠우산을 사용할 수 있나요?',
-        answer: '네! 쿠우산은 협업 기능과 역할 기반 액세스 제어가 있는 모든 규모의 팀을 위해 설계되었습니다.'
+        question: '쿠우산을 탈퇴하고 싶습니다.',
+        answer: '내 프로필 하단에서 탈퇴를 진행할 수 있습니다.'
       }
     },
   }
