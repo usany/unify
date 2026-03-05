@@ -144,8 +144,8 @@
 }
 
 .faqItem {
-  background: var(--primary);
-  border: 1px solid var(--primary-hover);
+  background: var(--bg-tier-2);
+  border: 1px solid var(--primary);
   border-radius: 12px;
   margin-bottom: 1rem;
   overflow: hidden;

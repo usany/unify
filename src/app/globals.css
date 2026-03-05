@@ -39,8 +39,8 @@
 
 [data-theme='dark'],
 .dark {
-    --primary: #66bb6a;
-    --primary-hover: #81c784;
+    --primary: #81c784;
+    --primary-hover: #66bb6a;
     --bg-body: var(--bg-tier-3);
     --bg-topbar: var(--bg-tier-2);
     --bg-card: var(--bg-tier-3);
