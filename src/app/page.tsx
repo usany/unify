@@ -170,7 +170,7 @@ export default function RootPage() {
       {/* Footer */}
       <footer>
         <div className={styles.footerBottom}>
-          <p>&copy; 2024 KHUSAN. All rights reserved.</p>
+          <p>&copy; 2024 KHUSAN.</p>
           <button 
             className={styles.privacyLink}
             onClick={() => setShowPrivacyModal(true)} 
