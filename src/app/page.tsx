@@ -110,6 +110,7 @@ export default function RootPage() {
   const { language } = useLanguage();
   const translation = translations[language];
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
+  const [showPrivacyModal, setShowPrivacyModal] = useState(false);
     
   return (
     <>
@@ -165,10 +166,37 @@ export default function RootPage() {
       </section>
       
       {/* Footer */}
-      <footer className={styles.footer}>
-        <p>&copy; 2024 KHUSAN. All rights reserved.</p>
-        <p>개인정보처리방침</p>
+      <footer>
+        <div className={styles.footerBottom}>
+          <p>&copy; 2024 KHUSAN. All rights reserved.</p>
+          <button 
+            className={styles.privacyLink}
+            onClick={() => setShowPrivacyModal(true)}
+          >
+            개인정보처리방침
+          </button>
+        </div>
       </footer>
+      
+      {/* Privacy Policy Modal */}
+      {showPrivacyModal && (
+        <div className={styles.modalOverlay} onClick={() => setShowPrivacyModal(false)}>
+          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalHeader}>
+              <h2>개인정보처리방침</h2>
+              <button 
+                className={styles.closeButton}
+                onClick={() => setShowPrivacyModal(false)}
+              >
+                ×
+              </button>
+            </div>
+            <div className={styles.modalBody}>
+              {method}
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
