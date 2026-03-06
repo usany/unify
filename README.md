@@ -150,8 +150,8 @@ This is an [Next.js](https://nextjs.org) project connected to KHUSAN.
 - `/mail` POST account verification mail to a user
 - `/api/comments/:slug` GET comments of a specific slug page from DB
 - `/api/comments` POST a new comment slug page to DB
-- `/api/comments/:id` PUT or DELETE a comment
-- `/api/comments/verification/:id` POST password verification of a comment
+- `/api/comments/:id` PUT or DELETE a specific comment
+- `/api/comments/verification/:id` POST password verification of a specific comment
 
 serviceWithDeno
 
