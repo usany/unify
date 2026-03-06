@@ -132,10 +132,30 @@ Access KHUSAN (https://khusan.co.kr)
 A campus umbrella sharing app for KHU.
 
 KHUSAN is a PWA based on [Vite](https://vite.dev)+[React](https://react.dev).
+
 Currently available in
 * [Web: KHUSAN.co.kr](https://khusan.co.kr)
 * [Android: Onestore](https://m.onestore.co.kr/v2/ko-kr/app/0000776823),
 * [Windows: MS store](https://apps.microsoft.com/detail/9n7801hsf6vh?hl=en-US&gl=US),
 
-### Features
+sending
+
+HTTP Server for KHUSAN (https://khusan.co.kr)
+
+## Structure
+This is an [Next.js](https://nextjs.org) project connected to KHUSAN.
+
+### Routes
+- `/` GET health check
+- `/mail` POST account verification mail to a user
+- `/api/comments/:slug` GET comments of a specific slug page from DB
+- `/api/comments` POST a new comment slug page to DB
+- `/api/comments/:id` PUT or DELETE a comment
+- `/api/comments/verification/:id` POST password verification of a comment
+
+serviceWithDeno
+
+WebSocket Server for KHUSAN (https://khusan.co.kr)
+
+
 
