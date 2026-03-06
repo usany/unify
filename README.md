@@ -113,7 +113,7 @@ This is a [Next.js](https://nextjs.org) project explaining usage of [KHUSAN](htt
 
 ### Contents
 
-- Platform
+- Platform: How to access KHUSAN
 - Status: Where you can check ongoing cards and conversations
 - Register: Allows you to register a sharing card so other users can see
 - Board: Shows registered cards
