@@ -103,21 +103,39 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-Access to KHUSAN Documentation (https://maps.khusan.co.kr)
+unify
+
+Access KHUSAN Documentation (https://maps.khusan.co.kr)
 
 ## KHUSAN Documentation
 
-This is a [Next.js](https://nextjs.org) project explaining how to use [KHUSAN](https://khusan.co.kr).
+This is a [Next.js](https://nextjs.org) project explaining usage of [KHUSAN](https://khusan.co.kr).
 
 ### Contents
 
 - Platform
-- Status
-- Register
-- Board
-- Profile
-- Search
-- Chat
-- Exhibition
-- Report
-- Playlist
+- Status: Where you can check ongoing cards and conversations
+- Register: Allows you to register a sharing card so other users can see
+- Board: Shows registered cards
+- Profile: Shows user profiles
+- Search: Allows you to search for users
+- Chat: Allows conversations with other users
+- Exhibition: Allows you to register umbrella images
+- Report: Allows you to report problems encountered while using the service
+- Playlist: Umbrella playlist
+
+usany.github.io
+
+Access KHUSAN (https://khusan.co.kr)
+
+## KHUSAN
+A campus umbrella sharing app for KHU.
+
+KHUSAN is a PWA based on [Vite](https://vite.dev)+[React](https://react.dev).
+Currently available in
+* [Web: KHUSAN.co.kr](https://khusan.co.kr)
+* [Android: Onestore](https://m.onestore.co.kr/v2/ko-kr/app/0000776823),
+* [Windows: MS store](https://apps.microsoft.com/detail/9n7801hsf6vh?hl=en-US&gl=US),
+
+### Features
+
