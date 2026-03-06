@@ -168,10 +168,10 @@ This is an [Next.js](https://nextjs.org) project connected to KHUSAN.
 
 - `/api/comments/verification/:id` POST password verification of a specific comment
   - request schema validation
+
     const VerifyPasswordSchema = zod.object({
       password: zod.string().min(1, 'Password is required').max(50, 'Password too long')
     });
-
 
 - `/api/comments/:id` PUT or DELETE a specific comment
   - request schema validation
