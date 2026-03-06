@@ -157,17 +157,25 @@ This is an [Next.js](https://nextjs.org) project connected to KHUSAN.
 - `/api/comments/:slug` GET comments of a specific slug page from DB    
 - `/api/comments` POST a new comment slug page to DB
   - request schema validation
-  const CreateCommentSchema = zod.object({
-    slug: zod.string().min(1, 'Slug is required'),
-    author: zod.string().min(1, 'Author name is required').max(100, 'Author name too long'),
-    content: zod.string().min(1, 'Content is required').max(1000, 'Content too long'),
-    password: zod.string().min(1, 'Password is required').max(50, 'Password too long'),
-    reply_to: zod.number().optional()
-  });
+
+    const CreateCommentSchema = zod.object({
+      slug: zod.string().min(1, 'Slug is required'),
+      author: zod.string().min(1, 'Author name is required').max(100, 'Author name too long'),
+      content: zod.string().min(1, 'Content is required').max(1000, 'Content too long'),
+      password: zod.string().min(1, 'Password is required').max(50, 'Password too long'),
+      reply_to: zod.number().optional()
+    });
 
 - `/api/comments/verification/:id` POST password verification of a specific comment
-- `/api/comments/:id` PUT or DELETE a specific comment
+  - request schema validation
+    const VerifyPasswordSchema = zod.object({
+      password: zod.string().min(1, 'Password is required').max(50, 'Password too long')
+    });
 
+
+- `/api/comments/:id` PUT or DELETE a specific comment
+  - request schema validation
+  
 serviceWithDeno
 
 WebSocket Server for KHUSAN (https://khusan.co.kr)
