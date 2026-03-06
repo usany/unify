@@ -105,7 +105,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ## KHUSAN Documentation
 
-This is [Next.js](https://nextjs.org) project explaining how to use [`KHUSAN`](https://khusan.co.kr).
+This is a [Next.js](https://nextjs.org) project explaining how to use [KHUSAN](https://khusan.co.kr).
 
 ### Contents
 
