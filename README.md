@@ -109,4 +109,13 @@ This is [Next.js](https://nextjs.org) project explaining how to use [`KHUSAN`](h
 
 ### Contents
 
-- 
+- Platform
+- Status
+- Register
+- Board
+- Profile
+- Search
+- Chat
+- Exhibition
+- Report
+- Playlist
