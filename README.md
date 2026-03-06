@@ -145,15 +145,17 @@ HTTP Server for KHUSAN (https://khusan.co.kr)
 ## Routes
 This is an [Next.js](https://nextjs.org) project connected to KHUSAN.
 - `/` GET health check
-    - request schema validation
+  - request schema validation
 
-      const EmailRequestSchema = zod.object({
-        to: zod.string().email('Invalid email address'),
-        number: zod.string().min(1, 'Number is required'),
-        language: zod.enum(['ko', 'en']).default('en')
-      });
 
 - `/mail` POST account verification mail to a user
+  - request schema validation
+  
+  const EmailRequestSchema = zod.object({
+    to: zod.string().email('Invalid email address'),
+    number: zod.string().min(1, 'Number is required'),
+    language: zod.enum(['ko', 'en']).default('en')
+  });
 - `/api/comments/:slug` GET comments of a specific slug page from DB
 - `/api/comments` POST a new comment slug page to DB
 - `/api/comments/verification/:id` POST password verification of a specific comment
