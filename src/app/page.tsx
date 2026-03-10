@@ -64,7 +64,8 @@ const method = <>
             <div>
               정보주체는 브라우저 옵션 설정을 통해 쿠키 허용, 차단 등의 설정을
               할 수 있습니다.
-            </div></>
+            </div>
+          </>
 const translations = {
   en: {
     title: 'KHUSAN Instructions',
