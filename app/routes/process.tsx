@@ -158,6 +158,12 @@ export default function Process() {
               </button>
             </div>
           )}
+          {vehicle === 'shuttle' && (
+            <div className='flex flex-col items-center'>
+              <div>학기 중 공휴일, 휴무일을 제외한 평일</div>
+              <div>요금: 2000원</div>
+            </div>
+          )}
           {vehicle === 'commute' && (
             <div className='flex flex-col items-center'>
               <div>학기 중 공휴일, 휴무일을 제외한 평일</div>
