@@ -67,11 +67,10 @@ export default function Process() {
   const getProcessSteps = (vehicleType: string) => {
     const steps: { [key: string]: (string | { id: number; nameKo: string; nameEn: string; })[] } = {
       busOne: [
-        "Start the car engine",
-        "Enter destination in GPS", 
-        "Follow the route",
-        "Park at destination",
-        "Arrive at " + destination
+        "회기역",
+        "경희대입구", 
+        "의료원입구사거리",
+        "경희의료원",
       ],
       busTwo: [
         "Go to the train station",
