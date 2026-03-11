@@ -7,6 +7,7 @@ export default function Process() {
   const destination = searchParams.get("destination");
   const from = searchParams.get("from");
   const [busData, setBusData] = useState<{ [key: number]: any }>({});
+  const [timeUntilNextFetch, setTimeUntilNextFetch] = useState(60);
 
   const fetchStep = async (id: number) => {
     const response = await fetch(`https://apis.data.go.kr/6410000/busarrivalservice/v2/getBusArrivalListv2?serviceKey=2285040a0cf11847ddd747ab39d20eb723e34a91e8d5fb404b9034c8e6e71d97&stationId=${id}&format=json`);
@@ -17,13 +18,37 @@ export default function Process() {
 
   useEffect(() => {
     if (vehicle === 'bus') {
-      const steps = getProcessSteps(vehicle);
-      steps.forEach(async (step) => {
-        if (typeof step !== 'string' && step.id) {
-          const data = await fetchStep(step.id);
-          setBusData(prev => ({ ...prev, [step.id]: data }));
-        }
-      });
+      const fetchBusData = async () => {
+        const steps = getProcessSteps(vehicle);
+        steps.forEach(async (step) => {
+          if (typeof step !== 'string' && step.id) {
+            const data = await fetchStep(step.id);
+            setBusData(prev => ({ ...prev, [step.id]: data }));
+          }
+        });
+        // Reset countdown when fetch completes
+        setTimeUntilNextFetch(60);
+      };
+
+      // Fetch immediately
+      fetchBusData();
+      
+      // Then fetch every minute (60000 milliseconds)
+      const interval = setInterval(fetchBusData, 60000);
+
+      // Countdown timer - update every second
+      const countdownInterval = setInterval(() => {
+        setTimeUntilNextFetch(prev => {
+          if (prev <= 1) return 60; // Reset when reaching 0
+          return prev - 1;
+        });
+      }, 1000);
+
+      // Cleanup intervals on component unmount
+      return () => {
+        clearInterval(interval);
+        clearInterval(countdownInterval);
+      };
     }
   }, [vehicle]);
 
@@ -123,6 +148,13 @@ export default function Process() {
 
         <div className="space-y-6">
           <h2 className="text-2xl font-semibold mb-6">Journey Progress:</h2>
+          {vehicle === 'bus' && (
+            <div className="text-center mb-4">
+              <p className="text-sm text-gray-600">
+                Next data update in: <span className="font-semibold text-blue-600">{timeUntilNextFetch}s</span>
+              </p>
+            </div>
+          )}
           <div className="relative flex justify-center">
             <div className="absolute left-8 top-0 bottom-0 w-1 bg-gray-300 dark:bg-gray-600"></div>
             <div className="relative space-y-8">
