@@ -7,6 +7,12 @@ const process = {
   shuttle: '캠퍼스 셔틀버스',
   commute: '영통역 통학버스'
 } as { [key: string]: string };
+const commuteTime = [
+  "8:45am",
+  "10:00am",
+  "1:00pm",
+  "6:00pm",
+] as string[];
 export default function Process() {
   const [searchParams] = useSearchParams();
   const vehicle = searchParams.get("vehicle");
@@ -99,12 +105,11 @@ export default function Process() {
         {id: 228000703 , nameKo: "체육대", nameEn: "KHU Physical Education College.Foreign University"},
         {id: 203000125 , nameKo: "정문 건너편", nameEn: "KHU"}
       ],
-      taxi: [
-        "Call or hail a taxi",
-        "Tell driver the destination",
-        "Ride to " + destination,
-        "Pay the fare",
-        "Arrive at destination"
+      commute: [
+        "영통역 1번 출구-외국어대학-생명과학대학-사색의 광장",
+        "영통역 1번 출구-외국어대학-생명과학대학-사색의 광장",
+        "영통역 1번 출구-외국어대학-생명과학대학-사색의 광장",
+        "사색의 광장-생명과학대학-외국어대학-영통역 1번 출구",
       ],
       walking: [
         "Check the route",
@@ -157,11 +162,11 @@ export default function Process() {
             <div className="absolute left-8 top-0 bottom-0 w-1 bg-gray-300 dark:bg-gray-600"></div>
             <div className="relative space-y-8">
               {steps.map((step, index) => {
-                if (vehicle === "bus") {
+                if (vehicle === "commute") {
                   return (
                     <div key={index} className="flex items-center space-x-6">
-                      <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold text-lg z-10">
-                        {index + 1}
+                      <div className="w-18 h-16 bg-blue-600 text-white rounded-md flex items-center justify-center font-semibold text-md z-10">
+                        {commuteTime[index]}
                       </div>
                       <div className="text-left max-w-md">
                         <p className="text-lg font-medium">
