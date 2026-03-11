@@ -35,7 +35,7 @@ export default function Process() {
   };
 
   useEffect(() => {
-    if (vehicle === 'bus') {
+    if (vehicle === 'busTo' || vehicle === 'busFrom') {
       // Fetch immediately
       fetchBusData();
       
@@ -140,7 +140,7 @@ export default function Process() {
 
         <div className="space-y-6">
           <h2 className="text-2xl font-semibold mb-6">{process[vehicle]}</h2>
-          {vehicle === 'bus' && (
+          {vehicle !== 'bus' && (
             <div className="text-center mb-4">
               <p className="text-sm text-gray-600 mb-2">
                 Next data update in: <span className="font-semibold text-blue-600">{timeUntilNextFetch}s</span>
@@ -157,7 +157,7 @@ export default function Process() {
             <div className="absolute left-8 top-0 bottom-0 w-1 bg-gray-300 dark:bg-gray-600"></div>
             <div className="relative space-y-8">
               {steps.map((step, index) => {
-                if (vehicle !== "bus") {
+                if (vehicle === "bus") {
                   return (
                     <div key={index} className="flex items-center space-x-6">
                       <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold text-lg z-10">
