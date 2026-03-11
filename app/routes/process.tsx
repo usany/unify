@@ -2,8 +2,9 @@ import { useSearchParams, Link } from "react-router";
 import { useState, useEffect } from "react";
 
 const process = {
-  bike: '외국어대-사색의 광장',
-  bus: '사색의 광장-정문 건너편',
+  busTo: '외국어대-사색의 광장',
+  busFrom: '사색의 광장-정문 건너편',
+  shuttle: '캠퍼스 셔틀버스'
 }
 export default function Process() {
   const [searchParams] = useSearchParams();
@@ -138,7 +139,7 @@ export default function Process() {
         </h1>
 
         <div className="space-y-6">
-          <h2 className="text-2xl font-semibold mb-6">사색의 광장 - 정문 건너편</h2>
+          <h2 className="text-2xl font-semibold mb-6">{process[vehicle]}</h2>
           {vehicle === 'bus' && (
             <div className="text-center mb-4">
               <p className="text-sm text-gray-600 mb-2">
