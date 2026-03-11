@@ -22,7 +22,7 @@ export default function Process() {
   }
 
   const fetchBusData = async () => {
-    if (vehicle !== 'bus') return;
+    // if (vehicle !== 'bus') return;
     const steps = getProcessSteps(vehicle);
     steps.forEach(async (step) => {
       if (typeof step !== 'string' && step.id) {
