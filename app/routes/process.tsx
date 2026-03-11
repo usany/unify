@@ -22,7 +22,6 @@ export default function Process() {
   }
 
   const fetchBusData = async () => {
-    // if (vehicle !== 'bus') return;
     const steps = getProcessSteps(vehicle);
     steps.forEach(async (step) => {
       if (typeof step !== 'string' && step.id) {
@@ -37,7 +36,7 @@ export default function Process() {
   useEffect(() => {
     if (vehicle === 'busTo' || vehicle === 'busFrom') {
       // Fetch immediately
-      fetchBusData();
+      fetchBusData();x
       
       // Then fetch every minute (60000 milliseconds)
       const interval = setInterval(fetchBusData, 60000);
