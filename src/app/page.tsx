@@ -7,6 +7,9 @@ import links from 'links';
 import { Button } from '@mui/material';
 import RainAnimation from '@/components/RainAnimation';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { Umbrella, User } from 'lucide-react';
+import secl from '@/assets/cl.jpeg';
 const method = <>
             <div>
               쿠우산KHUSAN은 다음의 목적을 위하여 개인정보를 처리합니다.
@@ -135,9 +138,28 @@ export default function RootPage() {
         <div className={styles.heroVisual}>
           <div className={styles.floatingCard}>
             <div className={styles.cardContent}>
+              <div className={styles.cardHeader}>
+                <Image
+                  src="/favicons.png"
+                  alt="KHUSAN"
+                  width={84}
+                  height={24}
+                />
+                <Image
+                  src={secl}
+                  alt="KHUSAN"
+                  width={84}
+                  height={24}
+                />
+              </div>
+              <div className={styles.cardHeader}>
+                <User />
+                <Umbrella />
+                <User />
+              </div>
+              {/* <div className={styles.cardLine}></div>
               <div className={styles.cardLine}></div>
-              <div className={styles.cardLine}></div>
-              <div className={styles.cardLine}></div>
+              <div className={styles.cardLine}></div> */}
             </div>
           </div>
         </div>
