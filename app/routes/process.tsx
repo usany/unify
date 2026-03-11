@@ -127,7 +127,10 @@ export default function Process() {
                     </div>
                   )
                 }
-                const fetched = await fetchStep(step.id);
+                const fetched = fetchStep(step.id);
+                console.log(fetched)
+                console.log('practices')
+                // console.log(fetched)
                 // const fetchedData = fetched.map(fetchedItem => {
                 //   console.log(fetchedItem)
                 //   return fetchedItem;
