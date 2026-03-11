@@ -187,7 +187,7 @@ export default function Process() {
                           const predictTime1 = data.predictTime1;
                           return (
                             <p key={index} className="text-sm text-gray-600 mt-1">
-                              Bus data: {JSON.stringify(routeName)}
+                              Bus data: {routeName}
                               <br />
                               {predictTime1 ? `${predictTime1}분 전` : '대기'}
                             </p>
