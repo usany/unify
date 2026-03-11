@@ -35,7 +35,7 @@ export default function TopBar() {
       <div className={styles.topBar}>
         <Link href="/" className={styles.homeButton}>
           <Image
-            src="/faviconImage.png"
+            src="/favicons.png"
             alt="KHUSAN"
             width={84}
             height={24}
