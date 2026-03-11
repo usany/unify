@@ -128,18 +128,6 @@ export default function Process() {
   }
 
   const steps = getProcessSteps(vehicle);
-  // const stepsObj = steps.map((step) => {
-  //   return {
-  //     step,
-  //     fetchStep: () => fetchStep(typeof step === 'object' ? step.id : 0)
-  //   }
-  // })
-  // if (vehicle === 'bus') {
-  //   (() => {
-  //     const fetched = steps['bus'].map((step) => step.fetched());
-  //     console.log(fetched);
-  //   })();
-  // }
   return (
     <div className="flex items-center justify-center min-h-screen pb-24">
       <div className="text-center max-w-2xl mx-auto p-8">
@@ -201,7 +189,7 @@ export default function Process() {
                             <p key={index} className="text-sm text-gray-600 mt-1">
                               Bus data: {JSON.stringify(routeName)}
                               <br />
-                              {JSON.stringify(predictTime1)}
+                              {predictTime1 ? `${predictTime1}분 전` : '대기'}
                             </p>
                           )
                         })
