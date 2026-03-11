@@ -16,20 +16,21 @@ export default function Process() {
     return res;
   }
 
+  const fetchBusData = async () => {
+    if (vehicle !== 'bus') return;
+    const steps = getProcessSteps(vehicle);
+    steps.forEach(async (step) => {
+      if (typeof step !== 'string' && step.id) {
+        const data = await fetchStep(step.id);
+        setBusData(prev => ({ ...prev, [step.id]: data }));
+      }
+    });
+    // Reset countdown when fetch completes
+    setTimeUntilNextFetch(60);
+  };
+
   useEffect(() => {
     if (vehicle === 'bus') {
-      const fetchBusData = async () => {
-        const steps = getProcessSteps(vehicle);
-        steps.forEach(async (step) => {
-          if (typeof step !== 'string' && step.id) {
-            const data = await fetchStep(step.id);
-            setBusData(prev => ({ ...prev, [step.id]: data }));
-          }
-        });
-        // Reset countdown when fetch completes
-        setTimeUntilNextFetch(60);
-      };
-
       // Fetch immediately
       fetchBusData();
       
@@ -150,9 +151,15 @@ export default function Process() {
           <h2 className="text-2xl font-semibold mb-6">Journey Progress:</h2>
           {vehicle === 'bus' && (
             <div className="text-center mb-4">
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-gray-600 mb-2">
                 Next data update in: <span className="font-semibold text-blue-600">{timeUntilNextFetch}s</span>
               </p>
+              <button
+                onClick={fetchBusData}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+              >
+                Refresh Now
+              </button>
             </div>
           )}
           <div className="relative flex justify-center">
