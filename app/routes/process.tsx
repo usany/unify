@@ -6,6 +6,13 @@ export default function Process() {
   const destination = searchParams.get("destination");
   const from = searchParams.get("from");
 
+  const fetchStep = async (id: number) => {
+    const response = await fetch(`https://apis.data.go.kr/6410000/busarrivalservice/v2/getBusArrivalListv2?serviceKey=2285040a0cf11847ddd747ab39d20eb723e34a91e8d5fb404b9034c8e6e71d97&stationId=${id}&format=json`);
+    const data = await response.json()
+    const res = data.response.body.items.item;
+    return res;
+  }
+
   const getProcessSteps = (vehicleType: string) => {
     const steps: { [key: string]: (string | { id: number; nameKo: string; nameEn: string; })[] } = {
       car: [
@@ -44,10 +51,10 @@ export default function Process() {
         "Arrive at " + destination
       ],
       bus: [
-        {id: 228001174, nameKo: "사색의 광장", nameEn: "Sasakomaru Square"},
-        {id: 228000704 , nameKo: "생명과학대.산업대학", nameEn: "Life Science College.Industrial College"},
-        {id: 228000703 , nameKo: "경희대체육대학.외대", nameEn: "KHU Physical Education College.Foreign University"},
-        {id: 203000125 , nameKo: "경희대학교", nameEn: "KHU"}
+        (() => { const id = 228001174; return {id, nameKo: "사색의 광장", nameEn: "Sasakomaru Square", fetched: () => fetchStep(id)}; })(),
+        (() => { const id = 228000704; return {id, nameKo: "생명과학대.산업대학", nameEn: "Life Science College.Industrial College", fetched: () => fetchStep(id)}; })(),
+        (() => { const id = 228000703; return {id, nameKo: "경희대체육대학.외대", nameEn: "KHU Physical Education College.Foreign University", fetched: () => fetchStep(id)}; })(),
+        (() => { const id = 203000125; return {id, nameKo: "경희대학교", nameEn: "KHU", fetched: () => fetchStep(id)}; })()
       ],
       taxi: [
         "Call or hail a taxi",
@@ -81,17 +88,18 @@ export default function Process() {
   }
 
   const steps = getProcessSteps(vehicle);
-  const stepsObj = steps.map((step) => {
-    const fetchStep = async () => {
-      const response = await fetch(`https://apis.data.go.kr/6410000/busarrivalservice/v2/getBusArrivalListv2?serviceKey=2285040a0cf11847ddd747ab39d20eb723e34a91e8d5fb404b9034c8e6e71d97&stationId=${step.id}&format=json`);
-      const data = await response.json();
-      return data;
-    }
-    return {
-      step,
-      fetchStep
-    }
-  })
+  // const stepsObj = steps.map((step) => {
+  //   return {
+  //     step,
+  //     fetchStep: () => fetchStep(typeof step === 'object' ? step.id : 0)
+  //   }
+  // })
+  // if (vehicle === 'bus') {
+  //   (() => {
+  //     const fetched = steps['bus'].map((step) => step.fetched());
+  //     console.log(fetched);
+  //   })();
+  // }
   return (
     <div className="flex items-center justify-center min-h-screen pb-24">
       <div className="text-center max-w-2xl mx-auto p-8">
@@ -119,6 +127,8 @@ export default function Process() {
                     </div>
                   )
                 }
+                const fetched = step.fetched();
+                console.log(fetched)
                 return (
                   <div key={index} className="flex items-center space-x-6">
                     <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold text-lg z-10">
