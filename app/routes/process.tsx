@@ -7,7 +7,7 @@ export default function Process() {
   const from = searchParams.get("from");
 
   const getProcessSteps = (vehicleType: string) => {
-    const steps: { [key: string]: string[] } = {
+    const steps: { [key: string]: (string | { id: number; nameKo: string; nameEn: string; })[] } = {
       car: [
         "Start the car engine",
         "Enter destination in GPS", 
@@ -44,11 +44,10 @@ export default function Process() {
         "Arrive at " + destination
       ],
       bus: [
-        "Go to the bus stop",
-        "Wait for the bus",
-        "Board and pay fare",
-        "Ride to destination",
-        "Get off at " + destination
+        {id: 228001174, nameKo: "사색의 광장", nameEn: "Sasakomaru Square"},
+        {id: 228000704 , nameKo: "생명과학대.산업대학", nameEn: "Life Science College.Industrial College"},
+        {id: 228000703 , nameKo: "경희대체육대학.외대", nameEn: "KHU Physical Education College.Foreign University"},
+        {id: 203000125 , nameKo: "경희대학교", nameEn: "KHU"}
       ],
       taxi: [
         "Call or hail a taxi",
@@ -82,7 +81,17 @@ export default function Process() {
   }
 
   const steps = getProcessSteps(vehicle);
-
+  const stepsObj = steps.map((step) => {
+    const fetchStep = async () => {
+      const response = await fetch(`https://apis.data.go.kr/6410000/busarrivalservice/v2/getBusArrivalListv2?serviceKey=2285040a0cf11847ddd747ab39d20eb723e34a91e8d5fb404b9034c8e6e71d97&stationId=${step.id}&format=json`);
+      const data = await response.json();
+      return data;
+    }
+    return {
+      step,
+      fetchStep
+    }
+  })
   return (
     <div className="flex items-center justify-center min-h-screen pb-24">
       <div className="text-center max-w-2xl mx-auto p-8">
@@ -95,16 +104,34 @@ export default function Process() {
           <div className="relative flex justify-center">
             <div className="absolute left-8 top-0 bottom-0 w-1 bg-gray-300 dark:bg-gray-600"></div>
             <div className="relative space-y-8">
-              {steps.map((step, index) => (
-                <div key={index} className="flex items-center space-x-6">
-                  <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold text-lg z-10">
-                    {index + 1}
+              {steps.map((step, index) => {
+                if (vehicle !== "bus") {
+                  return (
+                    <div key={index} className="flex items-center space-x-6">
+                      <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold text-lg z-10">
+                        {index + 1}
+                      </div>
+                      <div className="text-left max-w-md">
+                        <p className="text-lg font-medium">
+                          {typeof step === 'string' ? step : `${step.nameKo} (${step.nameEn})`}
+                        </p>
+                      </div>
+                    </div>
+                  )
+                }
+                return (
+                  <div key={index} className="flex items-center space-x-6">
+                    <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold text-lg z-10">
+                      {index + 1}
+                    </div>
+                    <div className="text-left max-w-md">
+                      <p className="text-lg font-medium">
+                        {typeof step === 'string' ? step : `${step.nameKo} (${step.nameEn})`}
+                      </p>
+                    </div>
                   </div>
-                  <div className="text-left max-w-md">
-                    <p className="text-lg font-medium">{step}</p>
-                  </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </div>
         </div>
