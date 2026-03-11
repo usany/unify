@@ -106,8 +106,8 @@ export default function Process() {
         {id: 203000125 , nameKo: "정문 건너편", nameEn: "KHU"}
       ],
       shuttle: [
-        "Check the route",
-        "Start walking",
+        "사색의 광장-생명과학대학-체육대학-온실",
+        "온실-외국어대학-생명과학대학-사색의 광장",
         "Follow the path",
         "Enjoy the journey",
         "Arrive at " + destination
