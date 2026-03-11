@@ -163,9 +163,11 @@ export default function Process() {
             <div className="relative space-y-8">
               {steps.map((step, index) => {
                 if (vehicle === "commute") {
+                  const currentHour = new Date().getHours();
+                  const isNightTime = currentHour >= 18 || currentHour < 6;
                   return (
                     <div key={index} className="flex items-center space-x-6">
-                      <div className="w-18 h-16 bg-blue-600 text-white rounded-md flex items-center justify-center font-semibold text-md z-10">
+                      <div className={`w-18 h-16 ${isNightTime ? 'bg-green-600' : 'bg-blue-600'} text-white rounded-md flex items-center justify-center font-semibold text-md z-10`}>
                         {commuteTime[index]}
                       </div>
                       <div className="text-left max-w-md">
