@@ -181,7 +181,10 @@ export default function Process() {
                   }
                   return (
                     <>
-                      <div className='flex justify-center'>학기 중 공휴일, 휴무일을 제외한 평일</div>
+                      <div className='flex flex-col items-center'>
+                        <div>학기 중 공휴일, 휴무일을 제외한 평일</div>
+                        <div>요금: 무료</div>
+                      </div>
                       <div key={index} className="flex items-center space-x-6">
                         <div className={`w-18 h-16 ${nextBus <= index ? 'bg-blue-600' : 'bg-gray-600'} text-white rounded-md flex items-center justify-center font-semibold text-md z-10`}>
                           {commuteTime[index]}
