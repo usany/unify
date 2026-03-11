@@ -105,18 +105,18 @@ export default function Process() {
         {id: 228000703 , nameKo: "체육대", nameEn: "KHU Physical Education College.Foreign University"},
         {id: 203000125 , nameKo: "정문 건너편", nameEn: "KHU"}
       ],
-      commute: [
-        "영통역 1번 출구-외국어대학-생명과학대학-사색의 광장",
-        "영통역 1번 출구-외국어대학-생명과학대학-사색의 광장",
-        "영통역 1번 출구-외국어대학-생명과학대학-사색의 광장",
-        "사색의 광장-생명과학대학-외국어대학-영통역 1번 출구",
-      ],
-      walking: [
+      shuttle: [
         "Check the route",
         "Start walking",
         "Follow the path",
         "Enjoy the journey",
         "Arrive at " + destination
+      ],
+      commute: [
+        "영통역 1번 출구-외국어대학-생명과학대학-사색의 광장",
+        "영통역 1번 출구-외국어대학-생명과학대학-사색의 광장",
+        "영통역 1번 출구-외국어대학-생명과학대학-사색의 광장",
+        "사색의 광장-생명과학대학-외국어대학-영통역 1번 출구",
       ],
     };
     return steps[vehicleType] || [];
@@ -160,8 +160,8 @@ export default function Process() {
           )}
           {vehicle === 'shuttle' && (
             <div className='flex flex-col items-center'>
-              <div>학기 중 공휴일, 휴무일을 제외한 평일</div>
-              <div>요금: 2000원</div>
+              <div>공휴일, 휴무일을 제외한 평일</div>
+              <div>요금: 페이코 승차권 예약 2000원</div>
             </div>
           )}
           {vehicle === 'commute' && (
