@@ -174,7 +174,36 @@ export default function Process() {
             <div className="absolute left-8 top-0 bottom-0 w-1 bg-gray-300 dark:bg-gray-600"></div>
             <div className="relative space-y-8">
               {steps.map((step, index) => {
-                if (vehicle === "commute") {
+                if (vehicle === "shuttle") {
+                  const currentHour = new Date().getHours();
+                  const currentMinute = new Date().getMinutes();
+                  let nextBus = 4
+                  if (currentHour >= 6 && currentHour <= 8) {
+                    if (currentHour === 8 && currentMinute >= 45) {
+                      nextBus = 1
+                    } else {
+                      nextBus = 0
+                    }
+                  } else if (currentHour > 8 && currentHour < 10) {
+                    nextBus = 1
+                  } else if (currentHour >= 10 && currentHour < 13) {
+                    nextBus = 2
+                  } else if (currentHour >= 13 && currentHour < 18) {
+                    nextBus = 3
+                  }
+                  return (
+                    <div key={index} className="flex items-center space-x-6">
+                      <div className={`w-18 h-16 ${nextBus <= index ? 'bg-blue-600' : 'bg-gray-600'} text-white rounded-md flex items-center justify-center font-semibold text-md z-10`}>
+                        {commuteTime[index]}
+                      </div>
+                      <div className="text-left max-w-md">
+                        <p className="text-lg font-medium">
+                          {typeof step === 'string' ? step : `${step.nameKo} (${step.nameEn})`}
+                        </p>
+                      </div>
+                    </div>
+                  )
+                } else if (vehicle === "commute") {
                   const currentHour = new Date().getHours();
                   const currentMinute = new Date().getMinutes();
                   let nextBus = 4
