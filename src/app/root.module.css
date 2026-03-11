@@ -34,6 +34,12 @@
   font-weight: 500;
 }
 
+.buttonContent {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .buttonGroup {
   display: grid;
   gap: 0.75rem;
@@ -90,7 +96,7 @@
 .cardHeader {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 3.75rem;
   justify-content: center;
 }
 .cardContent {

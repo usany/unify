@@ -8,7 +8,7 @@ import { Button } from '@mui/material';
 import RainAnimation from '@/components/RainAnimation';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { Umbrella, User } from 'lucide-react';
+import { Umbrella, User, UserCheck, UserCircle, Users } from 'lucide-react';
 import secl from '@/assets/cl.jpeg';
 const method = <>
             <div>
@@ -130,7 +130,10 @@ export default function RootPage() {
       <div className={`${styles.buttonGroup}`}>
         {links[language].map((link: LinkItem, index: number) => (
           <Button key={index} href={link.href} variant='outlined' className={'colorOne'}>
-            {link.label}
+            <div className={styles.buttonContent}>
+              {link.icon}
+              {link.label}
+            </div>
           </Button>
         ))}
       </div>
@@ -193,7 +196,7 @@ export default function RootPage() {
       {/* Footer */}
       <footer>
         <div className={styles.footerBottom}>
-          <p>&copy; 2024 KHUSAN.</p>
+          <p>&copy; 2026 KHUSAN.</p>
           <button 
             className={styles.privacyLink}
             onClick={() => setShowPrivacyModal(true)} 
