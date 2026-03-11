@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 const process = {
   busTo: '외국어대-사색의 광장',
   busFrom: '사색의 광장-정문 건너편',
-  shuttle: '캠퍼스 셔틀버스'
+  shuttle: '캠퍼스 셔틀버스',
+  commute: '영통역 통학버스'
 } as { [key: string]: string };
 export default function Process() {
   const [searchParams] = useSearchParams();

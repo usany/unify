@@ -38,13 +38,13 @@ export default function PlaceTwo() {
               <span className="font-medium">캠퍼스 셔틀버스</span>
             </a>
             <a
-              href="/process?vehicle=walking&destination=Place One&from=Place Two"
+              href="/process?vehicle=commute&destination=Place One&from=Place Two"
               className="flex flex-col items-center p-6 bg-teal-100 dark:bg-teal-900/30 rounded-lg hover:bg-teal-200 dark:hover:bg-teal-900/50 transition-colors"
             >
               <svg className="w-12 h-12 mb-2 text-teal-600 dark:text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
               </svg>
-              {/* <span className="font-medium">Walking</span> */}
+              <span className="font-medium">영통역 통학버스</span>
             </a>
           </div>
         </div>
