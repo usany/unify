@@ -8,7 +8,7 @@ import { Button } from '@mui/material';
 import RainAnimation from '@/components/RainAnimation';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { Umbrella, User, UserCheck, UserCircle, Users } from 'lucide-react';
+import { Umbrella, User2, Users2 } from 'lucide-react';
 import secl from '@/assets/cl.jpeg';
 const method = <>
             <div>
@@ -156,9 +156,9 @@ export default function RootPage() {
                 />
               </div>
               <div className={styles.cardHeader}>
-                <User />
+                <User2 />
                 <Umbrella />
-                <User />
+                <Users2 />
               </div>
               {/* <div className={styles.cardLine}></div>
               <div className={styles.cardLine}></div>
