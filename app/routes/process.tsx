@@ -118,7 +118,7 @@ export default function Process() {
           </Link>
           <div className="mt-4">
             <Link
-              to={from || "/"}
+              to={from === "Place One" ? "/place-one" : from === "Place Two" ? "/place-two" : "/"}
               className="text-gray-600 hover:text-gray-800 underline"
             >
               ← Back to {from || "Home"}
