@@ -78,7 +78,7 @@ export function DockNavigation() {
 
   return (
     <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50">
-      <div className="bg-white/10 dark:bg-black/30 backdrop-blur-2xl rounded-3xl px-6 py-3 shadow-2xl border border-white/20 dark:border-white/10">
+      <div className="bg-slate-800/90 dark:bg-slate-900/95 backdrop-blur-2xl rounded-3xl px-6 py-3 shadow-2xl border border-slate-600/50 dark:border-slate-700/50">
         <div className="flex items-center gap-3">
           {dockItems.map((item) => (
             <Link
