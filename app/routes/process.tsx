@@ -126,7 +126,7 @@ export default function Process() {
     return steps[vehicleType] || [];
   };
 
-  if (!vehicle || !destination) {
+  if (!vehicle) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
