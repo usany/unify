@@ -104,23 +104,18 @@ export default function Process() {
         {id: 228000703 , nameKo: "체육대학", nameEn: "KHU Physical Education College.Foreign University"},
         {id: 203000125 , nameKo: "정문 건너편", nameEn: "KHU"}
       ],
-      shuttle: [
+      shuttleGlobal: [
         "사색의 광장-생명과학대학-체육대학-온실",
         "사색의 광장-생명과학대학-체육대학-온실",
         "사색의 광장-생명과학대학-체육대학-온실",
         "사색의 광장-생명과학대학-체육대학-온실",
         "사색의 광장-생명과학대학-체육대학-온실",
-        "온실-외국어대학-생명과학대학-사색의 광장",
-        "온실-외국어대학-생명과학대학-사색의 광장",
-        "온실-외국어대학-생명과학대학-사색의 광장",
-        "온실-외국어대학-생명과학대학-사색의 광장",
-        "온실-외국어대학-생명과학대학-사색의 광장",
       ],
       commute: [
-        "영통역 1번 출구-외국어대학-생명과학대학-사색의 광장",
-        "영통역 1번 출구-외국어대학-생명과학대학-사색의 광장",
-        "영통역 1번 출구-외국어대학-생명과학대학-사색의 광장",
-        "사색의 광장-생명과학대학-외국어대학-영통역 1번 출구",
+        {time: commuteTime[0], routeKo: "영통역 1번 출구-외국어대학-생명과학대학-사색의 광장", routeEn: "Yeongtong Station 1st Exit - Foreign Language College - Life Science College - Sasakomaru Square"},
+        {time: commuteTime[1], routeKo: "영통역 1번 출구-외국어대학-생명과학대학-사색의 광장", routeEn: "Yeongtong Station 1st Exit - Foreign Language College - Life Science College - Sasakomaru Square"},
+        {time: commuteTime[2], routeKo: "영통역 1번 출구-외국어대학-생명과학대학-사색의 광장", routeEn: "Yeongtong Station 1st Exit - Foreign Language College - Life Science College - Sasakomaru Square"},
+        {time: commuteTime[3], routeKo: "사색의 광장-생명과학대학-외국어대학-영통역 1번 출구", routeEn: "Sasakomaru Square - Life Science College - Foreign Language College - Yeongtong Station 1st Exit"},
       ],
       busGwangneungOne: [
         {id: 222000665, nameKo: "봉선사입구 내산정 방면", nameEn: "Bongseonsa Entrance Nae-sanjeom Direction"},
@@ -233,11 +228,11 @@ export default function Process() {
                   return (
                     <div key={index} className="flex items-center space-x-6">
                       <div className={`w-18 h-16 ${nextBus <= index ? 'bg-blue-600' : 'bg-gray-600'} text-white rounded-md flex items-center justify-center font-semibold text-md z-10`}>
-                        {commuteTime[index]}
+                        {step.time}
                       </div>
                       <div className="text-left max-w-md">
                         <p className="text-lg font-medium">
-                          {typeof step === 'string' ? step : `${step.nameKo} (${step.nameEn})`}
+                          {step.routeKo}
                         </p>
                       </div>
                     </div>
