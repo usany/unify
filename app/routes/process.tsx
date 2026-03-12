@@ -31,9 +31,9 @@ export default function Process() {
   const fetchBusData = async () => {
     const steps = getProcessSteps(vehicle);
     steps.forEach(async (step) => {
-      if (typeof step !== 'string' && step.id) {
-        const data = await fetchStep(step.id);
-        setBusData(prev => ({ ...prev, [step.id]: data }));
+      if (typeof step !== 'string' && 'id' in step) {
+        const data = await fetchStep((step as any).id);
+        setBusData(prev => ({ ...prev, [(step as any).id]: data }));
       }
     });
     // Reset countdown when fetch completes
@@ -65,7 +65,7 @@ export default function Process() {
   }, [vehicle]);
 
   const getProcessSteps = (vehicleType: string) => {
-    const steps: { [key: string]: (string | { id: number; nameKo: string; nameEn: string; })[] } = {
+    const steps: { [key: string]: (string | { id: number; nameKo: string; nameEn: string } | { time: string; routeKo: string; routeEn: string })[] } = {
       busOne: [
         "회기역",
         "경희대입구", 
@@ -203,7 +203,7 @@ export default function Process() {
                       </div>
                       <div className="text-left max-w-md">
                         <p className="text-lg font-medium">
-                          {typeof step === 'string' ? step : `${step.nameKo} (${step.nameEn})`}
+                          {typeof step === 'string' ? step : 'nameKo' in step ? `${step.nameKo} (${step.nameEn})` : JSON.stringify(step)}
                         </p>
                       </div>
                     </div>
@@ -228,11 +228,11 @@ export default function Process() {
                   return (
                     <div key={index} className="flex items-center space-x-6">
                       <div className={`w-18 h-16 ${nextBus <= index ? 'bg-blue-600' : 'bg-gray-600'} text-white rounded-md flex items-center justify-center font-semibold text-md z-10`}>
-                        {step.time}
+                        {(step as any).time}
                       </div>
                       <div className="text-left max-w-md">
                         <p className="text-lg font-medium">
-                          {step.routeKo}
+                          {(step as any).routeKo}
                         </p>
                       </div>
                     </div>
@@ -240,7 +240,7 @@ export default function Process() {
                 }
                 
                 // For bus steps, we can access the fetched data from state
-                const stepId = typeof step !== 'string' ? step.id : null;
+                const stepId = typeof step !== 'string' && 'id' in step ? (step as any).id : null;
                 const fetchedData = stepId ? busData[stepId] : null;
                 
                 return (
@@ -250,7 +250,7 @@ export default function Process() {
                     </div>
                     <div className="text-left max-w-md">
                       <p className="text-lg font-medium">
-                        {typeof step === 'string' ? step : `${step.nameKo} (${step.nameEn})`}
+                        {typeof step === 'string' ? step : 'nameKo' in step ? `${step.nameKo} (${step.nameEn})` : JSON.stringify(step)}
                       </p>
                       {fetchedData && (
                         fetchedData.map((data: any, index: number) => {
