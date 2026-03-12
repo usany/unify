@@ -46,7 +46,7 @@ export default function PlaceOne() {
               <span className="font-medium">서울-국제 셔틀버스</span>
             </a>
           </div>
-          <a
+          {/* <a
             href="/process?vehicle=bike&destination=Place Two&from=Place One"
             className="flex flex-col items-center p-6 bg-orange-100 dark:bg-orange-900/30 rounded-lg hover:bg-orange-200 dark:hover:bg-orange-900/50 transition-colors"
           >
@@ -54,7 +54,7 @@ export default function PlaceOne() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
             </svg>
             <span className="font-medium">자전거 공유</span>
-          </a>
+          </a> */}
         </div>
       </div>
     </div>
