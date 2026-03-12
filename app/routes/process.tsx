@@ -182,7 +182,7 @@ export default function Process() {
 
         <div className="space-y-6">
           <h2 className="text-2xl font-semibold mb-6">{process[vehicle]}</h2>
-          {vehicle.includes('bus') && (
+          {vehicle.includes('bus') && !vehicle.includes('Seoul') && (
             <div className="text-center mb-4">
               <p className="text-sm text-gray-600 mb-2">
                 Next data update in: <span className="font-semibold text-blue-600">{timeUntilNextFetch}s</span>
