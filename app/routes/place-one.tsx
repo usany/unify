@@ -37,7 +37,7 @@ export default function PlaceOne() {
               <span className="font-medium">자율주행 A01번</span>
             </a>
             <a
-              href="/process?vehicle=ship&destination=Place Two&from=Place One"
+              href="/process?vehicle=shuttleSeoul&destination=Place Two&from=Place One"
               className="flex flex-col items-center p-6 bg-purple-100 dark:bg-purple-900/30 rounded-lg hover:bg-purple-200 dark:hover:bg-purple-900/50 transition-colors"
             >
               <svg className="w-12 h-12 mb-2 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

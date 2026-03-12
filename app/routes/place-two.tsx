@@ -38,7 +38,7 @@ export default function PlaceTwo() {
               <span className="font-medium">영통역 통학버스</span>
             </a>
             <a
-              href="/process?vehicle=shuttle&destination=Place One&from=Place Two"
+              href="/process?vehicle=shuttleGlobal&destination=Place One&from=Place Two"
               className="flex flex-col items-center p-6 bg-teal-100 dark:bg-teal-900/30 rounded-lg hover:bg-teal-200 dark:hover:bg-teal-900/50 transition-colors"
             >
               <svg className="w-12 h-12 mb-2 text-teal-600 dark:text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
