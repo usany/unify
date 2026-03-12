@@ -105,10 +105,10 @@ export default function Process() {
         {id: 203000125 , nameKo: "정문 건너편", nameEn: "KHU"}
       ],
       busGwangneungOne: [
-        {id: 222000665, nameKo: "봉선사입구 내산정 방면", nameEn: "Sasakomaru Square"},
+        {id: 222000665, nameKo: "봉선사입구 내산정 방면", nameEn: "Bongseonsa Entrance Nae-sanjeom Direction"},
       ],
       busGwangneungTwo: [
-        {id: 222000751, nameKo: "봉선사입구 종점 방면", nameEn: "Sasakomaru Square"},
+        {id: 222000751, nameKo: "봉선사입구 종점 방면", nameEn: "Bongseonsa Entrance Terminal Direction"},
       ],
       shuttle: [
         "사색의 광장-생명과학대학-체육대학-온실",
