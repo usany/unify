@@ -177,7 +177,7 @@ export default function Process() {
               </button>
             </div>
           )}
-          {vehicle === 'shuttle' && (
+          {vehicle.includes('shuttle') && (
             <div className='flex flex-col items-center'>
               <div>공휴일, 휴무일을 제외한 평일</div>
               <div>요금: 페이코 승차권 예약 2000원</div>
