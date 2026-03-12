@@ -80,7 +80,7 @@ export default function Process() {
 
   const getProcessSteps = (vehicleType: string) => {
     const steps: { [key: string]: (string | { id: number; nameKo: string; nameEn: string } | { time: string; routeKo: string; routeEn: string } | { clock: string; routeKo: string; routeEn: string })[] } = {
-      busOne: [
+      busSeoulOne: [
         "회기역",
         "경희대입구", 
         "의료원입구사거리",
@@ -88,7 +88,7 @@ export default function Process() {
         "경희대입구",
         "회기역"
       ],
-      busTwo: [
+      busSeoulTwo: [
         "회기역",
         "",
         "경희중고",
@@ -118,13 +118,13 @@ export default function Process() {
         {clock: shuttleSeoul[3], routeKo: "온실-외국어대학-생명과학대학-사색의 광장", routeEn: "온실-외국어대학-생명과학대학-사색의 광장"},
         {clock: shuttleSeoul[4], routeKo: "온실-외국어대학-생명과학대학-사색의 광장", routeEn: "온실-외국어대학-생명과학대학-사색의 광장"},
       ],
-      bicycle: [
-        "Go to the port",
-        "Board the ship",
-        "Sail to destination",
-        "Disembark at port",
-        "Arrive at " + destination
-      ],
+      // bicycle: [
+      //   "Go to the port",
+      //   "Board the ship",
+      //   "Sail to destination",
+      //   "Disembark at port",
+      //   "Arrive at " + destination
+      // ],
       busTo: [
         {id: 228000710 , nameKo: "외국어대학", nameEn: "Sasakomaru Square"},
         {id: 228000709 , nameKo: "생명과학대학", nameEn: "Life Science College.Industrial College"},
