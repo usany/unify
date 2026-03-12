@@ -94,11 +94,11 @@ export default function Process() {
         "Arrive at " + destination + " station"
       ],
       shuttleSeoul: [
-        "온실-외국어대학-생명과학대학-사색의 광장",
-        "온실-외국어대학-생명과학대학-사색의 광장",
-        "온실-외국어대학-생명과학대학-사색의 광장",
-        "온실-외국어대학-생명과학대학-사색의 광장",
-        "온실-외국어대학-생명과학대학-사색의 광장",
+        {clock: shuttleSeoul[0], routeKo: "온실-외국어대학-생명과학대학-사색의 광장", routeEn: "온실-외국어대학-생명과학대학-사색의 광장"},
+        {clock: shuttleSeoul[1], routeKo: "온실-외국어대학-생명과학대학-사색의 광장", routeEn: "온실-외국어대학-생명과학대학-사색의 광장"},
+        {clock: shuttleSeoul[2], routeKo: "온실-외국어대학-생명과학대학-사색의 광장", routeEn: "온실-외국어대학-생명과학대학-사색의 광장"},
+        {clock: shuttleSeoul[3], routeKo: "온실-외국어대학-생명과학대학-사색의 광장", routeEn: "온실-외국어대학-생명과학대학-사색의 광장"},
+        {clock: shuttleSeoul[4], routeKo: "온실-외국어대학-생명과학대학-사색의 광장", routeEn: "온실-외국어대학-생명과학대학-사색의 광장"},
       ],
       bicycle: [
         "Go to the port",
@@ -119,11 +119,11 @@ export default function Process() {
         {id: 203000125 , nameKo: "정문 건너편", nameEn: "KHU"}
       ],
       shuttleGlobal: [
-        "사색의 광장-생명과학대학-체육대학-온실",
-        "사색의 광장-생명과학대학-체육대학-온실",
-        "사색의 광장-생명과학대학-체육대학-온실",
-        "사색의 광장-생명과학대학-체육대학-온실",
-        "사색의 광장-생명과학대학-체육대학-온실",
+        {clock: shuttleGlobal[0], routeKo: "사색의 광장-생명과학대학-체육대학-온실", routeEn: "Sasakomaru Square - Life Science College - Physical Education College - Greenhouse"},
+        {clock: shuttleGlobal[1], routeKo: "사색의 광장-생명과학대학-체육대학-온실", routeEn: "Sasakomaru Square - Life Science College - Physical Education College - Greenhouse"},
+        {clock: shuttleGlobal[2], routeKo: "사색의 광장-생명과학대학-체육대학-온실", routeEn: "Sasakomaru Square - Life Science College - Physical Education College - Greenhouse"},
+        {clock: shuttleGlobal[3], routeKo: "사색의 광장-생명과학대학-체육대학-온실", routeEn: "Sasakomaru Square - Life Science College - Physical Education College - Greenhouse"},
+        {clock: shuttleGlobal[4], routeKo: "사색의 광장-생명과학대학-체육대학-온실", routeEn: "Sasakomaru Square - Life Science College - Physical Education College - Greenhouse"},
       ],
       commute: [
         {clock: commuteTime[0], routeKo: "영통역 1번 출구-외국어대학-생명과학대학-사색의 광장", routeEn: "Yeongtong Station 1st Exit - Foreign Language College - Life Science College - Sasakomaru Square"},
@@ -193,7 +193,7 @@ export default function Process() {
             <div className="absolute left-8 top-0 bottom-0 w-1 bg-gray-300 dark:bg-gray-600"></div>
             <div className="relative space-y-8">
               {steps.map((step, index) => {
-                if (vehicle === "shuttle") {
+                if (vehicle === "shuttleSeoul") {
                   const currentHour = new Date().getHours();
                   const currentMinute = new Date().getMinutes();
                   let nextBus = 4
@@ -213,7 +213,7 @@ export default function Process() {
                   return (
                     <div key={index} className="flex items-center space-x-6">
                       <div className={`w-18 h-16 ${nextBus <= index ? 'bg-blue-600' : 'bg-gray-600'} text-white rounded-md flex items-center justify-center font-semibold text-md z-10`}>
-                        {commuteTime[index]}
+                        {step.clock}
                       </div>
                       <div className="text-left max-w-md">
                         <p className="text-lg font-medium">
