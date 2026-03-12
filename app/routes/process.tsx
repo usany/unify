@@ -65,7 +65,7 @@ export default function Process() {
   }, [vehicle]);
 
   const getProcessSteps = (vehicleType: string) => {
-    const steps: { [key: string]: (string | { id: number; nameKo: string; nameEn: string } | { time: string; routeKo: string; routeEn: string })[] } = {
+    const steps: { [key: string]: (string | { id: number; nameKo: string; nameEn: string } | { clock: string; routeKo: string; routeEn: string })[] } = {
       busOne: [
         "회기역",
         "경희대입구", 
@@ -112,10 +112,10 @@ export default function Process() {
         "사색의 광장-생명과학대학-체육대학-온실",
       ],
       commute: [
-        {time: commuteTime[0], routeKo: "영통역 1번 출구-외국어대학-생명과학대학-사색의 광장", routeEn: "Yeongtong Station 1st Exit - Foreign Language College - Life Science College - Sasakomaru Square"},
-        {time: commuteTime[1], routeKo: "영통역 1번 출구-외국어대학-생명과학대학-사색의 광장", routeEn: "Yeongtong Station 1st Exit - Foreign Language College - Life Science College - Sasakomaru Square"},
-        {time: commuteTime[2], routeKo: "영통역 1번 출구-외국어대학-생명과학대학-사색의 광장", routeEn: "Yeongtong Station 1st Exit - Foreign Language College - Life Science College - Sasakomaru Square"},
-        {time: commuteTime[3], routeKo: "사색의 광장-생명과학대학-외국어대학-영통역 1번 출구", routeEn: "Sasakomaru Square - Life Science College - Foreign Language College - Yeongtong Station 1st Exit"},
+        {clock: commuteTime[0], routeKo: "영통역 1번 출구-외국어대학-생명과학대학-사색의 광장", routeEn: "Yeongtong Station 1st Exit - Foreign Language College - Life Science College - Sasakomaru Square"},
+        {clock: commuteTime[1], routeKo: "영통역 1번 출구-외국어대학-생명과학대학-사색의 광장", routeEn: "Yeongtong Station 1st Exit - Foreign Language College - Life Science College - Sasakomaru Square"},
+        {clock: commuteTime[2], routeKo: "영통역 1번 출구-외국어대학-생명과학대학-사색의 광장", routeEn: "Yeongtong Station 1st Exit - Foreign Language College - Life Science College - Sasakomaru Square"},
+        {clock: commuteTime[3], routeKo: "사색의 광장-생명과학대학-외국어대학-영통역 1번 출구", routeEn: "Sasakomaru Square - Life Science College - Foreign Language College - Yeongtong Station 1st Exit"},
       ],
       busGwangneungOne: [
         {id: 222000665, nameKo: "봉선사입구 내산정 방면", nameEn: "Bongseonsa Entrance Nae-sanjeom Direction"},
@@ -228,11 +228,11 @@ export default function Process() {
                   return (
                     <div key={index} className="flex items-center space-x-6">
                       <div className={`w-18 h-16 ${nextBus <= index ? 'bg-blue-600' : 'bg-gray-600'} text-white rounded-md flex items-center justify-center font-semibold text-md z-10`}>
-                        {(step as any).time}
+                        {step.clock}
                       </div>
                       <div className="text-left max-w-md">
                         <p className="text-lg font-medium">
-                          {(step as any).routeKo}
+                          {step.routeKo}
                         </p>
                       </div>
                     </div>
