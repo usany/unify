@@ -2,7 +2,7 @@ export default function PlaceTwo() {
   return (
     <div className="flex items-center justify-center min-h-screen pb-24">
       <div className="text-center">
-        <h1 className="text-4xl font-bold mb-8">경희대 국제캠</h1>
+        <h1 className="text-4xl font-bold mb-8">경희대 국제캠퍼스</h1>
         <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
           어디로 떠나볼까요?
         </p>
