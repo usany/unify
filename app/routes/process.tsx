@@ -5,7 +5,8 @@ import { Bus, BusFront, MonitorStop, PersonStanding, SquareStop, StopCircle } fr
 export const process = {
   busTo: '외국어대학-사색의 광장',
   busFrom: '사색의 광장-정문 건너편',
-  shuttle: '캠퍼스 셔틀버스',
+  shuttleSeoul: '서울-국제 셔틀버스',
+  shuttleGlobal: '국제-서울 셔틀버스',
   commute: '영통역 통학버스'
 } as { [key: string]: string };
 export const commuteTime = [
@@ -177,9 +178,9 @@ export default function Process() {
   return (
     <div className="flex items-center justify-center min-h-screen pb-24">
       <div className="text-center max-w-2xl mx-auto p-8">
-        <h1 className="text-4xl font-bold mb-8 capitalize">
+        {/* <h1 className="text-4xl font-bold mb-8 capitalize">
           {vehicle} Journey to {destination}
-        </h1>
+        </h1> */}
 
         <div className="space-y-6">
           <h2 className="text-2xl font-semibold mb-6">{process[vehicle]}</h2>
