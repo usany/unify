@@ -326,9 +326,12 @@ export default function Process() {
                 const fetchedData = stepId ? busData[stepId] : null;
                 
                 return (
-                  <div key={index} className="flex items-center space-x-6">
-                    <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold text-lg z-10">
+                  <div key={index} className="flex items-center space-x-6 h-full">
+                    <div className='flex flex-col items-between'>
                       <BusFront />
+                      <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold text-lg z-10">
+                        <BusFront />
+                      </div>
                     </div>
                     <div className="text-left max-w-md">
                       <p className="text-lg font-medium">
