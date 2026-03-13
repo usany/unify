@@ -1,6 +1,6 @@
 import { useSearchParams, Link } from "react-router";
 import { useState, useEffect } from "react";
-import { Bus, BusFront, MonitorStop, SquareStop, StopCircle } from "lucide-react";
+import { Bus, BusFront, MonitorStop, PersonStanding, SquareStop, StopCircle } from "lucide-react";
 
 export const process = {
   busTo: '외국어대학-사색의 광장',
@@ -35,7 +35,7 @@ export default function Process() {
   const from = searchParams.get("from");
   const [busData, setBusData] = useState<{ [key: number]: any }>({});
   const [timeUntilNextFetch, setTimeUntilNextFetch] = useState(60);
-
+  
   const fetchStep = async (id: number) => {
     const response = await fetch(`https://apis.data.go.kr/6410000/busarrivalservice/v2/getBusArrivalListv2?serviceKey=2285040a0cf11847ddd747ab39d20eb723e34a91e8d5fb404b9034c8e6e71d97&stationId=${id}&format=json`);
     const data = await response.json()
@@ -324,23 +324,25 @@ export default function Process() {
                 // For bus steps, we can access the fetched data from state
                 const stepId = typeof step !== 'string' && 'id' in step ? (step as any).id : null;
                 const fetchedData = stepId ? busData[stepId] : null;
-                
                 return (
                   <div key={index} className="flex space-x-6">
                     <div className='flex flex-col items-center justify-space'>
-                      <div className='h-16'>
-                        <BusFront />
-                      </div>
-                      <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold text-lg z-10">
-                        {/* <SquareStop /> */}
-                        <MonitorStop />
+                      <div className='flex flex-col items-center justify-center'>
+                        <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold text-lg z-10">
+                          <BusFront />
+                        </div>
+                        {fetchedData && fetchedData.some((data: any) => data.locationNo1 === 1) && (
+                          <div className='h-16 mt-2'>
+                            <BusFront />
+                          </div>
+                        )}
                       </div>
                     </div>
                     <div className="text-left max-w-md flex-1">
                       <p className="text-lg font-medium">
                         {typeof step === 'string' ? step : 'nameKo' in step ? `${step.nameKo} (${step.nameEn})` : JSON.stringify(step)}
                       </p>
-                      {fetchedData && (
+{fetchedData && (
                         fetchedData.map((data: any, dataIndex: number) => {
                           const routeName = data.routeName
                           const predictTime1 = data.predictTime1;
@@ -351,7 +353,6 @@ export default function Process() {
                               Bus data: {routeName}
                               <br />
                               {predictTime1 ? `${predictTime1}분 (${locationNo1} 정거장) ${stationNm1}` : '대기'}
-                              {/* {predictTime1 ? `${stationNm1}` : ''} */}
                               {index === steps.length - 1 && predictTime1 ? `(${stationNm1} ${locationNo1})` : ''}
                             </p>
                           )
