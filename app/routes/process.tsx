@@ -350,8 +350,8 @@ export default function Process() {
                             <p key={dataIndex} className="text-sm text-gray-600 mt-1">
                               Bus data: {routeName}
                               <br />
-                              {predictTime1 ? `${predictTime1}분 (${locationNo1} 정거장)` : '대기'}
-                              {predictTime1 ? `${stationNm1}` : ''}
+                              {predictTime1 ? `${predictTime1}분 (${locationNo1} 정거장) ${stationNm1}` : '대기'}
+                              {/* {predictTime1 ? `${stationNm1}` : ''} */}
                               {index === steps.length - 1 && predictTime1 ? `(${stationNm1} ${locationNo1})` : ''}
                             </p>
                           )
