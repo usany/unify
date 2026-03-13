@@ -52,7 +52,7 @@ export function DockNavigation() {
     },
     {
       path: "/gwangneung",
-      label: "광릉캠퍼스",
+      label: "광릉",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -93,10 +93,10 @@ export function DockNavigation() {
               `}
               title={item.label}
             >
-              <div className="w-6 h-6 flex flex-col items-center justify-center transition-transform duration-300 group-hover:scale-110">
+              <div className="w-6 h-6 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
                 {item.icon}
-                {item.label}
               </div>
+              <span className="text-xs mt-1">{item.label}</span>
               {isActive(item.path) && (
                 <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-white rounded-full shadow-lg shadow-white/50 animate-pulse" />
               )}
