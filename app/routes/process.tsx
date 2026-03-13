@@ -1,6 +1,6 @@
 import { useSearchParams, Link } from "react-router";
 import { useState, useEffect } from "react";
-import { Bus, BusFront } from "lucide-react";
+import { Bus, BusFront, MonitorStop, SquareStop, StopCircle } from "lucide-react";
 
 export const process = {
   busTo: '외국어대학-사색의 광장',
@@ -326,10 +326,14 @@ export default function Process() {
                 const fetchedData = stepId ? busData[stepId] : null;
                 
                 return (
-                  <div key={index} className="flex items-start space-x-6">
-                    <div className='flex flex-col items-center justify-center'>
-                      <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold text-lg z-10">
+                  <div key={index} className="flex space-x-6">
+                    <div className='flex flex-col items-center justify-space'>
+                      <div className='h-16'>
                         <BusFront />
+                      </div>
+                      <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold text-lg z-10">
+                        {/* <SquareStop /> */}
+                        <MonitorStop />
                       </div>
                     </div>
                     <div className="text-left max-w-md flex-1">
