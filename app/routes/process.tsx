@@ -8,8 +8,8 @@ export const process = {
   shuttleSeoul: '서울-국제 셔틀버스',
   shuttleGlobal: '국제-서울 셔틀버스',
   commute: '영통역 통학버스',
-  busGwangnengOne: '봉선사입구-내산정 방면',
-  busGwangnengTwo: '봉선사입구-종점 방면',
+  busGwangneungOne: '봉선사입구-내산정 방면',
+  busGwangneungTwo: '봉선사입구-종점 방면',
 } as { [key: string]: string };
 export const commuteTime = [
   "8:45am",
