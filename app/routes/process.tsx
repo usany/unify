@@ -2,6 +2,35 @@ import { useSearchParams, Link } from "react-router";
 import { useState, useEffect } from "react";
 import { Bus, BusFront, MonitorStop, PersonStanding, SquareStop, StopCircle } from "lucide-react";
 
+export const busCollection = {
+  seoul: {
+    '01': 1,
+    '02': 2,
+  },
+  global: {
+    'M5107': 234001243,
+    '5100': 200000115,
+    '1112(reserved)': 200000333,
+    '1112': 234000016,
+    'P9242(퇴근)': 233000335,
+    '28-3': 241425038,
+    '900': 200000010,
+    '7-2': 200000040,
+    '53': 241425010,
+    '18-1': 241425018,
+    '9-1': 200000186,
+    '1560A': 234000884,
+    '7000': 200000112,
+    '9': 200000103,
+    '310': 200000024,
+    '5': 200000076,
+    'M5107(예약)': 200000335,
+    '1550-1(예약)': 223000151,
+    '1560B': 228000433,
+    '1550-1': 234000324,
+    '32': 241425007
+  }
+}
 export const process = {
   busSeoulOne: '회기역-경희대 01번',
   busSeoulTwo: '회기역-외대앞역 02번',
@@ -48,12 +77,19 @@ export default function Process() {
     const res = data.response.msgBody.busArrivalList;
     return res;
   }
+  const fetchBus = async (id: number) => {
+    const response = await fetch(`https://apis.data.go.kr/6410000/busrouteservice/v2/getBusRouteInfoItemv2?serviceKey=2285040a0cf11847ddd747ab39d20eb723e34a91e8d5fb404b9034c8e6e71d97&routeId=${id}&format=json`);
+    const data = await response.json()
+    const res = data.response.msgBody.busArrivalList;
+    return res;
+  }
 
   const fetchBusData = async () => {
     const steps = getProcessSteps(vehicle);
     steps.forEach(async (step) => {
       if (typeof step !== 'string' && 'id' in step) {
         const data = await fetchStep((step as any).id);
+        const busData = await fetchBus((step as any).id);
         setBusData(prev => ({ ...prev, [(step as any).id]: data }));
       }
     });
@@ -194,6 +230,7 @@ export default function Process() {
           {vehicle === 'busThree' && (
             <div className='flex flex-col items-center'>
               <div>장한평역-청량리역-경희대</div>
+              <div>첫차: 막차: 배차간격: 75분</div>
             </div>
           )}
           {vehicle.includes('bus') && !vehicle.includes('Seoul') && (
