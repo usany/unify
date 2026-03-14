@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef, memo } from "react";
+import { ChevronDown, ChevronUp, Clock, Calendar } from "lucide-react";
 
 // Global flag to prevent multiple fetches across component remounts
 let globalHasFetched = false;
@@ -47,9 +48,22 @@ interface ScheduleProps {
 
 const Schedule = ({ vehicle }: ScheduleProps) => {
   const [busData, setBusData] = useState<any[]>([]);
+  const [openAccordions, setOpenAccordions] = useState<Set<number>>(new Set());
   const hasFetched = useRef(false);
   const campus = vehicle.includes('Seoul') ? 'seoul' : vehicle.includes('Gwangneung') ? 'gwangneung' : 'global';
   const selectedBus = busCollection[campus];
+  
+  const toggleAccordion = (index: number) => {
+    setOpenAccordions(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(index)) {
+        newSet.delete(index);
+      } else {
+        newSet.add(index);
+      }
+      return newSet;
+    });
+  };
   
   const fetchBus = async (id: number) => {
     const response = await fetch(`https://apis.data.go.kr/6410000/busrouteservice/v2/getBusRouteInfoItemv2?serviceKey=2285040a0cf11847ddd747ab39d20eb723e34a91e8d5fb404b9034c8e6e71d97&routeId=${id}&format=json`);
@@ -81,8 +95,8 @@ const Schedule = ({ vehicle }: ScheduleProps) => {
   console.log('Schedule render, busData length:', busData.length);
   
   return (
-    <div className='flex flex-col'>
-      <h1>Schedule</h1>
+    <div className='flex flex-col space-y-2'>
+      <h2 className="text-xl font-semibold mb-4">버스 시간표</h2>
       {busData.map((bus: any, index: number) => {
         const routeName = bus.routeName;
         const upFirstTime = bus.upFirstTime;
@@ -95,22 +109,62 @@ const Schedule = ({ vehicle }: ScheduleProps) => {
         const sunNPeekAlloc = bus.sunNPeekAlloc;
         const wePeekAlloc = bus.wePeekAlloc;
         const weNPeekAlloc = bus.weNPeekAlloc;
+        const isOpen = openAccordions.has(index);
+        
         return (
-          <div key={index} className="flex flex-col">
-            <p>{routeName}</p>
-            <div className='flex'>
-              <div>운행시간</div>
-              <div>{upFirstTime}~{upLastTime}</div>
-            </div>
-            <div className='flex'>
-              <div>배차간격</div>
-              <div className='flex flex-col'>
-                <p>평일: {peekAlloc}~{nPeekAlloc}분</p>
-                <p>토요일: {satPeekAlloc}~{satNPeekAlloc}분</p>
-                <p>일요일: {sunPeekAlloc}~{sunNPeekAlloc}분</p>
-                <p>공휴일: {wePeekAlloc}~{weNPeekAlloc}분</p>
+          <div key={index} className="border border-gray-200 rounded-lg overflow-hidden">
+            <button
+              onClick={() => toggleAccordion(index)}
+              className="w-full px-4 py-3 bg-white hover:bg-gray-50 flex items-center justify-between transition-colors"
+            >
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                  <span className="text-blue-600 font-semibold text-sm">{index + 1}</span>
+                </div>
+                <span className="font-medium text-left">{routeName}</span>
               </div>
-            </div>
+              <div className="flex items-center space-x-2">
+                <span className="text-sm text-gray-500">{upFirstTime}~{upLastTime}</span>
+                {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+              </div>
+            </button>
+            
+            {isOpen && (
+              <div className="px-4 py-3 bg-gray-50 border-t border-gray-200">
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-2">
+                    <Clock className="w-4 h-4 text-gray-600" />
+                    <span className="font-medium">운행시간</span>
+                    <span className="text-gray-700">{upFirstTime}~{upLastTime}</span>
+                  </div>
+                  
+                  <div className="flex items-start space-x-2">
+                    <Calendar className="w-4 h-4 text-gray-600 mt-1" />
+                    <div>
+                      <span className="font-medium">배차간격</span>
+                      <div className="mt-2 space-y-1 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">평일:</span>
+                          <span className="text-gray-800">{peekAlloc}~{nPeekAlloc}분</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">토요일:</span>
+                          <span className="text-gray-800">{satPeekAlloc}~{satNPeekAlloc}분</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">일요일:</span>
+                          <span className="text-gray-800">{sunPeekAlloc}~{sunNPeekAlloc}분</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">공휴일:</span>
+                          <span className="text-gray-800">{wePeekAlloc}~{weNPeekAlloc}분</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         );
       })}
