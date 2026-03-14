@@ -441,10 +441,10 @@ export default function Process() {
           </Link> */}
           <div className="mt-4">
             <Link
-              to={vehicle.includes('Gwangneung') ? "/place" : vehicle.includes('Seoul') ? "/place-one" : "/place-two"}
+              to={vehicle.includes('Gwangneung') ? "/gwangneung" : vehicle.includes('Seoul') ? "/place-one" : "/place-two"}
               className="text-gray-600 hover:text-gray-800 underline"
             >
-              ← Back to {vehicle.includes('Gwangneung') ? "/place" : vehicle.includes('Seoul') ? "/place-one" : "/place-two"}
+              ← Back to {vehicle.includes('Gwangneung') ? "/gwangneung" : vehicle.includes('Seoul') ? "/place-one" : "/place-two"}
             </Link>
           </div>
         </div>
