@@ -5,7 +5,7 @@ import { Bus, BusFront, MonitorStop, PersonStanding, SquareStop, StopCircle } fr
 export const process = {
   busSeoulOne: '회기역-경희대 01번',
   busSeoulTwo: '회기역-외대앞역 02번',
-  busSeoulThree: '자율주행 A01번',
+  busThree: '자율주행 A01번',
   busTo: '외국어대학-사색의 광장',
   busFrom: '사색의 광장-정문 건너편',
   shuttleSeoul: '서울-국제 셔틀버스',
