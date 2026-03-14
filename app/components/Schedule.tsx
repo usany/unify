@@ -96,10 +96,15 @@ const Schedule = ({ vehicle }: ScheduleProps) => {
         return (
           <div key={index} className="flex flex-col">
             <p>{routeName}</p>
-            <p>평일: {peekAlloc}~{nPeekAlloc}분</p>
-            <p>토요일: {satPeekAlloc}~{satNPeekAlloc}분</p>
-            <p>일요일: {sunPeekAlloc}~{sunNPeekAlloc}분</p>
-            <p>공휴일: {wePeekAlloc}~{weNPeekAlloc}분</p>
+            <div className='flex'>
+              <div>배차간격</div>
+              <div className='flex flex-col'>
+                <p>평일: {peekAlloc}~{nPeekAlloc}분</p>
+                <p>토요일: {satPeekAlloc}~{satNPeekAlloc}분</p>
+                <p>일요일: {sunPeekAlloc}~{sunNPeekAlloc}분</p>
+                <p>공휴일: {wePeekAlloc}~{weNPeekAlloc}분</p>
+              </div>
+            </div>
           </div>
         );
       })}
