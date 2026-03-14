@@ -1,4 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, memo } from "react";
+
+// Global flag to prevent multiple fetches across component remounts
+let globalHasFetched = false;
+
 export const busCollection = {
   seoul: {
     '01': 1,
@@ -42,38 +46,50 @@ interface ScheduleProps {
 }
 
 const Schedule = ({ vehicle }: ScheduleProps) => {
-    const [busData, setBusData] = useState<any[]>([]);
-    const campus = vehicle.includes('Seoul') ? 'seoul' : vehicle.includes('Gwangneung') ? 'gwangneung' : 'global';
-    const selectedBus = busCollection[campus];
-    const fetchBus = async (id: number) => {
-        const response = await fetch(`https://apis.data.go.kr/6410000/busrouteservice/v2/getBusRouteInfoItemv2?serviceKey=2285040a0cf11847ddd747ab39d20eb723e34a91e8d5fb404b9034c8e6e71d97&routeId=${id}&format=json`);
-        const data = await response.json()
-        const res = data.response.msgBody.busRouteInfoItem;
-        return res;
-    }
+  const [busData, setBusData] = useState<any[]>([]);
+  const hasFetched = useRef(false);
+  const campus = vehicle.includes('Seoul') ? 'seoul' : vehicle.includes('Gwangneung') ? 'gwangneung' : 'global';
+  const selectedBus = busCollection[campus];
+  
+  const fetchBus = async (id: number) => {
+    const response = await fetch(`https://apis.data.go.kr/6410000/busrouteservice/v2/getBusRouteInfoItemv2?serviceKey=2285040a0cf11847ddd747ab39d20eb723e34a91e8d5fb404b9034c8e6e71d97&routeId=${id}&format=json`);
+    const data = await response.json();
+    const res = data.response.msgBody.busRouteInfoItem;
+    return res;
+  }
 
-    useEffect(() => {
-        const fetchAllBuses = async () => {
-            if (selectedBus) {
-                const busRoutes = Object.values(selectedBus);
-                const promises = busRoutes.map((routeId: number) => fetchBus(routeId));
-                const results = await Promise.all(promises);
-                const allBusData = results.flat();
-                setBusData(allBusData);
-            }
-        };
-        fetchAllBuses();
-    }, [selectedBus]);
-    console.log(busData)
-return (
+  useEffect(() => {
+    console.log('Schedule useEffect triggered, globalHasFetched:', globalHasFetched);
+    if (globalHasFetched) return;
+    
+    const fetchAllBuses = async () => {
+      console.log('Starting fetch...');
+      if (selectedBus) {
+        const busRoutes = Object.values(selectedBus);
+        const promises = busRoutes.map((routeId: number) => fetchBus(routeId));
+        const results = await Promise.all(promises);
+        const allBusData = results.flat();
+        setBusData(allBusData);
+        globalHasFetched = true;
+        console.log('Fetch completed, globalHasFetched set to true');
+      }
+    };
+    
+    fetchAllBuses();
+  }, []);
+  
+  console.log('Schedule render, busData length:', busData.length);
+  
+  return (
     <div className='flex flex-col'>
-        <h1>Schedule</h1>
-        {busData.map((bus, index) => (
-            <div key={index}>
-                <p>{bus.nPeekAlloc}</p>
-            </div>
-        ))}
+      <h1>Schedule</h1>
+      {busData.map((bus: any, index: number) => (
+        <div key={index}>
+          <p>{bus.nPeekAlloc}</p>
+        </div>
+      ))}
     </div>
-)
+  );
 }
-export default Schedule;
+
+export default memo(Schedule);

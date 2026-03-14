@@ -1,5 +1,5 @@
 import { useSearchParams, Link } from "react-router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Bus, BusFront, MonitorStop, PersonStanding, SquareStop, StopCircle } from "lucide-react";
 import Schedule from "~/components/schedule";
 
@@ -93,7 +93,7 @@ export default function Process() {
   //   return res;
   // }
 
-  const fetchBusData = async () => {
+  const fetchBusData = useCallback(async () => {
     const steps = getProcessSteps(vehicle);
     steps.forEach(async (step) => {
       if (typeof step !== 'string' && 'id' in step) {
@@ -103,7 +103,7 @@ export default function Process() {
     });
     // Reset countdown when fetch completes
     setTimeUntilNextFetch(60);
-  };
+  }, [vehicle]);
 
   useEffect(() => {
     if (vehicle === 'busTo' || vehicle === 'busFrom' || vehicle === 'busGwangneungOne' || vehicle === 'busGwangneungTwo') {
@@ -127,7 +127,7 @@ export default function Process() {
         clearInterval(countdownInterval);
       };
     }
-  }, [vehicle]);
+  }, [vehicle, fetchBusData]);
 
   const getProcessSteps = (vehicleType: string) => {
     const steps: { [key: string]: (string | { id: number; nameKo: string; nameEn: string } | { time: string; routeKo: string; routeEn: string } | { clock: string; routeKo: string; routeEn: string })[] } = {
