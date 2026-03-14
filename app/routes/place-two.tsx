@@ -10,7 +10,7 @@ export default function PlaceTwo() {
           {/* <h2 className="text-2xl font-semibold mb-6">Choose your ride to visit Place One:</h2> */}
           <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
             <a
-              href="/process?vehicle=busTo&destination=Place One&from=Place Two"
+              href="/process?vehicle=busTo"
               className="flex flex-col items-center p-6 bg-red-100 dark:bg-red-900/30 rounded-lg hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors"
             >
               <svg className="w-12 h-12 mb-2 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -19,7 +19,7 @@ export default function PlaceTwo() {
               <span className="font-medium">외국어대학-사색의 광장</span>
             </a>
             <a
-              href="/process?vehicle=busFrom&destination=Place One&from=Place Two"
+              href="/process?vehicle=busFrom"
               className="flex flex-col items-center p-6 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg hover:bg-indigo-200 dark:hover:bg-indigo-900/50 transition-colors"
             >
               <svg className="w-12 h-12 mb-2 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -28,7 +28,7 @@ export default function PlaceTwo() {
               <span className="font-medium">사색의 광장-정문 건너편</span>
             </a>
             <a
-              href="/process?vehicle=commute&destination=Place One&from=Place Two"
+              href="/process?vehicle=commute"
               className="flex flex-col items-center p-6 bg-pink-100 dark:bg-pink-900/30 rounded-lg hover:bg-pink-200 dark:hover:bg-pink-900/50 transition-colors"
             >
               <svg className="w-12 h-12 mb-2 text-pink-600 dark:text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -38,7 +38,7 @@ export default function PlaceTwo() {
               <span className="font-medium">영통역 통학버스</span>
             </a>
             <a
-              href="/process?vehicle=shuttleGlobal&destination=Place One&from=Place Two"
+              href="/process?vehicle=shuttleGlobal"
               className="flex flex-col items-center p-6 bg-teal-100 dark:bg-teal-900/30 rounded-lg hover:bg-teal-200 dark:hover:bg-teal-900/50 transition-colors"
             >
               <svg className="w-12 h-12 mb-2 text-teal-600 dark:text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
