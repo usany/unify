@@ -106,7 +106,8 @@ export default function Process() {
   }, [vehicle]);
 
   useEffect(() => {
-    if (vehicle === 'busTo' || vehicle === 'busFrom' || vehicle === 'busGwangneungOne' || vehicle === 'busGwangneungTwo') {
+    // if (vehicle === 'busTo' || vehicle === 'busFrom' || vehicle === 'busGwangneungOne' || vehicle === 'busGwangneungTwo') {
+    if (vehicle?.includes('bus')) {
       // Fetch immediately
       fetchBusData();
       
