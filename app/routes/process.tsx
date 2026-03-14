@@ -204,7 +204,7 @@ export default function Process() {
               </button>
             </div>
           )}
-          {vehicle === 'busSeoulThree' && (
+          {vehicle === 'busThree' && (
             <div className='flex flex-col items-center'>
               <div>장한평역-청량리역-경희대</div>
             </div>
