@@ -48,7 +48,7 @@ const Schedule = ({ vehicle }: ScheduleProps) => {
     const fetchBus = async (id: number) => {
         const response = await fetch(`https://apis.data.go.kr/6410000/busrouteservice/v2/getBusRouteInfoItemv2?serviceKey=2285040a0cf11847ddd747ab39d20eb723e34a91e8d5fb404b9034c8e6e71d97&routeId=${id}&format=json`);
         const data = await response.json()
-        const res = data.response.msgBody.busArrivalList;
+        const res = data.response.msgBody.busRouteInfoItem;
         return res;
     }
 
@@ -64,7 +64,7 @@ const Schedule = ({ vehicle }: ScheduleProps) => {
         };
         fetchAllBuses();
     }, [selectedBus]);
-    
+    console.log(busData)
 return (
     <div className='flex flex-col'>
         <h1>Schedule</h1>
