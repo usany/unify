@@ -66,7 +66,7 @@ const Schedule = ({ vehicle }: ScheduleProps) => {
     }, [selectedBus]);
     
 return (
-    <div>
+    <div className='flex flex-col'>
         <h1>Schedule</h1>
         {busData.map((bus, index) => (
             <div key={index}>
