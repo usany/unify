@@ -83,11 +83,14 @@ const Schedule = ({ vehicle }: ScheduleProps) => {
   return (
     <div className='flex flex-col'>
       <h1>Schedule</h1>
-      {busData.map((bus: any, index: number) => (
-        <div key={index}>
-          <p>{bus.nPeekAlloc}</p>
-        </div>
-      ))}
+      {busData.map((bus: any, index: number) => {
+        const nPeekAlloc = bus.nPeekAlloc;
+        return (
+          <div key={index}>
+            <p>{nPeekAlloc}</p>
+          </div>
+        );
+      })}
     </div>
   );
 }
