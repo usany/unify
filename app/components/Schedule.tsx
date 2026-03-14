@@ -41,13 +41,25 @@ const Schedule = (vehicle: string) => {
     const [busData, setBusData] = useState<any[]>([]);
     const campus = vehicle.includes('Seoul') ? 'seoul' : vehicle.includes('Gwangneung') ? 'gwangneung' : 'global';
     const selectedBus = busCollection[campus];
-    
     const fetchBus = async (id: number) => {
         const response = await fetch(`https://apis.data.go.kr/6410000/busrouteservice/v2/getBusRouteInfoItemv2?serviceKey=2285040a0cf11847ddd747ab39d20eb723e34a91e8d5fb404b9034c8e6e71d97&routeId=${id}&format=json`);
         const data = await response.json()
         const res = data.response.msgBody.busArrivalList;
         return res;
     }
+
+    useEffect(() => {
+        const fetchAllBuses = async () => {
+            if (selectedBus) {
+                const busRoutes = Object.values(selectedBus);
+                const promises = busRoutes.map((routeId: number) => fetchBus(routeId));
+                const results = await Promise.all(promises);
+                const allBusData = results.flat();
+                setBusData(allBusData);
+            }
+        };
+        fetchAllBuses();
+    }, [selectedBus]);
 
 return (
     <div>
