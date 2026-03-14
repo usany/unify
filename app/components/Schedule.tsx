@@ -37,7 +37,11 @@ export const busCollection = {
   },
 }
 
-const Schedule = (vehicle: string) => {
+interface ScheduleProps {
+  vehicle: string;
+}
+
+const Schedule = ({ vehicle }: ScheduleProps) => {
     const [busData, setBusData] = useState<any[]>([]);
     const campus = vehicle.includes('Seoul') ? 'seoul' : vehicle.includes('Gwangneung') ? 'gwangneung' : 'global';
     const selectedBus = busCollection[campus];

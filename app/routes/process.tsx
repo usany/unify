@@ -1,6 +1,8 @@
 import { useSearchParams, Link } from "react-router";
 import { useState, useEffect } from "react";
 import { Bus, BusFront, MonitorStop, PersonStanding, SquareStop, StopCircle } from "lucide-react";
+import Schedule from "~/components/schedule";
+import Schedule from "~/components/schedule";
 
 export const busCollection = {
   seoul: {
@@ -241,6 +243,7 @@ export default function Process() {
               <div>첫차: 막차: 배차간격: 75분</div>
             </div>
           )}
+          <Schedule vehicle={vehicle} />
           {vehicle.includes('bus') && !vehicle.includes('Seoul') && (
             <div className="text-center mb-4">
               <p className="text-sm text-gray-600 mb-2">
