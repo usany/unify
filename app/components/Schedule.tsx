@@ -50,7 +50,7 @@ const Schedule = ({ vehicle }: ScheduleProps) => {
   const [busData, setBusData] = useState<any[]>([]);
   const [openAccordions, setOpenAccordions] = useState<Set<number>>(new Set());
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const hasFetched = useRef(false);
+  // const hasFetched = useRef(false);
   const campus = vehicle.includes('Seoul') ? 'seoul' : vehicle.includes('Gwangneung') ? 'gwangneung' : 'global';
   const selectedBus = busCollection[campus];
   
