@@ -101,8 +101,8 @@ export default function Process() {
     return res;
   }
   const fetchBus = async (): Promise<any[]> => {
-    
-    const response = await fetch(`http://localhost:3000/bus`);
+    const busRouteId = "100100118";
+    const response = await fetch(`/api/bus?busRouteId=${busRouteId}`);
     console.log(response)
     const responseText = await response.text();
     console.log('Response text:', responseText);
