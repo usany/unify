@@ -100,7 +100,42 @@ export default function Process() {
     const res = data.response.msgBody.busArrivalList;
     return res;
   }
-
+  const fetchBus = async () => {
+    const response = await fetch(`https://apis.data.go.kr/1613000/ArvlInfoInqireService/getSttnAcctoArvlPrearngeInfoList?serviceKey=4e29603eb9cdfeca5a112e732aabb542910e623c8a903aed41f18b21744a84b1&pageNo=1&numOfRows=10&_type=xml&cityCode=25&nodeId=DJB8001793`);
+    const textData = await response.text();
+    
+    try {
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(textData, 'text/xml');
+      
+      // Get all item elements
+      const itemElements = xmlDoc.getElementsByTagName('item');
+      const items: any[] = [];
+      
+      // Convert NodeList to array and extract data
+      for (let i = 0; i < itemElements.length; i++) {
+        const item = itemElements[i];
+        const itemData: any = {};
+        
+        // Extract all child elements of this item
+        const children = item.children;
+        for (let j = 0; j < children.length; j++) {
+          const child = children[j];
+          itemData[child.tagName] = child.textContent;
+        }
+        
+        items.push(itemData);
+        
+        console.log(`Item ${i + 1} Node ID:`, items);
+        console.log(`Item ${i + 1} Node ID:`, itemData.nodeid);
+      }
+      
+      return items;
+    } catch (error) {
+      console.error('Error parsing XML:', error);
+      return [];
+    }
+  }
   const fetchBusData = useCallback(async () => {
     const steps = getProcessSteps(vehicle);
     steps.forEach(async (step) => {
@@ -109,6 +144,8 @@ export default function Process() {
         setBusData(prev => ({ ...prev, [(step as any).id]: data }));
       }
     });
+    const dataBus = await fetchBus()
+    console.log(dataBus)
     // Reset countdown when fetch completes
     setTimeUntilNextFetch(60);
   }, [vehicle]);
