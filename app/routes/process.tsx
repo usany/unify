@@ -100,16 +100,32 @@ export default function Process() {
     const res = data.response.msgBody.busArrivalList;
     return res;
   }
-  const fetchBus = async () => {
-    const response = await fetch(`https://apis.data.go.kr/1613000/ArvlInfoInqireService/getSttnAcctoArvlPrearngeInfoList?serviceKey=4e29603eb9cdfeca5a112e732aabb542910e623c8a903aed41f18b21744a84b1&pageNo=1&numOfRows=10&_type=xml&cityCode=25&nodeId=DJB8001793`);
-    const textData = await response.text();
+  const fetchBus = async (): Promise<any[]> => {
+    
+    const response = await fetch(`http://localhost:3000/bus`);
+    console.log(response)
+    const responseText = await response.text();
+    console.log('Response text:', responseText);
+    
+    // Extract vehId1 from the response
+    const vehId1Match = responseText.match(/<vehId1>(.*?)<\/vehId1>/);
+    if (vehId1Match) {
+      const vehId1 = vehId1Match[1];
+      console.log('vehId1:', vehId1);
+      // You can now use vehId1 for further processing
+    } else {
+      console.log('vehId1 not found in response');
+    }
+    
+    const response2 = await fetch(`https://apis.data.go.kr/1613000/ArvlInfoInqireService/getSttnAcctoArvlPrearngeInfoList?serviceKey=2285040a0cf11847ddd747ab39d20eb723e34a91e8d5fb404b9034c8e6e71d97&pageNo=1&numOfRows=10&_type=xml&cityCode=25&nodeId=DJB8001793`);
+    const textData = await response2.text();
     
     try {
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(textData, 'text/xml');
       
       // Get all item elements
-      const itemElements = xmlDoc.getElementsByTagName('item');
+      const itemElements = xmlDoc.getElementsByTagName('msgHeader');
       const items: any[] = [];
       
       // Convert NodeList to array and extract data
@@ -127,7 +143,7 @@ export default function Process() {
         items.push(itemData);
         
         console.log(`Item ${i + 1} Node ID:`, items);
-        console.log(`Item ${i + 1} Node ID:`, itemData.nodeid);
+        console.log(`Item ${i + 1} Node ID:`, itemData.itemCount);
       }
       
       return items;
