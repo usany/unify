@@ -103,8 +103,9 @@ export default function Process() {
   const fetchBus = async (): Promise<any[]> => {
     const busRouteId = "100100118";
     const response = await fetch(`/api/bus?busRouteId=${busRouteId}`);
-    console.log(response)
     const responseText = await response.text();
+    
+    console.log(response)
     console.log('Response text:', responseText);
     
     // Extract vehId1 from the response
