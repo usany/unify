@@ -145,7 +145,7 @@ const Schedule = ({ vehicle }: ScheduleProps) => {
       </div>
     );
   };
-
+  console.log(busData)
   return (
     <>
       <div className='flex flex-col space-y-2'>
