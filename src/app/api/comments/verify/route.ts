@@ -1,18 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
+    const { id, password } = body;
     
-    const response = await fetch(`https://express-d1-app.ckd-qja.workers.dev/api/comments/${params.id}/verify-password`, {
+    const response = await fetch(`https://express-d1-app.ckd-qja.workers.dev/api/comments/${id}/verify-password`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ password: body.password })
+      body: JSON.stringify({ password })
     });
     
     if (!response.ok) {

@@ -86,7 +86,7 @@ export async function deleteComment(deleteData: {
   password: string;
 }) {
   try {
-    const response = await fetch(`${API_BASE}/api/comments/${deleteData.id}`, {
+    const response = await fetch(`${API_BASE}/api/comments/slug`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -114,12 +114,15 @@ export async function verifyCommentPassword(verifyData: {
   password: string;
 }) {
   try {
-    const response = await fetch(`${API_BASE}/api/comments/${verifyData.id}/verify-password`, {
+    const response = await fetch(`${API_BASE}/api/comments/verify`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ password: verifyData.password })
+      body: JSON.stringify({
+        id: verifyData.id,
+        password: verifyData.password
+      })
     });
     
     if (!response.ok) {
