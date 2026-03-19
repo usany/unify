@@ -2,7 +2,8 @@
 
 import { Comment } from '@/types/comment';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE || 'https://express-d1-app.ckd-qja.workers.dev';
+// const API_BASE = 'https://express-d1-app.ckd-qja.workers.dev';
+const API_BASE = 'http://localhost:8787';
 
 export async function getComments(slug: string): Promise<Comment[]> {
   try {
@@ -86,7 +87,7 @@ export async function deleteComment(deleteData: {
   password: string;
 }) {
   try {
-    const response = await fetch(`${API_BASE}/api/comments/slug`, {
+    const response = await fetch(`${API_BASE}/api/comments/${deleteData.id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -114,7 +115,7 @@ export async function verifyCommentPassword(verifyData: {
   password: string;
 }) {
   try {
-    const response = await fetch(`${API_BASE}/api/comments/verify`, {
+    const response = await fetch(`${API_BASE}/api/comments/${verifyData.id}/verify-password`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
