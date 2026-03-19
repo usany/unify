@@ -2,8 +2,8 @@
 
 import React, { useState, memo, useEffect, useCallback } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
-import { getComments, postComment, updateComment, deleteComment, verifyCommentPassword } from '../../lib/comments';
-import { Comment } from '../../types/comment';
+import { getComments, postComment, updateComment, deleteComment, verifyCommentPassword } from '../../../lib/comments';
+import { Comment } from '@/types/comment';
 import styles from './Comments.module.css';
 
 
@@ -104,7 +104,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
   const [fetchError, setFetchError] = useState<string | null>(null);
 
   // Fetch comments
-  const fetchComments = useCallback(async () => {
+  const loadComments = useCallback(async () => {
     if (!slug) return;
     
     setIsLoading(true);
@@ -121,8 +121,8 @@ export default memo(function Comments({ slug }: CommentsProps) {
   }, [slug]);
 
   useEffect(() => {
-    fetchComments();
-  }, [fetchComments]);
+    loadComments();
+  }, [loadComments]);
 
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -158,7 +158,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
       }
       
       // Refresh comments and reset form
-      await fetchComments();
+      await loadComments();
       setNewComment({ author: '', content: '', password: '' });
       setReplyingTo(null);
     } catch (err) {
@@ -201,7 +201,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
       });
       
       // Refresh comments and reset edit state
-      await fetchComments();
+      await loadComments();
       setEditingComment(null);
       setEditContent('');
       setEditPassword('');
@@ -272,7 +272,7 @@ export default memo(function Comments({ slug }: CommentsProps) {
       await deleteComment(deleteData);
       
       // Refresh comments and reset delete state
-      await fetchComments();
+      await loadComments();
       setShowDeleteModal(null);
       setDeletePassword('');
     } catch (err) {
