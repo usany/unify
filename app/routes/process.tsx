@@ -279,10 +279,10 @@ export default function Process() {
 
   if (!vehicle) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4">Invalid Request</h1>
-          <p className="text-lg text-gray-600 dark:text-gray-400">
+      <div style={styles.errorContainer as React.CSSProperties}>
+        <div style={styles.errorContent as React.CSSProperties}>
+          <h1 style={styles.errorTitle as React.CSSProperties}>Invalid Request</h1>
+          <p style={styles.errorText as React.CSSProperties}>
             Please select a vehicle and destination.
           </p>
         </div>
@@ -292,29 +292,25 @@ export default function Process() {
 
   const steps = getProcessSteps(vehicle.includes('shuttle') ? (activeShuttleTab === 'seoul' ? 'shuttleSeoul' : 'shuttleGlobal') : vehicle);
   return (
-    <div className="flex items-center justify-center min-h-screen pb-24">
-      <div className="text-center max-w-2xl mx-auto p-8">
-        {/* <h1 className="text-4xl font-bold mb-8 capitalize">
-          {vehicle} Journey to {destination}
-        </h1> */}
-
-        <div className="space-y-6">
-          <h2 className="text-2xl font-semibold mb-6">{vehicle.includes('shuttle') ? process[activeShuttleTab === 'seoul' ? 'shuttleSeoul' : 'shuttleGlobal'] : process[vehicle]}</h2>
+    <div style={styles.mainContainer as React.CSSProperties}>
+      <div style={styles.mainContent as React.CSSProperties}>
+        <div style={styles.processSection as React.CSSProperties}>
+          <h2 style={styles.processTitle as React.CSSProperties}>{vehicle.includes('shuttle') ? process[activeShuttleTab === 'seoul' ? 'shuttleSeoul' : 'shuttleGlobal'] : process[vehicle]}</h2>
           {vehicle === 'busThree' && (
-            <div className='flex flex-col items-center'>
+            <div style={styles.infoContainer as React.CSSProperties}>
               <div>장한평역-청량리역-경희대</div>
               <div>운행시간: 배차간격: 평일 75분</div>
             </div>
           )}
           {vehicle.includes('bus') && <Schedule vehicle={vehicle} />}
           {vehicle.includes('bus') && (
-            <div className="text-center mb-4">
-              <p className="text-sm text-gray-600 mb-2">
-                Next data update in: <span className="font-semibold text-blue-600">{timeUntilNextFetch}s</span>
+            <div style={styles.refreshContainer as React.CSSProperties}>
+              <p style={styles.refreshText as React.CSSProperties}>
+                Next data update in: <span style={styles.refreshCounter as React.CSSProperties}>{timeUntilNextFetch}s</span>
               </p>
               <button
                 onClick={fetchBusData}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+                style={styles.refreshButton as React.CSSProperties}
               >
                 Refresh Now
               </button>
@@ -322,28 +318,20 @@ export default function Process() {
           )}
           {vehicle.includes('shuttle') && (
             <>
-              <div className='flex flex-col items-center'>
+              <div style={styles.infoContainer as React.CSSProperties}>
                 <div>공휴일, 휴무일을 제외한 평일</div>
                 <div>요금: 페이코 승차권 예약 2000원</div>
               </div>
-              <div className="flex space-x-2 mb-6">
+              <div style={styles.tabContainer as React.CSSProperties}>
                 <button
                   onClick={() => handleShuttleTabChange('seoul')}
-                  className={`px-4 py-2 rounded-lg transition-colors ${
-                    activeShuttleTab === 'seoul'
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                  }`}
+                  style={(activeShuttleTab === 'seoul' ? styles.tabActive : styles.tabInactive) as React.CSSProperties}
                 >
                   서울-국제 셔틀
                 </button>
                 <button
                   onClick={() => handleShuttleTabChange('global')}
-                  className={`px-4 py-2 rounded-lg transition-colors ${
-                    activeShuttleTab === 'global'
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                  }`}
+                  style={(activeShuttleTab === 'global' ? styles.tabActive : styles.tabInactive) as React.CSSProperties}
                 >
                   국제-서울 셔틀
                 </button>
@@ -351,14 +339,14 @@ export default function Process() {
             </>
           )}
           {vehicle === 'commute' && (
-            <div className='flex flex-col items-center'>
+            <div style={styles.infoContainer as React.CSSProperties}>
               <div>학기 중 공휴일, 휴무일을 제외한 평일</div>
               <div>요금: 무료</div>
             </div>
           )}
-          <div className="relative">
-            <div className="absolute left-15 top-0 bottom-0 w-1 bg-gray-300 dark:bg-gray-600"></div>
-            <div className={`relative space-y-8 pl-8 ${vehicle.includes('bus') ? 'pt-5' : ''}`}>
+          <div style={styles.timelineContainer as React.CSSProperties}>
+            <div style={styles.timelineLine as React.CSSProperties}></div>
+            <div style={(vehicle.includes('bus') ? styles.timelineContentBus : styles.timelineContentShuttle) as React.CSSProperties}>
               {steps.map((step, index) => {
                 if (vehicle.includes('shuttle')) {
                   const currentHour = new Date().getHours();
@@ -416,12 +404,12 @@ export default function Process() {
                   }
                   
                   return (
-                    <div key={index} className="flex items-center space-x-6">
-                      <div className={`w-18 h-16 ${nextBus <= index ? 'bg-blue-600' : 'bg-gray-600'} text-white rounded-md flex items-center justify-center font-semibold text-md z-10`}>
+                    <div key={index} style={styles.stepContainer as React.CSSProperties}>
+                      <div style={(nextBus <= index ? styles.stepIconShuttleActive : styles.stepIconShuttleInactive) as React.CSSProperties}>
                         {step.clock}
                       </div>
-                      <div className="text-left max-w-md">
-                        <p className="text-lg font-medium">
+                      <div style={styles.stepTextContainer as React.CSSProperties}>
+                        <p style={styles.stepTitle as React.CSSProperties}>
                           {step.routeKo}
                         </p>
                       </div>
@@ -445,12 +433,12 @@ export default function Process() {
                     nextBus = 3
                   }
                   return (
-                    <div key={index} className="flex items-center space-x-6">
-                      <div className={`w-18 h-16 ${nextBus <= index ? 'bg-blue-600' : 'bg-gray-600'} text-white rounded-md flex items-center justify-center font-semibold text-md z-10`}>
+                    <div key={index} style={styles.stepContainer as React.CSSProperties}>
+                      <div style={(nextBus <= index ? styles.stepIconShuttleActive : styles.stepIconShuttleInactive) as React.CSSProperties}>
                         {step.clock}
                       </div>
-                      <div className="text-left max-w-md">
-                        <p className="text-lg font-medium">
+                      <div style={styles.stepTextContainer as React.CSSProperties}>
+                        <p style={styles.stepTitle as React.CSSProperties}>
                           {step.routeKo}
                         </p>
                       </div>
@@ -462,14 +450,14 @@ export default function Process() {
                 const stepId = typeof step !== 'string' && 'id' in step ? (step as any).id : null;
                 const fetchedData = stepId ? busData[stepId] : null;
                 return (
-                  <div key={index} className="flex space-x-6">
-                    <div className='flex flex-col items-center justify-space'>
-                      <div className='flex flex-col items-center justify-center'>
+                  <div key={index} style={styles.busStepContainer as React.CSSProperties}>
+                    <div style={styles.busIconWrapper as React.CSSProperties}>
+                      <div style={styles.busIconInner as React.CSSProperties}>
                         {fetchedData && (() => {
                           const targetDataList = fetchedData.filter((data: any) => data.locationNo1 === 1);
                           return targetDataList.length > 0 ? (
-                            <div className='flex h-16 items-center -ml-20'>
-                              <div className="mr-2">
+                            <div style={styles.busIncomingContainer as React.CSSProperties}>
+                              <div style={styles.busIncomingText as React.CSSProperties}>
                                 {targetDataList.map((data: any, idx: number) => (
                                   <div key={idx}>{data.routeName}</div>
                                 ))}
@@ -478,14 +466,13 @@ export default function Process() {
                             </div>
                           ) : null;
                         })()}
-                        <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold text-lg z-10">
-                          {/* <MonitorStop /> */}
+                        <div style={styles.busStopIcon as React.CSSProperties}>
                           <ChevronDown />
                         </div>
                       </div>
                     </div>
-                    <div className="text-left max-w-md flex-1">
-                      <p className="text-lg font-medium">
+                    <div style={styles.stepTextContainer as React.CSSProperties}>
+                      <p style={styles.stepTitle as React.CSSProperties}>
                         {typeof step === 'string' ? step : 'nameKo' in step ? `${step.nameKo} (${step.nameEn})` : JSON.stringify(step)}
                       </p>
                       {fetchedData && (
@@ -495,7 +482,7 @@ export default function Process() {
                           const locationNo1 = data.locationNo1
                           const stationNm1 = data.stationNm1
                           return (
-                            <p key={dataIndex} className="text-sm text-gray-600 mt-1">
+                            <p key={dataIndex} style={styles.busSubtitle as React.CSSProperties}>
                               Bus data: {routeName}
                               <br />
                               {predictTime1 ? `${predictTime1}분 (${locationNo1} 정거장) ${stationNm1}` : '대기'}
@@ -512,11 +499,11 @@ export default function Process() {
           </div>
         </div>
 
-        <div className="mt-8 space-y-4">
-          <div className="mt-4">
+        <div style={styles.navContainer as React.CSSProperties}>
+          <div style={styles.navInner as React.CSSProperties}>
             <Link
               to={vehicle.includes('Gwangneung') ? "/gwangneung" : vehicle.includes('Seoul') ? "/place-one" : "/place-two"}
-              className="text-gray-600 hover:text-gray-800 underline"
+              style={styles.navLink as React.CSSProperties}
             >
               ← Back to {vehicle.includes('Gwangneung') ? "/gwangneung" : vehicle.includes('Seoul') ? "/place-one" : "/place-two"}
             </Link>
@@ -526,3 +513,58 @@ export default function Process() {
     </div>
   );
 }
+
+const styles = {
+  // Error state
+  errorContainer: { display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' },
+  errorContent: { textAlign: 'center' },
+  errorTitle: { fontSize: 36, fontWeight: 'bold', marginBottom: 16, margin: 0 },
+  errorText: { fontSize: 18, color: '#4b5563', margin: 0 },
+
+  // Main layout
+  mainContainer: { display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', paddingBottom: 96 },
+  mainContent: { textAlign: 'center', maxWidth: 672, margin: '0 auto', padding: 32 },
+  processSection: { display: 'flex', flexDirection: 'column', gap: 24 },
+  processTitle: { fontSize: 24, fontWeight: 600, marginBottom: 24, margin: 0 },
+  
+  // Info text
+  infoContainer: { display: 'flex', flexDirection: 'column', alignItems: 'center' },
+  
+  // Refresh section
+  refreshContainer: { textAlign: 'center', marginBottom: 16 },
+  refreshText: { fontSize: 14, color: '#4b5563', marginBottom: 8, margin: 0 },
+  refreshCounter: { fontWeight: 600, color: '#2563eb' },
+  refreshButton: { padding: '8px 16px', backgroundColor: '#2563eb', color: 'white', border: 'none', borderRadius: 8, fontSize: 14, transition: 'background-color 0.2s', cursor: 'pointer' },
+
+  // Tabs
+  tabContainer: { display: 'flex', gap: 8, marginBottom: 24, justifyContent: 'center' },
+  tabActive: { padding: '8px 16px', borderRadius: 8, transition: 'background-color 0.2s', backgroundColor: '#2563eb', color: 'white', border: 'none', cursor: 'pointer' },
+  tabInactive: { padding: '8px 16px', borderRadius: 8, transition: 'background-color 0.2s', backgroundColor: '#e5e7eb', color: '#374151', border: 'none', cursor: 'pointer' },
+
+  // Timeline
+  timelineContainer: { position: 'relative' },
+  timelineLine: { position: 'absolute', left: 60, top: 0, bottom: 0, width: 4, backgroundColor: '#d1d5db' },
+  timelineContentBus: { position: 'relative', display: 'flex', flexDirection: 'column', gap: 32, paddingLeft: 32, paddingTop: 20 },
+  timelineContentShuttle: { position: 'relative', display: 'flex', flexDirection: 'column', gap: 32, paddingLeft: 32 },
+
+  // Timeline item
+  stepContainer: { display: 'flex', alignItems: 'center', gap: 24 },
+  stepIconShuttleActive: { width: 72, height: 64, backgroundColor: '#2563eb', color: 'white', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, fontSize: 16, zIndex: 10 },
+  stepIconShuttleInactive: { width: 72, height: 64, backgroundColor: '#4b5563', color: 'white', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, fontSize: 16, zIndex: 10 },
+  stepTextContainer: { textAlign: 'left', maxWidth: 448, flex: 1 },
+  stepTitle: { fontSize: 18, fontWeight: 500, margin: 0 },
+
+  // Bus specific
+  busStepContainer: { display: 'flex', gap: 24 },
+  busIconWrapper: { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: 64 },
+  busIconInner: { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' },
+  busIncomingContainer: { display: 'flex', height: 64, alignItems: 'center', marginLeft: -80 },
+  busIncomingText: { marginRight: 8, textAlign: 'right' },
+  busStopIcon: { width: 64, height: 64, backgroundColor: '#2563eb', color: 'white', borderRadius: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, fontSize: 18, zIndex: 10 },
+  busSubtitle: { fontSize: 14, color: '#4b5563', marginTop: 4, margin: 0 },
+
+  // Link
+  navContainer: { marginTop: 32, display: 'flex', flexDirection: 'column', gap: 16 },
+  navInner: { marginTop: 16 },
+  navLink: { color: '#4b5563', textDecoration: 'underline' }
+};
