@@ -4,13 +4,8 @@ import BusIncomingDisplay from "./BusIncomingDisplay";
 import { getProcessSteps } from "./steps";
 import { useBusData } from "~/hooks/useBusData";
 
-interface BusTimelineProps {
-  steps: any[];
-  busData: { [key: string]: any };
-  styles: any;
-}
 
-export default function BusTimeline({ styles }: BusTimelineProps) {
+export default function BusTimeline() {
   const pathname = location.pathname;
   const vehicle = pathname.slice(4, pathname.length);
   const steps = getProcessSteps(vehicle);
