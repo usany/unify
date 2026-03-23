@@ -225,7 +225,7 @@ export default function Process() {
         {id: 105900003, nameKo: "회기역", nameEn: "Hoegei Station"}
       ],
       busThree: [
-        "경희대"
+        {id: 105900050, nameKo: "경희대", nameEn: "Kyunghee University"}
       ],
       shuttleSeoul: [
         {clock: shuttleSeoul[0], routeKo: "온실-외국어대학-생명과학대학-사색의 광장", routeEn: "온실-외국어대학-생명과학대학-사색의 광장"},
