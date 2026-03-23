@@ -33,12 +33,6 @@ export default function BusTo() {
       <div style={styles.mainContent as React.CSSProperties}>
         <div style={styles.processSection as React.CSSProperties}>
           <h2 style={styles.processTitle as React.CSSProperties}>{process[vehicle]}</h2>
-          {vehicle === 'busThree' && (
-            <div style={styles.infoContainer as React.CSSProperties}>
-              <div>장한평역-청량리역-경희대</div>
-              <div>운행시간: 배차간격: 평일 75분</div>
-            </div>
-          )}
           {vehicle.includes('bus') && vehicle !== 'busThree' && vehicle.indexOf('busSeoul') === -1 && <Schedule vehicle={vehicle} />}
           {vehicle.includes('bus') && (
             <div style={styles.refreshContainer as React.CSSProperties}>
