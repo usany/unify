@@ -60,13 +60,13 @@ export default function Process() {
           </div>
           <div style={styles.tabContainer as React.CSSProperties}>
             <Link
-              to={`se/shuttle`}
+              to={`/se/shuttle`}
               style={(activeShuttleTab === 'seoul' ? styles.tabActive : styles.tabInactive) as React.CSSProperties}
             >
               서울-국제 셔틀
             </Link>
             <Link
-              to={`gl/shuttle`}
+              to={`/gl/shuttle`}
               style={(activeShuttleTab === 'global' ? styles.tabActive : styles.tabInactive) as React.CSSProperties}
             >
               국제-서울 셔틀

@@ -1,4 +1,4 @@
-import { useSearchParams, Link } from "react-router";
+import { useSearchParams, Link, useLocation } from "react-router";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 
@@ -20,9 +20,9 @@ export const shuttleGlobal = [
 
 export default function Process() {
   const [searchParams] = useSearchParams();
-  const vehicle = searchParams.get("vehicle") || "shuttleSeoul";
-  const [activeShuttleTab, setActiveShuttleTab] = useState<'seoul' | 'global'>('seoul');
-
+  // const vehicle = searchParams.get("vehicle") || "shuttleSeoul";
+  // const [activeShuttleTab, setActiveShuttleTab] = useState<'seoul' | 'global'>('seoul');
+  const activeShuttleTab = useLocation().pathname.includes('se') ? 'seoul' : 'global';
   const getProcessSteps = (vehicleType: string) => {
     const steps: { [key: string]: { clock: string; routeKo: string; routeEn: string }[] } = {
       shuttleSeoul: [
@@ -43,9 +43,9 @@ export default function Process() {
     return steps[vehicleType] || [];
   };
 
-  const handleShuttleTabChange = (tab: 'seoul' | 'global') => {
-    setActiveShuttleTab(tab);
-  };
+  // const handleShuttleTabChange = (tab: 'seoul' | 'global') => {
+  //   setActiveShuttleTab(tab);
+  // };
 
   const steps = getProcessSteps(activeShuttleTab === 'seoul' ? 'shuttleSeoul' : 'shuttleGlobal');
   return (
@@ -60,18 +60,18 @@ export default function Process() {
             <div>요금: 페이코 승차권 예약 2000원</div>
           </div>
           <div style={styles.tabContainer as React.CSSProperties}>
-            <button
-              onClick={() => handleShuttleTabChange('seoul')}
+            <Link
+              to={`/se/shuttle`}
               style={(activeShuttleTab === 'seoul' ? styles.tabActive : styles.tabInactive) as React.CSSProperties}
             >
               서울-국제 셔틀
-            </button>
-            <button
-              onClick={() => handleShuttleTabChange('global')}
+            </Link>
+            <Link
+              to={`/gl/shuttle`}
               style={(activeShuttleTab === 'global' ? styles.tabActive : styles.tabInactive) as React.CSSProperties}
             >
               국제-서울 셔틀
-            </button>
+            </Link>
           </div>
           <div style={styles.timelineContainer as React.CSSProperties}>
             <div style={styles.timelineLine as React.CSSProperties}></div>
