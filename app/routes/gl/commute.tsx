@@ -11,7 +11,6 @@ export default function BusTo() {
   const location = useLocation();
   const pathname = location.pathname;
   const vehicle = pathname.slice(4, pathname.length);
-  const { busData, timeUntilNextFetch, fetchBusData } = useBusData(pathname, getProcessSteps);
   
   const steps = getProcessSteps(vehicle);
 
