@@ -6,7 +6,7 @@ import RefreshCounter from "../../components/RefreshCounter";
 import { busCollection } from "../../components/busCollection";
 import { process } from "../../components/process";
 import { useBusData } from "../../hooks/useBusData";
-import { getProcessSteps } from "~/components/steps";
+import BackNavigation from "../../components/BackNavigation";
 
 export default function BusTo() {
   const location = useLocation();
