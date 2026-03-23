@@ -4,6 +4,7 @@ export const useBusData = (pathname: string, getProcessSteps: (vehicleType: stri
   const [busData, setBusData] = useState<{ [key: number]: any }>({});
   const [timeUntilNextFetch, setTimeUntilNextFetch] = useState(60);
   const vehicle = pathname.slice(4, pathname.length);
+  console.log(vehicle)
   const fetchStep = async (id: number) => {
     let response;
     if (pathname.includes('Seoul')) {

@@ -5,8 +5,8 @@ import { useLocation } from "react-router";
 export default function RefreshCounter() {
   const location = useLocation();
   const pathname = location.pathname;
-  const vehicle = pathname.slice(4, pathname.length);
-  const { busData, timeUntilNextFetch, fetchBusData } = useBusData(vehicle, getProcessSteps);
+  const { busData, timeUntilNextFetch, fetchBusData } = useBusData(pathname, getProcessSteps);
+  console.log(timeUntilNextFetch)
   return (
     <div style={styles.refreshContainer as React.CSSProperties}>
       <p style={styles.refreshText as React.CSSProperties}>
