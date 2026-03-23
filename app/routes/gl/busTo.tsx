@@ -7,6 +7,7 @@ import { busCollection } from "../../components/busCollection";
 import { process } from "../../components/process";
 import { useBusData } from "../../hooks/useBusData";
 import BackNavigation from "../../components/BackNavigation";
+import Previous from "~/components/Previous";
 
 export default function BusTo() {
   const location = useLocation();
@@ -92,17 +93,7 @@ export default function BusTo() {
             </div>
           </div>
         </div>
-
-        <div style={styles.navContainer as React.CSSProperties}>
-          <div style={styles.navInner as React.CSSProperties}>
-            <Link
-              to={pathname.includes('gw') ? "/gw" : pathname.includes('se') ? "/se" : "/gl"}
-              style={styles.navLink as React.CSSProperties}
-            >
-              ← Back to {pathname.includes('gw') ? "/gw" : pathname.includes('se') ? "/se" : "/gl"}
-            </Link>
-          </div>
-        </div>
+        <Previous />
       </div>
     </div>
   );
@@ -151,8 +142,4 @@ const styles = {
   busStopIcon: { width: 64, height: 64, backgroundColor: '#2563eb', color: 'white', borderRadius: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, fontSize: 18, zIndex: 10 },
   busSubtitle: { fontSize: 14, color: '#4b5563', marginTop: 4, margin: 0 },
 
-  // Link
-  navContainer: { marginTop: 32, display: 'flex', flexDirection: 'column', gap: 16 },
-  navInner: { marginTop: 16 },
-  navLink: { color: '#4b5563', textDecoration: 'underline' }
-};
+}
