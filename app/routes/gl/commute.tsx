@@ -1,139 +1,19 @@
-import { useSearchParams, Link, useNavigate } from "react-router";
-import { useState, useEffect, useCallback } from "react";
-import { Bus, BusFront, ChevronDown, MonitorStop, PersonStanding, SquareStop, StopCircle } from "lucide-react";
-import Schedule from "../components/Schedule";
-import { steps } from "~/components/steps";
+import { useSearchParams, Link, useNavigate, useLocation } from "react-router";
+import Schedule from "../../components/Schedule";
+import RefreshCounter from "../../components/RefreshCounter";
+import { process } from "../../components/process";
+import { useBusData } from "../../hooks/useBusData";
+import Previous from "~/components/Previous";
+import BusTimeline from "../../components/BusTimeline";
+import { getProcessSteps } from "~/components/steps";
 
-export const busCollection = {
-  seoul: {
-    '01': 105900003,
-    '02': 105900002,
-    'A01': 100000025,
-  },
-  gwangneung: {
-    '2': 241348004,
-    '21': 222000170,
-    '2-2A': 241348002,
-    '2A': 241348001,
-    '2-2': 241348005
-  },
-  global: {
-    'M5107': 234001243,
-    '5100': 200000115,
-    '1112(reserved)': 200000333,
-    '1112': 234000016,
-    'P9242(퇴근)': 233000335,
-    '28-3': 241425038,
-    '900': 200000010,
-    '7-2': 200000040,
-    '53': 241425010,
-    '18-1': 241425018,
-    '9-1': 200000186,
-    '1560A': 234000884,
-    '7000': 200000112,
-    '9': 200000103,
-    '310': 200000024,
-    '5': 200000076,
-    'M5107(예약)': 200000335,
-    '1550-1(예약)': 223000151,
-    '1560B': 228000433,
-    '1550-1': 234000324,
-    '32': 241425007
-  },
-}
-export const process = {
-  busSeoulOne: '회기역-경희대 01번',
-  busSeoulTwo: '회기역-외대앞역 02번',
-  busThree: '자율주행 A01번',
-  busTo: '외국어대학-사색의 광장',
-  busFrom: '사색의 광장-정문 건너편',
-  shuttleSeoul: '서울-국제 셔틀버스',
-  shuttleGlobal: '국제-서울 셔틀버스',
-  commute: '영통역 통학버스',
-  busGwangneungOne: '봉선사입구-내산정 방면',
-  busGwangneungTwo: '봉선사입구-종점 방면',
-} as { [key: string]: string };
-
-export default function Process() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const vehicle = searchParams.get("vehicle");
-  // const navigate = useNavigate();
-  // const from = searchParams.get("from");
-  // const destination = searchParams.get("destination");
-  const [busData, setBusData] = useState<{ [key: number]: any }>({});
-  const [timeUntilNextFetch, setTimeUntilNextFetch] = useState(60);
-  const [activeShuttleTab, setActiveShuttleTab] = useState<'seoul' | 'global'>('seoul');
+export default function BusTo() {
+  const location = useLocation();
+  const pathname = location.pathname;
+  const vehicle = pathname.slice(4, pathname.length);
+  const { busData, timeUntilNextFetch, fetchBusData } = useBusData(vehicle, getProcessSteps);
   
-  const handleShuttleTabChange = (tab: 'seoul' | 'global') => {
-    setActiveShuttleTab(tab);
-    const newVehicle = tab === 'seoul' ? 'shuttleSeoul' : 'shuttleGlobal';
-    setSearchParams({ vehicle: newVehicle });
-  };
-  
-  useEffect(() => {
-    if (vehicle?.includes('shuttle')) {
-      setActiveShuttleTab(vehicle === 'shuttleSeoul' ? 'seoul' : 'global');
-    }
-  }, [vehicle]);
-  
-  const fetchStep = async (id: number) => {
-    let response
-    if (vehicle === 'busSeoulOne' || vehicle === 'busSeoulTwo') {
-      response = await fetch(`http://localhost:3000/bus/${id}`)
-      const responseText = await response.text();
-      return responseText
-    } else {
-      response = await fetch(`https://apis.data.go.kr/6410000/busarrivalservice/v2/getBusArrivalListv2?serviceKey=2285040a0cf11847ddd747ab39d20eb723e34a91e8d5fb404b9034c8e6e71d97&stationId=${id}&format=json`);
-    }
-      const data = await response.json()
-      const res = data.response.msgBody.busArrivalList;
-      return res;
-  }
-  const fetchBusData = useCallback(async () => {
-    const steps = getProcessSteps(vehicle);
-    steps.forEach(async (step) => {
-      if (typeof step !== 'string' && 'id' in step) {
-        const data = await fetchStep((step as any).id);
-        const vehId1Match = data.match(/<arrmsg1>(.*?)<\/arrmsg1>/);
-        console.log(data)
-        console.log(vehId1Match)
-        setBusData(prev => ({ ...prev, [(step as any).id]: data }));
-      }
-    });
-    // const dataBus = await fetchBus()
-    // console.log(dataBus)
-    // Reset countdown when fetch completes
-    setTimeUntilNextFetch(60);
-  }, [vehicle]);
-
-  useEffect(() => {
-    // if (vehicle === 'busTo' || vehicle === 'busFrom' || vehicle === 'busGwangneungOne' || vehicle === 'busGwangneungTwo') {
-    if (vehicle?.includes('bus')) {
-      // Fetch immediately
-      fetchBusData();
-      
-      // Then fetch every minute (60000 milliseconds)
-      const interval = setInterval(fetchBusData, 60000);
-
-      // Countdown timer - update every second
-      const countdownInterval = setInterval(() => {
-        setTimeUntilNextFetch(prev => {
-          if (prev <= 1) return 60; // Reset when reaching 0
-          return prev - 1;
-        });
-      }, 1000);
-
-      // Cleanup intervals on component unmount
-      return () => {
-        clearInterval(interval);
-        clearInterval(countdownInterval);
-      };
-    }
-  }, [vehicle, fetchBusData]);
-
-  const getProcessSteps = (vehicleType: string) => {
-    return steps[vehicleType] || [];
-  };
+  const steps = getProcessSteps(vehicle);
 
   if (!vehicle) {
     return (
@@ -148,18 +28,15 @@ export default function Process() {
     );
   }
 
-  const steps = getProcessSteps(vehicle.includes('shuttle') ? (activeShuttleTab === 'seoul' ? 'shuttleSeoul' : 'shuttleGlobal') : vehicle);
   return (
     <div style={styles.mainContainer as React.CSSProperties}>
       <div style={styles.mainContent as React.CSSProperties}>
         <div style={styles.processSection as React.CSSProperties}>
           <h2 style={styles.processTitle as React.CSSProperties}>{vehicle.includes('shuttle') ? process[activeShuttleTab === 'seoul' ? 'shuttleSeoul' : 'shuttleGlobal'] : process[vehicle]}</h2>
-          {vehicle === 'commute' && (
-            <div style={styles.infoContainer as React.CSSProperties}>
-              <div>학기 중 공휴일, 휴무일을 제외한 평일</div>
-              <div>요금: 무료</div>
-            </div>
-          )}
+          <div style={styles.infoContainer as React.CSSProperties}>
+            <div>학기 중 공휴일, 휴무일을 제외한 평일</div>
+            <div>요금: 무료</div>
+          </div>
           <div style={styles.timelineContainer as React.CSSProperties}>
             <div style={styles.timelineLine as React.CSSProperties}></div>
             <div style={(vehicle.includes('bus') ? styles.timelineContentBus : styles.timelineContentShuttle) as React.CSSProperties}>
