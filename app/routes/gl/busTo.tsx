@@ -53,12 +53,6 @@ export default function BusTo() {
               </button>
             </div>
           )}
-          {vehicle === 'commute' && (
-            <div style={styles.infoContainer as React.CSSProperties}>
-              <div>학기 중 공휴일, 휴무일을 제외한 평일</div>
-              <div>요금: 무료</div>
-            </div>
-          )}
           <div style={styles.timelineContainer as React.CSSProperties}>
             <div style={styles.timelineLine as React.CSSProperties}></div>
             <div style={styles.timelineContentBus as React.CSSProperties}>
