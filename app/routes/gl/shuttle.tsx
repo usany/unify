@@ -18,7 +18,7 @@ export const shuttleGlobal = [
 ] as string[];
 
 export default function Process() {
-  const [searchParams] = useSearchParams();
+  // const [searchParams] = useSearchParams();
   // const vehicle = searchParams.get("vehicle") || "shuttleSeoul";
   // const [activeShuttleTab, setActiveShuttleTab] = useState<'seoul' | 'global'>('seoul');
   const activeShuttleTab = useLocation().pathname.includes('se') ? 'seoul' : 'global';
