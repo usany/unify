@@ -1,4 +1,4 @@
-import { useSearchParams, Link, useNavigate } from "react-router";
+import { useSearchParams, Link, useNavigate, useLocation } from "react-router";
 import { useState, useEffect, useCallback } from "react";
 import { Bus, BusFront, ChevronDown, MonitorStop, PersonStanding, SquareStop, StopCircle } from "lucide-react";
 import Schedule from "../../components/Schedule";
@@ -7,6 +7,7 @@ import { process } from "../../components/process";
 
 export default function Process() {
   // const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
   const vehicle = location.pathname.slice(location.pathname.indexOf('/'), location.pathname.length);
   const [busData, setBusData] = useState<{ [key: number]: any }>({});
   const [timeUntilNextFetch, setTimeUntilNextFetch] = useState(60);
