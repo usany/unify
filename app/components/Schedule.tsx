@@ -1,16 +1,14 @@
 import { useEffect, useState, useRef, memo } from "react";
 import { ChevronDown, ChevronUp, Clock, Calendar } from "lucide-react";
 import { busCollection } from "./busCollection";
+import { useLocation } from "react-router";
 
 // Global flag to prevent multiple fetches across component remounts
 // let globalHasFetched = false;
 
-
-interface ScheduleProps {
-  pathname: string;
-}
-
-const Schedule = ({ pathname }: ScheduleProps) => {
+const Schedule = () => {
+  const location = useLocation();
+  const pathname = location.pathname;
   const [busData, setBusData] = useState<any[]>([]);
   const [openAccordions, setOpenAccordions] = useState<Set<number>>(new Set());
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
