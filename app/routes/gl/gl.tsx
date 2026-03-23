@@ -37,7 +37,7 @@ export default function PlaceTwo() {
               <span style={styles.cardText as React.CSSProperties}>영통역 통학버스</span>
             </a>
             <a
-              href="/gl/shuttleGlobal"
+              href="/gl/shuttle"
               style={{...styles.cardBase, ...styles.cardTeal} as React.CSSProperties}
             >
               <svg style={{...styles.iconBase, ...styles.iconTeal} as React.CSSProperties} fill="none" stroke="currentColor" viewBox="0 0 24 24">
