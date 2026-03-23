@@ -1,46 +1,10 @@
 import { useEffect, useState, useRef, memo } from "react";
 import { ChevronDown, ChevronUp, Clock, Calendar } from "lucide-react";
+import { busCollection } from "./busCollection";
 
 // Global flag to prevent multiple fetches across component remounts
 // let globalHasFetched = false;
 
-export const busCollection = {
-  seoul: {
-    '01': 1,
-    '02': 2,
-    'A01': 3,
-  },
-  gwangneung: {
-    '2': 241348004,
-    '21': 222000170,
-    '2-2': 241348005,
-    '2-2A': 241348002,
-    '2A': 241348001,
-  },
-  global: {
-    'M5107': 234001243,
-    '5100': 200000115,
-    '1112': 234000016,
-    '9': 200000103,
-    '1560A': 234000884,
-    '1560B': 228000433,
-    '7000': 200000112,
-    'P9242(퇴근)': 233000335,
-    '1550-1': 234000324,
-    '1112(reserved)': 200000333,
-    '28-3': 241425038,
-    '900': 200000010,
-    '7-2': 200000040,
-    '53': 241425010,
-    '18-1': 241425018,
-    '9-1': 200000186,
-    '310': 200000024,
-    '5': 200000076,
-    'M5107(reserved)': 200000335,
-    '1550-1(reserved)': 223000151,
-    '32': 241425007
-  },
-}
 
 interface ScheduleProps {
   vehicle: string;
