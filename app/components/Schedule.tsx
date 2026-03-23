@@ -7,15 +7,15 @@ import { busCollection } from "./busCollection";
 
 
 interface ScheduleProps {
-  vehicle: string;
+  pathname: string;
 }
 
-const Schedule = ({ vehicle }: ScheduleProps) => {
+const Schedule = ({ pathname }: ScheduleProps) => {
   const [busData, setBusData] = useState<any[]>([]);
   const [openAccordions, setOpenAccordions] = useState<Set<number>>(new Set());
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   // const hasFetched = useRef(false);
-  const campus = vehicle.includes('Seoul') ? 'seoul' : vehicle.includes('Gwangneung') ? 'gwangneung' : 'global';
+  const campus = pathname.includes('se') ? 'seoul' : pathname.includes('gw') ? 'gwangneung' : 'global';
   const selectedBus = busCollection[campus];
   
   const toggleAccordion = (index: number) => {
