@@ -1,14 +1,6 @@
-import { useSearchParams, Link, useNavigate, useLocation } from "react-router";
-import { useState, useEffect, useCallback } from "react";
-import { Bus, BusFront, ChevronDown, MonitorStop, PersonStanding, SquareStop, StopCircle } from "lucide-react";
-import Schedule from "../../components/Schedule";
-import RefreshCounter from "../../components/RefreshCounter";
-import { busCollection } from "../../components/busCollection";
-import { process } from "../../components/process";
+import { useLocation } from "react-router";
 import { useBusData } from "../../hooks/useBusData";
 import Previous from "~/components/Previous";
-import BusDataDisplay from "../../components/BusDataDisplay";
-import BusIncomingDisplay from "../../components/BusIncomingDisplay";
 import BusTimeline from "../../components/BusTimeline";
 import { getProcessSteps } from "~/components/steps";
 
