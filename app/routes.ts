@@ -10,4 +10,12 @@ export default [
   route("se/busTwo", "routes/se/busTwo.tsx"),
   route("se/busThree", "routes/se/busThree.tsx"),
   route("se/shuttle", "routes/se/shuttle.tsx"),
+  route("gw", "routes/gw/gw.tsx"),
+  route("gw/busOne", "routes/gw/busOne.tsx"),
+  route("gw/busTwo", "routes/gw/busTwo.tsx"),
+  route("gl", "routes/gl/gl.tsx"),
+  route("gl/busOne", "routes/gl/busOne.tsx"),
+  route("gl/busTwo", "routes/gl/busTwo.tsx"),
+  route("gl/busThree", "routes/gl/busThree.tsx"),
+  route("gl/shuttle", "routes/gl/shuttle.tsx"),
 ] satisfies RouteConfig;
