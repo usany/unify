@@ -160,7 +160,7 @@ export default function Process() {
               <div>운행시간: 배차간격: 평일 75분</div>
             </div>
           )}
-          {vehicle.includes('bus') && vehicle !== 'busThree' && vehicle.indexOf('busSeoul') === -1 && <Schedule pathname={vehicle} />}
+          {vehicle.includes('bus') && vehicle !== 'busThree' && vehicle.indexOf('busSeoul') === -1 && <Schedule pathname={pathname} />}
           {vehicle.includes('bus') && (
             <div style={styles.refreshContainer as React.CSSProperties}>
               <p style={styles.refreshText as React.CSSProperties}>
