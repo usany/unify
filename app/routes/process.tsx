@@ -97,13 +97,15 @@ export default function Process() {
   const fetchStep = async (id: number) => {
     let response
     if (vehicle === 'busSeoulOne' || vehicle === 'busSeoulTwo') {
-      response = await fetch(`http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll?serviceKey=${id}&busRouteId=105900003`)
+      response = await fetch(`http://localhost:3000/bus/${id}`)
+      const responseText = await response.text();
+      return responseText
     } else {
       response = await fetch(`https://apis.data.go.kr/6410000/busarrivalservice/v2/getBusArrivalListv2?serviceKey=2285040a0cf11847ddd747ab39d20eb723e34a91e8d5fb404b9034c8e6e71d97&stationId=${id}&format=json`);
     }
-    const data = await response.json()
-    const res = data.response.msgBody.busArrivalList;
-    return res;
+      const data = await response.json()
+      const res = data.response.msgBody.busArrivalList;
+      return res;
   }
   const fetchBus = async (): Promise<any[]> => {
     
@@ -483,6 +485,7 @@ export default function Process() {
                       {fetchedData && (
                         fetchedData.map((data: any, dataIndex: number) => {
                           if (vehicle === 'busSeoulOne' || vehicle === 'busSeoulTwo' ) {
+                            console.log(data)
                             return null
                           }
                           const routeName = data.routeName
