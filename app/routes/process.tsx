@@ -107,68 +107,19 @@ export default function Process() {
       const res = data.response.msgBody.busArrivalList;
       return res;
   }
-  const fetchBus = async (): Promise<any[]> => {
-    
-    const response = await fetch(`http://localhost:3000/bus`);
-    console.log(response)
-    const responseText = await response.text();
-    console.log('Response text:', responseText);
-    
-    // Extract vehId1 from the response
-    const vehId1Match = responseText.match(/<vehId1>(.*?)<\/vehId1>/);
-    if (vehId1Match) {
-      const vehId1 = vehId1Match[1];
-      console.log('vehId1:', vehId1);
-      // You can now use vehId1 for further processing
-    } else {
-      console.log('vehId1 not found in response');
-    }
-    
-    const response2 = await fetch(`https://apis.data.go.kr/1613000/ArvlInfoInqireService/getSttnAcctoArvlPrearngeInfoList?serviceKey=2285040a0cf11847ddd747ab39d20eb723e34a91e8d5fb404b9034c8e6e71d97&pageNo=1&numOfRows=10&_type=xml&cityCode=25&nodeId=DJB8001793`);
-    const textData = await response2.text();
-    
-    try {
-      const parser = new DOMParser();
-      const xmlDoc = parser.parseFromString(textData, 'text/xml');
-      
-      // Get all item elements
-      const itemElements = xmlDoc.getElementsByTagName('msgHeader');
-      const items: any[] = [];
-      
-      // Convert NodeList to array and extract data
-      for (let i = 0; i < itemElements.length; i++) {
-        const item = itemElements[i];
-        const itemData: any = {};
-        
-        // Extract all child elements of this item
-        const children = item.children;
-        for (let j = 0; j < children.length; j++) {
-          const child = children[j];
-          itemData[child.tagName] = child.textContent;
-        }
-        
-        items.push(itemData);
-        
-        console.log(`Item ${i + 1} Node ID:`, items);
-        console.log(`Item ${i + 1} Node ID:`, itemData.itemCount);
-      }
-      
-      return items;
-    } catch (error) {
-      console.error('Error parsing XML:', error);
-      return [];
-    }
-  }
   const fetchBusData = useCallback(async () => {
     const steps = getProcessSteps(vehicle);
     steps.forEach(async (step) => {
       if (typeof step !== 'string' && 'id' in step) {
         const data = await fetchStep((step as any).id);
+        const vehId1Match = data.match(/<arrmsg1>(.*?)<\/arrmsg1>/);
+        console.log(data)
+        console.log(vehId1Match)
         setBusData(prev => ({ ...prev, [(step as any).id]: data }));
       }
     });
-    const dataBus = await fetchBus()
-    console.log(dataBus)
+    // const dataBus = await fetchBus()
+    // console.log(dataBus)
     // Reset countdown when fetch completes
     setTimeUntilNextFetch(60);
   }, [vehicle]);
@@ -309,7 +260,7 @@ export default function Process() {
               <div>운행시간: 배차간격: 평일 75분</div>
             </div>
           )}
-          {vehicle.includes('bus') && <Schedule vehicle={vehicle} />}
+          {vehicle.includes('bus') && vehicle !== 'busThree' && vehicle.indexOf('busSeoul') === -1 && <Schedule vehicle={vehicle} />}
           {vehicle.includes('bus') && (
             <div style={styles.refreshContainer as React.CSSProperties}>
               <p style={styles.refreshText as React.CSSProperties}>
