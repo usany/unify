@@ -1,6 +1,6 @@
 import { useSearchParams, Link, useLocation } from "react-router";
-import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+// import { useState } from "react";
+// import { ChevronDown } from "lucide-react";
 
 export const shuttleSeoul = [
   "07:10",
