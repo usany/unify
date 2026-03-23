@@ -1,6 +1,8 @@
 import { ChevronDown } from "lucide-react";
 import BusDataDisplay from "./BusDataDisplay";
 import BusIncomingDisplay from "./BusIncomingDisplay";
+import { getProcessSteps } from "./steps";
+import { useBusData } from "~/hooks/useBusData";
 
 interface BusTimelineProps {
   steps: any[];
@@ -8,7 +10,12 @@ interface BusTimelineProps {
   styles: any;
 }
 
-export default function BusTimeline({ steps, busData, styles }: BusTimelineProps) {
+export default function BusTimeline({ styles }: BusTimelineProps) {
+  const pathname = location.pathname;
+  const vehicle = pathname.slice(4, pathname.length);
+  const steps = getProcessSteps(vehicle);
+  const { busData, timeUntilNextFetch, fetchBusData } = useBusData(vehicle, getProcessSteps);
+  
   return (
     <div style={styles.timelineContainer as React.CSSProperties}>
       <div style={styles.timelineLine as React.CSSProperties}></div>
