@@ -35,7 +35,7 @@ export default function BusN() {
           <h2 style={styles.processTitle as React.CSSProperties}>{process[vehicle]}</h2>
           {vehicle.includes('bus') && <Schedule />}
           {vehicle.includes('bus') && <RefreshCounter />}
-          <BusTimeline steps={steps} busData={busData} styles={styles} />
+          <BusTimeline />
         </div>
         <Previous />
       </div>
