@@ -9,8 +9,8 @@ import { getProcessSteps } from "~/components/steps";
 
 export default function BusN() {
   const location = useLocation();
-  const pathname = location.pathname;
-  const vehicle = pathname.slice(4, pathname.length);
+    const pathname = location.pathname;
+    const vehicle = pathname.slice(4, pathname.length);
   const steps = getProcessSteps(vehicle);
   const { busData, timeUntilNextFetch, fetchBusData } = useBusData(vehicle, getProcessSteps);
   
@@ -34,7 +34,7 @@ export default function BusN() {
         <div style={styles.processSection as React.CSSProperties}>
           <h2 style={styles.processTitle as React.CSSProperties}>{process[vehicle]}</h2>
           {vehicle.includes('bus') && <Schedule />}
-          {vehicle.includes('bus') && <RefreshCounter timeUntilNextFetch={timeUntilNextFetch} onRefresh={fetchBusData} />}
+          {vehicle.includes('bus') && <RefreshCounter />}
           <BusTimeline steps={steps} busData={busData} styles={styles} />
         </div>
         <Previous />
