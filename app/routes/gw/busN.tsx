@@ -2,17 +2,13 @@ import { useSearchParams, Link, useNavigate, useLocation } from "react-router";
 import Schedule from "../../components/Schedule";
 import RefreshCounter from "../../components/RefreshCounter";
 import { process } from "../../components/process";
-import { useBusData } from "../../hooks/useBusData";
 import Previous from "~/components/Previous";
 import BusTimeline from "../../components/BusTimeline";
-import { getProcessSteps } from "~/components/steps";
 
 export default function BusN() {
   const location = useLocation();
   const pathname = location.pathname;
   const vehicle = pathname.slice(4, pathname.length);
-  // const steps = getProcessSteps(vehicle);
-  // const { busData, timeUntilNextFetch, fetchBusData } = useBusData(vehicle, getProcessSteps);
   
 
   if (!vehicle) {
