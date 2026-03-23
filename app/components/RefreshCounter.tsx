@@ -1,16 +1,17 @@
-interface RefreshCounterProps {
-  timeUntilNextFetch: number;
-  onRefresh: () => void;
-}
+import { useBusData } from "~/hooks/useBusData";
+import { getProcessSteps } from "./steps";
 
-export default function RefreshCounter({ timeUntilNextFetch, onRefresh }: RefreshCounterProps) {
+export default function RefreshCounter() {
+  const pathname = location.pathname;
+  const vehicle = pathname.slice(4, pathname.length);
+  const { busData, timeUntilNextFetch, fetchBusData } = useBusData(vehicle, getProcessSteps);
   return (
     <div style={styles.refreshContainer as React.CSSProperties}>
       <p style={styles.refreshText as React.CSSProperties}>
         Next data update in: <span style={styles.refreshCounter as React.CSSProperties}>{timeUntilNextFetch}s</span>
       </p>
       <button
-        onClick={onRefresh}
+        onClick={fetchBusData}
         style={styles.refreshButton as React.CSSProperties}
       >
         Refresh Now
