@@ -7,8 +7,7 @@ import { process } from "../../components/process";
 import { useBusData } from "../../hooks/useBusData";
 import { getProcessSteps } from "~/components/steps";
 
-export default function Process() {
-  // const [searchParams, setSearchParams] = useSearchParams();
+export default function BusTo() {
   const location = useLocation();
   const vehicle = location.pathname.slice(4, location.pathname.length);
   const { busData, timeUntilNextFetch, fetchBusData } = useBusData(vehicle, getProcessSteps);
