@@ -51,7 +51,7 @@ export const stepsCollection: { [key: string]: (string | { id: number; nameKo: s
     {id: 105900061, nameKo: "시조사삼거리", nameEn: "Sijosa Intersection"},
     {id: 105900027, nameKo: "회기역", nameEn: "Hoegei Station"}
   ],
-  busThree: [
+  busSeoulThree: [
     {id: 105900050, nameKo: "경희대", nameEn: "Kyunghee University"}
   ],
   shuttleSeoul: [
