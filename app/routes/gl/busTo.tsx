@@ -2,6 +2,7 @@ import { useSearchParams, Link, useNavigate, useLocation } from "react-router";
 import { useState, useEffect, useCallback } from "react";
 import { Bus, BusFront, ChevronDown, MonitorStop, PersonStanding, SquareStop, StopCircle } from "lucide-react";
 import Schedule from "../../components/Schedule";
+import RefreshCounter from "../../components/RefreshCounter";
 import { busCollection } from "../../components/busCollection";
 import { process } from "../../components/process";
 import { useBusData } from "../../hooks/useBusData";
@@ -34,19 +35,7 @@ export default function BusTo() {
         <div style={styles.processSection as React.CSSProperties}>
           <h2 style={styles.processTitle as React.CSSProperties}>{process[vehicle]}</h2>
           {vehicle.includes('bus') && <Schedule vehicle={vehicle} />}
-          {vehicle.includes('bus') && (
-            <div style={styles.refreshContainer as React.CSSProperties}>
-              <p style={styles.refreshText as React.CSSProperties}>
-                Next data update in: <span style={styles.refreshCounter as React.CSSProperties}>{timeUntilNextFetch}s</span>
-              </p>
-              <button
-                onClick={fetchBusData}
-                style={styles.refreshButton as React.CSSProperties}
-              >
-                Refresh Now
-              </button>
-            </div>
-          )}
+          {vehicle.includes('bus') && <RefreshCounter timeUntilNextFetch={timeUntilNextFetch} onRefresh={fetchBusData} />}
           <div style={styles.timelineContainer as React.CSSProperties}>
             <div style={styles.timelineLine as React.CSSProperties}></div>
             <div style={styles.timelineContentBus as React.CSSProperties}>
@@ -134,12 +123,6 @@ const styles = {
   
   // Info text
   infoContainer: { display: 'flex', flexDirection: 'column', alignItems: 'center' },
-  
-  // Refresh section
-  refreshContainer: { textAlign: 'center', marginBottom: 16 },
-  refreshText: { fontSize: 14, color: '#4b5563', marginBottom: 8, margin: 0 },
-  refreshCounter: { fontWeight: 600, color: '#2563eb' },
-  refreshButton: { padding: '8px 16px', backgroundColor: '#2563eb', color: 'white', border: 'none', borderRadius: 8, fontSize: 14, transition: 'background-color 0.2s', cursor: 'pointer' },
 
   // Tabs
   tabContainer: { display: 'flex', gap: 8, marginBottom: 24, justifyContent: 'center' },
