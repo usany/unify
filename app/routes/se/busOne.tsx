@@ -1,7 +1,7 @@
 import { useSearchParams, Link, useNavigate } from "react-router";
 import { useState, useEffect, useCallback } from "react";
 import { Bus, BusFront, ChevronDown, MonitorStop, PersonStanding, SquareStop, StopCircle } from "lucide-react";
-import Schedule from "../../../components/Schedule";
+import Schedule from "../../components/Schedule";
 
 export const busCollection = {
   seoul: {
