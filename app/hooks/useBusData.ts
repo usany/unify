@@ -1,12 +1,12 @@
 import { useState, useCallback, useEffect } from 'react';
 
-export const useBusData = (vehicle: string, getProcessSteps: (vehicleType: string) => any[]) => {
+export const useBusData = (pathname: string, getProcessSteps: (vehicleType: string) => any[]) => {
   const [busData, setBusData] = useState<{ [key: number]: any }>({});
   const [timeUntilNextFetch, setTimeUntilNextFetch] = useState(60);
-
+  const vehicle = pathname.slice(4, pathname.length);
   const fetchStep = async (id: number) => {
     let response;
-    if (vehicle.includes('Seoul')) {
+    if (pathname.includes('Seoul')) {
       response = await fetch(`http://localhost:3000/bus/${id}`);
       const responseText = await response.text();
       return responseText;
