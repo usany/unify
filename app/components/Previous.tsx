@@ -15,7 +15,6 @@ export default function Previous() {
       </div>
     </div>
   )
-;
 }
 const styles = {
   // Link
