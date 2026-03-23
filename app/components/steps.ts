@@ -19,7 +19,7 @@ export const shuttleGlobal = [
   "18:00",
 ] as string[];
 
-export const steps: { [key: string]: (string | { id: number; nameKo: string; nameEn: string } | { time: string; routeKo: string; routeEn: string } | { clock: string; routeKo: string; routeEn: string })[] } = {
+export const stepsCollection: { [key: string]: (string | { id: number; nameKo: string; nameEn: string } | { time: string; routeKo: string; routeEn: string } | { clock: string; routeKo: string; routeEn: string })[] } = {
   busSeoulOne: [
     {id: 105900027, nameKo: "회기역", nameEn: "Hoegei Station"},
     {id: 105900051, nameKo: "경희대입구", nameEn: "Kyunghee University Entrance"}, 
