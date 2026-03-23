@@ -12,7 +12,7 @@ export default function Process() {
   const vehicle = location.pathname.slice(location.pathname.indexOf('/'), location.pathname.length);
   const [busData, setBusData] = useState<{ [key: number]: any }>({});
   const [timeUntilNextFetch, setTimeUntilNextFetch] = useState(60);
-    
+  console.log(vehicle)
   const fetchStep = async (id: number) => {
     let response
     if (vehicle === 'busOne' || vehicle === 'busTwo') {
