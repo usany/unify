@@ -73,7 +73,6 @@ export default function BusTo() {
             </div>
           </div>
         </div>
-
         <Previous />
       </div>
     </div>
