@@ -18,7 +18,7 @@ export default function Place() {
               <span style={styles.cardText as React.CSSProperties}>봉선사입구-내산정 방면</span>
             </a>
             <a
-              href="/process?vehicle=busGwangneungTwo"
+              href="/gw/busJ"
               style={{...styles.cardBase, ...styles.cardGreen} as React.CSSProperties}
             >
               <svg style={{...styles.iconBase, ...styles.iconGreen} as React.CSSProperties} fill="none" stroke="currentColor" viewBox="0 0 24 24">
