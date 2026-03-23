@@ -9,7 +9,7 @@ export default function PlaceOne() {
         <div style={styles.cardsContainer as React.CSSProperties}>
           <div style={styles.grid as React.CSSProperties}>
             <a
-              href="/process?vehicle=busSeoulOne"
+              href="/se/busOne"
               style={{...styles.cardBase, ...styles.cardBlue} as React.CSSProperties}
             >
               <svg style={{...styles.iconBase, ...styles.iconBlue} as React.CSSProperties} fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -11,8 +11,8 @@ export function DockNavigation() {
 
   const dockItems: DockItem[] = [
     {
-      path: "/place-one",
-      label: "Place One",
+      path: "/se",
+      label: "Seoul",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
