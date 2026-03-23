@@ -12,7 +12,7 @@ export function DockNavigation() {
   const dockItems: DockItem[] = [
     {
       path: "/se",
-      label: "Seoul",
+      label: "se",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -31,8 +31,8 @@ export function DockNavigation() {
       ),
     },
     {
-      path: "/place-two",
-      label: "Place Two",
+      path: "/gl",
+      label: "gl",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -51,8 +51,8 @@ export function DockNavigation() {
       ),
     },
     {
-      path: "/gwangneung",
-      label: "광릉",
+      path: "/gw",
+      label: "gw",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
