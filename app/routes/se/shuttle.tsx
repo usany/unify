@@ -18,7 +18,7 @@ export const shuttleGlobal = [
   "18:00",
 ] as string[];
 
-export default function Process() {
+export default function Shuttle() {
   // const [searchParams] = useSearchParams();
   // const vehicle = searchParams.get("vehicle") || "shuttleSeoul";
   // const [activeShuttleTab, setActiveShuttleTab] = useState<'seoul' | 'global'>('seoul');
