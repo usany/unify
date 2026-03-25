@@ -5,14 +5,27 @@ import { getProcessSteps } from "./steps";
 import { useBusData } from "~/hooks/useBusData";
 import { useLocation } from "react-router";
 
-
+export const seoulBus = () => {
+  const location = useLocation();
+  const pathname = location.pathname;
+  return pathname.includes('busOne') || pathname.includes('busTwo') || pathname.includes('busThree');
+}
 export default function BusTimeline() {
   const location = useLocation();
   const pathname = location.pathname;
   const vehicle = pathname.slice(4, pathname.length);
   const steps = getProcessSteps(vehicle);
   const { busData, timeUntilNextFetch, fetchBusData } = useBusData(pathname, getProcessSteps);
-  
+  const isSeoulBus = seoulBus();
+  // const collection = busData.response.msgBody
+  // console.log(collection)
+  const parsedBusData = typeof busData === 'string' ? JSON.parse(busData) : busData;
+  let itemList
+  if (isSeoulBus && parsedBusData?.response?.msgBody?.itemList) {
+    itemList = parsedBusData.response.msgBody.itemList;
+  } else {
+    itemList = []
+  }
   return (
     <div style={styles.timelineContainer as React.CSSProperties}>
       <div style={styles.timelineLine as React.CSSProperties}></div>
@@ -20,14 +33,15 @@ export default function BusTimeline() {
         {steps.map((step, index) => {
           // For bus steps, we can access the fetched data from state
           const stepId = typeof step !== 'string' && 'id' in step ? (step as any).id : null;
-          const fetchedData = stepId ? busData[stepId] : null;
-          console.log(fetchedData)
+          // const fetchedData = stepId ? busData[stepId] : null;
+          const fetchedData = !isSeoulBus ? busData[stepId] : itemList;
+
           return (
             <div key={index} style={styles.busStepContainer as React.CSSProperties}>
               <div style={styles.busIconWrapper as React.CSSProperties}>
                 <div style={styles.busIconInner as React.CSSProperties}>
                   {fetchedData && (
-                    <BusIncomingDisplay fetchedData={fetchedData} styles={styles} />
+                    <BusIncomingDisplay fetchedData={fetchedData} styles={styles} index={index} />
                   )}
                   <div style={styles.busStopIcon as React.CSSProperties}>
                     <ChevronDown />
@@ -43,6 +57,7 @@ export default function BusTimeline() {
                     fetchedData={fetchedData} 
                     isLastStep={index === steps.length - 1}
                     styles={styles}
+                    index={index}
                   />
                 )}
               </div>

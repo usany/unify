@@ -1,13 +1,16 @@
 import { useState, useCallback, useEffect } from 'react';
+import { busCollection } from '~/components/busCollection';
+import { seoulBus } from '~/components/BusTimeline';
 
 export const useBusData = (pathname: string, getProcessSteps: (vehicleType: string) => any[]) => {
   const [busData, setBusData] = useState<{ [key: number]: any }>({});
   const [timeUntilNextFetch, setTimeUntilNextFetch] = useState(60);
   const vehicle = pathname.slice(4, pathname.length);
+  const isSeoulBus = seoulBus()
   console.log(vehicle)
   const fetchStep = async (id: number) => {
     let response;
-    if (pathname.includes('Seoul')) {
+    if (pathname.includes('se')) {
       response = await fetch(`http://localhost:3000/bus/${id}`);
       const responseText = await response.text();
       return responseText;
@@ -20,12 +23,19 @@ export const useBusData = (pathname: string, getProcessSteps: (vehicleType: stri
 
   const fetchBusData = useCallback(async () => {
     const steps = getProcessSteps(vehicle);
-    steps.forEach(async (step) => {
-      if (typeof step !== 'string' && 'id' in step) {
-        const data = await fetchStep((step as any).id);
-        setBusData(prev => ({ ...prev, [(step as any).id]: data }));
-      }
-    });
+    if (isSeoulBus) {
+      const busNum = pathname.includes('busOne') ? '01' : pathname.includes('busTwo') ? '02' : 'A01';
+      const busId = busCollection.seoul[busNum];
+      const data = await fetchStep(busId);
+      setBusData(data);
+    } else {
+      steps.forEach(async (step) => {
+        if (typeof step !== 'string' && 'id' in step) {
+          const data = await fetchStep((step as any).id);
+          setBusData(prev => ({ ...prev, [(step as any).id]: data }));
+        }
+      });
+    }
     setTimeUntilNextFetch(60);
   }, [vehicle, getProcessSteps]);
 
