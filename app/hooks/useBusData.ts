@@ -15,7 +15,7 @@ export const useBusData = (pathname: string, getProcessSteps: (vehicleType: stri
       const responseText = await response.text();
       return responseText;
     }
-    response = await fetch(`https://apis.data.go.kr/6410000/busarrivalservice/v2/getBusArrivalListv2?serviceKey=2285040a0cf11847ddd747ab39d20eb723e34a91e8d5fb404b9034c8e6e71d97&stationId=${id}&format=json`);
+    response = await fetch(`http://localhost:3000/gyArrival/${id}`);
     const data = await response.json();
     const res = data.response.msgBody.busArrivalList;
     return res;
