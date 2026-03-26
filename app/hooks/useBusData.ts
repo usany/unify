@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { busCollection } from '~/components/busCollection';
 import { seoulBus } from '~/components/BusTimeline';
 
@@ -12,8 +12,8 @@ export const useBusData = (pathname: string, getProcessSteps: (vehicleType: stri
     let response;
     if (pathname.includes('se')) {
       response = await fetch(`http://localhost:3000/bus/${id}`);
-      const responseText = await response.text();
-      return responseText;
+      const res = await response.json();
+      return res;
     }
     response = await fetch(`http://localhost:3000/gyArrival/${id}`);
     const data = await response.json();
