@@ -12,7 +12,6 @@ const Schedule = () => {
   const [busData, setBusData] = useState<any[]>([]);
   const [openAccordions, setOpenAccordions] = useState<Set<number>>(new Set());
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  // const hasFetched = useRef(false);
   const campus = pathname.includes('se') ? 'seoul' : pathname.includes('gw') ? 'gwangneung' : 'global';
   const selectedBus = busCollection[campus];
   
@@ -41,10 +40,7 @@ const Schedule = () => {
     return res;
   }
 
-  useEffect(() => {
-    // console.log('Schedule useEffect triggered, globalHasFetched:', globalHasFetched);
-    // if (globalHasFetched) return;
-    
+  useEffect(() => {    
     const fetchAllBuses = async () => {
       console.log('Starting fetch...');
       if (selectedBus) {
@@ -95,7 +91,7 @@ const Schedule = () => {
                 <span className="font-medium">배차간격</span>
                 <div className="mt-2 space-y-1 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-gray-600">기본:</span>
+                    <span className="text-gray-600">매일:</span>
                     <span className="text-gray-800">{peekAlloc}분</span>
                   </div>
                 </div>
