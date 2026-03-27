@@ -89,15 +89,6 @@ const Schedule = () => {
               <Calendar className="w-4 h-4 text-gray-600 mt-1" />
               <span className="font-medium">배차간격</span>
               <span className="text-gray-800">{peekAlloc}분</span>
-              {/* <div>
-                <span className="font-medium">배차간격</span>
-                <div className="mt-2 space-y-1 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">매일:</span>
-                    <span className="text-gray-800">{peekAlloc}분</span>
-                  </div>
-                </div>
-              </div> */}
             </div>
           </div>
         </div>
