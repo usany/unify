@@ -31,7 +31,7 @@ const Schedule = () => {
     if (pathname.includes('se')) {
       const response = await fetch(`http://localhost:3000/seArrival/${id}`);
       const data = await response.json();
-      const res = data.response.msgBody.itemList[3];
+      const res = data.response.msgBody.itemList[5];
       return res;
     }
     const response = await fetch(`http://localhost:3000/gyRoute/${id}`);
@@ -61,8 +61,8 @@ const Schedule = () => {
   console.log('Schedule render, busData length:', busData.length);
   const renderContent = (bus: any, index: number) => {
     const routeName = bus.rtNm;
-    const upFirstTime = bus.firstTm.slice(8, 10) + ':' + bus.firstTm.slice(10, 12);
-    const upLastTime = bus.lastTm.slice(8, 10) + ':' + bus.lastTm.slice(10, 12);
+    const upFirstTime = bus.firstTm.slice(8, 10) + ':' + bus.firstTm.slice(10, 11)+'0';
+    const upLastTime = bus.lastTm.slice(8, 10) + ':' + bus.lastTm.slice(10, 11)+'0';
     const peekAlloc = bus.term;
     
     return (
