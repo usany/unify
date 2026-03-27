@@ -37,31 +37,33 @@ export default function BusTimeline() {
           const fetchedData = !isSeoulBus ? busData[stepId] : itemList;
 
           return (
-            <div key={index} style={styles.busStepContainer as React.CSSProperties}>
-              <div style={styles.busIconWrapper as React.CSSProperties}>
-                <div style={styles.busIconInner as React.CSSProperties}>
-                  {fetchedData && (
-                    <BusIncomingDisplay fetchedData={fetchedData} styles={styles} index={index} />
-                  )}
-                  <div style={styles.busStopIcon as React.CSSProperties}>
-                    <ChevronDown />
+            <>
+              {fetchedData && (
+                <BusIncomingDisplay fetchedData={fetchedData} styles={styles} index={index} />
+              )}
+              <div key={index} style={styles.busStepContainer as React.CSSProperties}>
+                <div style={styles.busIconWrapper as React.CSSProperties}>
+                  <div style={styles.busIconInner as React.CSSProperties}>
+                    <div style={styles.busStopIcon as React.CSSProperties}>
+                      <ChevronDown />
+                    </div>
                   </div>
                 </div>
+                <div style={styles.stepTextContainer as React.CSSProperties}>
+                  <p style={styles.stepTitle as React.CSSProperties}>
+                    {typeof step === 'string' ? step : 'nameKo' in step ? `${step.nameKo} (${step.nameEn})` : JSON.stringify(step)}
+                  </p>
+                  {fetchedData && (
+                    <BusDataDisplay 
+                      fetchedData={fetchedData} 
+                      isLastStep={index === steps.length - 1}
+                      styles={styles}
+                      index={index}
+                    />
+                  )}
+                </div>
               </div>
-              <div style={styles.stepTextContainer as React.CSSProperties}>
-                <p style={styles.stepTitle as React.CSSProperties}>
-                  {typeof step === 'string' ? step : 'nameKo' in step ? `${step.nameKo} (${step.nameEn})` : JSON.stringify(step)}
-                </p>
-                {fetchedData && (
-                  <BusDataDisplay 
-                    fetchedData={fetchedData} 
-                    isLastStep={index === steps.length - 1}
-                    styles={styles}
-                    index={index}
-                  />
-                )}
-              </div>
-            </div>
+            </>
           )
         })}
       </div>
