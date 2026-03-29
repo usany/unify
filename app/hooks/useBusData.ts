@@ -21,6 +21,22 @@ const buildSeoulBusQuery = (id: number) => `
     }
   }
 `;
+const buildGyeonggiBusQuery = (id: number) => `
+  query {
+    gyeonggiBusArrival(stationId: ${id}) {
+      response {
+        msgBody {
+          busArrivalList {
+            routeName
+            predictTime1
+            locationNo1
+            stationNm1
+          }
+        }
+      }
+    }
+  }
+`;
 
 export const useBusData = (pathname: string, getProcessSteps: (vehicleType: string) => any[]) => {
   const [busData, setBusData] = useState<{ [key: number]: any }>({});
@@ -40,14 +56,29 @@ export const useBusData = (pathname: string, getProcessSteps: (vehicleType: stri
           query: buildSeoulBusQuery(id),
         }),
       });
+      // response = await fetch(`http://localhost:3000/seArrival/${id}`);
+
       const responseText = await response.json();
+      // const res = responseText.msgBody.busArrivalList;␍
       const res = responseText.data.seoulBusArrival;
       return res;
     }
-    response = await fetch(`http://localhost:3000/gyArrival/${id}`);
-    console.log(response)
+    response = await fetch(`http://localhost:3000/graphql`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: buildGyeonggiBusQuery(id),
+      }),
+    });
+    // response = await fetch(`http://localhost:3000/gyArrival/${id}`);
     const data = await response.json();
-    const res = data.response.msgBody.busArrivalList;
+    console.log(data)
+    const res = data.data.gyeonggiBusArrival.response.msgBody.busArrivalList
+    // const res = data.response.msgBody.busArrivalList
+    console.log(res)
+    
     return res;
   };
 
