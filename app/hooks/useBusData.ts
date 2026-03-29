@@ -1,4 +1,6 @@
+import request from 'graphql-request';
 import { useCallback, useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
 import { busCollection } from '~/components/busCollection';
 import { seoulBus } from '~/components/BusTimeline';
 
@@ -8,6 +10,17 @@ export const useBusData = (pathname: string, getProcessSteps: (vehicleType: stri
   const vehicle = pathname.slice(4, pathname.length);
   const isSeoulBus = seoulBus()
   console.log(vehicle)
+  const {data} = useQuery({
+    queryKey: ['busData'],
+    queryFn: async () => request('http://localhost:3000/graphql', `
+      query {
+        busData {
+          id
+          name
+        }
+      }
+    `)
+  })
   const fetchStep = async (id: number) => {
     let response;
     if (pathname.includes('se')) {
