@@ -1,8 +1,26 @@
-import request from 'graphql-request';
-import { useCallback, useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
+import { useState, useCallback, useEffect } from 'react';
 import { busCollection } from '~/components/busCollection';
 import { seoulBus } from '~/components/BusTimeline';
+
+const buildSeoulBusQuery = (id: number) => `
+  query {
+    seoulBusArrival(routeId: ${id}) {
+      response {
+        msgBody {
+          itemList {
+            arrmsg1
+            rtNm
+            vehId1
+            firstTm
+            lastTm
+            term
+            stId
+          }
+        }
+      }
+    }
+  }
+`;
 
 export const useBusData = (pathname: string, getProcessSteps: (vehicleType: string) => any[]) => {
   const [busData, setBusData] = useState<{ [key: number]: any }>({});
@@ -10,25 +28,24 @@ export const useBusData = (pathname: string, getProcessSteps: (vehicleType: stri
   const vehicle = pathname.slice(4, pathname.length);
   const isSeoulBus = seoulBus()
   console.log(vehicle)
-  const {data} = useQuery({
-    queryKey: ['busData'],
-    queryFn: async () => request('http://localhost:3000/graphql', `
-      query {
-        busData {
-          id
-          name
-        }
-      }
-    `)
-  })
   const fetchStep = async (id: number) => {
     let response;
     if (pathname.includes('se')) {
-      response = await fetch(`http://localhost:3000/bus/${id}`);
-      const res = await response.json();
+      response = await fetch(`http://localhost:3000/graphql`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: buildSeoulBusQuery(id),
+        }),
+      });
+      const responseText = await response.json();
+      const res = responseText.data.seoulBusArrival;
       return res;
     }
     response = await fetch(`http://localhost:3000/gyArrival/${id}`);
+    console.log(response)
     const data = await response.json();
     const res = data.response.msgBody.busArrivalList;
     return res;
