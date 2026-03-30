@@ -7,7 +7,7 @@ import { busCollection } from "./busCollection";
 // let globalHasFetched = false;
 const buildGyeonggiBusRouteQuery = (id: number) => `
   query {
-    gyeonggiBusRoute(routesId: ${id}) {
+    gyeonggiBusRoute(routeId: ${id}) {
       response {
         msgBody {
           busRouteInfoItem {
@@ -48,20 +48,20 @@ const Schedule = () => {
       return res;
     }
     console.log(id)
-    // const response = await fetch(`http://localhost:3000/graphql`, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     query: buildGyeonggiBusRouteQuery(id),
-    //   }),
-    // });
-    // const data = await response.json();
-    // console.log("data", data)
-    // const res = data.data.gyeonggiBusRoute.response.msgBody.busRouteInfoItem
-    // console.log("res", res)
-    // return res;
+    const response = await fetch(`http://localhost:3000/graphql`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: buildGyeonggiBusRouteQuery(id),
+      }),
+    });
+    const data = await response.json();
+    console.log("data", data)
+    const res = data.data.gyeonggiBusRoute.response.msgBody.busRouteInfoItem
+    console.log("res", res)
+    return res;
   }
 
   useEffect(() => {    
