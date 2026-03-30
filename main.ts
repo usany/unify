@@ -1,4 +1,5 @@
 import { createSchema, createYoga } from 'graphql-yoga'
+import xmlToJson from './xmlToJson.ts'
  
 const yoga = createYoga({
   schema: createSchema({
