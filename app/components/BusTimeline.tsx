@@ -17,15 +17,9 @@ export default function BusTimeline() {
   const steps = getProcessSteps(vehicle);
   const { busData, timeUntilNextFetch, fetchBusData } = useBusData(pathname, getProcessSteps);
   const isSeoulBus = seoulBus();
-  // const collection = busData.response.msgBody
-  // console.log(collection)
   const parsedBusData = typeof busData === 'string' ? JSON.parse(busData) : busData;
-  let itemList
-  if (isSeoulBus && parsedBusData?.response?.msgBody?.itemList) {
-    itemList = parsedBusData.response.msgBody.itemList;
-  } else {
-    itemList = []
-  }
+  const itemList = isSeoulBus ? parsedBusData : [];
+  console.log(busData)
   return (
     <div style={styles.timelineContainer as React.CSSProperties}>
       <div style={styles.timelineLine as React.CSSProperties}></div>
@@ -38,7 +32,7 @@ export default function BusTimeline() {
 
           return (
             <>
-              {fetchedData && (
+              {fetchedData?.length && (
                 <BusIncomingDisplay fetchedData={fetchedData} styles={styles} index={index} />
               )}
               <div key={index} style={styles.busStepContainer as React.CSSProperties}>

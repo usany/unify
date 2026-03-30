@@ -38,6 +38,21 @@ const buildGyeonggiBusQuery = (id: number) => `
   }
 `;
 
+
+const buildGyeonggiBusRouteQuery = (id: number) => `
+  query {
+    gyeonggiBusRoute(routesId: ${id}) {
+      response {
+        msgBody {
+          busRouteInfoItem {
+            routeName
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const useBusData = (pathname: string, getProcessSteps: (vehicleType: string) => any[]) => {
   const [busData, setBusData] = useState<{ [key: number]: any }>({});
   const [timeUntilNextFetch, setTimeUntilNextFetch] = useState(60);
@@ -60,7 +75,8 @@ export const useBusData = (pathname: string, getProcessSteps: (vehicleType: stri
 
       const responseText = await response.json();
       // const res = responseText.msgBody.busArrivalList;␍
-      const res = responseText.data.seoulBusArrival;
+      const res = responseText.data.seoulBusArrival.response.msgBody.itemList;
+      console.log(res)
       return res;
     }
     response = await fetch(`http://localhost:3000/graphql`, {
@@ -74,10 +90,29 @@ export const useBusData = (pathname: string, getProcessSteps: (vehicleType: stri
     });
     // response = await fetch(`http://localhost:3000/gyArrival/${id}`);
     const data = await response.json();
-    console.log(data)
     const res = data.data.gyeonggiBusArrival.response.msgBody.busArrivalList
-    // const res = data.response.msgBody.busArrivalList
     console.log(res)
+    // const res = data.response.msgBody.busArrivalList
+    
+    // console.log(res)
+    //     if (id === 222000665) {
+    //       [241348004, 222000170, 241348002, 241348001, 241348005]
+    //       const ids = 241348004
+    //       const responses = await fetch(`http://localhost:3000/graphql`, {
+    //         method: 'POST',
+    //         headers: {
+    //           'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({
+    //           query: buildGyeonggiBusRouteQuery(ids),
+    //         }),
+    //       });
+    //       const newData = await responses.json();
+    //       console.log("newData", newData)
+    //       const newRes = newData.data.gyeonggiBusRoute.response.msgBody.busRouteInfoItem
+    //       console.log("newRes", newRes)
+    // }
+
     
     return res;
   };
