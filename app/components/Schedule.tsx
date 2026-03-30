@@ -12,6 +12,16 @@ const buildGyeonggiBusRouteQuery = (id: number) => `
         msgBody {
           busRouteInfoItem {
             routeName
+            upFirstTime
+            upLastTime
+            peekAlloc
+            nPeekAlloc
+            satPeekAlloc
+            satNPeekAlloc
+            sunPeekAlloc
+            sunNPeekAlloc
+            wePeekAlloc
+            weNPeekAlloc
           }
         }
       }
@@ -123,7 +133,7 @@ const Schedule = () => {
   }
   const renderAccordionContent = (bus: any, index: number) => {
     console.log("bus", bus)
-    const routeName = bus?.adminName;
+    const routeName = bus?.routeName;
     // const upFirstTime = bus.upFirstTime;
     // const upLastTime = bus.upLastTime;
     // const peekAlloc = bus.peekAlloc;
