@@ -62,7 +62,7 @@ export const useBusData = (pathname: string, getProcessSteps: (vehicleType: stri
   const fetchStep = async (id: number) => {
     let response;
     if (pathname.includes('se')) {
-      response = await fetch(`http://localhost:3000/graphql`, {
+      response = await fetch(`http://localhost:8000/graphql`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ export const useBusData = (pathname: string, getProcessSteps: (vehicleType: stri
           query: buildSeoulBusQuery(id),
         }),
       });
-      // response = await fetch(`http://localhost:3000/seArrival/${id}`);
+      // response = await fetch(`http://localhost:8000/seArrival/${id}`);
 
       const responseText = await response.json();
       // const res = responseText.msgBody.busArrivalList;␍
@@ -79,7 +79,7 @@ export const useBusData = (pathname: string, getProcessSteps: (vehicleType: stri
       console.log(res)
       return res;
     }
-    response = await fetch(`http://localhost:3000/graphql`, {
+    response = await fetch(`http://localhost:8000/graphql`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -88,7 +88,7 @@ export const useBusData = (pathname: string, getProcessSteps: (vehicleType: stri
         query: buildGyeonggiBusQuery(id),
       }),
     });
-    // response = await fetch(`http://localhost:3000/gyArrival/${id}`);
+    // response = await fetch(`http://localhost:8000/gyArrival/${id}`);
     const data = await response.json();
     const res = data.data.gyeonggiBusArrival.response.msgBody.busArrivalList
     console.log(res)
@@ -98,7 +98,7 @@ export const useBusData = (pathname: string, getProcessSteps: (vehicleType: stri
     //     if (id === 222000665) {
     //       [241348004, 222000170, 241348002, 241348001, 241348005]
     //       const ids = 241348004
-    //       const responses = await fetch(`http://localhost:3000/graphql`, {
+    //       const responses = await fetch(`http://localhost:8000/graphql`, {
     //         method: 'POST',
     //         headers: {
     //           'Content-Type': 'application/json',

@@ -52,13 +52,13 @@ const Schedule = () => {
   
   const fetchBus = async (id: number) => {
     if (pathname.includes('se')) {
-      const response = await fetch(`http://localhost:3000/seArrival/${id}`);
+      const response = await fetch(`http://localhost:8000/seArrival/${id}`);
       const data = await response.json();
       const res = data.response.msgBody.itemList[5];
       return res;
     }
     console.log(id)
-    const response = await fetch(`http://localhost:3000/graphql`, {
+    const response = await fetch(`http://localhost:8000/graphql`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -97,9 +97,9 @@ const Schedule = () => {
   console.log('Schedule render, busData length:', busData.length);
   const renderContent = (bus: any, index: number) => {
     const routeName = bus.rtNm;
-    // const upFirstTime = bus.firstTm.slice(8, 10) + ':' + bus.firstTm.slice(10, 11)+'0';
-    // const upLastTime = bus.lastTm.slice(8, 10) + ':' + bus.lastTm.slice(10, 11)+'0';
-    // const peekAlloc = bus.term;
+    const upFirstTime = bus.firstTm.slice(8, 10) + ':' + bus.firstTm.slice(10, 11)+'0';
+    const upLastTime = bus.lastTm.slice(8, 10) + ':' + bus.lastTm.slice(10, 11)+'0';
+    const peekAlloc = bus.term;
     
     return (
       <div key={index} className="border border-gray-200 rounded-lg overflow-hidden bg-white">
@@ -110,7 +110,7 @@ const Schedule = () => {
             </div>
             <span className="font-medium text-left">{routeName}</span>
           </div>
-          {/* <span className="text-sm text-gray-500">{upFirstTime}~{upLastTime}</span> */}
+          <span className="text-sm text-gray-500">{upFirstTime}~{upLastTime}</span>
         </div>
 
         <div className="px-4 py-3 bg-gray-50 border-t border-gray-200">
@@ -118,13 +118,13 @@ const Schedule = () => {
             <div className="flex items-center space-x-2">
               <Clock className="w-4 h-4 text-gray-600" />
               <span className="font-medium">운행시간</span>
-              {/* <span className="text-gray-700">{upFirstTime}~{upLastTime}</span> */}
+              <span className="text-gray-700">{upFirstTime}~{upLastTime}</span>
             </div>
 
             <div className="flex items-start space-x-2">
               <Calendar className="w-4 h-4 text-gray-600 mt-1" />
               <span className="font-medium">배차간격</span>
-              {/* <span className="text-gray-800">{peekAlloc}분</span> */}
+              <span className="text-gray-800">{peekAlloc}분</span>
             </div>
           </div>
         </div>
@@ -134,16 +134,16 @@ const Schedule = () => {
   const renderAccordionContent = (bus: any, index: number) => {
     console.log("bus", bus)
     const routeName = bus?.routeName;
-    // const upFirstTime = bus.upFirstTime;
-    // const upLastTime = bus.upLastTime;
-    // const peekAlloc = bus.peekAlloc;
-    // const nPeekAlloc = bus.nPeekAlloc;
-    // const satPeekAlloc = bus.satPeekAlloc;
-    // const satNPeekAlloc = bus.satNPeekAlloc;
-    // const sunPeekAlloc = bus.sunPeekAlloc;
-    // const sunNPeekAlloc = bus.sunNPeekAlloc;
-    // const wePeekAlloc = bus.wePeekAlloc;
-    // const weNPeekAlloc = bus.weNPeekAlloc;
+    const upFirstTime = bus.upFirstTime;
+    const upLastTime = bus.upLastTime;
+    const peekAlloc = bus.peekAlloc;
+    const nPeekAlloc = bus.nPeekAlloc;
+    const satPeekAlloc = bus.satPeekAlloc;
+    const satNPeekAlloc = bus.satNPeekAlloc;
+    const sunPeekAlloc = bus.sunPeekAlloc;
+    const sunNPeekAlloc = bus.sunNPeekAlloc;
+    const wePeekAlloc = bus.wePeekAlloc;
+    const weNPeekAlloc = bus.weNPeekAlloc;
     const isOpen = openAccordions.has(index);
     
     return (
@@ -159,7 +159,7 @@ const Schedule = () => {
             <span className="font-medium text-left">{routeName}</span>
           </div>
           <div className="flex items-center space-x-2">
-            {/* <span className="text-sm text-gray-500">{upFirstTime}~{upLastTime}</span> */}
+            <span className="text-sm text-gray-500">{upFirstTime}~{upLastTime}</span>
             {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
           </div>
         </button>
@@ -170,7 +170,7 @@ const Schedule = () => {
               <div className="flex items-center space-x-2">
                 <Clock className="w-4 h-4 text-gray-600" />
                 <span className="font-medium">운행시간</span>
-                {/* <span className="text-gray-700">{upFirstTime}~{upLastTime}</span> */}
+                <span className="text-gray-700">{upFirstTime}~{upLastTime}</span>
               </div>
               
               <div className="flex items-start space-x-2">
@@ -178,7 +178,7 @@ const Schedule = () => {
                 <div>
                   <span className="font-medium">배차간격</span>
                   <div className="mt-2 space-y-1 text-sm">
-                    {/* <div className="flex justify-between">
+                    <div className="flex justify-between">
                       <span className="text-gray-600">평일:</span>
                       <span className="text-gray-800">{peekAlloc}~{nPeekAlloc}분</span>
                     </div>
@@ -193,7 +193,7 @@ const Schedule = () => {
                     <div className="flex justify-between">
                       <span className="text-gray-600">공휴일:</span>
                       <span className="text-gray-800">{wePeekAlloc}~{weNPeekAlloc}분</span>
-                    </div> */}
+                    </div>
                   </div>
                 </div>
               </div>
